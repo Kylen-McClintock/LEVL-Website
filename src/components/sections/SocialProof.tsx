@@ -2,7 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import { BentoCard } from "@/components/ui/BentoGrid";
-import { useInView, animate, motion } from "framer-motion";
+import { useInView, animate, motion, AnimatePresence } from "framer-motion";
 
 function Counter({ from = 0, to, duration = 2, decimals = 0, suffix = "" }: { from?: number; to: number; duration?: number; decimals?: number; suffix?: string }) {
     const nodeRef = useRef<HTMLSpanElement>(null);
@@ -60,63 +60,68 @@ export function SocialProof() {
     }, []);
 
     return (
-        <BentoCard colSpan={4} className="p-8 md:p-12 glass-panel border border-white/5 bg-brand-dark/50">
-            <div className="flex flex-col lg:flex-row gap-12 items-center justify-between">
-
-                {/* Header & Testimonials */}
-                <div className="flex-1 space-y-8 max-w-2xl w-full">
-                    <div>
-                        <h3 className="text-2xl font-bold text-white mb-2">Built with real world feedback, not hype</h3>
+        <>
+            {/* Testimonials Card */}
+            <BentoCard colSpan={4} className="p-8 md:p-12 glass-panel border border-white/5 bg-brand-dark/50 flex flex-col justify-center min-h-[300px]">
+                <div className="max-w-4xl mx-auto w-full">
+                    <div className="mb-8 text-center md:text-left">
+                        <h3 className="text-2xl font-bold text-white mb-2">Built with real world feedback</h3>
                         <p className="text-white/60">We test until the data says it works.</p>
                     </div>
 
-                    <div className="relative min-h-[200px]">
-                        {testimonials.map((item, index) => (
+                    <div className="relative min-h-[150px] flex items-center">
+                        <AnimatePresence mode="wait">
                             <motion.div
-                                key={index}
-                                initial={{ opacity: 0, x: 20 }}
-                                animate={{
-                                    opacity: currentIndex === index ? 1 : 0,
-                                    x: currentIndex === index ? 0 : 20,
-                                    pointerEvents: currentIndex === index ? "auto" : "none"
-                                }}
-                                transition={{ duration: 0.5 }}
-                                className="absolute inset-0"
+                                key={currentIndex}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.4, ease: "easeInOut" }}
+                                className="w-full"
                             >
-                                <blockquote className="border-l-2 border-brand-purple pl-6">
-                                    <p className="text-lg md:text-xl text-white/90 italic mb-4 leading-relaxed">"{item.quote}"</p>
-                                    <footer className="text-sm text-brand-copper font-medium">— {item.author}</footer>
+                                <blockquote className="border-l-2 border-brand-purple pl-6 md:pl-8 py-2">
+                                    <p className="text-lg md:text-xl text-white/90 italic mb-6 leading-relaxed">
+                                        "{testimonials[currentIndex].quote}"
+                                    </p>
+                                    <footer className="flex items-center gap-3">
+                                        <div className="h-px w-8 bg-brand-copper/50" />
+                                        <span className="text-sm md:text-base text-brand-copper font-medium tracking-wide">
+                                            {testimonials[currentIndex].author}
+                                        </span>
+                                    </footer>
                                 </blockquote>
                             </motion.div>
-                        ))}
+                        </AnimatePresence>
                     </div>
                 </div>
+            </BentoCard>
 
-                {/* Metrics */}
-                <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-8 w-full">
-                    <div className="text-center p-6 bg-white/5 rounded-2xl border border-white/5">
+            {/* Metrics Card */}
+            <BentoCard colSpan={4} className="p-8 border border-white/5 bg-white/5">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 w-full">
+                    <div className="text-center">
                         <div className="mb-2 text-brand-purple">
                             <Counter to={258} />
                         </div>
                         <div className="text-sm text-white/60 font-medium uppercase tracking-wide">DeepCell Testers</div>
                     </div>
 
-                    <div className="text-center p-6 bg-white/5 rounded-2xl border border-white/5">
+                    <div className="text-center border-t sm:border-t-0 sm:border-l border-white/10 pt-8 sm:pt-0">
                         <div className="mb-2 text-brand-copper">
                             <Counter to={8.4} decimals={1} />
                         </div>
                         <div className="text-sm text-white/60 font-medium uppercase tracking-wide">Avg Next Day Feel</div>
                     </div>
 
-                    <div className="text-center p-6 bg-white/5 rounded-2xl border border-white/5">
+                    <div className="text-center border-t sm:border-t-0 sm:border-l border-white/10 pt-8 sm:pt-0">
                         <div className="mb-2 text-white">
                             <Counter to={92} suffix="%" />
                         </div>
                         <div className="text-sm text-white/60 font-medium uppercase tracking-wide">Would Recommend</div>
                     </div>
                 </div>
-
-            </div>
-        </BentoCard>
+            </BentoCard>
+        </>
     );
 }
+
