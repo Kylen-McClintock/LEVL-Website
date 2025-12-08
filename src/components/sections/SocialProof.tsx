@@ -37,15 +37,15 @@ const testimonials = [
     },
     {
         quote: "2 Capsules turned out to be perfect. It was the best night of sleep I may have ever had in years",
-        author: "Lisa Melser (DeepCell Tester)"
+        author: "Lisa M. (DeepCell Tester)"
     },
     {
         quote: "I drift into dreamland pretty easily again. From a physical standpoint, I’m gaining and retaining muscle mass easier and I haven’t done a grip strength test but my overall health outcomes seem to have leveled up since starting a nightly regiment of LEVL.",
-        author: "Aaron Miltenberger (DeepCell Tester)"
+        author: "Aaron M. (DeepCell Tester)"
     },
     {
         quote: "I fell asleep quickly, and actually stayed asleep the entire night. As a young mom, waking up feeling actually rested was so refreshing.",
-        author: "Michelle (DeepCell Tester)"
+        author: "Michelle G. (DeepCell Tester)"
     }
 ];
 
