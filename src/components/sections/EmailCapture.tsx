@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { BentoCard } from "@/components/ui/BentoGrid";
 import { Button } from "@/components/ui/Button";
 import { Mail } from "lucide-react";
@@ -16,28 +17,37 @@ export function EmailCapture() {
                     Join the first cohort to test DeepCell. Founding customers get launch pricing and direct input into future formulations.
                 </p>
 
-                <form
-                    className="space-y-3"
-                    action="mailto:kylen@levlhealth.com"
-                    method="post"
-                    encType="text/plain"
-                >
-                    <div className="relative">
-                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
-                        <input
-                            type="email"
-                            name="email"
-                            required
-                            placeholder="Enter your email"
-                            className="w-full h-11 pl-10 pr-4 bg-black/40 border border-white/10 rounded-full text-white placeholder:text-white/30 focus:outline-none focus:border-brand-copper/50 transition-colors"
-                        />
-                    </div>
-                    <Button variant="secondary" className="w-full" type="submit">
-                        Join the Early Access List
-                    </Button>
-                    <p className="text-xs text-center text-white/40">No spam. Only high signal longevity updates.</p>
-                </form>
+                <EmailForm />
             </div>
         </BentoCard>
+    );
+}
+
+function EmailForm() {
+    const [email, setEmail] = useState("");
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        window.location.href = `mailto:kylen@levlhealth.com?subject=Early Access Request&body=Please add ${email} to the early access list.`;
+    };
+
+    return (
+        <form onSubmit={handleSubmit} className="space-y-3">
+            <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+                <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    placeholder="Enter your email"
+                    className="w-full h-11 pl-10 pr-4 bg-black/40 border border-white/10 rounded-full text-white placeholder:text-white/30 focus:outline-none focus:border-brand-copper/50 transition-colors"
+                />
+            </div>
+            <Button variant="secondary" className="w-full" type="submit">
+                Join the Early Access List
+            </Button>
+            <p className="text-xs text-center text-white/40">No spam. Only high signal longevity updates.</p>
+        </form>
     );
 }

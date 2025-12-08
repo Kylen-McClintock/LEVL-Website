@@ -6,8 +6,6 @@ const navLinks = [
     { name: "Science", href: "/#science" },
     { name: "App", href: "/#app" },
     { name: "About", href: "https://levlhealth.com/pages/about" },
-    { name: "Blog", href: "https://levlhealth.com/blogs/news" },
-    { name: "Privacy", href: "/privacy" },
 ];
 
 export function Footer() {
