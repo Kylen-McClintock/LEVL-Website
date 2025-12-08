@@ -26,30 +26,31 @@ export function EmailCapture() {
 function EmailForm() {
     const [email, setEmail] = useState("");
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleJoin = () => {
+        if (!email) return;
         const subject = encodeURIComponent("Early Access Request");
         const body = encodeURIComponent(`Please add ${email} to the early access list.`);
         window.location.href = `mailto:kylen@levlhealth.com?subject=${subject}&body=${body}`;
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-3">
+        <div className="space-y-3">
             <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                 <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleJoin()}
                     required
                     placeholder="Enter your email"
                     className="w-full h-11 pl-10 pr-4 bg-black/40 border border-white/10 rounded-full text-white placeholder:text-white/30 focus:outline-none focus:border-brand-copper/50 transition-colors"
                 />
             </div>
-            <Button variant="secondary" className="w-full" type="submit">
+            <Button variant="secondary" className="w-full" onClick={handleJoin}>
                 Join the Early Access List
             </Button>
             <p className="text-xs text-center text-white/40">No spam. Only high signal longevity updates.</p>
-        </form>
+        </div>
     );
 }
