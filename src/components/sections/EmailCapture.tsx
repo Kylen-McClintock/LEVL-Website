@@ -14,7 +14,7 @@ export function EmailCapture() {
             <div className="relative z-10">
                 <h3 className="text-2xl font-bold text-white mb-3">Gain Early Access</h3>
                 <p className="text-white/70 mb-6">
-                    Join the first cohort to test DeepCell. Founding customers get launch pricing and direct input into future formulations.
+                    Join the first cohort to test DeepCell. Founding customers get launch pricing and direct input into future formulations designed to extend healthy lifespan.
                 </p>
 
                 <EmailForm />
