@@ -10,7 +10,7 @@ import { Menu, X } from "lucide-react";
 import Image from "next/image";
 
 const navLinks = [
-    { name: "Shop DeepCell", href: "/#deepcell" },
+    { name: "Get Early Access", href: "/#early-access" },
     { name: "Science", href: "/#science" },
     { name: "App", href: "/#app" },
     { name: "About", href: "https://levlhealth.com/pages/about" },
@@ -58,9 +58,11 @@ export function Navbar() {
 
                 {/* CTA & Mobile Menu */}
                 <div className="flex items-center gap-4">
-                    <Button variant="primary" size="sm" className="hidden md:flex">
-                        Gain Early Access
-                    </Button>
+                    <Link href="/#early-access">
+                        <Button variant="primary" size="sm" className="hidden md:flex">
+                            Gain Early Access
+                        </Button>
+                    </Link>
 
                     <button
                         className="md:hidden text-white"
@@ -89,7 +91,9 @@ export function Navbar() {
                             {link.name}
                         </Link>
                     ))}
-                    <Button className="w-full mt-2">Gain Early Access</Button>
+                    <Link href="/#early-access" onClick={() => setIsMobileMenuOpen(false)}>
+                        <Button className="w-full mt-2">Gain Early Access</Button>
+                    </Link>
                 </motion.div>
             )}
         </nav>

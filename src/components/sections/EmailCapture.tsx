@@ -6,7 +6,7 @@ import { Mail } from "lucide-react";
 
 export function EmailCapture() {
     return (
-        <BentoCard colSpan={2} className="p-8 bg-brand-copper/10 border-brand-copper/20 flex flex-col justify-center relative overflow-hidden">
+        <BentoCard id="early-access" colSpan={2} className="p-8 bg-brand-copper/10 border-brand-copper/20 flex flex-col justify-center relative overflow-hidden">
             {/* Background Decor */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-brand-copper/10 blur-[80px] rounded-full pointer-events-none" />
 

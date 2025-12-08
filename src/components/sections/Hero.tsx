@@ -37,9 +37,11 @@ export function Hero() {
                 </ul>
 
                 <div className="flex flex-wrap items-center gap-4 mt-2">
-                    <Button size="lg" className="bg-brand-purple hover:bg-brand-purple/90 text-white shadow-lg shadow-brand-purple/20">
-                        Shop DeepCell
-                    </Button>
+                    <Link href="#early-access">
+                        <Button size="lg" className="bg-brand-purple hover:bg-brand-purple/90 text-white shadow-lg shadow-brand-purple/20">
+                            Get Early Access
+                        </Button>
+                    </Link>
                     <Link href="#science">
                         <Button variant="ghost" size="lg" className="group">
                             Science

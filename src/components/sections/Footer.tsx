@@ -2,7 +2,7 @@ import { BentoCard } from "@/components/ui/BentoGrid";
 import { Container } from "@/components/ui/Container";
 
 const navLinks = [
-    { name: "Shop DeepCell", href: "/#deepcell" },
+    { name: "Get Early Access", href: "/#early-access" },
     { name: "Science", href: "/#science" },
     { name: "App", href: "/#app" },
     { name: "About", href: "https://levlhealth.com/pages/about" },
@@ -18,7 +18,7 @@ export function Footer() {
                     <div className="col-span-1 md:col-span-2">
                         <h2 className="text-2xl font-bold text-white mb-4">LEVL</h2>
                         <p className="text-white/60 mb-6 max-w-sm">
-                            Advanced longevity supplements that connect daily experience to long term hallmarks of aging.
+                            Advanced Longevity Supplements to Extend Healthy Lifespan
                         </p>
                         <p className="text-white/40 text-sm">© 2025 LEVL Health</p>
                     </div>
