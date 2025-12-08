@@ -122,21 +122,21 @@ export function ScienceExplorer() {
     return (
         <div className="py-12 md:py-24 space-y-12">
             <div className="text-center max-w-3xl mx-auto px-4">
-                <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Targeting the 8 Hallmarks of Aging</h2>
+                <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Targeting 8 Key Hallmarks of Aging</h2>
                 <p className="text-white/60 text-lg">DeepCell isn't just a sleep aid. It's a longevity protocol.</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-7xl mx-auto px-4">
                 {/* Left Side: Hallmarks Menu */}
                 <div className="lg:col-span-3 space-y-2">
-                    <h3 className="text-sm font-bold text-white/40 uppercase tracking-widest mb-4 px-2">The Hallmarks</h3>
+                    <h3 className="text-sm font-bold text-white/40 uppercase tracking-widest mb-4 px-2">Improved Hallmarks of Aging</h3>
                     {hallucinations.map((hall) => (
                         <button
                             key={hall}
                             onClick={() => setSelectedHall(selectedHall === hall ? null : hall)}
                             className={`w-full text-left px-4 py-3 rounded-full transition-all text-sm font-medium border ${selectedHall === hall
-                                    ? "bg-brand-purple text-white border-brand-purple shadow-brand-glow"
-                                    : "bg-white/5 text-white/70 border-white/5 hover:bg-white/10 hover:text-white"
+                                ? "bg-brand-purple text-white border-brand-purple shadow-brand-glow"
+                                : "bg-white/5 text-white/70 border-white/5 hover:bg-white/10 hover:text-white"
                                 }`}
                         >
                             {hall}

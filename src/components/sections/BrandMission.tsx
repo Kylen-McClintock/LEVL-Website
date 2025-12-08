@@ -33,9 +33,11 @@ export function BrandMission() {
                     ))}
                 </div>
                 <div className="mt-8">
-                    <Button size="lg" className="bg-white text-black hover:bg-white/90">
-                        OutPace Aging With Us
-                    </Button>
+                    <a href="https://discord.gg/9zBP7rvD6d" target="_blank" rel="noopener noreferrer">
+                        <Button size="lg" className="bg-white text-black hover:bg-white/90">
+                            OutPace Aging With Us
+                        </Button>
+                    </a>
                 </div>
             </div>
 

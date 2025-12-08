@@ -32,9 +32,11 @@ export function DeepCellAppCard() {
             </div>
 
             <div className="space-y-6">
-                <Button className="w-full bg-white text-black hover:bg-white/90">
-                    Gain Early Access to App
-                </Button>
+                <a href="https://deep-cell-testing-app.vercel.app/" target="_blank" rel="noopener noreferrer" className="block w-full">
+                    <Button className="w-full bg-white text-black hover:bg-white/90">
+                        DeepCell Testing App
+                    </Button>
+                </a>
 
                 {/* Pseudo-mockup viz */}
                 <div className="relative w-full h-32 bg-black/40 rounded-t-2xl border-t border-x border-white/10 mx-auto -mb-8 overflow-hidden">
