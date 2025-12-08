@@ -16,14 +16,14 @@ const timelineItems = [
         time: "1 Week",
         points: [
             "More consistent sleep schedule",
-            "Smoother mood, less wired & tired feeling"
+            "Deeper, more restorative sleep"
         ]
     },
     {
         icon: CheckCircle,
         time: "1 Month",
         points: [
-            "Deeper, more restorative sleep",
+            "Support for autophagy & mitochondrial function",
             "Improved recovery from training and long days"
         ]
     },
@@ -31,8 +31,8 @@ const timelineItems = [
         icon: Zap,
         time: "Long Term",
         points: [
-            "Support for autophagy & mitochondrial function",
-            "Sleep hygiene aligned with longevity hallmarks"
+            "Supports Healthy Brain Aging",
+            "Supports Cellular Rejuvenation"
         ]
     }
 ];
@@ -53,7 +53,7 @@ export function BenefitTimeline() {
 
             <div className="relative z-10">
                 <div className="text-center mb-12">
-                    <h3 className="text-3xl font-bold text-white mb-2">The Timeline</h3>
+                    <h3 className="text-3xl font-bold text-white mb-2">Timeline of Benefits</h3>
                     <p className="text-white/60">What to expect when you OutPace Aging</p>
                 </div>
 
