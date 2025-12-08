@@ -1,5 +1,8 @@
 import { BentoCard } from "@/components/ui/BentoGrid";
 import { Container } from "@/components/ui/Container";
+import Link from "next/link";
+
+import Image from "next/image";
 
 const navLinks = [
     { name: "Get Early Access", href: "/#early-access" },
@@ -14,7 +17,15 @@ export function Footer() {
             <Container>
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
                     <div className="col-span-1 md:col-span-2">
-                        <h2 className="text-2xl font-bold text-white mb-4">LEVL</h2>
+                        <Link href="/" className="inline-block mb-6">
+                            <Image
+                                src="/images/levl-logo.png"
+                                alt="LEVL"
+                                width={120}
+                                height={40}
+                                className="h-8 w-auto object-contain"
+                            />
+                        </Link>
                         <p className="text-white/60 mb-6 max-w-sm">
                             Advanced Longevity Supplements to Extend Healthy Lifespan
                         </p>
