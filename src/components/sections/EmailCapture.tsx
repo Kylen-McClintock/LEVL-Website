@@ -28,7 +28,9 @@ function EmailForm() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        window.location.href = `mailto:kylen@levlhealth.com?subject=Early Access Request&body=Please add ${email} to the early access list.`;
+        const subject = encodeURIComponent("Early Access Request");
+        const body = encodeURIComponent(`Please add ${email} to the early access list.`);
+        window.location.href = `mailto:kylen@levlhealth.com?subject=${subject}&body=${body}`;
     };
 
     return (

@@ -32,25 +32,30 @@ export function BrandMission() {
                         </div>
                     ))}
                 </div>
-                <div className="mt-8">
-                    <a href="https://discord.gg/9zBP7rvD6d" target="_blank" rel="noopener noreferrer">
-                        <Button size="lg" className="bg-white text-black hover:bg-white/90">
-                            OutPace Aging With Us
-                        </Button>
-                    </a>
-                </div>
             </div>
 
             {/* Image Side - Bottom Full Width */}
-            <div className="relative w-full h-[400px] md:h-[500px] overflow-hidden rounded-b-3xl border-x border-b border-white/10 -mt-6">
+            <div className="relative w-full h-[400px] md:h-[500px] overflow-hidden rounded-b-3xl border-x border-b border-white/10 -mt-6 group">
                 <Image
                     src="/images/longevity-art.jpg"
                     alt="Live Fast Die Never"
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-40" />
                 <div className="absolute top-0 w-full h-24 bg-gradient-to-b from-brand-dark to-transparent" />
+
+                {/* Centered Button */}
+                <div className="absolute inset-0 flex items-center justify-center z-20">
+                    <a href="https://discord.gg/9zBP7rvD6d" target="_blank" rel="noopener noreferrer">
+                        <Button
+                            size="lg"
+                            className="bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-white shadow-2xl transition-all hover:scale-105"
+                        >
+                            OutPace Aging With Us
+                        </Button>
+                    </a>
+                </div>
             </div>
         </BentoCard>
     );
