@@ -27,7 +27,7 @@ export function Hero() {
                     {[
                         "Deeper, more restorative sleep",
                         "Designed to support autophagy and nighttime cellular cleanup",
-                        "Formulated by PhD and physician team"
+                        "13 active ingredients shown to improve 8 hallmarks of aging"
                     ].map((item, i) => (
                         <li key={i} className="flex items-center gap-3 text-white/80">
                             <div className="h-1.5 w-1.5 rounded-full bg-brand-copper shadow-brand-glow" />
