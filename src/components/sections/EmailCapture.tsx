@@ -26,12 +26,9 @@ export function EmailCapture() {
 function EmailForm() {
     const [email, setEmail] = useState("");
 
-    const handleJoin = () => {
-        if (!email) return;
-        const subject = encodeURIComponent("Early Access Request");
-        const body = encodeURIComponent(`Please add ${email} to the early access list.`);
-        window.location.href = `mailto:kylen@levlhealth.com?subject=${subject}&body=${body}`;
-    };
+    const subject = encodeURIComponent("Early Access Request");
+    const body = encodeURIComponent(`Please add ${email} to the early access list.`);
+    const mailtoLink = `mailto:kylen@levlhealth.com?subject=${subject}&body=${body}`;
 
     return (
         <div className="space-y-3">
@@ -41,15 +38,25 @@ function EmailForm() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && handleJoin()}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter" && email) {
+                            window.location.href = mailtoLink;
+                        }
+                    }}
                     required
                     placeholder="Enter your email"
                     className="w-full h-11 pl-10 pr-4 bg-black/40 border border-white/10 rounded-full text-white placeholder:text-white/30 focus:outline-none focus:border-brand-copper/50 transition-colors"
                 />
             </div>
-            <Button variant="secondary" className="w-full" onClick={handleJoin}>
+
+            <a
+                href={email ? mailtoLink : "#"}
+                className={`inline-flex items-center justify-center rounded-full font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple h-11 px-8 text-base bg-brand-copper text-white hover:bg-brand-copper/90 w-full ${!email ? 'opacity-50 cursor-not-allowed' : ''}`}
+                onClick={(e) => !email && e.preventDefault()}
+            >
                 Join the Early Access List
-            </Button>
+            </a>
+
             <p className="text-xs text-center text-white/40">No spam. Only high signal longevity updates.</p>
         </div>
     );
