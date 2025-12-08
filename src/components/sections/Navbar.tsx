@@ -10,7 +10,6 @@ import { Menu, X } from "lucide-react";
 import Image from "next/image";
 
 const navLinks = [
-    { name: "Get Early Access", href: "/#early-access" },
     { name: "Science", href: "/#science" },
     { name: "App", href: "/#app" },
     { name: "About", href: "https://levlhealth.com/pages/about" },

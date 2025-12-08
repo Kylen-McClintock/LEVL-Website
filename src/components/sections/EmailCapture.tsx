@@ -51,7 +51,7 @@ function EmailForm() {
 
             <a
                 href={email ? mailtoLink : "#"}
-                className={`inline-flex items-center justify-center rounded-full font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple h-11 px-8 text-base bg-brand-copper text-white hover:bg-brand-copper/90 w-full ${!email ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`inline-flex items-center justify-center rounded-full font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple h-11 px-8 text-base bg-gradient-to-r from-brand-purple to-[#2a0f55] hover:shadow-lg hover:shadow-brand-purple/25 text-white w-full ${!email ? 'opacity-50 cursor-not-allowed' : ''}`}
                 onClick={(e) => !email && e.preventDefault()}
             >
                 Join the Early Access List
