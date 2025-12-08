@@ -4,7 +4,7 @@ import { Smartphone, Activity, BarChart3, FlaskConical } from "lucide-react";
 
 export function DeepCellAppCard() {
     return (
-        <BentoCard colSpan={2} className="p-8 bg-gradient-to-br from-brand-dark to-brand-purple/20 flex flex-col justify-between overflow-hidden">
+        <BentoCard id="app" colSpan={2} className="p-8 bg-gradient-to-br from-brand-dark to-brand-purple/20 flex flex-col justify-between overflow-hidden">
             <div>
                 <div className="flex items-center gap-2 mb-6">
                     <div className="p-2 bg-brand-purple/20 rounded-lg">
