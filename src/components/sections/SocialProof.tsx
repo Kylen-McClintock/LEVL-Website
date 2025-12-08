@@ -2,7 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import { BentoCard } from "@/components/ui/BentoGrid";
-import { useInView, animate } from "framer-motion";
+import { useInView, animate, motion } from "framer-motion";
 
 function Counter({ from = 0, to, duration = 2, decimals = 0, suffix = "" }: { from?: number; to: number; duration?: number; decimals?: number; suffix?: string }) {
     const nodeRef = useRef<HTMLSpanElement>(null);
@@ -27,35 +27,68 @@ function Counter({ from = 0, to, duration = 2, decimals = 0, suffix = "" }: { fr
 }
 
 const testimonials = [
-    { quote: "Finally a sleep supplement that doesn't leave me groggy.", author: "Sarah J., DeepCell Cohort 1" },
-    { quote: "My Oura scores have consistently been +15% higher.", author: "Mike T., Biohacker" },
-    { quote: "I feel like I actually rested, not just passed out.", author: "Elena R., Physician" },
+    {
+        quote: "LEVL’s DeepCell product has worked tremendously for me. I typically have a hard time falling asleep, often lying awake for hours, but since I started using this, I’ve noticed a huge difference. Within an hour of taking the supplement, I feel relaxed and a sleepy wave comes over me. I’m able to drift off without the usual tossing and turning. What I love most is that I wake up feeling refreshed and energized, never groggy or drowsy. It’s been a total game changer for my nightly routine.",
+        author: "Andrea S. (DeepCell Tester)"
+    },
+    {
+        quote: "As a postmenopausal woman I was frustrated with experiencing nights of difficulty falling asleep, staying asleep or just broken sleep. Then I tried LEVL’s DeepCell product. I was looking for a drug free sleep aid so that I would wake up rested and ready to start my day. DeepCell was the perfect choice. Beginning on night 1, I took the recommended dosage and actually felt myself drifting off into a relaxed state. Next thing I know it's a new day. I experienced a restful night which I hadn't encountered in a long time. I take LEVL on a regular schedule and can honestly say I feel so much better in the morning after sleeping through the night.",
+        author: "Cathleen L. (DeepCell Tester)"
+    },
+    {
+        quote: "2 Capsules turned out to be perfect. It was the best night of sleep I may have ever had in years",
+        author: "Lisa Melser (DeepCell Tester)"
+    },
+    {
+        quote: "I drift into dreamland pretty easily again. From a physical standpoint, I’m gaining and retaining muscle mass easier and I haven’t done a grip strength test but my overall health outcomes seem to have leveled up since starting a nightly regiment of LEVL.",
+        author: "Aaron Miltenberger (DeepCell Tester)"
+    },
+    {
+        quote: "I fell asleep quickly, and actually stayed asleep the entire night. As a young mom, waking up feeling actually rested was so refreshing.",
+        author: "Michelle (DeepCell Tester)"
+    }
 ];
 
 export function SocialProof() {
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+        }, 8000);
+        return () => clearInterval(timer);
+    }, []);
+
     return (
         <BentoCard colSpan={4} className="p-8 md:p-12 glass-panel border border-white/5 bg-brand-dark/50">
-            <div className="flex flex-col md:flex-row gap-12 items-center justify-between">
+            <div className="flex flex-col lg:flex-row gap-12 items-center justify-between">
 
                 {/* Header & Testimonials */}
-                <div className="flex-1 space-y-8 max-w-lg">
+                <div className="flex-1 space-y-8 max-w-2xl w-full">
                     <div>
                         <h3 className="text-2xl font-bold text-white mb-2">Built with real world feedback, not hype</h3>
                         <p className="text-white/60">We test until the data says it works.</p>
                     </div>
 
-                    <div className="relative h-32 overflow-hidden">
-                        <div className="absolute inset-0 flex flex-col gap-4 animate-slide-up">
-                            {/* Simplified static display for now, could be a carousel */}
-                            <blockquote className="border-l-2 border-brand-purple pl-4">
-                                <p className="text-lg text-white/90 italic mb-2">"Finally a sleep supplement that doesn't leave me groggy."</p>
-                                <footer className="text-sm text-brand-copper font-medium">— Sarah J., DeepCell Cohort 1</footer>
-                            </blockquote>
-                            <blockquote className="border-l-2 border-brand-purple pl-4 hidden md:block">
-                                <p className="text-lg text-white/90 italic mb-2">"My Oura scores have consistently been +15% higher since starting."</p>
-                                <footer className="text-sm text-brand-copper font-medium">— Mike T., Biohacker</footer>
-                            </blockquote>
-                        </div>
+                    <div className="relative min-h-[200px]">
+                        {testimonials.map((item, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{
+                                    opacity: currentIndex === index ? 1 : 0,
+                                    x: currentIndex === index ? 0 : 20,
+                                    pointerEvents: currentIndex === index ? "auto" : "none"
+                                }}
+                                transition={{ duration: 0.5 }}
+                                className="absolute inset-0"
+                            >
+                                <blockquote className="border-l-2 border-brand-purple pl-6">
+                                    <p className="text-lg md:text-xl text-white/90 italic mb-4 leading-relaxed">"{item.quote}"</p>
+                                    <footer className="text-sm text-brand-copper font-medium">— {item.author}</footer>
+                                </blockquote>
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
 
