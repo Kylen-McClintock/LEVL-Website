@@ -12,7 +12,7 @@ import Image from "next/image";
 const navLinks = [
     { name: "Science", href: "/#science" },
     { name: "App", href: "/#app" },
-    { name: "About", href: "https://levlhealth.com/pages/about" },
+    { name: "About", href: "/about" },
 ];
 
 export function Navbar() {
