@@ -67,20 +67,29 @@ export function Hero() {
                         />
                     </div>
                 </div>
-            </div>
-
-            {/* Floating Chips */}
-            <div className="absolute top-[25%] right-[5%] animate-bounce delay-100 duration-[3000ms] z-20">
-                <div className="glass px-4 py-2 rounded-full flex items-center gap-2 text-xs font-semibold text-white/90 border-glow">
-                    <Zap className="w-3 h-3 text-brand-copper" />
-                    Mitochondrial Health
+                {/* Floating Chips - Now overlapping the bottle */}
+                {/* Chip 1: Mitochondrial Health (Top Right) */}
+                <div className="absolute top-[15%] -right-[10%] md:right-[-5%] z-20 animate-bounce delay-100 duration-[3000ms]">
+                    <div className="glass px-3 py-1.5 md:px-4 md:py-2 rounded-full flex items-center gap-2 text-[10px] md:text-xs font-semibold text-white/90 border-glow bg-black/40 backdrop-blur-md shadow-xl whitespace-nowrap">
+                        <Zap className="w-3 h-3 text-brand-copper" />
+                        Mitochondrial Health
+                    </div>
                 </div>
-            </div>
 
-            <div className="absolute bottom-[25%] left-[-5%] animate-bounce delay-700 duration-[4000ms] z-20">
-                <div className="glass px-4 py-2 rounded-full flex items-center gap-2 text-xs font-semibold text-white/90 border-glow">
-                    <Activity className="w-3 h-3 text-teal-400" />
-                    Cellular Renewal
+                {/* Chip 2: Cellular Renewal (Bottom Left) */}
+                <div className="absolute bottom-[20%] -left-[10%] md:left-[-5%] z-20 animate-bounce delay-700 duration-[4000ms]">
+                    <div className="glass px-3 py-1.5 md:px-4 md:py-2 rounded-full flex items-center gap-2 text-[10px] md:text-xs font-semibold text-white/90 border-glow bg-black/40 backdrop-blur-md shadow-xl whitespace-nowrap">
+                        <Activity className="w-3 h-3 text-teal-400" />
+                        Cellular Renewal
+                    </div>
+                </div>
+
+                {/* Chip 3: Nighttime Autophagy (Top Left - New) */}
+                <div className="absolute top-[25%] -left-[15%] md:-left-[10%] z-20 animate-bounce delay-500 duration-[3500ms]">
+                    <div className="glass px-3 py-1.5 md:px-4 md:py-2 rounded-full flex items-center gap-2 text-[10px] md:text-xs font-semibold text-white/90 border-glow bg-black/40 backdrop-blur-md shadow-xl whitespace-nowrap">
+                        <Moon className="w-3 h-3 text-brand-purple-100" />
+                        Nighttime Autophagy
+                    </div>
                 </div>
             </div>
         </BentoCard >
