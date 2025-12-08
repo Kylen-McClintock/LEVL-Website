@@ -1,19 +1,33 @@
 import { BentoCard } from "@/components/ui/BentoGrid";
 import { Button } from "@/components/ui/Button";
 import { Rocket, Target, Users } from "lucide-react";
+import Image from "next/image";
+
 
 export function BrandMission() {
     return (
-        <BentoCard colSpan={4} className="p-8 md:p-12 lg:p-16 bg-gradient-to-tr from-[#1e1e1e] to-brand-dark border-white/10 flex flex-col items-center text-center">
-            <div className="max-w-3xl space-y-8">
-                <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">
+        <BentoCard colSpan={4} className="p-0 bg-transparent border-none overflow-hidden flex flex-col lg:flex-row shadow-none group-none">
+            {/* Image Side */}
+            <div className="relative w-full lg:w-1/2 min-h-[400px] lg:min-h-[600px] rounded-3xl overflow-hidden glass-panel border border-white/10">
+                <Image
+                    src="/images/longevity-art.jpg"
+                    alt="Live Fast Die Never"
+                    fill
+                    className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-transparent opacity-60" />
+            </div>
+
+            {/* Content Side */}
+            <div className="lg:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center text-center lg:text-left glass-panel rounded-3xl mt-4 lg:mt-0 lg:ml-4 border border-white/10 bg-gradient-to-tr from-[#1e1e1e] to-brand-dark">
+                <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight leading-[1.1] mb-6">
                     Peak Health Today, <br />
                     <span className="text-brand-copper">Longevity Escape Velocity Tomorrow</span>
                 </h2>
 
-                <p className="text-lg md:text-xl text-white/70 leading-relaxed">
+                <p className="text-lg text-white/70 leading-relaxed mb-8">
                     Longevity Escape Velocity is the point where every year you stay alive, science adds more than a year of healthy life expectancy back.
-                    LEVL exists to help people reach that point by combining evidence based formulas, real world data, and a transparent R&D loop.
+                    LEVL exists to help people reach that point.
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left max-w-4xl mx-auto py-8">
@@ -28,8 +42,7 @@ export function BrandMission() {
                         </div>
                     ))}
                 </div>
-
-                <div>
+                <div className="mt-8">
                     <Button size="lg" className="bg-white text-black hover:bg-white/90">
                         OutPace Aging With Us
                     </Button>

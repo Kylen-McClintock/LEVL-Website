@@ -53,32 +53,35 @@ export function Hero() {
                 <div className="absolute inset-0 bg-brand-purple/20 blur-[100px] rounded-full" />
                 <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-3/4 h-12 bg-black/50 blur-xl rounded-[100%]" />
 
-                {/* Product Image Placeholder */}
+                {/* Product Image */}
                 <div className="relative z-10 w-full h-full flex items-center justify-center animate-slide-up">
-                    <div className="w-[80%] h-[80%] bg-gradient-to-t from-white/10 to-transparent rounded-3xl border border-white/10 flex items-center justify-center backdrop-blur-sm">
-                        <span className="text-white/50 text-center px-4">
-                            Product Image<br />(DeepCell Bottle)
-                        </span>
-                    </div>
-                    {/* Replace the above div with Image component when asset is available */}
-                    {/* <Image src="/path/to/bottle.png" alt="DeepCell Bottle" fill className="object-contain" /> */}
-                </div>
-
-                {/* Floating Chips */}
-                <div className="absolute top-[20%] right-0 animate-bounce delay-100 duration-[3000ms]">
-                    <div className="glass px-4 py-2 rounded-full flex items-center gap-2 text-xs font-semibold text-white/90 border-glow">
-                        <Zap className="w-3 h-3 text-brand-copper" />
-                        Mitochondrial Health
-                    </div>
-                </div>
-
-                <div className="absolute bottom-[30%] left-[-10%] animate-bounce delay-700 duration-[4000ms]">
-                    <div className="glass px-4 py-2 rounded-full flex items-center gap-2 text-xs font-semibold text-white/90 border-glow">
-                        <Activity className="w-3 h-3 text-teal-400" />
-                        Cellular Renewal
+                    <div className="relative w-full h-full max-w-[300px] max-h-[500px]">
+                        <Image
+                            src="/images/deepcell-bottle.jpg"
+                            alt="LIFESPAN+ DeepCell Bottle"
+                            fill
+                            className="object-contain drop-shadow-2xl"
+                            priority
+                        />
                     </div>
                 </div>
             </div>
-        </BentoCard>
+
+            {/* Floating Chips */}
+            <div className="absolute top-[20%] right-0 animate-bounce delay-100 duration-[3000ms]">
+                <div className="glass px-4 py-2 rounded-full flex items-center gap-2 text-xs font-semibold text-white/90 border-glow">
+                    <Zap className="w-3 h-3 text-brand-copper" />
+                    Mitochondrial Health
+                </div>
+            </div>
+
+            <div className="absolute bottom-[30%] left-[-10%] animate-bounce delay-700 duration-[4000ms]">
+                <div className="glass px-4 py-2 rounded-full flex items-center gap-2 text-xs font-semibold text-white/90 border-glow">
+                    <Activity className="w-3 h-3 text-teal-400" />
+                    Cellular Renewal
+                </div>
+
+            </div>
+        </BentoCard >
     );
 }

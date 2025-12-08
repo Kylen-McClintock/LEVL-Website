@@ -7,6 +7,7 @@ import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 
 const navLinks = [
     { name: "Shop DeepCell", href: "/#deepcell" },
@@ -32,8 +33,14 @@ export function Navbar() {
         >
             <Container className="flex items-center justify-between h-16 md:h-20">
                 {/* Logo */}
-                <Link href="/" className="text-2xl font-bold tracking-tighter text-white">
-                    LEVL
+                <Link href="/" className="flex items-center">
+                    <Image
+                        src="/images/levl-logo.png"
+                        alt="LEVL"
+                        width={120}
+                        height={40}
+                        className="h-8 w-auto object-contain"
+                    />
                 </Link>
 
                 {/* Desktop Nav */}
