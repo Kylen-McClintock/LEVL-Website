@@ -1,6 +1,7 @@
 import { Container } from "@/components/ui/Container";
 import { BentoGrid } from "@/components/ui/BentoGrid";
 import { Navbar } from "@/components/sections/Navbar";
+import { TopHero } from "@/components/sections/TopHero";
 import { Hero } from "@/components/sections/Hero";
 import { TaglineBand } from "@/components/sections/TaglineBand";
 import { BenefitTimeline } from "@/components/sections/BenefitTimeline";
@@ -20,6 +21,7 @@ export default function Home() {
       <Container className="pt-24 md:pt-32 space-y-4 md:space-y-6">
 
         <BentoGrid>
+          <TopHero />
           <Hero />
           <TaglineBand />
           <BenefitTimeline />
