@@ -6,31 +6,21 @@ import Image from "next/image";
 
 export function BrandMission() {
     return (
-        <BentoCard colSpan={4} className="p-0 bg-transparent border-none overflow-hidden flex flex-col lg:flex-row shadow-none group-none">
-            {/* Image Side */}
-            <div className="relative w-full lg:w-1/2 min-h-[400px] lg:min-h-[600px] rounded-3xl overflow-hidden glass-panel border border-white/10">
-                <Image
-                    src="/images/longevity-art.jpg"
-                    alt="Live Fast Die Never"
-                    fill
-                    className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-transparent opacity-60" />
-            </div>
+        <BentoCard colSpan={4} className="p-0 bg-transparent border-none overflow-hidden flex flex-col shadow-none group-none">
 
             {/* Content Side */}
-            <div className="lg:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center text-center lg:text-left glass-panel rounded-3xl mt-4 lg:mt-0 lg:ml-4 border border-white/10 bg-gradient-to-tr from-[#1e1e1e] to-brand-dark">
-                <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight leading-[1.1] mb-6">
+            <div className="w-full p-8 md:p-12 lg:p-16 flex flex-col justify-center text-center items-center glass-panel rounded-t-3xl border border-white/10 bg-gradient-to-tr from-[#1e1e1e] to-brand-dark z-10 relative">
+                <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight leading-[1.1] mb-6 max-w-4xl">
                     Peak Health Today, <br />
                     <span className="text-brand-copper">Longevity Escape Velocity Tomorrow</span>
                 </h2>
 
-                <p className="text-lg text-white/70 leading-relaxed mb-8">
+                <p className="text-lg text-white/70 leading-relaxed mb-8 max-w-3xl">
                     Longevity Escape Velocity is the point where every year you stay alive, science adds more than a year of healthy life expectancy back.
                     LEVL exists to help people reach that point.
                 </p>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left max-w-4xl mx-auto py-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left max-w-4xl mx-auto py-8 w-full">
                     {[
                         { icon: Target, text: "Advanced formulations that target multiple hallmarks of aging." },
                         { icon: Rocket, text: "An outcomes testing app that closes the loop between science and protocol." },
@@ -47,6 +37,18 @@ export function BrandMission() {
                         OutPace Aging With Us
                     </Button>
                 </div>
+            </div>
+
+            {/* Image Side - Bottom Full Width */}
+            <div className="relative w-full h-[400px] md:h-[500px] overflow-hidden rounded-b-3xl border-x border-b border-white/10 -mt-6">
+                <Image
+                    src="/images/longevity-art.jpg"
+                    alt="Live Fast Die Never"
+                    fill
+                    className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-40" />
+                <div className="absolute top-0 w-full h-24 bg-gradient-to-b from-brand-dark to-transparent" />
             </div>
         </BentoCard>
     );

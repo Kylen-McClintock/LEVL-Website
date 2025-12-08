@@ -40,10 +40,12 @@ export function Hero() {
                     <Button size="lg" className="bg-brand-purple hover:bg-brand-purple/90 text-white shadow-lg shadow-brand-purple/20">
                         Shop DeepCell
                     </Button>
-                    <Button variant="ghost" size="lg" className="group">
-                        See how it works
-                        <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-                    </Button>
+                    <Link href="#science">
+                        <Button variant="ghost" size="lg" className="group">
+                            Science
+                            <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+                        </Button>
+                    </Link>
                 </div>
             </div>
 
@@ -55,12 +57,12 @@ export function Hero() {
 
                 {/* Product Image */}
                 <div className="relative z-10 w-full h-full flex items-center justify-center animate-slide-up">
-                    <div className="relative w-full h-full max-w-[300px] max-h-[500px]">
+                    <div className="relative w-full h-full max-w-[300px] max-h-[500px] rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
                         <Image
                             src="/images/deepcell-bottle.jpg"
                             alt="LIFESPAN+ DeepCell Bottle"
                             fill
-                            className="object-contain drop-shadow-2xl"
+                            className="object-cover"
                             priority
                         />
                     </div>
@@ -68,19 +70,18 @@ export function Hero() {
             </div>
 
             {/* Floating Chips */}
-            <div className="absolute top-[20%] right-0 animate-bounce delay-100 duration-[3000ms]">
+            <div className="absolute top-[25%] right-[5%] animate-bounce delay-100 duration-[3000ms] z-20">
                 <div className="glass px-4 py-2 rounded-full flex items-center gap-2 text-xs font-semibold text-white/90 border-glow">
                     <Zap className="w-3 h-3 text-brand-copper" />
                     Mitochondrial Health
                 </div>
             </div>
 
-            <div className="absolute bottom-[30%] left-[-10%] animate-bounce delay-700 duration-[4000ms]">
+            <div className="absolute bottom-[25%] left-[-5%] animate-bounce delay-700 duration-[4000ms] z-20">
                 <div className="glass px-4 py-2 rounded-full flex items-center gap-2 text-xs font-semibold text-white/90 border-glow">
                     <Activity className="w-3 h-3 text-teal-400" />
                     Cellular Renewal
                 </div>
-
             </div>
         </BentoCard >
     );
