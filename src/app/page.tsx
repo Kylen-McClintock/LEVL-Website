@@ -25,9 +25,9 @@ export default function Home() {
           <Hero />
           <TaglineBand />
           <BenefitTimeline />
+          <SocialProof />
           <DeepCellAppCard />
           <EmailCapture />
-          <SocialProof />
         </BentoGrid>
 
         {/* Science Explorer is full width outside of the main bento grid wrapper to allow custom grid inside */}
