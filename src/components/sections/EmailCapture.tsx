@@ -23,41 +23,77 @@ export function EmailCapture() {
     );
 }
 
+import { subscribeUser } from "@/app/actions";
+
 function EmailForm() {
     const [email, setEmail] = useState("");
+    const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+    const [message, setMessage] = useState("");
 
-    const subject = encodeURIComponent("Early Access Request");
-    const body = encodeURIComponent(`Please add ${email} to the early access list.`);
-    const mailtoLink = `mailto:kylen@levlhealth.com?subject=${subject}&body=${body}`;
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!email) return;
+
+        setStatus("loading");
+        const formData = new FormData();
+        formData.append("email", email);
+
+        const result = await subscribeUser(formData);
+
+        if (result.success) {
+            setStatus("success");
+            setEmail("");
+            setMessage("You're on the list! Watch your inbox.");
+        } else {
+            setStatus("error");
+            setMessage(result.message || "Something went wrong.");
+        }
+    };
+
+    if (status === "success") {
+        return (
+            <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-4 text-center">
+                <p className="text-green-400 font-medium mb-1">Welcome Early Adopter</p>
+                <p className="text-sm text-white/60">{message}</p>
+                <button
+                    onClick={() => setStatus("idle")}
+                    className="mt-3 text-xs text-white/40 hover:text-white transition-colors"
+                >
+                    Add another email
+                </button>
+            </div>
+        );
+    }
 
     return (
-        <div className="space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-3">
             <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                 <input
+                    name="email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter" && email) {
-                            window.location.href = mailtoLink;
-                        }
-                    }}
                     required
+                    disabled={status === "loading"}
                     placeholder="Enter your email"
-                    className="w-full h-11 pl-10 pr-4 bg-black/40 border border-white/10 rounded-full text-white placeholder:text-white/30 focus:outline-none focus:border-brand-copper/50 transition-colors"
+                    className="w-full h-11 pl-10 pr-4 bg-black/40 border border-white/10 rounded-full text-white placeholder:text-white/30 focus:outline-none focus:border-brand-copper/50 transition-colors disabled:opacity-50"
                 />
             </div>
 
-            <a
-                href={email ? mailtoLink : "#"}
-                className={`inline-flex items-center justify-center rounded-full font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple h-11 px-8 text-base bg-gradient-to-r from-brand-purple to-[#2a0f55] hover:shadow-lg hover:shadow-brand-purple/25 text-white w-full ${!email ? 'opacity-50 cursor-not-allowed' : ''}`}
-                onClick={(e) => !email && e.preventDefault()}
+            <button
+                type="submit"
+                disabled={status === "loading" || !email}
+                className={`inline-flex items-center justify-center rounded-full font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple h-11 px-8 text-base bg-gradient-to-r from-brand-purple to-[#2a0f55] hover:shadow-lg hover:shadow-brand-purple/25 text-white w-full disabled:opacity-50 disabled:cursor-not-allowed`}
             >
-                Join the Early Access List
-            </a>
+                {status === "loading" ? "Joining..." : "Join the Early Access List"}
+            </button>
+
+            {status === "error" && (
+                <p className="text-xs text-center text-red-400">{message}</p>
+            )}
 
             <p className="text-xs text-center text-white/40">No spam. Only high signal longevity updates.</p>
-        </div>
+        </form>
     );
 }
