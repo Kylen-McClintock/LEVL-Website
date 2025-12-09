@@ -13,6 +13,7 @@ const navLinks = [
     { name: "Science", href: "/#science" },
     { name: "App", href: "/#app" },
     { name: "About", href: "/about" },
+    { name: "Learn", href: "/learn", hiddenOnMobile: true },
 ];
 
 export function Navbar() {
@@ -79,16 +80,19 @@ export function Navbar() {
                     exit={{ opacity: 0, y: -20 }}
                     className="absolute top-16 left-0 right-0 bg-brand-dark border-b border-white/10 p-4 md:hidden flex flex-col gap-4 shadow-2xl"
                 >
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.name}
-                            href={link.href}
-                            className="text-lg font-medium text-white/90 py-2 border-b border-white/5"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            {link.name}
-                        </Link>
-                    ))}
+                    {navLinks.map((link) => {
+                        if (link.hiddenOnMobile) return null;
+                        return (
+                            <Link
+                                key={link.name}
+                                href={link.href}
+                                className="text-lg font-medium text-white/90 py-2 border-b border-white/5"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                                {link.name}
+                            </Link>
+                        )
+                    })}
                     <Link href="/#early-access" onClick={() => setIsMobileMenuOpen(false)}>
                         <Button className="w-full mt-2">Gain Early Access</Button>
                     </Link>
