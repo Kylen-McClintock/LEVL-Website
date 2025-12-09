@@ -2,23 +2,50 @@
 
 @theme {
   --font-sans: var(--font-outfit);
-  
+
   --color-brand-dark: #050505;
   --color-brand-purple: #4c1d95;
   --color-brand-copper: #b45309;
   --color-brand-glow: #7c3aed;
-  
+
   --animate-fade-in: fade-in 0.5s ease-out forwards;
   --animate-slide-up: slide-up 0.5s ease-out forwards;
+  --animate-gradient-xy: gradient-xy 3s ease infinite;
 
   @keyframes fade-in {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
   }
-  
+
   @keyframes slide-up {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes gradient-xy {
+
+    0%,
+    100% {
+      background-size: 400% 400%;
+      background-position: 0% 0%;
+    }
+
+    50% {
+      background-size: 400% 400%;
+      background-position: 100% 100%;
+    }
   }
 }
 
