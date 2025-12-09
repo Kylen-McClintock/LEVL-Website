@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Info, ChevronDown } from "lucide-react";
+import { X, Info } from "lucide-react";
 import { HALLMARKS, BENEFITS, MOLECULES, Hallmark, Benefit, Molecule } from "@/data/periodicTableData";
 import { cn } from "@/lib/utils";
 
@@ -38,6 +38,17 @@ type ActiveView =
 export function PeriodicTable() {
     const [activeView, setActiveView] = useState<ActiveView>({ type: "none" });
 
+    // Click outside handler
+    useEffect(() => {
+        const handleGlobalClick = (e: MouseEvent) => {
+            // If the click target is the background/body or outside our interactive elements, close active view
+            // However, implementing precise "click outside" for complex grid is tough.
+            // Easier approach: The Grid Container itself handles the "Close" action, 
+            // and all interactive children stopPropagation.
+        };
+        // We will implement this via the Container onClick in JSX.
+    }, []);
+
     // Helper to check if a specific molecule is highlighted
     const isHighlighted = (molecule: Molecule) => {
         if (activeView.type === "molecule") return activeView.data.id === molecule.id;
@@ -58,12 +69,21 @@ export function PeriodicTable() {
     };
 
     return (
-        <div className="relative w-full max-w-[1600px] mx-auto p-4 select-none">
+        <div
+            className="relative w-full max-w-[1600px] mx-auto p-4 select-none min-h-screen flex flex-col justify-center"
+            onClick={() => setActiveView({ type: "none" })} // Click background to close
+        >
 
             {/* Main Grid Container */}
-            <div className="grid gap-2" style={{
-                gridTemplateColumns: `150px repeat(${BENEFITS.length}, 1fr)`,
-            }}>
+            <div
+                className="grid gap-2"
+                style={{
+                    gridTemplateColumns: `150px repeat(${BENEFITS.length}, 1fr)`,
+                }}
+                onClick={(e) => e.stopPropagation()} // Stop bubbling from grid gaps? No, gaps should close.
+            >
+                {/* Actually, if I click a GAP in the grid, it bubbles to Container -> Close. Good. */}
+                {/* If I click a BUTTON, I need stopPropagation. */}
 
                 {/* Row 1: Top Headers (Nervous System) + Top Left Title */}
                 <div className="col-start-1 row-start-1 flex items-end justify-end p-2 pb-4">
@@ -93,7 +113,10 @@ export function PeriodicTable() {
                     <button
                         key={benefit.id}
                         style={{ gridColumnStart: i + 2, gridRowStart: 2 }}
-                        onClick={() => setActiveView(activeView.type === 'benefit' && activeView.data.id === benefit.id ? { type: 'none' } : { type: "benefit", data: benefit })}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setActiveView(activeView.type === 'benefit' && activeView.data.id === benefit.id ? { type: 'none' } : { type: "benefit", data: benefit })
+                        }}
                         className={cn(
                             "flex flex-col items-center justify-center p-4 rounded-xl transition-all duration-300 group relative overflow-hidden",
                             "hover:bg-white/5 active:scale-95",
@@ -121,6 +144,7 @@ export function PeriodicTable() {
                             exit={{ opacity: 0, height: 0 }}
                             className="col-span-full mx-4 my-4 overflow-hidden order-last md:order-none"
                             style={{ gridRowStart: 3 }}
+                            onClick={(e) => e.stopPropagation()} // Clicking inside panel shouldn't close it
                         >
                             <div className="bg-[#1a1a1e] border border-white/10 rounded-2xl p-6 md:p-8 flex gap-8 shadow-2xl relative border-t-4" style={{ borderColor: activeView.data.id === 'energy' ? '#f59e0b' : 'rgba(255,255,255,0.1)' }}>
                                 <button
@@ -142,14 +166,8 @@ export function PeriodicTable() {
 
 
                 {/* Data Rows (Starting Row 3 or 4 depending on expansion) */}
-                {/* Note: We rely on CSS Grid auto-placement for rows, but we need to account for the Benefit Expansion Panel taking up a visual "row" slot if active. */}
-                {/* Actually, explicitly setting row start is safer. Benefit Header is Row 2. Benefit Panel is Row 3. First Data Row is 4. */}
 
                 {HALLMARKS.map((hallmark, rowIndex) => {
-                    // Offset for Rows: 1 (Labels) + 1 (Headers) + 1 (Benefit Panel Placeholder) = 3.
-                    // So data starts at 4?
-                    // If benefit is open, it pushes flow content. But utilizing `contents` wrapper and explicit placement helps.
-
                     const isExpanded = activeView.type === "molecule" && activeView.rowIndex === rowIndex;
                     const isHallmarkExpanded = activeView.type === "hallmark" && activeView.data.id === hallmark.id;
 
@@ -158,9 +176,12 @@ export function PeriodicTable() {
                             {/* Hallmark Header */}
                             <button
                                 style={{ gridColumn: "1" }}
-                                onClick={() => setActiveView(activeView.type === 'hallmark' && activeView.data.id === hallmark.id ? { type: 'none' } : { type: "hallmark", data: hallmark })}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setActiveView(activeView.type === 'hallmark' && activeView.data.id === hallmark.id ? { type: 'none' } : { type: "hallmark", data: hallmark })
+                                }}
                                 className={cn(
-                                    "flex items-center justify-end text-right p-4 rounded-xl transition-all duration-300 relative group min-h-[100px]",
+                                    "flex items-center justify-end text-right p-4 rounded-xl transition-all duration-300 relative group min-h-[100px] h-full",
                                     "hover:bg-white/5",
                                     activeView.type === "hallmark" && activeView.data.id === hallmark.id ? "text-white bg-white/10 z-10" : "text-white/60 hover:text-white"
                                 )}
@@ -171,7 +192,10 @@ export function PeriodicTable() {
 
                             {/* Hallmark Expansion Panel (Immediate) */}
                             {isHallmarkExpanded && (
-                                <div className="col-span-full mx-4 my-2 p-6 bg-[#1a1a1e] border border-brand-purple/30 rounded-2xl flex flex-col md:flex-row items-center gap-6 relative">
+                                <div
+                                    className="col-span-full mx-4 my-2 p-6 bg-[#1a1a1e] border border-brand-purple/30 rounded-2xl flex flex-col md:flex-row items-center gap-6 relative"
+                                    onClick={(e) => e.stopPropagation()}
+                                >
                                     <button
                                         onClick={(e) => { e.stopPropagation(); setActiveView({ type: "none" }); }}
                                         className="absolute top-4 right-4 p-2 text-white/40 hover:text-white"
@@ -189,39 +213,46 @@ export function PeriodicTable() {
                             {BENEFITS.map((benefit, colIndex) => {
                                 // SHIFT LOGIC:
                                 // If Row 0 (Genomic Instability), we shift +1.
-                                // So Col 0 displays nothing? Col 1 displays Index 0?
-                                // Regular: index = rowIndex * 8 + colIndex
+                                // But we must ensure the "Empty" cell behaves like a real cell to maintain row height/alignment.
 
                                 let moleculeIndex = -1;
 
                                 if (rowIndex === 0) {
-                                    // Row 0 Shift:
-                                    // Col 0 -> Empty
-                                    // Col 1 -> Index 0
                                     if (colIndex === 0) {
                                         moleculeIndex = -1; // Empty
                                     } else {
                                         moleculeIndex = 0 * 8 + (colIndex - 1);
                                     }
                                 } else {
-                                    // Normal
                                     moleculeIndex = rowIndex * 8 + colIndex;
                                 }
 
                                 const molecule = moleculeIndex >= 0 ? MOLECULES[moleculeIndex] : null;
 
-                                if (!molecule) return <div key={`empty-${rowIndex}-${colIndex}`} className="opacity-10 bg-white/5 rounded-lg" />;
+                                if (!molecule) return (
+                                    <div
+                                        key={`empty-${rowIndex}-${colIndex}`}
+                                        className="opacity-10 bg-white/5 rounded-lg min-h-[100px] h-full w-full"
+                                    // Make sure even empty cells propagate clicks to close? Yes, it's non-interactive
+                                    />
+                                );
 
                                 const isHighlightedState = isHighlighted(molecule);
                                 const isSelected = activeView.type === "molecule" && activeView.data.id === molecule.id;
+
+                                // Vibrant color for highlighted state (fallback from rainbow if desired, but user asked for rainbow highlight)
+                                // Actually user asked for "border of the card should be the matching vibrant rainbow gradient" when highlighted.
 
                                 return (
                                     <motion.button
                                         key={molecule.id}
                                         layout
-                                        onClick={() => isSelected ? setActiveView({ type: "none" }) : setActiveView({ type: "molecule", data: molecule, rowIndex })}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            isSelected ? setActiveView({ type: "none" }) : setActiveView({ type: "molecule", data: molecule, rowIndex })
+                                        }}
                                         className={cn(
-                                            "relative rounded-lg p-2 flex items-center justify-center text-center transition-all duration-300 group",
+                                            "relative rounded-lg p-2 flex items-center justify-center text-center transition-all duration-300 group min-h-[100px] h-full w-full",
                                             "bg-gradient-to-br from-white/5 to-transparent backdrop-blur-sm",
                                             isSelected
                                                 ? "z-20 scale-105 border-transparent ring-0"
@@ -230,13 +261,12 @@ export function PeriodicTable() {
                                         )}
                                     >
                                         {/* Rainbow Border for Selection / Highlight / Hover */}
-                                        {/* We want rainbow on Hover OR Highlight OR Selection */}
                                         <div className={cn(
                                             "absolute inset-0 rounded-lg p-[2px] bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 -z-10 animate-gradient-xy transition-opacity duration-300",
                                             isSelected || isHighlightedState ? "opacity-100" : "opacity-0 group-hover:opacity-100"
                                         )} />
 
-                                        {/* Inner Content Background (to cover the center of the rainbow border) */}
+                                        {/* Inner Content Background */}
                                         <div className="absolute inset-[1px] rounded-[7px] bg-[#0a0a0a] z-[-1]" />
 
                                         <div className={cn(
@@ -259,6 +289,7 @@ export function PeriodicTable() {
                                         animate={{ opacity: 1, height: "auto" }}
                                         exit={{ opacity: 0, height: 0 }}
                                         className="col-span-full mx-4 my-2 overflow-hidden"
+                                        onClick={(e) => e.stopPropagation()}
                                     >
                                         <div className="bg-[#1a1a1e] border border-white/10 rounded-2xl p-6 md:p-8 flex gap-8 shadow-2xl relative">
                                             <button
@@ -270,7 +301,7 @@ export function PeriodicTable() {
 
                                             {/* Hallmarks List (Left) */}
                                             <div className="w-1/4 border-r border-white/10 pr-8 flex flex-col justify-center text-right md:text-left">
-                                                <h4 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-4">Targeted Hallmarks</h4>
+                                                <h4 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-4">Targeted Hallmarks of Aging</h4>
                                                 <div className="space-y-2">
                                                     {activeView.data.hallmarks.map(hId => {
                                                         const h = HALLMARKS.find(i => i.id === hId);
