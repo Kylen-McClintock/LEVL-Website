@@ -80,7 +80,7 @@ export function PeriodicTable() {
                 style={{
                     gridTemplateColumns: `150px repeat(${BENEFITS.length}, 1fr)`,
                 }}
-                onClick={(e) => e.stopPropagation()} // Stop bubbling from grid gaps? No, gaps should close.
+            // Removed stopPropagation here so clicks on grid gaps close the view
             >
                 {/* Actually, if I click a GAP in the grid, it bubbles to Container -> Close. Good. */}
                 {/* If I click a BUTTON, I need stopPropagation. */}
@@ -109,6 +109,10 @@ export function PeriodicTable() {
 
 
                 {/* Row 2: Benefit Headers */}
+
+                {/* Spacer for Col 1 Row 2 to prevent Hallmark Header from floating up */}
+                <div className="col-start-1 row-start-2" />
+
                 {BENEFITS.map((benefit, i) => (
                     <button
                         key={benefit.id}
