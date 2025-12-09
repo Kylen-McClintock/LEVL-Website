@@ -123,6 +123,7 @@ export function PeriodicTable() {
                         <div key={`row-group-${rowIndex}`} className="contents">
                             {/* Y-Axis Header */}
                             <button
+                                style={{ gridColumn: "1" }}
                                 onClick={() => setActiveView(activeView.type === 'hallmark' && activeView.data.id === hallmark.id ? { type: 'none' } : { type: "hallmark", data: hallmark })}
                                 className={cn(
                                     "flex items-center justify-end text-right p-4 rounded-xl transition-all duration-300 relative group min-h-[100px]",
@@ -144,6 +145,11 @@ export function PeriodicTable() {
                                 const isHighlightedState = isHighlighted(molecule);
                                 const isSelected = activeView.type === "molecule" && activeView.data.id === molecule.id;
 
+                                // Get vibrant border color for this column
+                                // BORDER_COLORS keys are like "border-orange-500/50", we want "border-orange-500"
+                                const baseBorder = BORDER_COLORS[benefit.id] || "border-white/50";
+                                const vibrantBorder = baseBorder.replace("/50", "");
+
                                 return (
                                     <motion.button
                                         key={molecule.id}
@@ -152,21 +158,14 @@ export function PeriodicTable() {
                                         className={cn(
                                             "relative rounded-lg p-2 flex items-center justify-center text-center transition-all duration-300 group",
                                             "bg-gradient-to-br from-white/5 to-transparent backdrop-blur-sm border",
-                                            isSelected ? "z-20 scale-105 border-transparent ring-2 ring-white" : "border-white/5 hover:border-white/20 hover:scale-105 hover:z-20",
-                                            isHighlightedState && !isSelected && "z-10 scale-105", // Highlighted but not selected
+                                            isSelected
+                                                ? cn("z-20 scale-105 ring-2 ring-white border-transparent")
+                                                : isHighlightedState
+                                                    ? cn("z-10 scale-105 border-2", vibrantBorder)
+                                                    : "border-white/5 hover:border-white/20 hover:scale-105 hover:z-20",
                                             isDimmed(molecule) && "opacity-20 blur-[1px] scale-95 grayscale"
                                         )}
                                     >
-                                        {/* Rainbow Border for Highlighted Items */}
-                                        {isHighlightedState && !isSelected && (
-                                            <div className="absolute inset-0 rounded-lg p-[2px] bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 -z-10 animate-gradient-xy opacity-100" />
-                                        )}
-
-                                        <div className={cn(
-                                            "absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity bg-gradient-to-br",
-                                            BENEFIT_COLORS[benefit.id]
-                                        )} />
-
                                         <span className="text-[10px] md:text-xs font-medium text-white/90 leading-tight line-clamp-2">
                                             {molecule.name}
                                         </span>
@@ -193,7 +192,24 @@ export function PeriodicTable() {
                                                 <X className="w-5 h-5" />
                                             </button>
 
-                                            {/* Content */}
+                                            {/* Hallmarks List (Left Side) */}
+                                            <div className="w-1/4 border-r border-white/10 pr-8 flex flex-col justify-center text-right md:text-left">
+                                                <h4 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-4">Targeted Hallmarks</h4>
+                                                <div className="space-y-2">
+                                                    {activeView.data.hallmarks.map(hId => {
+                                                        const h = HALLMARKS.find(i => i.id === hId);
+                                                        if (!h) return null;
+                                                        return (
+                                                            <div key={hId} className="flex items-center gap-2 text-sm text-white/70 justify-end md:justify-start">
+                                                                <div className="w-1.5 h-1.5 rounded-full bg-brand-copper shrink-0" />
+                                                                {h.label}
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </div>
+                                            </div>
+
+                                            {/* Content (Right Side) */}
                                             <div className="flex-1 flex flex-col justify-center">
                                                 <div className="flex items-baseline gap-4 mb-2">
                                                     <h2 className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
@@ -219,23 +235,6 @@ export function PeriodicTable() {
                                                             )}>
                                                                 {ben.label}
                                                             </span>
-                                                        )
-                                                    })}
-                                                </div>
-                                            </div>
-
-                                            {/* Hallmarks List (Right Side) */}
-                                            <div className="w-1/3 border-l border-white/10 pl-8 flex flex-col justify-center">
-                                                <h4 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-4">Targeted Hallmarks</h4>
-                                                <div className="space-y-2">
-                                                    {activeView.data.hallmarks.map(hId => {
-                                                        const h = HALLMARKS.find(i => i.id === hId);
-                                                        if (!h) return null;
-                                                        return (
-                                                            <div key={hId} className="flex items-center gap-2 text-sm text-white/70">
-                                                                <div className="w-1.5 h-1.5 rounded-full bg-brand-copper" />
-                                                                {h.label}
-                                                            </div>
                                                         )
                                                     })}
                                                 </div>
