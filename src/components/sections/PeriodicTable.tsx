@@ -54,7 +54,6 @@ export function PeriodicTable() {
     // Traverses counter-clockwise: Orange -> Red -> Pink -> Purple -> Blue -> Teal
     const getCellColor = (row: number, col: number) => {
         const startHue = 45; // Amber/Gold (Energy)
-        const startHue = 45; // Amber/Gold (Energy)
         const hueStepX = -32; // Color headers logic
         const hueStepY = -6;  // ~10 degree angle (tan(10) * 32)
 
