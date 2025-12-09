@@ -21,13 +21,15 @@ export async function subscribeUser(formData: FormData) {
         });
 
         // 2. Send Notification to Kylen
+        // NOTE: In Resend Sandbox mode, we can ONLY send to the account email (kylen.mcclintock@gmail.com)
+        // Once you verify 'levlhealth.com' in Resend dashboard, you can change this back to 'kylen@levlhealth.com'
+        // and also send confirmation emails to the users.
         await resend.emails.send({
-            from: 'LEVL Early Access <onboarding@resend.dev>', // Free tier must use this or verified domain
-            to: 'kylen@levlhealth.com',
+            from: 'LEVL Early Access <onboarding@resend.dev>',
+            to: 'kylen.mcclintock@gmail.com', // Must use verified sandbox email
             subject: 'New Early Access Request',
             text: `New signup: ${email} has joined the waiting list via the website.`,
         });
-
         return { success: true, message: 'Successfully subscribed!' };
     } catch (error) {
         console.error('Resend Error:', error);
