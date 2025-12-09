@@ -50,17 +50,12 @@ export function PeriodicTable() {
     }, []);
 
     // Function to generate dynamic 2D gradient specific to the grid
-    // X-Axis: Energy (Orange) -> Sleep (Teal)
-    // Y-Axis: Slight shift to create depth
+    // Matches the Functional Benefit headers: Energy (Orange) -> ... -> Sleep (Teal)
+    // Traverses counter-clockwise: Orange -> Red -> Pink -> Purple -> Blue -> Teal
     const getCellColor = (row: number, col: number) => {
-        // Base Hues:
-        // Col 0 (Energy): ~30 (Orange)
-        // Col 7 (Sleep): ~170 (Teal) 
-        // Span: 140 deg / 7 steps = 20 deg per col.
-
-        const startHue = 25; // Orange/Peach
-        const hueStepX = 18;
-        const hueStepY = 2; // Slight vertical shift to differentiate rows
+        const startHue = 45; // Amber/Gold (Energy)
+        const hueStepX = -32; // Go backwards through Red, Pink, Purple to Teal
+        const hueStepY = 3;  // Maintain slight diagonal tilt
 
         const hue = startHue + (col * hueStepX) + (row * hueStepY);
         return `hsl(${hue}, 90%, 65%)`; // High saturation, good legibility lightness
