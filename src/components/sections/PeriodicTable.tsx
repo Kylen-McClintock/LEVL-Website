@@ -38,13 +38,7 @@ type ActiveView =
 export function PeriodicTable() {
     const [activeView, setActiveView] = useState<ActiveView>({ type: "none" });
 
-    // Helper to find molecule at intersection
-    // This is computationally cheap for 96 items
-    const getMoleculeAt = (hallmarkId: string, benefitId: string) => {
-        return MOLECULES.find(
-            (m) => m.hallmarks.includes(hallmarkId) && m.benefits.includes(benefitId)
-        );
-    };
+
 
     // Derived state for highlighting
     const highlightedMolecules = useMemo(() => {
@@ -114,7 +108,9 @@ export function PeriodicTable() {
                 {/* Molecule Cells */}
                 {HALLMARKS.map((hallmark, rowIndex) => (
                     BENEFITS.map((benefit, colIndex) => {
-                        const molecule = getMoleculeAt(hallmark.id, benefit.id);
+                        const index = rowIndex * 8 + colIndex;
+                        const molecule = MOLECULES[index];
+
                         if (!molecule) return <div key={`${rowIndex}-${colIndex}`} className="bg-white/5 rounded-lg opacity-20" />;
 
                         return (

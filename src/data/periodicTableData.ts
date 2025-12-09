@@ -46,118 +46,775 @@ export const BENEFITS: Benefit[] = [
     { id: "sleep", label: "Sleep", description: "Supports deep, restorative sleep cycles." },
 ];
 
-// Based on visual transcription of the user's periodic table
+// 12 Hallmarks x 8 Benefits = 96 Cells.
+// Flattened array of molecules based on user input (row-major order assumed).
 export const MOLECULES: Molecule[] = [
-    // format: { id: "fullerene", name: "Fullerene", hallmarks: ["genomic_instability", "mitochondrial_dysfunction"], benefits: ["energy", "recovery"], description: "A Carbon-60 molecule known for its potent antioxidant properties." },
-    // Row 1: Energy
-    { id: "fullerene", name: "Fullerene", hallmarks: ["genomic_instability"], benefits: ["energy"], description: "Powerful antioxidant scavenging free radicals." },
-    { id: "astragalus", name: "Astragalus Extract", hallmarks: ["telomere_attrition"], benefits: ["energy"], description: "Traditional herb supporting telomere length." },
-    { id: "pterostilbene", name: "Pterostilbene", hallmarks: ["epigenetic_alterations"], benefits: ["energy"], description: "Analog of resveratrol with higher bioavailability." },
-    { id: "rhodiola", name: "Rhodiola Rosea", hallmarks: ["loss_of_proteostasis"], benefits: ["energy"], description: "Adaptogen that combats fatigue and stress." },
-    { id: "urolithin_a", name: "Urolithin A", hallmarks: ["disabled_macroautophagy"], benefits: ["energy"], description: "Activates mitophagy to renew mitochondria." },
-    { id: "ca_akg", name: "Ca-AKG", hallmarks: ["deregulated_nutrient_sensing"], benefits: ["energy"], description: "Key metabolite in the Krebs cycle for energy." },
-    { id: "creatine", name: "Creatine", hallmarks: ["mitochondrial_dysfunction"], benefits: ["energy"], description: "Boosts ATP availability for muscle and brain." },
-    { id: "fisetin", name: "Fisetin", hallmarks: ["cellular_senescence"], benefits: ["energy"], description: "Potent senolytic found in strawberries." },
-    { id: "nmn", name: "NMN", hallmarks: ["stem_cell_exhaustion"], benefits: ["energy"], description: "Precursor to NAD+, essential for energy metabolism." },
-    { id: "beet_root", name: "Beet Root Extract", hallmarks: ["altered_communication"], benefits: ["energy"], description: "Enhances blood flow and oxygen delivery." },
-    { id: "boswellia", name: "Boswellia", hallmarks: ["chronic_inflammation"], benefits: ["energy"], description: "Reduces inflammation to support joint health." },
-    { id: "probiotic_s_thermophilus", name: "Probiotic (S. thermophilus)", hallmarks: ["dysbiosis"], benefits: ["energy"], description: "Supports gut health and metabolic energy." },
-
-    // Row 2: Cognition
-    { id: "nac", name: "NAC", hallmarks: ["genomic_instability"], benefits: ["cognition"], description: "Precursor to glutathione, protecting neurons." },
-    { id: "cycloastragenol", name: "Cycloastragenol", hallmarks: ["telomere_attrition"], benefits: ["cognition"], description: "Active compound in Astragalus." },
-    { id: "polydatin", name: "Polydatin", hallmarks: ["epigenetic_alterations"], benefits: ["cognition"], description: "Precursor to resveratrol, supports brain health." },
-    { id: "taurine", name: "Taurine", hallmarks: ["loss_of_proteostasis"], benefits: ["cognition"], description: "Supports neurotransmitter regulation." },
-    { id: "trehalose", name: "Trehalose", hallmarks: ["disabled_macroautophagy"], benefits: ["cognition"], description: "Induces autophagy to clear cellular debris." },
-    { id: "beta_hydroxybutyrate", name: "Beta-Hydroxybutyrate", hallmarks: ["deregulated_nutrient_sensing"], benefits: ["cognition"], description: "Ketone body serving as brain fuel." },
-    { id: "pqq", name: "PQQ", hallmarks: ["mitochondrial_dysfunction"], benefits: ["cognition"], description: "Stimulates mitochondrial biogenesis in the brain." },
-    { id: "quercetin", name: "Quercetin", hallmarks: ["cellular_senescence"], benefits: ["cognition"], description: "Flavonoid supporting brain health and immunity." },
-    { id: "tmg", name: "TMG", hallmarks: ["stem_cell_exhaustion"], benefits: ["cognition"], description: "Methyl donor supporting DNA synthesis." },
-    { id: "apigenin", name: "Apigenin", hallmarks: ["altered_communication"], benefits: ["cognition"], description: "Flavonoid with neuroprotective effects." },
-    { id: "ginger_extract", name: "Ginger Extract", hallmarks: ["chronic_inflammation"], benefits: ["cognition"], description: "Reduces oxidative stress in cognitive pathways." },
-    { id: "prebiotic_inulin", name: "Prebiotic (Inulin)", hallmarks: ["dysbiosis"], benefits: ["cognition"], description: "Feeds gut bacteria beneficial for the brain." },
-
-    // Row 3: Focus
-    { id: "sulforaphane", name: "Sulforaphane", hallmarks: ["genomic_instability"], benefits: ["focus"], description: "Activates Nrf2 pathway for cellular defense." },
-    { id: "astragaloside_iv", name: "Astragaloside IV", hallmarks: ["telomere_attrition"], benefits: ["focus"], description: "Potent compound for cellular protection." },
-    { id: "l_theanine", name: "L-Theanine", hallmarks: ["epigenetic_alterations"], benefits: ["focus"], description: "Promotes relaxed alertness and focus." },
-    { id: "egcg", name: "EGCG", hallmarks: ["loss_of_proteostasis"], benefits: ["focus"], description: "Green tea catchin supporting brain function." },
-    { id: "curcumin", name: "Curcumin", hallmarks: ["disabled_macroautophagy"], benefits: ["focus"], description: "Anti-inflammatory improving mood and memory." },
-    { id: "nicotinamide_riboside", name: "Nicotinamide Riboside (NR)", hallmarks: ["deregulated_nutrient_sensing"], benefits: ["focus"], description: "Boosts NAD+ levels for mental clarity." },
-    { id: "methylene_blue", name: "Methylene Blue", hallmarks: ["mitochondrial_dysfunction"], benefits: ["focus"], description: "Improves mitochondrial efficiency in neurons." },
-    { id: "piperlongumine", name: "Piperlongumine", hallmarks: ["cellular_senescence"], benefits: ["focus"], description: "Senolytic agent clearing senescent cells." },
-    { id: "ginseng", name: "Ginseng", hallmarks: ["stem_cell_exhaustion"], benefits: ["focus"], description: "Adaptogen enhancing mental performance." },
-    { id: "bacopa_monnieri", name: "Bacopa Monnieri", hallmarks: ["altered_communication"], benefits: ["focus"], description: "Ayurvedic herb for memory and learning." },
-    { id: "honokiol", name: "Honokiol", hallmarks: ["chronic_inflammation"], benefits: ["focus"], description: "Neuroprotective compound from magnolia bark." },
-    { id: "probiotic_b_longum", name: "Probiotic (B. longum)", hallmarks: ["dysbiosis"], benefits: ["focus"], description: "Supports the gut-brain axis." },
-
-    // Row 4: Metabolism
-    { id: "ala", name: "ALA", hallmarks: ["genomic_instability"], benefits: ["metabolism"], description: "Alpha Lipoic Acid, master antioxidant." },
-    { id: "gynostemma", name: "Gynostemma", hallmarks: ["telomere_attrition"], benefits: ["metabolism"], description: "Activates AMPK for metabolic balance." },
-    { id: "milk_thistle", name: "Milk Thistle Extract", hallmarks: ["epigenetic_alterations"], benefits: ["metabolism"], description: "Supports liver function and detoxification." },
-    { id: "spermidine", name: "Spermidine", hallmarks: ["loss_of_proteostasis"], benefits: ["metabolism"], description: "Induces autophagy essential for metabolism." },
-    { id: "rapamycin", name: "Rapamycin", hallmarks: ["disabled_macroautophagy"], benefits: ["metabolism"], description: "mTOR inhibitor mimicking calorie restriction." },
-    { id: "metformin", name: "Metformin", hallmarks: ["deregulated_nutrient_sensing"], benefits: ["metabolism"], description: "Improves insulin sensitivity." },
-    { id: "acetyl_l_carnitine", name: "Acetyl-L-Carnitine", hallmarks: ["mitochondrial_dysfunction"], benefits: ["metabolism"], description: "Transports fatty acids for energy." },
-    { id: "berberine", name: "Berberine", hallmarks: ["cellular_senescence"], benefits: ["metabolism"], description: "Activates AMPK, mimicking exercise." },
-    { id: "nmn_metabolism", name: "NMN", hallmarks: ["stem_cell_exhaustion"], benefits: ["metabolism"], description: "Supports NAD+ for metabolic health." },
-    { id: "nigella_sativa", name: "Nigella Sativa", hallmarks: ["altered_communication"], benefits: ["metabolism"], description: "Black seed oil supporting glucose metabolism." },
-    { id: "grape_seed", name: "Grape Seed Extract", hallmarks: ["chronic_inflammation"], benefits: ["metabolism"], description: "Supports circulation and reduces oxidation." },
-    { id: "glucosamine", name: "Glucosamine", hallmarks: ["dysbiosis"], benefits: ["metabolism"], description: "Promotes joint health and mimics low-carb diet." },
-
-    // Row 5: Immunity
-    { id: "zinc", name: "Zinc", hallmarks: ["genomic_instability"], benefits: ["immunity"], description: "Essential mineral for immune function." },
-    { id: "echinacea", name: "Echinacea", hallmarks: ["telomere_attrition"], benefits: ["immunity"], description: "Supports immune system response." },
-    { id: "vitamin_c", name: "Vitamin C", hallmarks: ["epigenetic_alterations"], benefits: ["immunity"], description: "Antioxidant vital for immune cells." },
-    { id: "lions_mane", name: "Lion's Mane", hallmarks: ["loss_of_proteostasis"], benefits: ["immunity"], description: "Mushroom supporting nerve and immune health." },
-    { id: "chaga_mushroom", name: "Chaga Mushroom", hallmarks: ["disabled_macroautophagy"], benefits: ["immunity"], description: "Rich in antioxidants and immune modulation." },
-    { id: "resveratrol", name: "Resveratrol", hallmarks: ["deregulated_nutrient_sensing"], benefits: ["immunity"], description: "Supports immune and cardiovascular health." },
-    { id: "astaxanthin", name: "Astaxanthin", hallmarks: ["mitochondrial_dysfunction"], benefits: ["immunity"], description: "Potent antioxidant protecting cell membranes." },
-    { id: "senolytic_complex", name: "Senolytic Complex", hallmarks: ["cellular_senescence"], benefits: ["immunity"], description: "Blend of Fisetin + Pepper for clearing cells." },
-    { id: "reishi_mushroom", name: "Reishi Mushroom", hallmarks: ["stem_cell_exhaustion"], benefits: ["immunity"], description: "Adaptogen boosting immune systems." },
-    { id: "beta_glucans", name: "Beta-Glucans", hallmarks: ["altered_communication"], benefits: ["immunity"], description: "Primes immune cells for action." },
-    { id: "tart_cherry", name: "Tart Cherry Extract", hallmarks: ["chronic_inflammation"], benefits: ["immunity"], description: "Reduces inflammation and aids sleep." },
-    { id: "s_boulardii", name: "S. Boulardii", hallmarks: ["dysbiosis"], benefits: ["immunity"], description: "Probiotic yeast preventing gut infections." },
-
-    // Row 6: Recovery
-    { id: "glynac", name: "GlyNAC", hallmarks: ["genomic_instability"], benefits: ["recovery"], description: "Glycine + NAC boosting glutathione." },
-    { id: "astragalus_recovery", name: "Astragalus", hallmarks: ["telomere_attrition"], benefits: ["recovery"], description: "Supports immune and physical recovery." },
-    { id: "phosphatidylserine", name: "Phosphatidylserine", hallmarks: ["epigenetic_alterations"], benefits: ["recovery"], description: "Supports cortisol balance and recovery." },
-    { id: "collagen", name: "Collagen", hallmarks: ["loss_of_proteostasis"], benefits: ["recovery"], description: "Building block for connective tissues." },
-    { id: "urolithin_b", name: "Urolithin B", hallmarks: ["disabled_macroautophagy"], benefits: ["recovery"], description: "Supports muscle growth and repair." },
-    { id: "glutathione", name: "Glutathione", hallmarks: ["deregulated_nutrient_sensing"], benefits: ["recovery"], description: "Master antioxidant for detox and repair." },
-    { id: "coq10", name: "CoQ10", hallmarks: ["mitochondrial_dysfunction"], benefits: ["recovery"], description: "Vital for cellular energy and recovery." },
-    { id: "fisetin_recovery", name: "Fisetin", hallmarks: ["cellular_senescence"], benefits: ["recovery"], description: "Reduces inflammation aiding recovery." },
-    { id: "bovine_colostrum", name: "Bovine Colostrum", hallmarks: ["stem_cell_exhaustion"], benefits: ["recovery"], description: "Rich in growth factors for tissue repair." },
-    { id: "shilajit", name: "Shilajit", hallmarks: ["altered_communication"], benefits: ["recovery"], description: "Rich in minerals, boosts energy recovery." },
-    { id: "artemisinin", name: "Artemisinin", hallmarks: ["chronic_inflammation"], benefits: ["recovery"], description: "Modulates immune response." },
-    { id: "l_rhamnosus", name: "L. Rhamnosus", hallmarks: ["dysbiosis"], benefits: ["recovery"], description: "Probiotic aiding gut recovery." },
-
-    // Row 7: Calm
-    { id: "omega_3", name: "Omega-3", hallmarks: ["genomic_instability"], benefits: ["calm"], description: "Supports brain health and mood stability." },
-    { id: "cacao", name: "Cacao", hallmarks: ["telomere_attrition"], benefits: ["calm"], description: "Contains theobromine for mood elevation." },
-    { id: "5_htp", name: "5-HTP", hallmarks: ["epigenetic_alterations"], benefits: ["calm"], description: "Precursor to serotonin." },
-    { id: "holy_basil", name: "Holy Basil (Tulsi)", hallmarks: ["loss_of_proteostasis"], benefits: ["calm"], description: "Adaptogen for stress relief." },
-    { id: "tremella", name: "Tremella Mushroom", hallmarks: ["disabled_macroautophagy"], benefits: ["calm"], description: "Hydrating mushroom supporting neuroprotection." },
-    { id: "inositol", name: "Inositol", hallmarks: ["deregulated_nutrient_sensing"], benefits: ["calm"], description: "Supports neurotransmitter signaling." },
-    { id: "tongkat_ali", name: "Tongkat Ali", hallmarks: ["mitochondrial_dysfunction"], benefits: ["calm"], description: "Balances stress hormones like cortisol." },
-    { id: "lithium", name: "Lithium (Low Dose)", hallmarks: ["cellular_senescence"], benefits: ["calm"], description: "Neuroprotective trace mineral." },
-    { id: "shatavari", name: "Shatavari", hallmarks: ["stem_cell_exhaustion"], benefits: ["calm"], description: "Adaptogen supporting hormonal balance." },
-    { id: "magnesium_glycinate", name: "Magnesium Glycinate", hallmarks: ["altered_communication"], benefits: ["calm"], description: "Highly absorbable form for relaxation." },
-    { id: "lemon_balm", name: "Lemon Balm", hallmarks: ["chronic_inflammation"], benefits: ["calm"], description: "Herb promoting calmness and reduced anxiety." },
-    { id: "turkey_tail", name: "Turkey Tail Mushroom", hallmarks: ["dysbiosis"], benefits: ["calm"], description: "Supports gut-brain axis balance." },
-
-    // Row 8: Sleep
-    { id: "gaba", name: "GABA", hallmarks: ["genomic_instability"], benefits: ["sleep"], description: "Inhibitory neurotransmitter for relaxation." },
-    { id: "gotu_kola", name: "Gotu Kola", hallmarks: ["telomere_attrition"], benefits: ["sleep"], description: "Herb that soothes the nervous system." },
-    { id: "kava", name: "Kava", hallmarks: ["epigenetic_alterations"], benefits: ["sleep"], description: "Traditional root for deep relaxation." },
-    { id: "magnolia_bark", name: "Magnolia Bark Extract", hallmarks: ["loss_of_proteostasis"], benefits: ["sleep"], description: "Modulates cortisol for better sleep." },
-    { id: "tart_cherry_sleep", name: "Tart Cherry Extract", hallmarks: ["disabled_macroautophagy"], benefits: ["sleep"], description: "Natural source of melatonin." },
-    { id: "zma", name: "ZMA (Zinc/Mag/B6)", hallmarks: ["deregulated_nutrient_sensing"], benefits: ["sleep"], description: "Synergistic blend for sleep quality." },
-    { id: "l_tryptophan", name: "L-Tryptophan", hallmarks: ["mitochondrial_dysfunction"], benefits: ["sleep"], description: "Precursor to serotonin and melatonin." },
-    { id: "hops_extract", name: "Hops Extract", hallmarks: ["cellular_senescence"], benefits: ["sleep"], description: "Promotes sedation and sleep onset." },
-    { id: "skullcap", name: "Skullcap", hallmarks: ["stem_cell_exhaustion"], benefits: ["sleep"], description: "Calms the mind and induces sleep." },
-    { id: "chamomile", name: "Chamomile", hallmarks: ["altered_communication"], benefits: ["sleep"], description: "Classic herb for relaxing into sleep." },
-    { id: "polygala", name: "Polygala Tenuifolia", hallmarks: ["chronic_inflammation"], benefits: ["sleep"], description: "Supports sleep quality and memory." },
-    { id: "l_rhamnosus_sleep", name: "Lactobacillus Rhamnosus", hallmarks: ["dysbiosis"], benefits: ["sleep"], description: "Psychobiotic reducing stress for sleep." },
+    // 1
+    {
+        id: "fullerene",
+        name: "Fullerene",
+        description: "Potent free radical scavenger that protects lipids and membranes from oxidative damage.",
+        hallmarks: ["genomic_instability", "loss_of_proteostasis", "mitochondrial_dysfunction", "chronic_inflammation"],
+        benefits: ["energy", "recovery", "cognition"]
+    },
+    // 2
+    {
+        id: "nac",
+        name: "NAC",
+        description: "Precursor to glutathione that supports detoxification, antioxidant defense, and respiratory health.",
+        hallmarks: ["loss_of_proteostasis", "mitochondrial_dysfunction", "genomic_instability", "chronic_inflammation"],
+        benefits: ["recovery", "immunity", "energy"]
+    },
+    // 3
+    {
+        id: "sulforaphane",
+        name: "Sulforaphane",
+        description: "Broccoli-derived Nrf2 activator that boosts cellular detox and cytoprotective enzymes.",
+        hallmarks: ["genomic_instability", "loss_of_proteostasis", "chronic_inflammation", "cellular_senescence"],
+        benefits: ["metabolism", "immunity", "recovery"]
+    },
+    // 4
+    {
+        id: "ala",
+        name: "ALA",
+        description: "Mitochondrial cofactor and antioxidant that improves glucose handling and nerve health.",
+        hallmarks: ["mitochondrial_dysfunction", "deregulated_nutrient_sensing", "loss_of_proteostasis", "chronic_inflammation"],
+        benefits: ["energy", "metabolism", "recovery"]
+    },
+    // 5
+    {
+        id: "zinc",
+        name: "Zinc",
+        description: "Essential mineral for DNA repair, antioxidant enzymes, and immune cell function.",
+        hallmarks: ["genomic_instability", "loss_of_proteostasis", "chronic_inflammation", "stem_cell_exhaustion"],
+        benefits: ["immunity", "recovery", "metabolism"]
+    },
+    // 6
+    {
+        id: "glynac",
+        name: "GlyNAC",
+        description: "Glycine plus NAC to restore glutathione and improve mitochondrial and metabolic health.",
+        hallmarks: ["genomic_instability", "loss_of_proteostasis", "mitochondrial_dysfunction", "chronic_inflammation"],
+        benefits: ["energy", "recovery", "metabolism"]
+    },
+    // 7
+    {
+        id: "omega_3",
+        name: "Omega-3",
+        description: "EPA/DHA fatty acids that resolve inflammation and support cardiovascular and brain function.",
+        hallmarks: ["chronic_inflammation", "altered_communication", "mitochondrial_dysfunction", "loss_of_proteostasis"],
+        benefits: ["cognition", "immunity", "recovery", "metabolism"]
+    },
+    // 8
+    {
+        id: "gaba",
+        name: "GABA",
+        description: "Inhibitory neurotransmitter that calms the nervous system and eases sleep onset.",
+        hallmarks: ["altered_communication", "chronic_inflammation", "cellular_senescence"],
+        benefits: ["calm", "sleep"]
+    },
+    // 9
+    {
+        id: "astragalus_extract",
+        name: "Astragalus Extract",
+        description: "Adaptogenic root that supports immunity, stress resilience, and healthy aging.",
+        hallmarks: ["telomere_attrition", "stem_cell_exhaustion", "chronic_inflammation", "cellular_senescence"],
+        benefits: ["immunity", "recovery", "energy"]
+    },
+    // 10
+    {
+        id: "cycloastragenol",
+        name: "Cycloastragenol",
+        description: "Purified astragalus triterpenoid associated with telomerase activation and cellular longevity.",
+        hallmarks: ["telomere_attrition", "stem_cell_exhaustion", "genomic_instability", "cellular_senescence"],
+        benefits: ["recovery", "energy"]
+    },
+    // 11
+    {
+        id: "astragaloside_iv",
+        name: "Astragaloside IV",
+        description: "Astragalus saponin with immune, vascular, and telomere-supportive effects.",
+        hallmarks: ["telomere_attrition", "stem_cell_exhaustion", "chronic_inflammation", "cellular_senescence"],
+        benefits: ["immunity", "recovery", "energy"]
+    },
+    // 12
+    {
+        id: "gynostemma",
+        name: "Gynostemma",
+        description: "Adaptogen sometimes called “southern ginseng” that activates AMPK and supports metabolic health.",
+        hallmarks: ["deregulated_nutrient_sensing", "mitochondrial_dysfunction", "chronic_inflammation", "cellular_senescence"],
+        benefits: ["metabolism", "energy", "recovery"]
+    },
+    // 13
+    {
+        id: "echinacea",
+        name: "Echinacea",
+        description: "Immune-modulating herb often used to support upper respiratory defenses.",
+        hallmarks: ["dysbiosis", "chronic_inflammation", "altered_communication", "stem_cell_exhaustion"],
+        benefits: ["immunity", "recovery"]
+    },
+    // 14
+    {
+        id: "astragalus_whole",
+        name: "Astragalus",
+        description: "Whole astragalus root providing broad immune and vitality support.",
+        hallmarks: ["telomere_attrition", "stem_cell_exhaustion", "chronic_inflammation", "cellular_senescence"],
+        benefits: ["immunity", "energy", "recovery"]
+    },
+    // 15
+    {
+        id: "cacao",
+        name: "Cacao",
+        description: "Polyphenol-rich cocoa that supports vascular health, mood, and cognitive performance.",
+        hallmarks: ["chronic_inflammation", "loss_of_proteostasis", "mitochondrial_dysfunction", "altered_communication"],
+        benefits: ["cognition", "focus", "energy"]
+    },
+    // 16
+    {
+        id: "gotu_kola",
+        name: "Gotu Kola",
+        description: "Tonic herb that supports microcirculation, collagen synthesis, and cognitive function.",
+        hallmarks: ["loss_of_proteostasis", "stem_cell_exhaustion", "altered_communication", "chronic_inflammation"],
+        benefits: ["cognition", "recovery", "metabolism"]
+    },
+    // 17
+    {
+        id: "pterostilbene",
+        name: "Pterostilbene",
+        description: "Lipophilic resveratrol analog with antioxidant and sirtuin-activating properties.",
+        hallmarks: ["epigenetic_alterations", "mitochondrial_dysfunction", "loss_of_proteostasis", "chronic_inflammation"],
+        benefits: ["cognition", "metabolism", "recovery"]
+    },
+    // 18
+    {
+        id: "polydatin",
+        name: "Polydatin",
+        description: "Glucoside form of resveratrol that provides antioxidant and cardiometabolic support.",
+        hallmarks: ["epigenetic_alterations", "mitochondrial_dysfunction", "chronic_inflammation", "loss_of_proteostasis"],
+        benefits: ["metabolism", "recovery", "energy"]
+    },
+    // 19
+    {
+        id: "l_theanine",
+        name: "L-Theanine",
+        description: "Green tea amino acid that promotes relaxed alertness and smoother focus.",
+        hallmarks: ["altered_communication", "chronic_inflammation", "cellular_senescence"],
+        benefits: ["calm", "focus", "sleep"]
+    },
+    // 20
+    {
+        id: "milk_thistle_extract",
+        name: "Milk Thistle Extract",
+        description: "Silymarin-rich liver protectant that enhances detox and antioxidant capacity.",
+        hallmarks: ["loss_of_proteostasis", "mitochondrial_dysfunction", "chronic_inflammation", "genomic_instability"],
+        benefits: ["recovery", "metabolism", "immunity"]
+    },
+    // 21
+    {
+        id: "vitamin_c",
+        name: "Vitamin C",
+        description: "Water-soluble antioxidant essential for collagen, immunity, and redox balance.",
+        hallmarks: ["genomic_instability", "loss_of_proteostasis", "chronic_inflammation", "stem_cell_exhaustion"],
+        benefits: ["immunity", "recovery", "energy"]
+    },
+    // 22
+    {
+        id: "phosphatidylserine",
+        name: "Phosphatidylserine",
+        description: "Phospholipid that supports neuronal membranes, stress resilience, and memory.",
+        hallmarks: ["altered_communication", "mitochondrial_dysfunction", "loss_of_proteostasis", "chronic_inflammation"],
+        benefits: ["cognition", "focus", "calm"]
+    },
+    // 23
+    {
+        id: "5_htp",
+        name: "5-HTP",
+        description: "Serotonin precursor that supports mood, sleep quality, and appetite regulation.",
+        hallmarks: ["altered_communication", "chronic_inflammation", "cellular_senescence"],
+        benefits: ["sleep", "calm"]
+    },
+    // 24
+    {
+        id: "kava",
+        name: "Kava",
+        description: "Root extract with strong calming effects that reduces anxiety and muscle tension.",
+        hallmarks: ["altered_communication", "chronic_inflammation", "cellular_senescence"],
+        benefits: ["calm", "sleep"]
+    },
+    // 25
+    {
+        id: "rhodiola_rosea",
+        name: "Rhodiola Rosea",
+        description: "Adaptogen that improves stress resilience, energy, and mental performance.",
+        hallmarks: ["mitochondrial_dysfunction", "deregulated_nutrient_sensing", "altered_communication", "chronic_inflammation"],
+        benefits: ["energy", "focus", "cognition"]
+    },
+    // 26
+    {
+        id: "taurine",
+        name: "Taurine",
+        description: "Amino acid that supports mitochondrial function, calcium handling, and metabolic health.",
+        hallmarks: ["mitochondrial_dysfunction", "genomic_instability", "telomere_attrition", "cellular_senescence"],
+        benefits: ["energy", "metabolism", "recovery"]
+    },
+    // 27
+    {
+        id: "egcg",
+        name: "EGCG",
+        description: "Green tea catechin that activates autophagy and supports cardiometabolic and brain health.",
+        hallmarks: ["loss_of_proteostasis", "disabled_macroautophagy", "mitochondrial_dysfunction", "chronic_inflammation"],
+        benefits: ["metabolism", "cognition", "recovery"]
+    },
+    // 28
+    {
+        id: "spermidine",
+        name: "Spermidine",
+        description: "Polyamine that induces autophagy and is linked to cardiovascular and brain health.",
+        hallmarks: ["disabled_macroautophagy", "loss_of_proteostasis", "mitochondrial_dysfunction", "cellular_senescence"],
+        benefits: ["cognition", "metabolism", "recovery"]
+    },
+    // 29
+    {
+        id: "lions_mane",
+        name: "Lion's Mane",
+        description: "Mushroom that promotes nerve growth factor and supports memory and mood.",
+        hallmarks: ["altered_communication", "loss_of_proteostasis", "mitochondrial_dysfunction", "chronic_inflammation"],
+        benefits: ["cognition", "focus", "calm"]
+    },
+    // 30
+    {
+        id: "collagen",
+        name: "Collagen",
+        description: "Structural protein that supports joints, skin elasticity, and connective tissue repair.",
+        hallmarks: ["loss_of_proteostasis", "stem_cell_exhaustion", "cellular_senescence", "chronic_inflammation"],
+        benefits: ["recovery", "metabolism", "sleep"]
+    },
+    // 31
+    {
+        id: "holy_basil",
+        name: "Holy Basil (Tulsi)",
+        description: "Adaptogen that lowers stress reactivity and supports glycemic and immune balance.",
+        hallmarks: ["chronic_inflammation", "deregulated_nutrient_sensing", "altered_communication", "cellular_senescence"],
+        benefits: ["calm", "metabolism", "immunity"]
+    },
+    // 32
+    {
+        id: "magnolia_bark_extract",
+        name: "Magnolia Bark Extract",
+        description: "Calming, anti-inflammatory bark used for anxiety and sleep support.",
+        hallmarks: ["altered_communication", "chronic_inflammation", "cellular_senescence", "loss_of_proteostasis"],
+        benefits: ["calm", "sleep", "recovery"]
+    },
+    // 33
+    {
+        id: "urolithin_a",
+        name: "Urolithin A",
+        description: "Gut-derived metabolite that enhances mitophagy and muscle function.",
+        hallmarks: ["disabled_macroautophagy", "mitochondrial_dysfunction", "loss_of_proteostasis", "cellular_senescence"],
+        benefits: ["energy", "recovery", "metabolism"]
+    },
+    // 34
+    {
+        id: "trehalose",
+        name: "Trehalose",
+        description: "Autophagy-inducing sugar that stabilizes proteins and supports cellular cleanup.",
+        hallmarks: ["loss_of_proteostasis", "disabled_macroautophagy", "mitochondrial_dysfunction", "cellular_senescence"],
+        benefits: ["recovery", "cognition", "metabolism"]
+    },
+    // 35
+    {
+        id: "curcumin",
+        name: "Curcumin",
+        description: "Turmeric polyphenol that strongly reduces inflammation and oxidative damage.",
+        hallmarks: ["chronic_inflammation", "loss_of_proteostasis", "genomic_instability", "cellular_senescence"],
+        benefits: ["recovery", "immunity", "metabolism"]
+    },
+    // 36
+    {
+        id: "rapamycin",
+        name: "Rapamycin",
+        description: "mTOR inhibitor that shifts cells from growth to repair and extends lifespan in animals.",
+        hallmarks: ["deregulated_nutrient_sensing", "disabled_macroautophagy", "cellular_senescence", "loss_of_proteostasis"],
+        benefits: ["metabolism", "immunity", "recovery"]
+    },
+    // 37
+    {
+        id: "chaga_mushroom",
+        name: "Chaga Mushroom",
+        description: "Antioxidant mushroom that supports immune function and reduces oxidative stress.",
+        hallmarks: ["chronic_inflammation", "dysbiosis", "loss_of_proteostasis", "altered_communication"],
+        benefits: ["immunity", "recovery"]
+    },
+    // 38
+    {
+        id: "urolithin_b",
+        name: "Urolithin B",
+        description: "Related metabolite with anabolic and mitophagy-supporting effects on muscle tissue.",
+        hallmarks: ["disabled_macroautophagy", "mitochondrial_dysfunction", "loss_of_proteostasis", "stem_cell_exhaustion"],
+        benefits: ["recovery", "energy", "metabolism"]
+    },
+    // 39
+    {
+        id: "tremella_mushroom",
+        name: "Tremella Mushroom",
+        description: "Hydrating mushroom that supports skin, collagen, and immune balance.",
+        hallmarks: ["loss_of_proteostasis", "stem_cell_exhaustion", "chronic_inflammation", "dysbiosis"],
+        benefits: ["recovery", "immunity"]
+    },
+    // 40
+    {
+        id: "tart_cherry_extract",
+        name: "Tart Cherry Extract",
+        description: "Polyphenol-rich extract that reduces soreness and improves sleep quality.",
+        hallmarks: ["chronic_inflammation", "loss_of_proteostasis", "altered_communication", "cellular_senescence"],
+        benefits: ["recovery", "sleep", "calm"]
+    },
+    // 41
+    {
+        id: "ca_akg",
+        name: "Ca-AKG",
+        description: "Calcium alpha-ketoglutarate supporting mitochondrial metabolism and epigenetic balance.",
+        hallmarks: ["deregulated_nutrient_sensing", "mitochondrial_dysfunction", "epigenetic_alterations", "chronic_inflammation"],
+        benefits: ["energy", "metabolism", "recovery"]
+    },
+    // 42
+    {
+        id: "beta_hydroxybutyrate",
+        name: "Beta-Hydroxybutyrate",
+        description: "Ketone body used as clean fuel that supports mitochondria and brain energy.",
+        hallmarks: ["deregulated_nutrient_sensing", "mitochondrial_dysfunction", "loss_of_proteostasis", "chronic_inflammation"],
+        benefits: ["energy", "cognition", "metabolism"]
+    },
+    // 43
+    {
+        id: "nr",
+        name: "Nicotinamide Riboside (NR)",
+        description: "NAD precursor that restores cellular NAD and supports repair and energy pathways.",
+        hallmarks: ["mitochondrial_dysfunction", "genomic_instability", "epigenetic_alterations", "deregulated_nutrient_sensing"],
+        benefits: ["energy", "metabolism", "recovery"]
+    },
+    // 44
+    {
+        id: "metformin",
+        name: "Metformin",
+        description: "Insulin sensitizer that activates AMPK and mimics caloric-restriction-like signaling.",
+        hallmarks: ["deregulated_nutrient_sensing", "mitochondrial_dysfunction", "chronic_inflammation", "cellular_senescence"],
+        benefits: ["metabolism", "energy", "recovery"]
+    },
+    // 45
+    {
+        id: "resveratrol",
+        name: "Resveratrol",
+        description: "Polyphenol that activates sirtuins and supports vascular and metabolic health.",
+        hallmarks: ["epigenetic_alterations", "deregulated_nutrient_sensing", "mitochondrial_dysfunction", "chronic_inflammation"],
+        benefits: ["metabolism", "cognition", "recovery"]
+    },
+    // 46
+    {
+        id: "glutathione",
+        name: "Glutathione",
+        description: "Master intracellular antioxidant that protects proteins, DNA, and mitochondria.",
+        hallmarks: ["genomic_instability", "loss_of_proteostasis", "mitochondrial_dysfunction", "chronic_inflammation"],
+        benefits: ["recovery", "energy", "immunity"]
+    },
+    // 47
+    {
+        id: "inositol",
+        name: "Inositol",
+        description: "Sugar-like molecule that supports mood, sleep, and insulin signaling.",
+        hallmarks: ["deregulated_nutrient_sensing", "altered_communication", "chronic_inflammation", "cellular_senescence"],
+        benefits: ["calm", "sleep", "metabolism"]
+    },
+    // 48
+    {
+        id: "zma",
+        name: "ZMA (Zinc/Mag/B6)",
+        description: "Mineral and vitamin combo that supports hormone balance, recovery, and sleep.",
+        hallmarks: ["genomic_instability", "loss_of_proteostasis", "chronic_inflammation", "altered_communication"],
+        benefits: ["sleep", "recovery", "energy"]
+    },
+    // 49
+    {
+        id: "creatine",
+        name: "Creatine",
+        description: "High-energy phosphate buffer that enhances muscle power and brain energy.",
+        hallmarks: ["mitochondrial_dysfunction", "loss_of_proteostasis", "chronic_inflammation", "stem_cell_exhaustion"],
+        benefits: ["energy", "recovery", "cognition"]
+    },
+    // 50
+    {
+        id: "pqq",
+        name: "PQQ",
+        description: "Redox cofactor that stimulates mitochondrial biogenesis and antioxidant defenses.",
+        hallmarks: ["mitochondrial_dysfunction", "loss_of_proteostasis", "genomic_instability", "chronic_inflammation"],
+        benefits: ["energy", "cognition", "recovery"]
+    },
+    // 51
+    {
+        id: "methylene_blue",
+        name: "Methylene Blue",
+        description: "Redox dye that improves electron transport and brain energy at low doses.",
+        hallmarks: ["mitochondrial_dysfunction", "loss_of_proteostasis", "genomic_instability", "chronic_inflammation"],
+        benefits: ["cognition", "focus", "energy"]
+    },
+    // 52
+    {
+        id: "acetyl_l_carnitine",
+        name: "Acetyl-L-Carnitine",
+        description: "Carnitine form that ferries fats into mitochondria and supports mood and cognition.",
+        hallmarks: ["mitochondrial_dysfunction", "loss_of_proteostasis", "chronic_inflammation", "altered_communication"],
+        benefits: ["energy", "cognition", "recovery"]
+    },
+    // 53
+    {
+        id: "astaxanthin",
+        name: "Astaxanthin",
+        description: "Strong carotenoid antioxidant that protects membranes, eyes, and skin.",
+        hallmarks: ["genomic_instability", "loss_of_proteostasis", "mitochondrial_dysfunction", "chronic_inflammation"],
+        benefits: ["recovery", "energy", "immunity"]
+    },
+    // 54
+    {
+        id: "coq10",
+        name: "CoQ10",
+        description: "Electron carrier in mitochondria that supports ATP production and heart health.",
+        hallmarks: ["mitochondrial_dysfunction", "loss_of_proteostasis", "chronic_inflammation", "genomic_instability"],
+        benefits: ["energy", "recovery", "metabolism"]
+    },
+    // 55
+    {
+        id: "tongkat_ali",
+        name: "Tongkat Ali",
+        description: "Root extract that supports testosterone, motivation, and physical performance.",
+        hallmarks: ["deregulated_nutrient_sensing", "altered_communication", "stem_cell_exhaustion", "chronic_inflammation"],
+        benefits: ["energy", "focus", "metabolism"]
+    },
+    // 56
+    {
+        id: "l_tryptophan",
+        name: "L-Tryptophan",
+        description: "Amino acid precursor to serotonin and melatonin for mood and sleep.",
+        hallmarks: ["altered_communication", "chronic_inflammation", "cellular_senescence"],
+        benefits: ["sleep", "calm"]
+    },
+    // 57
+    {
+        id: "fisetin",
+        name: "Fisetin",
+        description: "Flavonoid with senolytic and antioxidant properties that clears aged cells.",
+        hallmarks: ["cellular_senescence", "chronic_inflammation", "stem_cell_exhaustion", "loss_of_proteostasis"],
+        benefits: ["recovery", "immunity", "cognition"]
+    },
+    // 58
+    {
+        id: "quercetin",
+        name: "Quercetin",
+        description: "Broad flavonoid antioxidant with senolytic and vascular support effects.",
+        hallmarks: ["cellular_senescence", "chronic_inflammation", "genomic_instability", "loss_of_proteostasis"],
+        benefits: ["recovery", "immunity", "metabolism"]
+    },
+    // 59
+    {
+        id: "piperlongumine",
+        name: "Piperlongumine",
+        description: "Plant alkaloid studied as a senolytic that stresses senescent cells more than healthy ones.",
+        hallmarks: ["cellular_senescence", "chronic_inflammation", "loss_of_proteostasis", "stem_cell_exhaustion"],
+        benefits: ["recovery", "immunity"]
+    },
+    // 60
+    {
+        id: "berberine",
+        name: "Berberine",
+        description: "AMPK-activating alkaloid that supports glucose control and metabolic health.",
+        hallmarks: ["deregulated_nutrient_sensing", "mitochondrial_dysfunction", "chronic_inflammation", "dysbiosis"],
+        benefits: ["metabolism", "energy", "immunity"]
+    },
+    // 61
+    {
+        id: "senolytic_complex",
+        name: "Senolytic Complex",
+        description: "Combination stack targeting clearance or suppression of senescent cells.",
+        hallmarks: ["cellular_senescence", "chronic_inflammation", "stem_cell_exhaustion", "altered_communication"],
+        benefits: ["recovery", "immunity", "metabolism"]
+    },
+    // 62 (Fisetin 2nd)
+    {
+        id: "fisetin_2",
+        name: "Fisetin",
+        description: "Flavonoid with senolytic and antioxidant properties that clears aged cells.",
+        hallmarks: ["cellular_senescence", "chronic_inflammation", "stem_cell_exhaustion", "loss_of_proteostasis"],
+        benefits: ["recovery", "immunity", "cognition"]
+    },
+    // 63
+    {
+        id: "lithium",
+        name: "Lithium (Low Dose)",
+        description: "Trace mineral dosing that supports neuroprotection and mood stability.",
+        hallmarks: ["altered_communication", "cellular_senescence", "chronic_inflammation", "loss_of_proteostasis"],
+        benefits: ["cognition", "calm", "sleep"]
+    },
+    // 64
+    {
+        id: "hops_extract",
+        name: "Hops Extract",
+        description: "Bitter flower extract with GABAergic effects that ease tension and improve sleep.",
+        hallmarks: ["altered_communication", "chronic_inflammation", "cellular_senescence"],
+        benefits: ["sleep", "calm"]
+    },
+    // 65
+    {
+        id: "nmn_2",
+        name: "NMN",
+        description: "NAD precursor that raises cellular NAD to support repair and metabolism.",
+        hallmarks: ["mitochondrial_dysfunction", "genomic_instability", "epigenetic_alterations", "deregulated_nutrient_sensing"],
+        benefits: ["energy", "metabolism", "recovery"]
+    },
+    // 66
+    {
+        id: "tmg",
+        name: "TMG",
+        description: "Methyl donor that supports homocysteine clearance and DNA methylation balance.",
+        hallmarks: ["epigenetic_alterations", "deregulated_nutrient_sensing", "chronic_inflammation", "stem_cell_exhaustion"],
+        benefits: ["metabolism", "recovery"]
+    },
+    // 67
+    {
+        id: "ginseng",
+        name: "Ginseng",
+        description: "Classic adaptogen that boosts physical energy, resilience, and immune function.",
+        hallmarks: ["deregulated_nutrient_sensing", "mitochondrial_dysfunction", "chronic_inflammation", "altered_communication"],
+        benefits: ["energy", "focus", "immunity"]
+    },
+    // 68 (NMN 2nd)
+    {
+        id: "nmn_3",
+        name: "NMN",
+        description: "NAD precursor that raises cellular NAD to support repair and metabolism.",
+        hallmarks: ["mitochondrial_dysfunction", "genomic_instability", "epigenetic_alterations", "deregulated_nutrient_sensing"],
+        benefits: ["energy", "metabolism", "recovery"]
+    },
+    // 69
+    {
+        id: "reishi_mushroom",
+        name: "Reishi Mushroom",
+        description: "Immune-modulating mushroom that calms the nervous system and supports longevity.",
+        hallmarks: ["dysbiosis", "chronic_inflammation", "altered_communication", "stem_cell_exhaustion"],
+        benefits: ["immunity", "calm", "sleep"]
+    },
+    // 70
+    {
+        id: "bovine_colostrum",
+        name: "Bovine Colostrum",
+        description: "Growth-factor-rich first milk that supports gut barrier and immune defense.",
+        hallmarks: ["dysbiosis", "stem_cell_exhaustion", "altered_communication", "chronic_inflammation"],
+        benefits: ["immunity", "recovery", "metabolism"]
+    },
+    // 71
+    {
+        id: "shatavari",
+        name: "Shatavari",
+        description: "Ayurvedic root supporting female hormone balance, resilience, and digestion.",
+        hallmarks: ["deregulated_nutrient_sensing", "altered_communication", "chronic_inflammation", "stem_cell_exhaustion"],
+        benefits: ["calm", "metabolism", "immunity"]
+    },
+    // 72
+    {
+        id: "skullcap",
+        name: "Skullcap",
+        description: "Calming herb used to reduce anxiety and promote deeper sleep.",
+        hallmarks: ["altered_communication", "chronic_inflammation", "cellular_senescence"],
+        benefits: ["calm", "sleep"]
+    },
+    // 73
+    {
+        id: "beet_root_extract",
+        name: "Beet Root Extract",
+        description: "Nitrate-rich extract that boosts nitric oxide and blood flow.",
+        hallmarks: ["mitochondrial_dysfunction", "altered_communication", "chronic_inflammation", "stem_cell_exhaustion"],
+        benefits: ["energy", "recovery", "metabolism"]
+    },
+    // 74
+    {
+        id: "apigenin",
+        name: "Apigenin",
+        description: "Flavone from chamomile and celery with anti-inflammatory and autophagy-supporting effects.",
+        hallmarks: ["chronic_inflammation", "loss_of_proteostasis", "disabled_macroautophagy", "cellular_senescence"],
+        benefits: ["calm", "recovery", "cognition"]
+    },
+    // 75
+    {
+        id: "bacopa_monnieri",
+        name: "Bacopa Monnieri",
+        description: "Nootropic herb that improves memory consolidation and stress resilience.",
+        hallmarks: ["altered_communication", "mitochondrial_dysfunction", "loss_of_proteostasis", "chronic_inflammation"],
+        benefits: ["cognition", "focus", "calm"]
+    },
+    // 76
+    {
+        id: "nigella_sativa",
+        name: "Nigella Sativa",
+        description: "Black seed extract with anti-inflammatory and metabolic benefits.",
+        hallmarks: ["chronic_inflammation", "deregulated_nutrient_sensing", "dysbiosis", "loss_of_proteostasis"],
+        benefits: ["metabolism", "immunity", "recovery"]
+    },
+    // 77
+    {
+        id: "beta_glucans",
+        name: "Beta-Glucans",
+        description: "Soluble fibers that prime innate immunity and support metabolic health.",
+        hallmarks: ["dysbiosis", "chronic_inflammation", "altered_communication", "stem_cell_exhaustion"],
+        benefits: ["immunity", "recovery", "metabolism"]
+    },
+    // 78
+    {
+        id: "shilajit",
+        name: "Shilajit",
+        description: "Mineral-rich resin that supports mitochondrial function, testosterone, and recovery.",
+        hallmarks: ["mitochondrial_dysfunction", "deregulated_nutrient_sensing", "chronic_inflammation", "stem_cell_exhaustion"],
+        benefits: ["energy", "recovery", "metabolism"]
+    },
+    // 79
+    {
+        id: "magnesium_glycinate",
+        name: "Magnesium Glycinate",
+        description: "Highly absorbable magnesium that relaxes muscles and supports sleep and stress resilience.",
+        hallmarks: ["altered_communication", "chronic_inflammation", "cellular_senescence"],
+        benefits: ["calm", "sleep", "recovery"]
+    },
+    // 80
+    {
+        id: "chamomile",
+        name: "Chamomile",
+        description: "Gentle herb that calms the nervous system and supports sleep onset.",
+        hallmarks: ["altered_communication", "chronic_inflammation", "cellular_senescence"],
+        benefits: ["calm", "sleep"]
+    },
+    // 81
+    {
+        id: "boswellia",
+        name: "Boswellia",
+        description: "Resin extract that reduces joint and systemic inflammation.",
+        hallmarks: ["chronic_inflammation", "loss_of_proteostasis", "stem_cell_exhaustion", "cellular_senescence"],
+        benefits: ["recovery", "metabolism", "sleep"]
+    },
+    // 82
+    {
+        id: "ginger_extract",
+        name: "Ginger Extract",
+        description: "Root extract that supports digestion, circulation, and anti-inflammatory signaling.",
+        hallmarks: ["chronic_inflammation", "loss_of_proteostasis", "altered_communication", "dysbiosis"],
+        benefits: ["recovery", "metabolism", "immunity"]
+    },
+    // 83
+    {
+        id: "honokiol",
+        name: "Honokiol",
+        description: "Magnolia constituent with anti-inflammatory, neuroprotective, and anxiolytic effects.",
+        hallmarks: ["chronic_inflammation", "mitochondrial_dysfunction", "altered_communication", "loss_of_proteostasis"],
+        benefits: ["calm", "cognition", "recovery"]
+    },
+    // 84
+    {
+        id: "grape_seed_extract",
+        name: "Grape Seed Extract",
+        description: "Proanthocyanidin-rich extract that supports vascular health and antioxidant protection.",
+        hallmarks: ["chronic_inflammation", "genomic_instability", "loss_of_proteostasis", "altered_communication"],
+        benefits: ["recovery", "cognition", "metabolism"]
+    },
+    // 85
+    {
+        id: "tart_cherry_extract_2",
+        name: "Tart Cherry Extract",
+        description: "Same anti-inflammatory and sleep-supportive profile as earlier listing.",
+        hallmarks: ["chronic_inflammation", "loss_of_proteostasis", "altered_communication", "cellular_senescence"],
+        benefits: ["recovery", "sleep", "calm"]
+    },
+    // 86
+    {
+        id: "artemisinin",
+        name: "Artemisinin",
+        description: "Sesquiterpene lactone with antiparasitic and experimental autophagy and anticancer roles.",
+        hallmarks: ["chronic_inflammation", "loss_of_proteostasis", "disabled_macroautophagy", "cellular_senescence"],
+        benefits: ["immunity", "recovery"]
+    },
+    // 87
+    {
+        id: "lemon_balm",
+        name: "Lemon Balm",
+        description: "Herb that reduces nervous tension and supports sleep and digestion.",
+        hallmarks: ["altered_communication", "chronic_inflammation", "cellular_senescence"],
+        benefits: ["calm", "sleep"]
+    },
+    // 88
+    {
+        id: "polygala_tenuifolia",
+        name: "Polygala Tenuifolia",
+        description: "Nootropic root that supports BDNF, mood, and memory.",
+        hallmarks: ["altered_communication", "mitochondrial_dysfunction", "loss_of_proteostasis", "chronic_inflammation"],
+        benefits: ["cognition", "focus", "calm"]
+    },
+    // 89
+    {
+        id: "probiotic_s_thermophilus",
+        name: "Probiotic (S. thermophilus)",
+        description: "Yogurt starter strain that supports lactose digestion and gut barrier health.",
+        hallmarks: ["dysbiosis", "altered_communication", "chronic_inflammation", "stem_cell_exhaustion"],
+        benefits: ["immunity", "metabolism", "recovery"]
+    },
+    // 90
+    {
+        id: "prebiotic_inulin",
+        name: "Prebiotic (Inulin)",
+        description: "Fermentable fiber that feeds beneficial microbes and improves metabolic markers.",
+        hallmarks: ["dysbiosis", "chronic_inflammation", "altered_communication", "deregulated_nutrient_sensing"],
+        benefits: ["metabolism", "immunity", "recovery"]
+    },
+    // 91
+    {
+        id: "probiotic_b_longum",
+        name: "Probiotic (B. longum)",
+        description: "Commensal strain that supports gut health, immunity, and mood.",
+        hallmarks: ["dysbiosis", "altered_communication", "chronic_inflammation", "stem_cell_exhaustion"],
+        benefits: ["immunity", "calm", "cognition"]
+    },
+    // 92
+    {
+        id: "glucosamine",
+        name: "Glucosamine",
+        description: "Joint nutrient that supports cartilage matrix and reduces degeneration.",
+        hallmarks: ["loss_of_proteostasis", "stem_cell_exhaustion", "cellular_senescence", "chronic_inflammation"],
+        benefits: ["recovery", "metabolism"]
+    },
+    // 93
+    {
+        id: "s_boulardii",
+        name: "S. Boulardii",
+        description: "Probiotic yeast used to stabilize the gut during stress or antibiotic use.",
+        hallmarks: ["dysbiosis", "chronic_inflammation", "altered_communication", "stem_cell_exhaustion"],
+        benefits: ["immunity", "recovery", "metabolism"]
+    },
+    // 94
+    {
+        id: "l_rhamnosus",
+        name: "L. Rhamnosus",
+        description: "Probiotic strain that supports gut barrier and mood via gut–brain signaling.",
+        hallmarks: ["dysbiosis", "altered_communication", "chronic_inflammation", "stem_cell_exhaustion"],
+        benefits: ["immunity", "calm", "cognition"]
+    },
+    // 95
+    {
+        id: "turkey_tail_mushroom",
+        name: "Turkey Tail Mushroom",
+        description: "Polysaccharide-rich mushroom used for immune modulation and gut support.",
+        hallmarks: ["dysbiosis", "chronic_inflammation", "altered_communication", "stem_cell_exhaustion"],
+        benefits: ["immunity", "recovery"]
+    },
+    // 96
+    {
+        id: "l_rhamnosus_2",
+        name: "Lactobacillus Rhamnosus",
+        description: "Same species-level probiotic as above, second appearance in the grid.",
+        hallmarks: ["dysbiosis", "altered_communication", "chronic_inflammation", "stem_cell_exhaustion"],
+        benefits: ["immunity", "calm", "cognition"]
+    }
 ];
