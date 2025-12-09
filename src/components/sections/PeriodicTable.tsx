@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Info } from "lucide-react";
+import { X, Info, ChevronDown } from "lucide-react";
 import { HALLMARKS, BENEFITS, MOLECULES, Hallmark, Benefit, Molecule } from "@/data/periodicTableData";
 import { cn } from "@/lib/utils";
 
@@ -31,29 +31,32 @@ const BORDER_COLORS: Record<string, string> = {
 
 type ActiveView =
     | { type: "none" }
-    | { type: "molecule"; data: Molecule }
+    | { type: "molecule"; data: Molecule; rowIndex: number }
     | { type: "hallmark"; data: Hallmark }
     | { type: "benefit"; data: Benefit };
 
 export function PeriodicTable() {
     const [activeView, setActiveView] = useState<ActiveView>({ type: "none" });
 
+    // Helper to check if a specific molecule is highlighted
+    const isHighlighted = (molecule: Molecule) => {
+        if (activeView.type === "molecule") return activeView.data.id === molecule.id;
 
-
-    // Derived state for highlighting
-    const highlightedMolecules = useMemo(() => {
         if (activeView.type === "hallmark") {
-            return MOLECULES.filter((m) => m.hallmarks.includes(activeView.data.id)).map(m => m.id);
+            return molecule.hallmarks.includes(activeView.data.id);
         }
         if (activeView.type === "benefit") {
-            return MOLECULES.filter((m) => m.benefits.includes(activeView.data.id)).map(m => m.id);
+            return molecule.benefits.includes(activeView.data.id);
         }
-        return [];
-    }, [activeView]);
+        return false;
+    };
 
-    const isDimmed = (moleculeId: string) => {
-        if (activeView.type === "none" || activeView.type === "molecule") return false;
-        return !highlightedMolecules.includes(moleculeId);
+    const isDimmed = (molecule: Molecule) => {
+        if (activeView.type === "none") return false;
+        // If we are viewing a molecule detail, dim everything else
+        if (activeView.type === "molecule") return activeView.data.id !== molecule.id;
+        // Otherwise dim things that aren't highlighted
+        return !isHighlighted(molecule);
     };
 
     return (
@@ -62,17 +65,27 @@ export function PeriodicTable() {
             {/* Main Grid Container */}
             <div className="grid gap-2" style={{
                 gridTemplateColumns: `150px repeat(${BENEFITS.length}, 1fr)`,
-                gridTemplateRows: `auto repeat(${HALLMARKS.length}, 1fr)`
+                // Dynamic rows: Header + (Hallmarks * (1 Row + Optional Expansion))
+                // We handle expansion via Fragments and col-span-full
             }}>
 
-                {/* Corner (Empty) */}
-                <div className="row-start-1 col-start-1" />
+                {/* Top Top Left (Empty) */}
+                <div className="col-start-1 row-start-1" />
+
+                {/* Sympathetic / Parasympathetic Axis Headers */}
+                <div className="col-start-2 col-span-4 flex items-center justify-center pb-2 border-b border-white/10 mb-2">
+                    <span className="text-xs uppercase tracking-[0.2em] text-white/40 font-semibold">Sympathetic (Action)</span>
+                </div>
+                <div className="col-start-6 col-span-4 flex items-center justify-center pb-2 border-b border-white/10 mb-2">
+                    <span className="text-xs uppercase tracking-[0.2em] text-white/40 font-semibold">Parasympathetic (Rest)</span>
+                </div>
 
                 {/* X-Axis Headers: Benefits */}
-                {BENEFITS.map((benefit) => (
+                {BENEFITS.map((benefit, i) => (
                     <button
                         key={benefit.id}
-                        onClick={() => setActiveView({ type: "benefit", data: benefit })}
+                        style={{ gridColumnStart: i + 2, gridRowStart: 2 }}
+                        onClick={() => setActiveView(activeView.type === 'benefit' && activeView.data.id === benefit.id ? { type: 'none' } : { type: "benefit", data: benefit })}
                         className={cn(
                             "flex flex-col items-center justify-center p-4 rounded-xl transition-all duration-300 group relative overflow-hidden",
                             "hover:bg-white/5 active:scale-95",
@@ -86,169 +99,187 @@ export function PeriodicTable() {
                             {benefit.label}
                         </span>
                         <div className={cn("absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r opacity-50", BENEFIT_COLORS[benefit.id])} />
+                        {/* Info Icon on Hover */}
+                        <Info className="absolute -top-2 -right-2 w-4 h-4 text-white/50 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </button>
                 ))}
 
-                {/* Y-Axis Headers: Hallmarks */}
-                {HALLMARKS.map((hallmark, rowIndex) => (
-                    <button
-                        key={hallmark.id}
-                        style={{ gridRowStart: rowIndex + 2, gridColumnStart: 1 }}
-                        onClick={() => setActiveView({ type: "hallmark", data: hallmark })}
-                        className={cn(
-                            "flex items-center justify-end text-right p-4 rounded-xl transition-all duration-300 relative group",
-                            "hover:bg-white/5",
-                            activeView.type === "hallmark" && activeView.data.id === hallmark.id ? "text-white bg-white/10 z-10" : "text-white/60 hover:text-white"
-                        )}
-                    >
-                        <span className="text-xs font-medium leading-tight">{hallmark.label}</span>
-                    </button>
-                ))}
+                {/* Rows Loop */}
+                {HALLMARKS.map((hallmark, rowIndex) => {
+                    // Grid Row Index starts at 3 (1 = Sympathetic/Parasympathetic Labels, 2 = Benefits, 3 = First Hallmark)
+                    // BUT, if we have expanded rows, CSS Grid alignment gets tricky if we rely on implicit flow.
+                    // We must use explicit placement or flatten the structure. 
+                    // To support "pushing away", we iterate and render rows.
 
-                {/* Molecule Cells */}
-                {HALLMARKS.map((hallmark, rowIndex) => (
-                    BENEFITS.map((benefit, colIndex) => {
-                        const index = rowIndex * 8 + colIndex;
-                        const molecule = MOLECULES[index];
+                    // We will use a standard flex/grid wrapper per row if we weren't using a single big grid. 
+                    // But since we want column alignment, we keep the single big grid.
+                    // We just rely on auto-placement for the loop.
+                    // Wait, auto-placement breaks if we inject full-width items in between.
+                    // Actually, `col-span-full` works in CSS Grid to break to a new line and push content down.
 
-                        if (!molecule) return <div key={`${rowIndex}-${colIndex}`} className="bg-white/5 rounded-lg opacity-20" />;
+                    const isExpanded = activeView.type === "molecule" && activeView.rowIndex === rowIndex;
 
-                        return (
-                            <motion.button
-                                key={molecule.id}
-                                layoutId={`molecule-${molecule.id}`}
-                                style={{ gridRowStart: rowIndex + 2, gridColumnStart: colIndex + 2 }}
-                                onClick={() => setActiveView({ type: "molecule", data: molecule })}
+                    return (
+                        <div key={`row-group-${rowIndex}`} className="contents">
+                            {/* Y-Axis Header */}
+                            <button
+                                onClick={() => setActiveView(activeView.type === 'hallmark' && activeView.data.id === hallmark.id ? { type: 'none' } : { type: "hallmark", data: hallmark })}
                                 className={cn(
-                                    "relative aspect-[4/3] rounded-lg p-2 flex items-center justify-center text-center transition-all duration-300 group",
-                                    "border border-white/5 hover:border-white/20 hover:scale-105 hover:z-20",
-                                    "bg-gradient-to-br from-white/5 to-transparent backdrop-blur-sm",
-                                    isDimmed(molecule.id) && "opacity-20 blur-[1px] scale-95 grayscale",
-                                    activeView.type === "benefit" && activeView.data.id === benefit.id && "ring-1 ring-white/50 bg-white/10",
-                                    activeView.type === "hallmark" && activeView.data.id === hallmark.id && "ring-1 ring-white/50 bg-white/10"
+                                    "flex items-center justify-end text-right p-4 rounded-xl transition-all duration-300 relative group min-h-[100px]",
+                                    "hover:bg-white/5",
+                                    activeView.type === "hallmark" && activeView.data.id === hallmark.id ? "text-white bg-white/10 z-10" : "text-white/60 hover:text-white"
                                 )}
                             >
-                                <div className={cn(
-                                    "absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity bg-gradient-to-br",
-                                    BENEFIT_COLORS[benefit.id]
-                                )} />
-                                <span className="text-[10px] md:text-xs font-medium text-white/90 leading-tight line-clamp-2">
-                                    {molecule.name}
-                                </span>
-                            </motion.button>
-                        );
-                    })
-                ))}
+                                <span className="text-xs font-medium leading-tight">{hallmark.label}</span>
+                                <Info className="ml-2 w-3 h-3 opacity-0 group-hover:opacity-50" />
+                            </button>
+
+                            {/* Molecule Cells for this Row */}
+                            {BENEFITS.map((benefit, colIndex) => {
+                                const index = rowIndex * 8 + colIndex;
+                                const molecule = MOLECULES[index];
+
+                                if (!molecule) return <div key={`empty-${index}`} className="opacity-10 bg-white/5 rounded-lg" />;
+
+                                const isHighlightedState = isHighlighted(molecule);
+                                const isSelected = activeView.type === "molecule" && activeView.data.id === molecule.id;
+
+                                return (
+                                    <motion.button
+                                        key={molecule.id}
+                                        layout
+                                        onClick={() => isSelected ? setActiveView({ type: "none" }) : setActiveView({ type: "molecule", data: molecule, rowIndex })}
+                                        className={cn(
+                                            "relative rounded-lg p-2 flex items-center justify-center text-center transition-all duration-300 group",
+                                            "bg-gradient-to-br from-white/5 to-transparent backdrop-blur-sm border",
+                                            isSelected ? "z-20 scale-105 border-transparent ring-2 ring-white" : "border-white/5 hover:border-white/20 hover:scale-105 hover:z-20",
+                                            isHighlightedState && !isSelected && "z-10 scale-105", // Highlighted but not selected
+                                            isDimmed(molecule) && "opacity-20 blur-[1px] scale-95 grayscale"
+                                        )}
+                                    >
+                                        {/* Rainbow Border for Highlighted Items */}
+                                        {isHighlightedState && !isSelected && (
+                                            <div className="absolute inset-0 rounded-lg p-[2px] bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 -z-10 animate-gradient-xy opacity-100" />
+                                        )}
+
+                                        <div className={cn(
+                                            "absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity bg-gradient-to-br",
+                                            BENEFIT_COLORS[benefit.id]
+                                        )} />
+
+                                        <span className="text-[10px] md:text-xs font-medium text-white/90 leading-tight line-clamp-2">
+                                            {molecule.name}
+                                        </span>
+                                    </motion.button>
+                                );
+                            })}
+
+                            {/* Expansion Panel (Inserted Row) */}
+                            <AnimatePresence>
+                                {isExpanded && activeView.type === "molecule" && (
+                                    <motion.div
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: "auto" }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        className="col-span-full mx-4 my-2 overflow-hidden"
+                                    >
+                                        <div className="bg-[#1a1a1e] border border-white/10 rounded-2xl p-6 md:p-8 flex gap-8 shadow-2xl relative">
+
+                                            {/* Close Button */}
+                                            <button
+                                                onClick={(e) => { e.stopPropagation(); setActiveView({ type: "none" }); }}
+                                                className="absolute top-4 right-4 p-2 text-white/40 hover:text-white"
+                                            >
+                                                <X className="w-5 h-5" />
+                                            </button>
+
+                                            {/* Content */}
+                                            <div className="flex-1 flex flex-col justify-center">
+                                                <div className="flex items-baseline gap-4 mb-2">
+                                                    <h2 className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
+                                                        {activeView.data.name}
+                                                    </h2>
+                                                    <span className="text-white/40 font-mono text-sm">#{MOLECULES.findIndex(m => m.id === activeView.data.id) + 1}</span>
+                                                </div>
+
+                                                <p className="text-xl text-white/80 leading-relaxed max-w-3xl mb-6">
+                                                    {activeView.data.description}
+                                                </p>
+
+                                                {/* Tags */}
+                                                <div className="flex flex-wrap gap-4">
+                                                    {activeView.data.benefits.map(bId => {
+                                                        const ben = BENEFITS.find(b => b.id === bId);
+                                                        if (!ben) return null;
+                                                        return (
+                                                            <span key={bId} className={cn(
+                                                                "px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border bg-black/20",
+                                                                BORDER_COLORS[bId],
+                                                                "text-white"
+                                                            )}>
+                                                                {ben.label}
+                                                            </span>
+                                                        )
+                                                    })}
+                                                </div>
+                                            </div>
+
+                                            {/* Hallmarks List (Right Side) */}
+                                            <div className="w-1/3 border-l border-white/10 pl-8 flex flex-col justify-center">
+                                                <h4 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-4">Targeted Hallmarks</h4>
+                                                <div className="space-y-2">
+                                                    {activeView.data.hallmarks.map(hId => {
+                                                        const h = HALLMARKS.find(i => i.id === hId);
+                                                        if (!h) return null;
+                                                        return (
+                                                            <div key={hId} className="flex items-center gap-2 text-sm text-white/70">
+                                                                <div className="w-1.5 h-1.5 rounded-full bg-brand-copper" />
+                                                                {h.label}
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+                    );
+                })}
             </div>
 
-            {/* Overlay Detail View */}
+            {/* Overlays for Benefits/Hallmarks Details (Still using modal for these as they are axis-level) */}
             <AnimatePresence>
-                {activeView.type !== "none" && (
+                {(activeView.type === "benefit" || activeView.type === "hallmark") && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md"
-                        onClick={() => setActiveView({ type: "none" })}
+                        className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-full max-w-2xl px-4 pointer-events-none"
                     >
-                        <motion.div
-                            layoutId={activeView.type === "molecule" ? `molecule-${activeView.data.id}` : undefined}
-                            className="relative w-full max-w-3xl bg-[#0f0f11] border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl overflow-hidden"
-                            onClick={(e) => e.stopPropagation()}
-                        >
+                        <div className="bg-[#1a1a1e]/90 backdrop-blur-xl border border-white/10 p-6 rounded-2xl shadow-2xl text-center pointer-events-auto">
+                            <h3 className={cn(
+                                "text-2xl font-bold mb-2",
+                                activeView.type === "benefit" ? "text-brand-copper" : "text-brand-purple-100"
+                            )}>
+                                {activeView.data.label}
+                            </h3>
+                            <p className="text-white/80 leading-relaxed mb-4">
+                                {activeView.data.description}
+                            </p>
                             <button
                                 onClick={() => setActiveView({ type: "none" })}
-                                className="absolute top-6 right-6 p-2 rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors"
+                                className="text-sm font-semibold text-white/40 hover:text-white transition-colors"
                             >
-                                <X className="w-6 h-6" />
+                                Dismiss
                             </button>
-
-                            {/* Molecule Detail */}
-                            {activeView.type === "molecule" && (
-                                <div className="flex flex-col gap-6">
-                                    <div className="flex items-center gap-4">
-                                        <div className={cn(
-                                            "w-16 h-16 rounded-2xl flex items-center justify-center bg-gradient-to-br text-2xl font-bold text-white",
-                                            BENEFIT_COLORS[activeView.data.benefits[0]] // Use primary benefit color
-                                        )}>
-                                            {activeView.data.name.charAt(0)}
-                                        </div>
-                                        <div>
-                                            <h2 className="text-4xl font-bold text-white mb-1">{activeView.data.name}</h2>
-                                            <div className="flex gap-2">
-                                                {activeView.data.benefits.map(bId => {
-                                                    const b = BENEFITS.find(i => i.id === bId);
-                                                    return b ? <span key={b.id} className="text-sm text-brand-copper uppercase tracking-wider font-semibold">{b.label}</span> : null;
-                                                })}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <p className="text-xl text-white/80 leading-relaxed max-w-2xl">
-                                        {activeView.data.description}
-                                    </p>
-
-                                    <div className="grid grid-cols-2 gap-8 mt-4">
-                                        <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
-                                            <h4 className="text-sm font-semibold text-white/50 uppercase tracking-widest mb-4">Functional Benefits</h4>
-                                            <div className="flex flex-wrap gap-2">
-                                                {activeView.data.benefits.map(id => {
-                                                    const item = BENEFITS.find(b => b.id === id);
-                                                    return item ? (
-                                                        <span key={id} className={cn(
-                                                            "px-3 py-1.5 rounded-full text-sm font-medium border bg-white/5 text-white",
-                                                            BORDER_COLORS[id]
-                                                        )}>
-                                                            {item.label}
-                                                        </span>
-                                                    ) : null;
-                                                })}
-                                            </div>
-                                        </div>
-
-                                        <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
-                                            <h4 className="text-sm font-semibold text-white/50 uppercase tracking-widest mb-4">Targeted Hallmarks</h4>
-                                            <div className="flex flex-col gap-2">
-                                                {activeView.data.hallmarks.map(id => {
-                                                    const item = HALLMARKS.find(h => h.id === id);
-                                                    return item ? (
-                                                        <div key={id} className="flex items-center gap-2 text-white/80">
-                                                            <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
-                                                            {item.label}
-                                                        </div>
-                                                    ) : null;
-                                                })}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-
-                            {/* Category Detail (Benefit or Hallmark) */}
-                            {(activeView.type === "benefit" || activeView.type === "hallmark") && (
-                                <div className="flex flex-col gap-6 text-center items-center">
-                                    <div className={cn(
-                                        "w-20 h-20 rounded-full flex items-center justify-center bg-white/5 mb-2",
-                                        activeView.type === "benefit" ? "text-brand-copper" : "text-brand-purple-100"
-                                    )}>
-                                        <Info className="w-10 h-10" />
-                                    </div>
-                                    <h2 className="text-4xl font-bold text-white">
-                                        {activeView.data.label}
-                                    </h2>
-                                    <p className="text-xl text-white/80 max-w-2xl">
-                                        {activeView.data.description}
-                                    </p>
-                                    <div className="flex items-center gap-2 mt-4 px-4 py-2 rounded-full bg-white/5 text-sm text-white/50">
-                                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                                        Highlighting {activeView.type === "benefit" ? "Molecules in this Column" : "Molecules in this Row"}
-                                    </div>
-                                </div>
-                            )}
-                        </motion.div>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
+
         </div>
     );
 }

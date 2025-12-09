@@ -21,29 +21,29 @@ export interface Molecule {
 }
 
 export const HALLMARKS: Hallmark[] = [
-    { id: "genomic_instability", label: "Genomic Instability", description: "Accumulation of genetic damage over time." },
-    { id: "telomere_attrition", label: "Telomere Attrition", description: "Shortening of protective caps on chromosomes." },
-    { id: "epigenetic_alterations", label: "Epigenetic Alterations", description: "Changes in gene expression without altering DNA sequence." },
-    { id: "loss_of_proteostasis", label: "Loss of Proteostasis", description: "Failure of protein folding and clearance mechanisms." },
-    { id: "disabled_macroautophagy", label: "Disabled Macroautophagy", description: "Decline in the cell's ability to recycle waste." },
-    { id: "deregulated_nutrient_sensing", label: "Deregulated Nutrient Sensing", description: "Imbalanced cellular response to nutrients." },
-    { id: "mitochondrial_dysfunction", label: "Mitochondrial Dysfunction", description: "Reduced energy production and increased oxidative stress." },
-    { id: "cellular_senescence", label: "Cellular Senescence", description: "Accumulation of 'zombie cells' that damage tissue." },
-    { id: "stem_cell_exhaustion", label: "Stem Cell Exhaustion", description: "Decline in regenerative capacity of tissues." },
-    { id: "altered_communication", label: "Altered Intercellular Communication", description: "Changes in signaling between cells, leading to inflammation." },
-    { id: "chronic_inflammation", label: "Chronic Inflammation", description: "Persistent, low-grade inflammation ('inflammaging')." },
-    { id: "dysbiosis", label: "Dysbiosis", description: "Imbalance in the gut microbiome." },
+    { id: "genomic_instability", label: "Genomic Instability", description: "The accumulation of genetic damage/mutations over time. This instability disrupts cellular function and can lead to malfunctioning cells or cancer." },
+    { id: "telomere_attrition", label: "Telomere Attrition", description: "The shortening of the protective caps (telomeres) on chromosomes with each cell division. Eventually, cells stop dividing and become senescent." },
+    { id: "epigenetic_alterations", label: "Epigenetic Alterations", description: "Changes in gene expression markers (like DNA methylation) that occur with age, causing cells to lose their identity and function improperly." },
+    { id: "loss_of_proteostasis", label: "Loss of Proteostasis", description: "A decline in the cell's ability to maintain protein quality. Misfolded or damaged proteins aggregate, causing toxicity." },
+    { id: "disabled_macroautophagy", label: "Disabled Macroautophagy", description: "A failure of the cell's recycling system (autophagy) to clear out damaged organelles and proteins, leading to cellular 'trash' accumulation." },
+    { id: "deregulated_nutrient_sensing", label: "Deregulated Nutrient Sensing", description: "Cells lose the ability to properly sense fuel availability (glucose, insulin), leading to metabolic inefficiency and fat accumulation." },
+    { id: "mitochondrial_dysfunction", label: "Mitochondrial Dysfunction", description: "The power plants of the cell become less efficient, producing less energy (ATP) and more damaging free radicals (oxidative stress)." },
+    { id: "cellular_senescence", label: "Cellular Senescence", description: "Cells stop dividing but refuse to die, lingering as 'zombie cells' that secrete inflammatory signals (SASP) and damage neighbors." },
+    { id: "stem_cell_exhaustion", label: "Stem Cell Exhaustion", description: "The depletion of the body's regenerative reserve. Stem cells lose the ability to divide and repair tissue damage." },
+    { id: "altered_communication", label: "Altered Intercellular Communication", description: "Disrupted signaling between cells, often shifting towards a chronic inflammatory state ('inflammaging') that spreads dysfunction." },
+    { id: "chronic_inflammation", label: "Chronic Inflammation", description: "A persistent, low-grade immune response that damages tissues over time, driven by senescent cells and immune system aging." },
+    { id: "dysbiosis", label: "Dysbiosis", description: "An imbalance in the gut microbiome composition, compromising the gut barrier and driving systemic inflammation." },
 ];
 
 export const BENEFITS: Benefit[] = [
-    { id: "energy", label: "Energy", description: "Enhances cellular energy production and physical vitality." },
-    { id: "cognition", label: "Cognition", description: "Supports brain health, memory, and mental clarity." },
-    { id: "focus", label: "Focus", description: "Improves concentration and sustained attention." },
-    { id: "metabolism", label: "Metabolism", description: "Optimizes nutrient processing and metabolic flexibility." },
-    { id: "immunity", label: "Immunity", description: "Strengthens immune defense and resilience." },
-    { id: "recovery", label: "Recovery", description: "Aids in tissue repair and physical recovery." },
-    { id: "calm", label: "Calm", description: "Promotes relaxation and stress resilience." },
-    { id: "sleep", label: "Sleep", description: "Supports deep, restorative sleep cycles." },
+    { id: "energy", label: "Energy", description: "Enhances mitochondrial efficiency and ATP production to combat fatigue and improve cellular endurance." },
+    { id: "cognition", label: "Cognition", description: "Supports neuroplasticity, memory retention, and processing speed by protecting neurons and optimizing signaling." },
+    { id: "focus", label: "Focus", description: "Promotes sustained attention and mental clarity by modulating neurotransmitters like dopamine and acetylcholine." },
+    { id: "metabolism", label: "Metabolism", description: "Optimizes nutrient partitioning, insulin sensitivity, and metabolic rate to support healthy body composition." },
+    { id: "immunity", label: "Immunity", description: "Strengthens both innate and adaptive immune defenses, improving resilience against pathogens and stress." },
+    { id: "recovery", label: "Recovery", description: "Accelerates tissue repair and reduces downtime by enhancing protein synthesis and dampening excessive inflammation." },
+    { id: "calm", label: "Calm", description: "Modulates the stress response (HPA axis) and boosts GABAergic activity to promote relaxation without sedation." },
+    { id: "sleep", label: "Sleep", description: "Supports the circadian rhythm and sleep architecture, promoting deeper, more restorative cycles of rest." },
 ];
 
 // 12 Hallmarks x 8 Benefits = 96 Cells.
