@@ -240,21 +240,10 @@ export function PeriodicTable() {
 
                             {/* Molecule Cells */}
                             {BENEFITS.map((benefit, colIndex) => {
-                                // SHIFT LOGIC:
-                                // If Row 0 (Genomic Instability), we shift +1.
-                                // But we must ensure the "Empty" cell behaves like a real cell to maintain row height/alignment.
-
-                                let moleculeIndex = -1;
-
-                                if (rowIndex === 0) {
-                                    if (colIndex === 0) {
-                                        moleculeIndex = -1; // Empty
-                                    } else {
-                                        moleculeIndex = 0 * 8 + (colIndex - 1);
-                                    }
-                                } else {
-                                    moleculeIndex = rowIndex * 8 + colIndex;
-                                }
+                                // Standard Index Logic (Row-Major)
+                                // Row 0: 0-7 (Fullerene to GABA)
+                                // Row 1: 8-15 (Astragalus...)
+                                const moleculeIndex = rowIndex * 8 + colIndex;
 
                                 const molecule = moleculeIndex >= 0 ? MOLECULES[moleculeIndex] : null;
 
