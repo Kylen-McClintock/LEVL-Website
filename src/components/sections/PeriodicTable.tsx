@@ -49,6 +49,23 @@ export function PeriodicTable() {
         // We will implement this via the Container onClick in JSX.
     }, []);
 
+    // Function to generate dynamic 2D gradient specific to the grid
+    // X-Axis: Energy (Orange) -> Sleep (Teal)
+    // Y-Axis: Slight shift to create depth
+    const getCellColor = (row: number, col: number) => {
+        // Base Hues:
+        // Col 0 (Energy): ~30 (Orange)
+        // Col 7 (Sleep): ~170 (Teal) 
+        // Span: 140 deg / 7 steps = 20 deg per col.
+
+        const startHue = 25; // Orange/Peach
+        const hueStepX = 18;
+        const hueStepY = 2; // Slight vertical shift to differentiate rows
+
+        const hue = startHue + (col * hueStepX) + (row * hueStepY);
+        return `hsl(${hue}, 90%, 65%)`; // High saturation, good legibility lightness
+    };
+
     // Helper to check if a specific molecule is highlighted
     const isHighlighted = (molecule: Molecule) => {
         if (activeView.type === "molecule") return activeView.data.id === molecule.id;
@@ -87,7 +104,7 @@ export function PeriodicTable() {
 
                 {/* Row 1: Top Headers (Nervous System) + Top Left Title */}
                 <div className="col-start-1 row-start-1 flex items-end justify-end p-2 pb-4">
-                    <span className="text-xs font-bold text-white/30 uppercase tracking-widest text-right leading-relaxed">
+                    <span className="text-xs font-bold bg-clip-text text-transparent bg-gradient-to-br from-orange-400 to-teal-400 uppercase tracking-widest text-right leading-relaxed">
                         Hallmarks<br />of Aging
                     </span>
                 </div>
@@ -175,6 +192,9 @@ export function PeriodicTable() {
                     const isExpanded = activeView.type === "molecule" && activeView.rowIndex === rowIndex;
                     const isHallmarkExpanded = activeView.type === "hallmark" && activeView.data.id === hallmark.id;
 
+                    // Hallmark Label Color: Match the start of the row (Col 0 approx)
+                    const labelColor = getCellColor(rowIndex, 0);
+
                     return (
                         <div key={`row-group-${rowIndex}`} className="contents">
                             {/* Hallmark Header */}
@@ -187,11 +207,16 @@ export function PeriodicTable() {
                                 className={cn(
                                     "flex items-center justify-end text-right p-4 rounded-xl transition-all duration-300 relative group min-h-[100px] h-full",
                                     "hover:bg-white/5",
-                                    activeView.type === "hallmark" && activeView.data.id === hallmark.id ? "text-white bg-white/10 z-10" : "text-white/60 hover:text-white"
+                                    activeView.type === "hallmark" && activeView.data.id === hallmark.id ? "bg-white/10 z-10" : "hover:bg-white/5"
                                 )}
                             >
-                                <span className="text-xs font-medium leading-tight">{hallmark.label}</span>
-                                <Info className="ml-2 w-3 h-3 opacity-0 group-hover:opacity-50" />
+                                <span
+                                    className="text-xs font-bold leading-tight uppercase tracking-wide transition-colors duration-300"
+                                    style={{ color: labelColor }}
+                                >
+                                    {hallmark.label}
+                                </span>
+                                <Info className="ml-2 w-3 h-3 opacity-0 group-hover:opacity-50 text-white" />
                             </button>
 
                             {/* Hallmark Expansion Panel (Immediate) */}
@@ -233,6 +258,9 @@ export function PeriodicTable() {
 
                                 const molecule = moleculeIndex >= 0 ? MOLECULES[moleculeIndex] : null;
 
+                                // Calc Color for this specific cell
+                                const cellColor = getCellColor(rowIndex, colIndex);
+
                                 if (!molecule) return (
                                     <div
                                         key={`empty-${rowIndex}-${colIndex}`}
@@ -244,9 +272,6 @@ export function PeriodicTable() {
                                 const isHighlightedState = isHighlighted(molecule);
                                 const isSelected = activeView.type === "molecule" && activeView.data.id === molecule.id;
 
-                                // Vibrant color for highlighted state (fallback from rainbow if desired, but user asked for rainbow highlight)
-                                // Actually user asked for "border of the card should be the matching vibrant rainbow gradient" when highlighted.
-
                                 return (
                                     <motion.button
                                         key={molecule.id}
@@ -257,30 +282,44 @@ export function PeriodicTable() {
                                         }}
                                         className={cn(
                                             "relative rounded-lg p-2 flex items-center justify-center text-center transition-all duration-300 group min-h-[100px] h-full w-full",
-                                            "bg-gradient-to-br from-white/5 to-transparent backdrop-blur-sm",
+                                            "backdrop-blur-sm border", // Keep border for structure, color will be dynamic
                                             isSelected
-                                                ? "z-20 scale-105 border-transparent ring-0"
-                                                : "border border-white/5 hover:border-transparent hover:scale-105 hover:z-20",
+                                                ? "z-20 scale-105"
+                                                : "hover:scale-105 hover:z-20",
                                             isDimmed(molecule) && "opacity-20 blur-[1px] scale-95 grayscale"
                                         )}
+                                        style={{
+                                            borderColor: isSelected || isHighlightedState ? cellColor : "rgba(255,255,255,0.1)",
+                                            backgroundColor: isSelected ? "rgba(255,255,255,0.05)" : "transparent",
+                                            boxShadow: isSelected || isHighlightedState ? `0 0 20px ${cellColor}` : "none",
+                                        }}
                                     >
-                                        {/* Rainbow Border for Selection / Highlight / Hover */}
-                                        <div className={cn(
-                                            "absolute inset-0 rounded-lg p-[2px] bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 -z-10 animate-gradient-xy transition-opacity duration-300",
-                                            isSelected || isHighlightedState ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-                                        )} />
-
                                         {/* Inner Content Background */}
                                         <div className="absolute inset-[1px] rounded-[7px] bg-[#0a0a0a] z-[-1]" />
 
-                                        <div className={cn(
-                                            "absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity bg-gradient-to-br rounded-lg",
-                                            BENEFIT_COLORS[benefit.id]
-                                        )} />
+                                        {/* We can also tint the background slightly with the cell color on hover */}
+                                        <div
+                                            className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-10 transition-opacity"
+                                            style={{ backgroundColor: cellColor }}
+                                        />
 
                                         <span className="text-[10px] md:text-xs font-medium text-white/90 leading-tight line-clamp-2 relative z-10">
                                             {molecule.name}
                                         </span>
+
+                                        {/* Always visible colored border? Or only on Highlight? 
+                                            User said: "This is the rainbow gradient i meant for the cards". 
+                                            Usually implies the grid ITSELF is the rainbow. 
+                                            So let's make the border ALWAYS have the color, but maybe dimmer when not active? 
+                                        */}
+                                        <div
+                                            className="absolute inset-0 rounded-lg border-2 pointer-events-none transition-opacity duration-300"
+                                            style={{
+                                                borderColor: cellColor,
+                                                opacity: isSelected || isHighlightedState ? 1 : 0.4
+                                            }}
+                                        />
+
                                     </motion.button>
                                 );
                             })}
