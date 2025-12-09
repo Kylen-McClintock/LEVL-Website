@@ -21,18 +21,18 @@ export interface Molecule {
 }
 
 export const HALLMARKS: Hallmark[] = [
-    { id: "genomic_instability", label: "Genomic Instability", description: "The accumulation of genetic damage/mutations over time. This instability disrupts cellular function and can lead to malfunctioning cells or cancer." },
-    { id: "telomere_attrition", label: "Telomere Attrition", description: "The shortening of the protective caps (telomeres) on chromosomes with each cell division. Eventually, cells stop dividing and become senescent." },
-    { id: "epigenetic_alterations", label: "Epigenetic Alterations", description: "Changes in gene expression markers (like DNA methylation) that occur with age, causing cells to lose their identity and function improperly." },
-    { id: "loss_of_proteostasis", label: "Loss of Proteostasis", description: "A decline in the cell's ability to maintain protein quality. Misfolded or damaged proteins aggregate, causing toxicity." },
-    { id: "disabled_macroautophagy", label: "Disabled Macroautophagy", description: "A failure of the cell's recycling system (autophagy) to clear out damaged organelles and proteins, leading to cellular 'trash' accumulation." },
-    { id: "deregulated_nutrient_sensing", label: "Deregulated Nutrient Sensing", description: "Cells lose the ability to properly sense fuel availability (glucose, insulin), leading to metabolic inefficiency and fat accumulation." },
-    { id: "mitochondrial_dysfunction", label: "Mitochondrial Dysfunction", description: "The power plants of the cell become less efficient, producing less energy (ATP) and more damaging free radicals (oxidative stress)." },
-    { id: "cellular_senescence", label: "Cellular Senescence", description: "Cells stop dividing but refuse to die, lingering as 'zombie cells' that secrete inflammatory signals (SASP) and damage neighbors." },
-    { id: "stem_cell_exhaustion", label: "Stem Cell Exhaustion", description: "The depletion of the body's regenerative reserve. Stem cells lose the ability to divide and repair tissue damage." },
-    { id: "altered_communication", label: "Altered Intercellular Communication", description: "Disrupted signaling between cells, often shifting towards a chronic inflammatory state ('inflammaging') that spreads dysfunction." },
-    { id: "chronic_inflammation", label: "Chronic Inflammation", description: "A persistent, low-grade immune response that damages tissues over time, driven by senescent cells and immune system aging." },
-    { id: "dysbiosis", label: "Dysbiosis", description: "An imbalance in the gut microbiome composition, compromising the gut barrier and driving systemic inflammation." },
+    { id: "genomic_instability", label: "Genomic Instability", description: "DNA is the instruction manual for every cell, but it accumulates damage over time from UV light, radiation, and metabolic byproducts. When repair mechanisms fail, this genomic instability leads to mutations and cellular dysfunction, driving the aging process and increasing the risk of age-related diseases." },
+    { id: "telomere_attrition", label: "Telomere Attrition", description: "Telomeres are protective caps at the ends of chromosomes, acting like the plastic tips on shoelaces. With every cell division, these caps shorten. When they become too critically short, the cell senses a crisis and stops dividing, entering a state of senescence or programmed cell death, limiting tissue regeneration." },
+    { id: "epigenetic_alterations", label: "Epigenetic Alterations", description: "While our DNA code remains constant, the chemical markers that tell genes when to switch on or off—the epigenome—become disorganized with age. These alterations cause cells to 'forget' their identity and behave erratically, contributing to the functional decline of tissues and organs." },
+    { id: "loss_of_proteostasis", label: "Loss of Proteostasis", description: "Proteins are the workhorses of the cell, but they must be folded correctly to function. Aging impairs the machinery responsible for folding and clearing proteins, leading to the accumulation of sticky, toxic protein aggregates—a hallmark of neurodegenerative conditions and cellular failure." },
+    { id: "disabled_macroautophagy", label: "Disabled Macroautophagy", description: "Autophagy is the cell's essential housekeeping process, identifying and recycling damaged organelles and proteins. As we age, this cleanup system slows down, causing cellular 'trash' to pile up. Restoring autophagy is key to rejuvenating cells and maintaining metabolic efficiency." },
+    { id: "deregulated_nutrient_sensing", label: "Deregulated Nutrient Sensing", description: "Cells use sophisticated sensors to match metabolism to nutrient availability. In aging, these sensors (like mTOR and Insulin/IGF-1) become less sensitive or hyperactive, often tricked by modern diets. This deregulation leads to inefficient metabolism, fat accumulation, and a failure to trigger repair pathways." },
+    { id: "mitochondrial_dysfunction", label: "Mitochondrial Dysfunction", description: "Mitochondria are the power plants of our cells, generating the energy (ATP) needed for life. Over time, they accumulate damage and become inefficient, producing less energy and more harmful free radicals. This energy deficit compromises cellular performance and accelerates systemic aging." },
+    { id: "cellular_senescence", label: "Cellular Senescence", description: "Senescent cells are 'zombie cells' that have stopped dividing due to damage but refuse to die. Instead, they linger in tissues and secrete a toxic cocktail of inflammatory signals (SASP) that damages neighboring healthy cells, spreading dysfunction and chronic inflammation throughout the body." },
+    { id: "stem_cell_exhaustion", label: "Stem Cell Exhaustion", description: "Stem cells are the body's reservoir for repair and regeneration, replacing dying cells in tissues like skin, blood, and gut. With age, this pool becomes exhausted or loses its ability to divide effectively, leading to frailty, slower healing, and the progressive failure of organ maintenance." },
+    { id: "altered_communication", label: "Altered Intercellular Communication", description: "Cells must constantly talk to each other to coordinate function. Aging disrupts these signals, often shifting the conversation towards a chronic, systemic inflammatory state known as 'inflammaging.' This breakdown in communication prevents distinct tissues from working together harmoniously." },
+    { id: "chronic_inflammation", label: "Chronic Inflammation", description: "Unlike the acute inflammation that heals wounds, aging is accompanied by a persistent, low-grade 'sterile' inflammation. Driven by immune system imbalances and senescent cells, this chronic fire slowly damages tissues, degrades proteins, and is a root cause of most age-related diseases." },
+    { id: "dysbiosis", label: "Dysbiosis", description: "The gut microbiome is a complex ecosystem that regulates metabolism, immunity, and even brain health. Aging and lifestyle factors can disturb this balance (dysbiosis), increasing gut permeability ('leaky gut') and allowing toxins to enter the bloodstream, triggering systemic inflammation." },
 ];
 
 export const BENEFITS: Benefit[] = [
@@ -263,7 +263,7 @@ export const MOLECULES: Molecule[] = [
         name: "EGCG",
         description: "Green tea catechin that activates autophagy and supports cardiometabolic and brain health.",
         hallmarks: ["loss_of_proteostasis", "disabled_macroautophagy", "mitochondrial_dysfunction", "chronic_inflammation"],
-        benefits: ["metabolism", "cognition", "recovery"]
+        benefits: ["metabolism", "cognition", "recovery", "focus"]
     },
     // 28
     {
@@ -317,7 +317,7 @@ export const MOLECULES: Molecule[] = [
     {
         id: "trehalose",
         name: "Trehalose",
-        description: "Autophagy-inducing sugar that stabilizes proteins and supports cellular cleanup.",
+        description: "A naturally occurring sugar found in mushrooms and resurrection plants. It functions as a powerful autophagy inducer and protein stabilizer, protecting cellular structures.",
         hallmarks: ["loss_of_proteostasis", "disabled_macroautophagy", "mitochondrial_dysfunction", "cellular_senescence"],
         benefits: ["recovery", "cognition", "metabolism"]
     },
@@ -365,7 +365,7 @@ export const MOLECULES: Molecule[] = [
     {
         id: "tart_cherry_extract",
         name: "Tart Cherry Extract",
-        description: "Polyphenol-rich extract that reduces soreness and improves sleep quality.",
+        description: "A potent source of anthocyanins and natural melatonin, this extract reduces oxidative stress and inflammation while regulating sleep cycles and muscle recovery.",
         hallmarks: ["chronic_inflammation", "loss_of_proteostasis", "altered_communication", "cellular_senescence"],
         benefits: ["recovery", "sleep", "calm"]
     },
@@ -725,7 +725,7 @@ export const MOLECULES: Molecule[] = [
     {
         id: "tart_cherry_extract_2",
         name: "Tart Cherry Extract",
-        description: "Same anti-inflammatory and sleep-supportive profile as earlier listing.",
+        description: "A potent source of anthocyanins and natural melatonin, this extract reduces oxidative stress and inflammation while regulating sleep cycles and muscle recovery.",
         hallmarks: ["chronic_inflammation", "loss_of_proteostasis", "altered_communication", "cellular_senescence"],
         benefits: ["recovery", "sleep", "calm"]
     },
@@ -797,7 +797,7 @@ export const MOLECULES: Molecule[] = [
     {
         id: "l_rhamnosus",
         name: "L. Rhamnosus",
-        description: "Probiotic strain that supports gut barrier and mood via gut–brain signaling.",
+        description: "A premier probiotic strain extensively studied for its ability to strengthen the gut barrier and modulate the gut-brain axis/mood.",
         hallmarks: ["dysbiosis", "altered_communication", "chronic_inflammation", "stem_cell_exhaustion"],
         benefits: ["immunity", "calm", "cognition"]
     },
