@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Info } from "lucide-react";
 import { HALLMARKS, BENEFITS, MOLECULES, Hallmark, Benefit, Molecule } from "@/data/periodicTableData";
@@ -39,16 +39,6 @@ export function PeriodicTable() {
     const [activeView, setActiveView] = useState<ActiveView>({ type: "none" });
     const [geekMode, setGeekMode] = useState(false);
 
-    // Click outside handler
-    useEffect(() => {
-        const handleGlobalClick = (e: MouseEvent) => {
-            // If the click target is the background/body or outside our interactive elements, close active view
-            // However, implementing precise "click outside" for complex grid is tough.
-            // Easier approach: The Grid Container itself handles the "Close" action, 
-            // and all interactive children stopPropagation.
-        };
-        // We will implement this via the Container onClick in JSX.
-    }, []);
 
     // Function to generate dynamic 2D gradient specific to the grid
     // Matches the Functional Benefit headers: Energy (Orange) -> ... -> Sleep (Teal)
@@ -263,7 +253,11 @@ export function PeriodicTable() {
                                         layout
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            isSelected ? setActiveView({ type: "none" }) : setActiveView({ type: "molecule", data: molecule, rowIndex })
+                                            if (isSelected) {
+                                                setActiveView({ type: "none" });
+                                            } else {
+                                                setActiveView({ type: "molecule", data: molecule, rowIndex });
+                                            }
                                         }}
                                         className={cn(
                                             "relative rounded-lg p-2 flex items-center justify-center text-center transition-all duration-300 group min-h-[100px] h-full w-full",
@@ -375,21 +369,62 @@ export function PeriodicTable() {
                                                                 initial={{ opacity: 0, y: 10 }}
                                                                 animate={{ opacity: 1, y: 0 }}
                                                                 exit={{ opacity: 0, y: -10 }}
-                                                                className="space-y-6"
+                                                                className="space-y-8"
                                                             >
+                                                                {/* Main Text with HTML support for superscripts */}
                                                                 <div className="prose prose-invert prose-sm max-w-none">
-                                                                    <p className="text-lg text-white/90 leading-relaxed">
-                                                                        {activeView.data.geekModeText || "Geek mode content coming soon..."}
-                                                                    </p>
+                                                                    <div
+                                                                        className="text-lg text-white/90 leading-relaxed [&>p]:mb-4"
+                                                                        dangerouslySetInnerHTML={{ __html: activeView.data.geekModeText || "Geek mode content coming soon..." }}
+                                                                    />
                                                                 </div>
 
+                                                                {/* Synergy Details Box */}
+                                                                {activeView.data.synergyDetails && (
+                                                                    <div className="bg-brand-purple/5 border border-brand-purple/20 rounded-xl overflow-hidden">
+                                                                        <div className="bg-brand-purple/10 px-6 py-3 border-b border-brand-purple/20">
+                                                                            <h5 className="text-xs font-bold text-brand-purple-100 uppercase tracking-widest flex items-center gap-2">
+                                                                                <span className="w-1.5 h-1.5 rounded-full bg-brand-purple" />
+                                                                                Synergistic Architecture
+                                                                            </h5>
+                                                                        </div>
+                                                                        <div className="p-6 grid gap-6 md:grid-cols-3">
+                                                                            <div>
+                                                                                <span className="text-[10px] uppercase tracking-wider text-white/40 block mb-1">Partner</span>
+                                                                                <p className="text-base font-semibold text-white">{activeView.data.synergyDetails.partner}</p>
+                                                                            </div>
+                                                                            <div>
+                                                                                <span className="text-[10px] uppercase tracking-wider text-white/40 block mb-1">Mechanism</span>
+                                                                                <p className="text-sm text-white/70">{activeView.data.synergyDetails.mechanism}</p>
+                                                                            </div>
+                                                                            <div>
+                                                                                <span className="text-[10px] uppercase tracking-wider text-white/40 block mb-1">Impact</span>
+                                                                                <p className="text-sm text-white/70">{activeView.data.synergyDetails.impact}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+
+                                                                {/* Sources List */}
                                                                 {activeView.data.sources && activeView.data.sources.length > 0 && (
                                                                     <div className="pt-4 border-t border-white/10">
-                                                                        <h5 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-2">Sources</h5>
-                                                                        <ul className="space-y-1">
+                                                                        <h5 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-3">Scientific References</h5>
+                                                                        <ul className="space-y-2">
                                                                             {activeView.data.sources.map((source, idx) => (
-                                                                                <li key={idx} className="text-xs text-white/50 font-mono break-all">
-                                                                                    {source}
+                                                                                <li key={idx} className="text-xs text-white/50 font-mono flex gap-2">
+                                                                                    <span className="shrink-0 text-brand-copper select-none">{source.id}.</span>
+                                                                                    {source.url ? (
+                                                                                        <a
+                                                                                            href={source.url}
+                                                                                            target="_blank"
+                                                                                            rel="noopener noreferrer"
+                                                                                            className="hover:text-brand-cyan hover:underline transition-colors break-words"
+                                                                                        >
+                                                                                            {source.text}
+                                                                                        </a>
+                                                                                    ) : (
+                                                                                        <span className="break-words">{source.text}</span>
+                                                                                    )}
                                                                                 </li>
                                                                             ))}
                                                                         </ul>
