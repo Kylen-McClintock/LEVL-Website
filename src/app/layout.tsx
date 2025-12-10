@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 
+import { Analytics } from "@vercel/analytics/react";
+
 const outfit = Outfit({
   variable: "--font-outfit",
   subsets: ["latin"],
@@ -24,6 +26,7 @@ export default function RootLayout({
         className={`${outfit.variable} antialiased bg-brand-dark text-white`}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );
