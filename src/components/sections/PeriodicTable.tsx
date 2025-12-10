@@ -37,6 +37,7 @@ type ActiveView =
 
 export function PeriodicTable() {
     const [activeView, setActiveView] = useState<ActiveView>({ type: "none" });
+    const [geekMode, setGeekMode] = useState(false);
 
     // Click outside handler
     useEffect(() => {
@@ -320,27 +321,41 @@ export function PeriodicTable() {
                                     >
                                         <div className="bg-[#1a1a1e] border border-white/10 rounded-2xl p-6 md:p-8 flex gap-8 shadow-2xl relative">
                                             <button
-                                                onClick={(e) => { e.stopPropagation(); setActiveView({ type: "none" }); }}
+                                                onClick={(e) => { e.stopPropagation(); setActiveView({ type: "none" }); setGeekMode(false); }}
                                                 className="absolute top-4 right-4 p-2 text-white/40 hover:text-white"
                                             >
                                                 <X className="w-5 h-5" />
                                             </button>
 
                                             {/* Hallmarks List (Left) */}
-                                            <div className="w-1/4 border-r border-white/10 pr-8 flex flex-col justify-center text-right md:text-left">
-                                                <h4 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-4">Targeted Hallmarks of Aging</h4>
-                                                <div className="space-y-2">
-                                                    {activeView.data.hallmarks.map(hId => {
-                                                        const h = HALLMARKS.find(i => i.id === hId);
-                                                        if (!h) return null;
-                                                        return (
-                                                            <div key={hId} className="flex items-center gap-2 text-sm text-white/70 justify-end md:justify-start">
-                                                                <div className="w-1.5 h-1.5 rounded-full bg-brand-copper shrink-0" />
-                                                                {h.label}
-                                                            </div>
-                                                        )
-                                                    })}
+                                            <div className="w-1/4 border-r border-white/10 pr-8 flex flex-col justify-between text-right md:text-left">
+                                                <div>
+                                                    <h4 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-4">Targeted Hallmarks</h4>
+                                                    <div className="space-y-2 mb-8">
+                                                        {activeView.data.hallmarks.map(hId => {
+                                                            const h = HALLMARKS.find(i => i.id === hId);
+                                                            if (!h) return null;
+                                                            return (
+                                                                <div key={hId} className="flex items-center gap-2 text-sm text-white/70 justify-end md:justify-start">
+                                                                    <div className="w-1.5 h-1.5 rounded-full bg-brand-copper shrink-0" />
+                                                                    {h.label}
+                                                                </div>
+                                                            )
+                                                        })}
+                                                    </div>
                                                 </div>
+
+                                                <button
+                                                    onClick={(e) => { e.stopPropagation(); setGeekMode(!geekMode); }}
+                                                    className={cn(
+                                                        "flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-xs font-bold uppercase tracking-wider transition-all border",
+                                                        geekMode
+                                                            ? "bg-brand-purple/20 border-brand-purple text-brand-purple-100 shadow-[0_0_15px_rgba(168,85,247,0.3)]"
+                                                            : "bg-white/5 border-white/10 text-white/60 hover:text-white hover:bg-white/10"
+                                                    )}
+                                                >
+                                                    {geekMode ? "Geek Mode: ON" : "Geek Mode: OFF"}
+                                                </button>
                                             </div>
 
                                             {/* Content (Right) */}
@@ -352,12 +367,68 @@ export function PeriodicTable() {
                                                     <span className="text-white/40 font-mono text-sm">#{MOLECULES.findIndex(m => m.id === activeView.data.id) + 1}</span>
                                                 </div>
 
-                                                <p className="text-xl text-white/80 leading-relaxed max-w-3xl mb-6">
-                                                    {activeView.data.description}
-                                                </p>
+                                                <div className="relative min-h-[150px]">
+                                                    <AnimatePresence mode="wait">
+                                                        {geekMode ? (
+                                                            <motion.div
+                                                                key="geek"
+                                                                initial={{ opacity: 0, y: 10 }}
+                                                                animate={{ opacity: 1, y: 0 }}
+                                                                exit={{ opacity: 0, y: -10 }}
+                                                                className="space-y-6"
+                                                            >
+                                                                <div className="prose prose-invert prose-sm max-w-none">
+                                                                    <p className="text-lg text-white/90 leading-relaxed">
+                                                                        {activeView.data.geekModeText || "Geek mode content coming soon..."}
+                                                                    </p>
+                                                                </div>
 
-                                                {/* Tags */}
-                                                <div className="flex flex-wrap gap-4">
+                                                                {activeView.data.sources && activeView.data.sources.length > 0 && (
+                                                                    <div className="pt-4 border-t border-white/10">
+                                                                        <h5 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-2">Sources</h5>
+                                                                        <ul className="space-y-1">
+                                                                            {activeView.data.sources.map((source, idx) => (
+                                                                                <li key={idx} className="text-xs text-white/50 font-mono break-all">
+                                                                                    {source}
+                                                                                </li>
+                                                                            ))}
+                                                                        </ul>
+                                                                    </div>
+                                                                )}
+                                                            </motion.div>
+                                                        ) : (
+                                                            <motion.div
+                                                                key="normal"
+                                                                initial={{ opacity: 0, y: 10 }}
+                                                                animate={{ opacity: 1, y: 0 }}
+                                                                exit={{ opacity: 0, y: -10 }}
+                                                            >
+                                                                <p className="text-xl text-white/80 leading-relaxed max-w-3xl mb-6">
+                                                                    {activeView.data.detailedDescription || activeView.data.description}
+                                                                </p>
+
+                                                                {activeView.data.synergies && activeView.data.synergies.length > 0 && (
+                                                                    <div className="mb-6 bg-white/5 rounded-lg p-4 border border-white/5">
+                                                                        <h5 className="text-xs font-bold text-brand-copper uppercase tracking-widest mb-2 flex items-center gap-2">
+                                                                            <span className="w-1 h-1 rounded-full bg-brand-copper" />
+                                                                            Synergizes With
+                                                                        </h5>
+                                                                        <div className="flex flex-wrap gap-2">
+                                                                            {activeView.data.synergies.map((syn, idx) => (
+                                                                                <span key={idx} className="text-sm text-white/70 bg-black/20 px-2 py-1 rounded">
+                                                                                    {syn}
+                                                                                </span>
+                                                                            ))}
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                            </motion.div>
+                                                        )}
+                                                    </AnimatePresence>
+                                                </div>
+
+                                                {/* Benefits Tags (Always Visible) */}
+                                                <div className="flex flex-wrap gap-4 mt-6 pt-6 border-t border-white/10">
                                                     {activeView.data.benefits.map(bId => {
                                                         const ben = BENEFITS.find(b => b.id === bId);
                                                         if (!ben) return null;
