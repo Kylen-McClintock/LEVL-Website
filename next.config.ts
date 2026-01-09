@@ -1,15 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  async redirects() {
-    return [
-      {
-        source: '/LEVTrajectory',
-        destination: '/LEVTrajectory/',
-        permanent: true,
-      },
-    ];
-  },
+  trailingSlash: true,
   async rewrites() {
     return [
       {
