@@ -5,11 +5,11 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/LEVTrajectory',
-        destination: 'https://lev-longevity-trajectory-mu.vercel.app'
+        destination: 'https://lev-longevity-trajectory.vercel.app'
       },
       {
         source: '/LEVTrajectory/:path*',
-        destination: 'https://lev-longevity-trajectory-mu.vercel.app/:path*'
+        destination: 'https://lev-longevity-trajectory.vercel.app/:path*'
       }
     ]
   },
