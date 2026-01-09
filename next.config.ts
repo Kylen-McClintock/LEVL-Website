@@ -1,11 +1,20 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  async rewrites() {
+  async redirects() {
     return [
       {
         source: '/LEVTrajectory',
-        destination: 'https://lev-longevity-trajectory.vercel.app'
+        destination: '/LEVTrajectory/',
+        permanent: true,
+      },
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/LEVTrajectory/',
+        destination: 'https://lev-longevity-trajectory.vercel.app/'
       },
       {
         source: '/LEVTrajectory/:path*',

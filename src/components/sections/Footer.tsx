@@ -8,7 +8,7 @@ const navLinks = [
     { name: "Get Early Access", href: "/#early-access" },
     { name: "Science", href: "/#science" },
     { name: "App", href: "/#app" },
-    { name: "LEV Trajectory", href: "/LEVTrajectory" },
+    { name: "LEV Trajectory", href: "/LEVTrajectory/" },
     { name: "About", href: "https://levlhealth.com/pages/about" },
 ];
 
