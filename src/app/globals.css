@@ -8,6 +8,17 @@
   --color-brand-copper: #b45309;
   --color-brand-glow: #7c3aed;
 
+  /* LEVL Product Storefront Colors */
+  --color-levl-bg: #060913;
+  --color-levl-panel: #0B0E17;
+  --color-levl-panel-border: #1F222B;
+  --color-levl-cyan: #0ea5e9;
+  --color-levl-green: #22c55e;
+  --color-levl-magenta: #e879f9;
+  --color-levl-text-primary: #ffffff;
+  --color-levl-text-secondary: #B4B5B8;
+  --color-levl-text-muted: #696B71;
+
   --animate-fade-in: fade-in 0.5s ease-out forwards;
   --animate-slide-up: slide-up 0.5s ease-out forwards;
   --animate-gradient-xy: gradient-xy 3s ease infinite;
@@ -50,8 +61,8 @@
 }
 
 :root {
-  --background: #050505;
-  --foreground: #ededed;
+  --background: #060913;
+  --foreground: #ffffff;
 }
 
 body {
