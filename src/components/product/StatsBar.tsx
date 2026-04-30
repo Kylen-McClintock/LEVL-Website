@@ -37,7 +37,7 @@ function CountUp({ end, suffix = "", decimals = 0, duration = 2 }: { end: number
 
 export function StatsBar() {
   return (
-    <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4 divide-y md:divide-y-0 md:divide-x divide-white/10 shadow-lg mt-8">
+    <div className="bg-[linear-gradient(30deg,#301844e6,#5D265E33)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4 divide-y md:divide-y-0 md:divide-x divide-white/10 shadow-lg mt-8">
       
       <div className="flex flex-col items-center justify-center w-full md:w-1/3 pt-4 md:pt-0 first:pt-0">
         <h3 className="text-3xl md:text-4xl font-black text-white tracking-tighter mb-1">

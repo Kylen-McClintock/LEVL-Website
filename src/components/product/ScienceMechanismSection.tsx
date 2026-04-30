@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { BentoGrid, BentoCard } from '@/components/ui/BentoGrid';
 import { Activity, Moon, SunMoon, Dna, BrainCircuit, ShieldCheck, ChevronDown, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -8,11 +8,33 @@ import { motion, AnimatePresence } from 'framer-motion';
 export function ScienceMechanismSection() {
     const [showReferences, setShowReferences] = useState(false);
     const [showAllMechanisms, setShowAllMechanisms] = useState(false);
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.playbackRate = 0.5;
+        }
+    }, []);
 
     return (
-        <section className="bg-[#0B0E17]/50 py-24 border-y border-[var(--color-levl-panel-border)] overflow-hidden relative">
+        <section className="py-24 border-y border-[var(--color-levl-panel-border)] overflow-hidden relative">
+            {/* Video Background */}
+            <video
+                ref={videoRef}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover scale-[1.25] z-0"
+            >
+                <source src="/videos/levl-background-footage.mp4" type="video/mp4" />
+            </video>
+
+            {/* Opacity filter over video */}
+            <div className="absolute inset-0 bg-[#0B0E17]/70 z-0 pointer-events-none" />
+
             {/* Subtle background glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 opacity-20 pointer-events-none bg-[radial-gradient(circle,_var(--color-levl-cyan)_0%,_transparent_60%)] blur-[120px]" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 opacity-20 pointer-events-none bg-[radial-gradient(circle,_var(--color-levl-cyan)_0%,_transparent_60%)] blur-[120px] z-0" />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="text-center mb-16">
@@ -29,7 +51,7 @@ export function ScienceMechanismSection() {
 
                 <BentoGrid className="mb-12">
                     {/* Card 1 */}
-                    <BentoCard colSpan={2} className="p-8 group hover:border-[var(--color-levl-cyan)]/50">
+                    <BentoCard colSpan={2} className="bg-[linear-gradient(30deg,#451F52e6,#742D6B33)] backdrop-blur-md p-8 group hover:border-[var(--color-levl-cyan)]/50">
                                                 <div className="flex items-center gap-4">
                             <div className="w-12 h-12 rounded-full bg-[var(--color-levl-cyan)]/10 flex items-center justify-center shrink-0 text-[var(--color-levl-cyan)]">
                                 <Activity className="w-6 h-6" />
@@ -57,7 +79,7 @@ export function ScienceMechanismSection() {
                     </BentoCard>
 
                     {/* Card 2 */}
-                    <BentoCard colSpan={2} className="p-8 group hover:border-[var(--color-levl-green)]/50">
+                    <BentoCard colSpan={2} className="bg-[linear-gradient(30deg,#451F52e6,#742D6B33)] p-8 backdrop-blur-md group hover:border-[var(--color-levl-green)]/50">
                                                 <div className="flex items-center gap-4">
                             <div className="w-12 h-12 rounded-full bg-[var(--color-levl-green)]/10 flex items-center justify-center shrink-0 text-[var(--color-levl-green)]">
                                 <Moon className="w-6 h-6" />
@@ -86,7 +108,7 @@ export function ScienceMechanismSection() {
                     </BentoCard>
 
                                                 {/* Card 3 */}
-                            <BentoCard colSpan={2} className="p-8 group hover:border-[var(--color-levl-magenta)]/50 ">
+                            <BentoCard colSpan={2} className="bg-[linear-gradient(30deg,#451F52e6,#742D6B33)] p-8 backdrop-blur-md group hover:border-[var(--color-levl-magenta)]/50 ">
                                                         <div className="flex items-center gap-4">
                             <div className="w-12 h-12 rounded-full bg-[var(--color-levl-magenta)]/10 flex items-center justify-center shrink-0 text-[var(--color-levl-magenta)]">
                                 <SunMoon className="w-6 h-6" />
@@ -114,7 +136,7 @@ export function ScienceMechanismSection() {
                             </BentoCard>
 
                             {/* Card 4 */}
-                            <BentoCard colSpan={2} className="p-8 group hover:border-[var(--color-levl-cyan)]/50  ">
+                            <BentoCard colSpan={2} className="bg-[linear-gradient(30deg,#451F52e6,#742D6B33)] p-8 backdrop-blur-md group hover:border-[var(--color-levl-cyan)]/50  ">
                                                         <div className="flex items-center gap-4">
                             <div className="w-12 h-12 rounded-full bg-[var(--color-levl-cyan)]/10 flex items-center justify-center shrink-0 text-[var(--color-levl-cyan)]">
                                 <Dna className="w-6 h-6" />
@@ -141,7 +163,7 @@ export function ScienceMechanismSection() {
                             </BentoCard>
 
                             {/* Card 5 */}
-                            <BentoCard colSpan={2} className="p-8 group hover:border-[var(--color-levl-magenta)]/50  ">
+                            <BentoCard colSpan={2} className="bg-[linear-gradient(30deg,#451F52e6,#742D6B33)] p-8 backdrop-blur-md group hover:border-[var(--color-levl-magenta)]/50  ">
                                                         <div className="flex items-center gap-4">
                             <div className="w-12 h-12 rounded-full bg-[var(--color-levl-magenta)]/10 flex items-center justify-center shrink-0 text-[var(--color-levl-magenta)]">
                                 <BrainCircuit className="w-6 h-6" />
@@ -172,7 +194,7 @@ export function ScienceMechanismSection() {
                             </BentoCard>
 
                             {/* Card 6 */}
-                            <BentoCard colSpan={2} className="p-8 group hover:border-[var(--color-levl-green)]/50  ">
+                            <BentoCard colSpan={2} className="bg-[linear-gradient(30deg,#451F52e6,#742D6B33)] p-8 backdrop-blur-md group hover:border-[var(--color-levl-green)]/50  ">
                                                         <div className="flex items-center gap-4">
                             <div className="w-12 h-12 rounded-full bg-[var(--color-levl-green)]/10 flex items-center justify-center shrink-0 text-[var(--color-levl-green)]">
                                 <ShieldCheck className="w-6 h-6" />
@@ -207,7 +229,7 @@ export function ScienceMechanismSection() {
                 <div className="flex justify-center mt-8 mb-12 relative z-20">
                     <button 
                         onClick={() => setShowAllMechanisms(!showAllMechanisms)}
-                        className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--color-levl-panel)] border border-[var(--color-levl-cyan)]/30 text-white font-medium hover:border-[var(--color-levl-cyan)] hover:shadow-[0_0_15px_rgba(14,165,233,0.3)] transition-all group"
+                        className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-black/30 backdrop-blur-md border border-[var(--color-levl-cyan)]/30 text-white font-medium hover:border-[var(--color-levl-cyan)] hover:shadow-[0_0_15px_rgba(14,165,233,0.3)] transition-all group"
                     >
                         {showAllMechanisms ? "Collapse Protocol" : "View Full Protocol"}
                         {showAllMechanisms ? (
@@ -219,7 +241,7 @@ export function ScienceMechanismSection() {
                 </div>
 
                 {/* References Toggle */}
-                <div className="max-w-4xl mx-auto mt-8 bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-2xl overflow-hidden transition-colors hover:border-[var(--color-levl-cyan)]/30">
+                <div className="max-w-4xl mx-auto mt-8 bg-black/30 backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl overflow-hidden transition-colors hover:border-[var(--color-levl-cyan)]/30">
                     <button
                         onClick={() => setShowReferences(!showReferences)}
                         className="w-full flex items-center justify-between p-6 text-left"

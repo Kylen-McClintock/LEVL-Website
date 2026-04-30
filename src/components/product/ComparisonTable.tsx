@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Check, X, Minus } from 'lucide-react';
+import { Check, X, Minus, Info } from 'lucide-react';
 import { productContent } from '../../content/productLongevity';
 import { cn } from '../cart/CheckoutButton';
 
@@ -15,7 +15,7 @@ export function ComparisonTable() {
   };
 
   return (
-    <section className="bg-[var(--color-levl-panel)] py-24 border-y border-[var(--color-levl-panel-border)] overflow-hidden">
+    <section className="py-24 border-y border-[var(--color-levl-panel-border)] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">The Standard for Longevity</h2>
@@ -57,7 +57,18 @@ export function ComparisonTable() {
                     "hover:bg-white/[0.02]"
                   )}
                 >
-                  <div className="text-white font-medium pr-4">{row.feature}</div>
+                  <div className="text-white font-medium pr-4 flex items-center gap-2 group relative cursor-default">
+                    {row.feature}
+                    {row.tooltip && (
+                      <div className="relative">
+                        <Info className="w-4 h-4 text-[var(--color-levl-text-muted)] group-hover:text-[var(--color-levl-cyan)] transition-colors" />
+                        <div className="absolute left-0 bottom-full mb-3 w-64 bg-[#1A1D27] border border-[var(--color-levl-panel-border)] p-3 rounded-lg text-xs text-white opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-20 shadow-xl">
+                          {row.tooltip}
+                          <div className="absolute top-full left-1 border-8 border-transparent border-t-[#1A1D27]" />
+                        </div>
+                      </div>
+                    )}
+                  </div>
                   <div className="text-center relative">
                     {/* Background column highlight for LEVL */}
                     <div className="absolute inset-y-[-1.5rem] inset-x-0 bg-[var(--color-levl-cyan)]/5 border-x border-[var(--color-levl-cyan)]/20 -z-10" />

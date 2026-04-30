@@ -16,7 +16,7 @@ interface PurchaseBoxProps {
 }
 
 export function PurchaseBox({ product, onCartOpen, cartId }: PurchaseBoxProps) {
-  const [selectedPlan, setSelectedPlan] = useState<PlanType>('subscribe-30');
+  const [selectedPlan, setSelectedPlan] = useState<PlanType>('subscribe-90');
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
 
@@ -45,9 +45,11 @@ export function PurchaseBox({ product, onCartOpen, cartId }: PurchaseBoxProps) {
   };
 
   return (
-    <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-2xl p-6 md:p-8 flex flex-col gap-6">
+    <div className="bg-[linear-gradient(30deg,#1B1237e6,#451F5233)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-6 md:p-8 flex flex-col gap-6">
       {/* Price Header */}
-      <div className="flex items-end gap-3 flex-wrap">
+      <div className="flex flex-col gap-2">
+        <h2 className="text-xl font-bold text-white tracking-wide">LIFESPAN+ DeepCell</h2>
+        <div className="flex items-end gap-3 flex-wrap">
         <div className="flex items-end gap-3">
           <span className="text-3xl font-bold text-white">{priceDisplay}</span>
           {originalPrice && (
@@ -57,6 +59,7 @@ export function PurchaseBox({ product, onCartOpen, cartId }: PurchaseBoxProps) {
         {perBottleText && (
           <span className="text-sm font-medium text-[var(--color-levl-cyan)] mb-2">{perBottleText}</span>
         )}
+      </div>
       </div>
 
       {/* Selectors */}

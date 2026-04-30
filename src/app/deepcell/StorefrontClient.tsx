@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { CartDrawer } from '../../components/cart/CartDrawer';
 import { StickyMobileCTA } from '../../components/product/StickyMobileCTA';
+import { StickyDesktopHeader } from '../../components/product/StickyDesktopHeader';
 import { ShopifyProduct } from '../../types/shopify';
 
 interface StorefrontClientProps {
@@ -43,6 +44,7 @@ export function StorefrontClient({ children, product, initialCartId }: Storefron
         cartId={initialCartId} 
       />
       <StickyMobileCTA product={product} onAddToCart={() => setIsCartOpen(true)} />
+      <StickyDesktopHeader product={product} onAddToCart={() => setIsCartOpen(true)} />
     </StorefrontContext.Provider>
   );
 }

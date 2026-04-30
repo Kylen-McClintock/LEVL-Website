@@ -50,7 +50,7 @@ const timelineItems = [
 
 export function BenefitTimeline() {
     return (
-        <section className="py-24 relative overflow-hidden bg-[#060913]">
+        <section className="py-24 relative overflow-hidden">
             {/* Background Image / Glow */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-10 pointer-events-none bg-[radial-gradient(circle,_var(--color-levl-cyan)_0%,_transparent_60%)] blur-[120px]" />

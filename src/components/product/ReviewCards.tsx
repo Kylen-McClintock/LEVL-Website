@@ -33,7 +33,7 @@ export function ReviewCards() {
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8 md:pb-12">
       <div className="text-center mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Built with real world feedback</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Built With Real World Feedback</h2>
         <p className="text-lg text-[var(--color-levl-text-secondary)] mb-12">We test until the data says it works.</p>
 
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
@@ -77,7 +77,7 @@ export function ReviewCards() {
           {productContent.reviews.map((review, i) => (
             <div 
               key={i} 
-              className="snap-center shrink-0 w-[85vw] md:w-[600px] bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-2xl p-8 flex flex-col h-full hover:border-[var(--color-levl-cyan)]/50 transition-all hover:shadow-[0_0_30px_rgba(14,165,233,0.15)] relative z-0"
+              className="snap-center shrink-0 w-[85vw] md:w-[600px] bg-[linear-gradient(30deg,#742D6Be6,#E37C6033)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-8 flex flex-col h-full hover:border-[var(--color-levl-cyan)]/50 transition-all hover:shadow-[0_0_30px_rgba(14,165,233,0.15)] relative z-0 overflow-hidden"
             >
               <div className="flex items-center gap-1 text-[var(--color-levl-cyan)] mb-6">
                 {[...Array(review.rating)].map((_, j) => <Star key={j} className="w-4 h-4 fill-current" />)}

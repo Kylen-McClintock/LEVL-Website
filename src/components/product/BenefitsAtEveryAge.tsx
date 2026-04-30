@@ -15,7 +15,7 @@ export function BenefitsAtEveryAge() {
   const activeContent = data[activeTab];
 
   return (
-    <section className="bg-[var(--color-levl-bg)] pt-12 pb-24 border-y border-[var(--color-levl-panel-border)]">
+    <section className="pt-12 pb-24 border-y border-[var(--color-levl-panel-border)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center mb-16">
@@ -71,7 +71,7 @@ export function BenefitsAtEveryAge() {
         </div>
 
         {/* Content Area */}
-        <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl overflow-hidden shadow-2xl relative min-h-[400px]">
+        <div className="bg-[linear-gradient(30deg,#AC4A69e6,#f79d6533)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-3xl overflow-hidden shadow-2xl relative min-h-[400px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}

@@ -70,7 +70,7 @@ export function InteractiveIngredients() {
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.9 }}
-                                className={`bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-2xl p-6 flex flex-col hover:border-[var(--color-levl-green)]/30 transition-all`}
+                                className={`bg-[linear-gradient(30deg,#5D265Ee6,#AC4A6933)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-6 flex flex-col hover:border-[var(--color-levl-green)]/30 transition-all`}
                             >
                                 <div className="flex justify-between items-start mb-2 gap-2">
                                     <h4 className="font-bold text-white text-lg leading-tight">{ing.name}</h4>
@@ -93,12 +93,12 @@ export function InteractiveIngredients() {
                                 </div>
 
                                 {/* Desktop: Always expanded */}
-                                <div className="mt-auto pt-4 border-t border-white/10 text-sm text-[var(--color-levl-text-secondary)] hidden md:block">
+                                <div className="mt-4 pt-4 border-t border-white/10 text-sm text-[var(--color-levl-text-secondary)] hidden md:block">
                                     {ing.whyItMatters}
                                 </div>
 
                                 {/* Mobile: Toggleable */}
-                                <div className="md:hidden mt-auto pt-4 border-t border-white/10">
+                                <div className="md:hidden mt-4 pt-4 border-t border-white/10">
                                   <button
                                       onClick={() => setExpandedIngredient(expandedIngredient === ing.name ? null : ing.name)}
                                       className="text-xs font-semibold text-[var(--color-levl-green)] hover:text-[var(--color-levl-green)]/80 flex items-center gap-1"

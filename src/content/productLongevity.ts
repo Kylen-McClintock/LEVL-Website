@@ -275,12 +275,12 @@ export const productContent = {
   comparisonTable: {
     headers: ["Feature", "LEVL DeepCell", "Generic Melatonin", "Sleeping Pills", "DIY Stack"],
     rows: [
-      { feature: "Multi-pathway longevity formulation", levl: true, generic: false, single: false, diy: true },
-      { feature: "Fall asleep faster", levl: true, generic: true, single: true, diy: "Varies" },
-      { feature: "Avoids morning grogginess", levl: true, generic: false, single: false, diy: "Varies" },
-      { feature: "Supports natural sleep architecture & non-habit forming", levl: true, generic: false, single: false, diy: "Varies" },
-      { feature: "Designed for nocturnal cellular repair", levl: true, generic: false, single: false, diy: "Varies" },
-      { feature: "Transparent clinical dosing", levl: true, generic: false, single: true, diy: true }
+      { feature: "Multi-pathway longevity formulation", tooltip: "Addresses multiple aging hallmarks simultaneously (like autophagy and telomere health).", levl: true, generic: false, single: false, diy: true },
+      { feature: "Fall asleep faster", tooltip: "Uses proven GABA-modulating ingredients to quiet a racing mind.", levl: true, generic: true, single: true, diy: "Varies" },
+      { feature: "Avoids morning grogginess", tooltip: "No synthetic melatonin or heavy sedatives that cause morning hangovers.", levl: true, generic: false, single: false, diy: "Varies" },
+      { feature: "Supports natural sleep architecture & non-habit forming", tooltip: "Enhances your endogenous sleep cycles without creating chemical dependency.", levl: true, generic: false, single: false, diy: "Varies" },
+      { feature: "Designed for nocturnal cellular repair", tooltip: "Specific ingredients target overnight ATP regeneration and DNA repair.", levl: true, generic: false, single: false, diy: "Varies" },
+      { feature: "Transparent clinical dosing", tooltip: "No proprietary blends. Every ingredient matches the dosage used in clinical studies.", levl: true, generic: false, single: true, diy: true }
     ]
   },
 
