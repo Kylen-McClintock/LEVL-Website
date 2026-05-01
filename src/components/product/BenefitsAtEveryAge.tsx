@@ -51,20 +51,20 @@ export function BenefitsAtEveryAge() {
         </div>
 
         {/* Mobile Tabs */}
-        <div className="flex md:hidden overflow-x-auto hide-scrollbar mb-8 pb-4 snap-x">
-          <div className="flex gap-2">
+        <div className="flex md:hidden w-full mb-8">
+          <div className="flex w-full gap-2">
             {data.map((item, index) => (
               <button
                 key={item.id}
                 onClick={() => setActiveTab(index)}
                 className={cn(
-                  "snap-center px-6 py-2 text-sm font-semibold rounded-full border transition-colors whitespace-nowrap",
+                  "flex-1 py-2 px-1 text-xs sm:text-sm font-semibold rounded-full border transition-colors whitespace-nowrap text-center",
                   activeTab === index 
                     ? "bg-white text-black border-white" 
                     : "bg-[var(--color-levl-panel)] text-[var(--color-levl-text-secondary)] border-[var(--color-levl-panel-border)]"
                 )}
               >
-                {item.label}
+                {item.label.replace(/in your /i, '').trim()}
               </button>
             ))}
           </div>

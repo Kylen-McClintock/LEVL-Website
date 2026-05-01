@@ -79,9 +79,6 @@ export function InteractiveIngredients() {
                                 
                                 <div className="flex items-center gap-2 mb-4">
                                   <p className="text-sm text-[var(--color-levl-text-secondary)] leading-relaxed font-medium">{ing.function}</p>
-                                  <Badge variant="outline" className="text-[10px] bg-white/5 text-[var(--color-levl-text-secondary)] border-white/10 font-medium shrink-0">
-                                      {ing.evidenceTag}
-                                  </Badge>
                                 </div>
 
                                 <div className="flex flex-wrap gap-2 mb-4">
@@ -94,6 +91,12 @@ export function InteractiveIngredients() {
 
                                 {/* Desktop: Always expanded */}
                                 <div className="mt-4 pt-4 border-t border-white/10 text-sm text-[var(--color-levl-text-secondary)] hidden md:block">
+                                    <div className="flex items-center gap-2 mb-3">
+                                        <span className="text-xs font-semibold uppercase tracking-wider text-white/50">Evidence Level:</span>
+                                        <Badge variant="outline" className="text-[10px] bg-white/5 text-[var(--color-levl-text-secondary)] border-white/10 font-medium shrink-0">
+                                            {ing.evidenceTag}
+                                        </Badge>
+                                    </div>
                                     {ing.whyItMatters}
                                 </div>
 
@@ -115,6 +118,12 @@ export function InteractiveIngredients() {
                                             exit={{ opacity: 0, height: 0 }}
                                             className="mt-4 pt-4 border-t border-white/10 text-sm text-[var(--color-levl-text-secondary)] overflow-hidden"
                                         >
+                                            <div className="flex items-center gap-2 mb-3">
+                                                <span className="text-xs font-semibold uppercase tracking-wider text-white/50">Evidence Level:</span>
+                                                <Badge variant="outline" className="text-[10px] bg-white/5 text-[var(--color-levl-text-secondary)] border-white/10 font-medium shrink-0">
+                                                    {ing.evidenceTag}
+                                                </Badge>
+                                            </div>
                                             {ing.whyItMatters}
                                         </motion.div>
                                     )}
