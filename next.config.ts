@@ -11,7 +11,16 @@ const nextConfig: NextConfig = {
     ],
   },
   async rewrites() {
-    return []
+    return [
+      {
+        source: '/research',
+        destination: 'https://research-hub.levlhealth.com/',
+      },
+      {
+        source: '/research/:path*',
+        destination: 'https://research-hub.levlhealth.com/:path*',
+      },
+    ]
   },
   async redirects() {
     return [
