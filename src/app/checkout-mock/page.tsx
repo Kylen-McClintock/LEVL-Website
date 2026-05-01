@@ -42,7 +42,7 @@ export default function CheckoutMockPage() {
           </h1>
           
           <p className="text-[var(--color-levl-text-secondary)] text-center text-lg mb-8 leading-relaxed">
-            Due to overwhelming demand, LEVL DeepCell is currently finalizing our initial production run. We will be officially launching and fulfilling orders in a few weeks.
+            The LEVL team is currently finalizing our initial production run of LIFESPAN+ DeepCell. We will be officially launching and fulfilling orders in a few weeks.
           </p>
 
           <div className="bg-black/40 rounded-2xl p-6 border border-white/5 mb-6 shadow-inner relative overflow-hidden">
