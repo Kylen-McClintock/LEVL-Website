@@ -191,30 +191,46 @@ export async function addToCart(
     await mockDelay(600);
     
     // Naive mock implementation
-    const newEdges = lines.map(line => ({
-      node: {
-        id: `mock-line-${Math.random()}`,
-        quantity: line.quantity,
-        cost: { totalAmount: { amount: '120.00', currencyCode: 'USD' } },
-        merchandise: {
-          id: line.merchandiseId,
-          title: 'Variant Title',
-          product: { title: 'LEVL LIFESPAN+', handle: 'longevity' },
-          image: { url: MOCK_PRODUCT.images.edges[0].node.url, altText: 'Thumb' }
-        },
-        sellingPlanAllocation: line.sellingPlanId ? {
-          sellingPlan: { id: line.sellingPlanId, name: 'Subscribe & Save' }
-        } : undefined
+    const newEdges = lines.map(line => {
+      let price = 49.00;
+      let planName = 'One-Time Purchase';
+      if (line.sellingPlanId === 'mock-plan-90') {
+         price = 117.00;
+         planName = 'Subscribe & Save (90-Day)';
+      } else if (line.sellingPlanId === 'mock-plan-30') {
+         price = 43.00;
+         planName = 'Subscribe & Save (30-Day)';
       }
-    }));
+
+      return {
+        node: {
+          id: `mock-line-${Math.random()}`,
+          quantity: line.quantity,
+          cost: { totalAmount: { amount: (price * line.quantity).toFixed(2), currencyCode: 'USD' } },
+          merchandise: {
+            id: line.merchandiseId,
+            title: 'LEVL DeepCell',
+            product: { title: 'LEVL LIFESPAN+', handle: 'longevity' },
+            image: { url: MOCK_PRODUCT.images.edges[0].node.url, altText: 'Thumb' }
+          },
+          sellingPlanAllocation: line.sellingPlanId ? {
+            sellingPlan: { id: line.sellingPlanId, name: planName }
+          } : undefined
+        }
+      };
+    });
     
+    const updatedEdges = [...MOCK_CART.lines.edges, ...newEdges];
+    const totalQuantity = updatedEdges.reduce((a, b) => a + b.node.quantity, 0);
+    const subtotal = updatedEdges.reduce((a, b) => a + parseFloat(b.node.cost.totalAmount.amount), 0);
+
     MOCK_CART = {
       ...MOCK_CART,
-      lines: { edges: [...MOCK_CART.lines.edges, ...newEdges] },
-      totalQuantity: MOCK_CART.totalQuantity + lines.reduce((a, b) => a + b.quantity, 0),
+      lines: { edges: updatedEdges },
+      totalQuantity,
       cost: {
-        subtotalAmount: { amount: String(MOCK_CART.totalQuantity * 120), currencyCode: 'USD' },
-        totalAmount: { amount: String(MOCK_CART.totalQuantity * 120), currencyCode: 'USD' },
+        subtotalAmount: { amount: subtotal.toFixed(2), currencyCode: 'USD' },
+        totalAmount: { amount: subtotal.toFixed(2), currencyCode: 'USD' },
       }
     };
     return MOCK_CART;
@@ -237,10 +253,18 @@ export async function getCart(cartId: string): Promise<ShopifyCart | undefined> 
 export async function removeFromCart(cartId: string, lineIds: string[]): Promise<ShopifyCart> {
   if (isMockMode) {
     await mockDelay(400);
+    const remainingEdges = MOCK_CART.lines.edges.filter(e => !lineIds.includes(e.node.id));
+    const totalQuantity = remainingEdges.reduce((a, b) => a + b.node.quantity, 0);
+    const subtotal = remainingEdges.reduce((a, b) => a + parseFloat(b.node.cost.totalAmount.amount), 0);
+    
     MOCK_CART = {
       ...MOCK_CART,
-      lines: { edges: MOCK_CART.lines.edges.filter(e => !lineIds.includes(e.node.id)) },
-      totalQuantity: MOCK_CART.lines.edges.filter(e => !lineIds.includes(e.node.id)).reduce((a, b) => a + b.node.quantity, 0)
+      lines: { edges: remainingEdges },
+      totalQuantity,
+      cost: {
+        subtotalAmount: { amount: subtotal.toFixed(2), currencyCode: 'USD' },
+        totalAmount: { amount: subtotal.toFixed(2), currencyCode: 'USD' },
+      }
     };
     return MOCK_CART;
   }
