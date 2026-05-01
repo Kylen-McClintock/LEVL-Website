@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, Clock, Zap } from 'lucide-react';
 import { WaitlistForm } from './WaitlistForm';
+import { Navbar } from '@/components/sections/Navbar';
+import { Footer } from '@/components/sections/Footer';
 
 export const metadata: Metadata = {
   title: 'Checkout | LEVL DeepCell',
@@ -10,15 +12,18 @@ export const metadata: Metadata = {
 
 export default function CheckoutMockPage() {
   return (
-    <div className="min-h-screen bg-[var(--color-levl-bg)] relative flex items-center justify-center p-4 sm:p-6 overflow-hidden">
+    <div className="min-h-screen bg-[var(--color-levl-bg)] relative flex flex-col">
+      <Navbar />
+
       {/* Global Twilight Background Orbs */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute top-[-10%] right-[-5%] w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] rounded-full bg-[radial-gradient(circle,_#1E2C5A_0%,_transparent_70%)] opacity-40 blur-[120px]" />
         <div className="absolute top-[40%] left-[-10%] w-[90vw] h-[90vw] max-w-[1000px] max-h-[1000px] rounded-full bg-[radial-gradient(circle,_#151C3B_0%,_transparent_70%)] opacity-50 blur-[150px]" />
       </div>
 
-      <div className="relative z-10 w-full max-w-xl">
-        <Link 
+      <main className="flex-1 flex items-center justify-center p-4 sm:p-6 mt-16 md:mt-20">
+        <div className="relative z-10 w-full max-w-xl">
+          <Link 
           href="/products/longevity" 
           className="inline-flex items-center gap-2 text-[var(--color-levl-text-secondary)] hover:text-white mb-8 transition-colors group"
         >
@@ -66,6 +71,9 @@ export default function CheckoutMockPage() {
           </p>
         </div>
       </div>
+      </main>
+
+      <Footer />
     </div>
   );
 }
