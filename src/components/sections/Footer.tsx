@@ -9,7 +9,7 @@ const navLinks = [
     { name: "Science", href: "/#science" },
     { name: "App", href: "/#app" },
     { name: "LEV Trajectory", href: "/LEVTrajectory/" },
-    { name: "About", href: "https://levlhealth.com/pages/about" },
+    { name: "About", href: "/about" },
 ];
 
 export function Footer() {

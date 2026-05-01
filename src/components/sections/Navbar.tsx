@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 
 const navLinks = [
@@ -16,7 +16,7 @@ const navLinks = [
     { name: "Learn", href: "/learn", hiddenOnMobile: true },
 ];
 
-export function Navbar() {
+export function Navbar({ showCart = false }: { showCart?: boolean } = {}) {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { scrollY } = useScroll();
@@ -57,6 +57,11 @@ export function Navbar() {
 
                 {/* CTA & Mobile Menu */}
                 <div className="flex items-center gap-4">
+                    {showCart && (
+                        <button id="cart-trigger" className="p-2 text-white hover:text-[var(--color-levl-cyan)] transition-colors relative">
+                            <ShoppingBag className="w-5 h-5" />
+                        </button>
+                    )}
                     <Link href="/#early-access">
                         <Button variant="primary" size="sm" className="hidden md:flex">
                             Gain Early Access
