@@ -11,7 +11,6 @@ const timelineItems = [
             "87% increased next day energy"
         ],
         points: [
-            "Fall asleep faster and feel calmer",
             "Wake with a clear head instead of a melatonin hangover"
         ]
     },
