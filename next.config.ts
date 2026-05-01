@@ -11,16 +11,7 @@ const nextConfig: NextConfig = {
     ],
   },
   async rewrites() {
-    return [
-      {
-        source: '/LEVTrajectory/',
-        destination: 'https://lev-longevity-trajectory.vercel.app/'
-      },
-      {
-        source: '/LEVTrajectory/:path*',
-        destination: 'https://lev-longevity-trajectory.vercel.app/:path*'
-      }
-    ]
+    return []
   },
   async redirects() {
     return [

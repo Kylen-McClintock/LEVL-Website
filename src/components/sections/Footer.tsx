@@ -10,6 +10,7 @@ const navLinks = [
     { name: "App", href: "/#app" },
     { name: "LEV Trajectory", href: "/LEVTrajectory/" },
     { name: "About", href: "/about" },
+    { name: "Learn", href: "/learn/" },
 ];
 
 export function Footer() {
