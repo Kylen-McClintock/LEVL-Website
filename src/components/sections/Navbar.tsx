@@ -14,6 +14,7 @@ const navLinks = [
     { name: "App", href: "/#app" },
     { name: "About", href: "/about" },
     { name: "Learn", href: "/learn", hiddenOnMobile: true },
+    { name: "Research", href: "/research" },
 ];
 
 export function Navbar({ showCart = false }: { showCart?: boolean } = {}) {

@@ -11,7 +11,16 @@ const nextConfig: NextConfig = {
     ],
   },
   async rewrites() {
-    return []
+    return [
+      {
+        source: '/research',
+        destination: 'https://levl-research-paper-summary-engine.vercel.app/',
+      },
+      {
+        source: '/research/:path*',
+        destination: 'https://levl-research-paper-summary-engine.vercel.app/:path*',
+      },
+    ]
   },
   async redirects() {
     return [
