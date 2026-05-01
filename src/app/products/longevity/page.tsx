@@ -16,7 +16,7 @@ import { Footer } from '../../../components/sections/Footer';
 import { CartDrawer } from '../../../components/cart/CartDrawer';
 import { productContent } from '../../../content/productLongevity';
 import { getProduct, createCart } from '../../../lib/shopify';
-import { StorefrontClient } from './StorefrontClient';
+import { StorefrontClient } from '../../StorefrontClient';
 
 export const metadata: Metadata = {
   title: 'LEVL LIFESPAN+ | Daily Longevity Support',

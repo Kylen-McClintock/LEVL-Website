@@ -9,7 +9,7 @@ import { ShopifyProduct } from '../../types/shopify';
 import { productContent } from '../../content/productLongevity';
 import { Badge } from '../ui/Badge'; // Assume this exists or I will create it
 
-import { StorefrontContext } from '../../app/products/longevity/StorefrontClient';
+import { StorefrontContext } from '../../app/StorefrontClient';
 
 interface ProductHeroProps {
   product?: ShopifyProduct;

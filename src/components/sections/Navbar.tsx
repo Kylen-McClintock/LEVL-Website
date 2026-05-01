@@ -62,7 +62,7 @@ export function Navbar({ showCart = false }: { showCart?: boolean } = {}) {
                             <ShoppingBag className="w-5 h-5" />
                         </button>
                     )}
-                    <Link href="/#early-access">
+                    <Link href="/checkout-mock/">
                         <Button variant="primary" size="sm" className="hidden md:flex">
                             Gain Early Access
                         </Button>
@@ -98,7 +98,7 @@ export function Navbar({ showCart = false }: { showCart?: boolean } = {}) {
                             </Link>
                         )
                     })}
-                    <Link href="/#early-access" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Link href="/checkout-mock/" onClick={() => setIsMobileMenuOpen(false)}>
                         <Button className="w-full mt-2">Gain Early Access</Button>
                     </Link>
                 </motion.div>
