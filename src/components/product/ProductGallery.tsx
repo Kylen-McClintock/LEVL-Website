@@ -26,11 +26,11 @@ export function ProductGallery({ images }: ProductGalleryProps) {
         <AnimatePresence mode="wait">
           <motion.div
             key={safeIndex}
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="absolute inset-0"
+            className="absolute inset-0 z-0"
           >
             <Image
               src={images[safeIndex].url}
