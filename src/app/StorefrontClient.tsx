@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { CartDrawer } from '../../components/cart/CartDrawer';
-import { StickyMobileCTA } from '../../components/product/StickyMobileCTA';
-import { StickyDesktopHeader } from '../../components/product/StickyDesktopHeader';
-import { ShopifyProduct } from '../../types/shopify';
+import { CartDrawer } from '../components/cart/CartDrawer';
+import { StickyMobileCTA } from '../components/product/StickyMobileCTA';
+import { StickyDesktopHeader } from '../components/product/StickyDesktopHeader';
+import { ShopifyProduct } from '../types/shopify';
 
 interface StorefrontClientProps {
   children: React.ReactNode;
