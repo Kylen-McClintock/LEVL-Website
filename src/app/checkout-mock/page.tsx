@@ -8,6 +8,17 @@ import { Footer } from '@/components/sections/Footer';
 export const metadata: Metadata = {
   title: 'Checkout | LEVL DeepCell',
   description: 'Join the waitlist for LEVL DeepCell early access.',
+  openGraph: {
+    title: 'Checkout | LEVL DeepCell',
+    description: 'Join the waitlist for LEVL DeepCell early access.',
+    images: ['https://www.levlhealth.com/images/deepcell_pathways_bg.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Checkout | LEVL DeepCell',
+    description: 'Join the waitlist for LEVL DeepCell early access.',
+    images: ['https://www.levlhealth.com/images/deepcell_pathways_bg.png'],
+  }
 };
 
 export default function CheckoutMockPage() {

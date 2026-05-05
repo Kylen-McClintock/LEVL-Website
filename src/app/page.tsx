@@ -24,7 +24,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'LEVL LIFESPAN+ | Daily Longevity Support',
     description: productContent.shortDescription,
-    images: ['https://placehold.co/1200x630/0B0E17/22c55e?text=LEVL+LIFESPAN%2B'],
+    images: ['https://www.levlhealth.com/images/deepcell_pathways_bg.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'LEVL LIFESPAN+ | Daily Longevity Support',
+    description: productContent.shortDescription,
+    images: ['https://www.levlhealth.com/images/deepcell_pathways_bg.png'],
   }
 };
 

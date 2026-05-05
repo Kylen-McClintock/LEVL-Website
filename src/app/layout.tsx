@@ -13,6 +13,29 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: "LEVL | OutPace Aging",
   description: "Advanced longevity supplements to extend healthy lifespan. Better nights, more tomorrows.",
+  metadataBase: new URL('https://www.levlhealth.com'),
+  openGraph: {
+    title: "LEVL | OutPace Aging",
+    description: "Advanced longevity supplements to extend healthy lifespan. Better nights, more tomorrows.",
+    url: 'https://www.levlhealth.com',
+    siteName: 'LEVL Health',
+    images: [
+      {
+        url: 'https://www.levlhealth.com/images/deepcell_pathways_bg.png',
+        width: 1200,
+        height: 630,
+        alt: 'LEVL Health DeepCell Pathways',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "LEVL | OutPace Aging",
+    description: "Advanced longevity supplements to extend healthy lifespan. Better nights, more tomorrows.",
+    images: ['https://www.levlhealth.com/images/deepcell_pathways_bg.png'],
+  },
 };
 
 export default function RootLayout({
