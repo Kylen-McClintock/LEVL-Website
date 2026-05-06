@@ -21,10 +21,10 @@ export const metadata: Metadata = {
     siteName: 'LEVL Health',
     images: [
       {
-        url: 'https://www.levlhealth.com/images/deepcell_pathways_bg.png',
+        url: 'https://www.levlhealth.com/images/deepcell-bottle.jpg',
         width: 1200,
         height: 630,
-        alt: 'LEVL Health DeepCell Pathways',
+        alt: 'LEVL LIFESPAN+ DeepCell',
       },
     ],
     locale: 'en_US',
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "LEVL | OutPace Aging",
     description: "Advanced longevity supplements to extend healthy lifespan. Better nights, more tomorrows.",
-    images: ['https://www.levlhealth.com/images/deepcell_pathways_bg.png'],
+    images: ['https://www.levlhealth.com/images/deepcell-bottle.jpg'],
   },
 };
 

@@ -24,13 +24,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'LEVL LIFESPAN+ | Daily Longevity Support',
     description: productContent.shortDescription,
-    images: ['https://www.levlhealth.com/images/deepcell_pathways_bg.png'],
+    images: ['https://www.levlhealth.com/images/deepcell-bottle.jpg'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'LEVL LIFESPAN+ | Daily Longevity Support',
     description: productContent.shortDescription,
-    images: ['https://www.levlhealth.com/images/deepcell_pathways_bg.png'],
+    images: ['https://www.levlhealth.com/images/deepcell-bottle.jpg'],
   }
 };
 
