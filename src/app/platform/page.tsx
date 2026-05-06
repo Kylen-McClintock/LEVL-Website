@@ -10,7 +10,7 @@ import { BentoGrid, BentoCard } from '@/components/ui/BentoGrid';
 import { 
     BookOpen, Network, Zap, CheckCircle2, FlaskConical, Users, 
     ArrowRight, Activity, Cpu, Search, Microscope, LineChart, 
-    Layers, ShieldCheck, HeartPulse, Dna, BrainCircuit, Workflow
+    Layers, ShieldCheck, HeartPulse, Dna, BrainCircuit, Workflow, Database
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -79,6 +79,25 @@ export default function PlatformPage() {
                             </div>
                         ))}
                     </div>
+
+                    {/* Trust/Data Sources Band */}
+                    <div className="pt-20 border-t border-white/5 mt-20">
+                        <p className="text-xs font-mono text-[var(--color-levl-text-muted)] uppercase tracking-widest mb-6">Continuously ingesting and structuring from</p>
+                        <div className="flex flex-wrap justify-center gap-x-12 gap-y-6 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                            <div className="flex items-center gap-2 font-mono text-sm tracking-wide text-white">
+                                <Database className="w-4 h-4" /> PubMed & arXiv
+                            </div>
+                            <div className="flex items-center gap-2 font-mono text-sm tracking-wide text-white">
+                                <Database className="w-4 h-4" /> ClinicalTrials.gov
+                            </div>
+                            <div className="flex items-center gap-2 font-mono text-sm tracking-wide text-white">
+                                <Database className="w-4 h-4" /> DrugBank & ChEMBL
+                            </div>
+                            <div className="flex items-center gap-2 font-mono text-sm tracking-wide text-white">
+                                <Database className="w-4 h-4" /> Real-World Biomarker Data
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </Container>
         </section>
@@ -102,21 +121,24 @@ export default function PlatformPage() {
                         </div>
                     </div>
                     
-                    <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] p-8 md:p-12 rounded-3xl backdrop-blur-xl relative overflow-hidden shadow-2xl">
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-levl-magenta)]/10 blur-[100px] rounded-full pointer-events-none" />
+                    <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] p-8 md:p-12 rounded-3xl backdrop-blur-xl relative overflow-hidden shadow-2xl group">
+                        <div className="absolute inset-0 bg-[url('/images/platform-visual-2.png')] bg-cover bg-center opacity-30 group-hover:opacity-50 transition-opacity duration-700 pointer-events-none mix-blend-screen" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-levl-panel)] via-[var(--color-levl-panel)]/90 to-black/20 pointer-events-none" />
                         
-                        <p className="text-2xl text-white font-medium mb-8 leading-relaxed">
-                            But aging does not happen one pathway at a time.
-                        </p>
-                        <p className="text-[var(--color-levl-text-secondary)] leading-relaxed mb-8">
-                            It emerges from interacting biological systems: impaired autophagy, mitochondrial dysfunction, deregulated nutrient sensing, chronic inflammation, cellular senescence, genomic instability, epigenetic drift, and other hallmarks of aging.
-                        </p>
-                        <p className="text-[var(--color-levl-cyan)] text-xl font-medium">
-                            LEVL was built for that complexity.
-                        </p>
-                        <p className="text-[var(--color-levl-text-muted)] mt-4 leading-relaxed">
-                            Our platform organizes longevity science into a living map of compounds, pathways, hallmarks, functional outcomes, biomarkers, doses, and real-world results, then uses that map to discover combinations that single-ingredient thinking misses.
-                        </p>
+                        <div className="relative z-10">
+                            <p className="text-2xl text-white font-medium mb-8 leading-relaxed">
+                                But aging does not happen one pathway at a time.
+                            </p>
+                            <p className="text-[var(--color-levl-text-secondary)] leading-relaxed mb-8">
+                                It emerges from interacting biological systems: impaired autophagy, mitochondrial dysfunction, deregulated nutrient sensing, chronic inflammation, cellular senescence, genomic instability, epigenetic drift, and other hallmarks of aging.
+                            </p>
+                            <p className="text-[var(--color-levl-cyan)] text-xl font-medium">
+                                LEVL was built for that complexity.
+                            </p>
+                            <p className="text-[var(--color-levl-text-muted)] mt-4 leading-relaxed">
+                                Our platform organizes longevity science into a living map of compounds, pathways, hallmarks, functional outcomes, biomarkers, doses, and real-world results, then uses that map to discover combinations that single-ingredient thinking misses.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </Container>
@@ -145,15 +167,19 @@ export default function PlatformPage() {
                     </div>
 
                     {/* Longevity Graph */}
-                    <div className="md:col-span-2 bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl p-8 backdrop-blur-xl relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[var(--color-levl-magenta)]/5 to-transparent pointer-events-none" />
-                        <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:bg-[var(--color-levl-magenta)]/10 transition-colors">
-                            <Network className="w-6 h-6 text-[var(--color-levl-magenta)]" />
+                    <div className="md:col-span-2 bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl backdrop-blur-xl relative overflow-hidden group">
+                        <div className="absolute inset-0 bg-[url('/images/platform-visual.png')] bg-cover bg-center opacity-40 group-hover:opacity-60 transition-opacity duration-700 pointer-events-none mix-blend-screen" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-levl-panel)] via-[var(--color-levl-panel)]/80 to-transparent pointer-events-none" />
+                        
+                        <div className="relative z-10 p-8 h-full flex flex-col justify-end min-h-[300px]">
+                            <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 backdrop-blur-md">
+                                <Network className="w-6 h-6 text-[var(--color-levl-magenta)]" />
+                            </div>
+                            <h3 className="text-xl font-bold mb-3 text-white">Longevity Graph</h3>
+                            <p className="text-[var(--color-levl-text-secondary)] leading-relaxed max-w-md">
+                                Maps compounds, pathways, hallmarks of aging, biomarkers, and functional outcomes into a cohesive biological network.
+                            </p>
                         </div>
-                        <h3 className="text-xl font-bold mb-3 text-white">Longevity Graph</h3>
-                        <p className="text-[var(--color-levl-text-secondary)] leading-relaxed max-w-md">
-                            Maps compounds, pathways, hallmarks of aging, biomarkers, and functional outcomes into a cohesive biological network.
-                        </p>
                     </div>
 
                     {/* Synergy Engine */}
@@ -256,79 +282,145 @@ export default function PlatformPage() {
                     <p className="text-xl text-[var(--color-levl-text-secondary)]">From aging science to personalized protocols.</p>
                 </div>
 
-                <div className="max-w-4xl mx-auto relative border-l border-white/10 pl-8 md:pl-12 space-y-20">
+                <div className="max-w-4xl mx-auto relative pl-8 md:pl-12 space-y-24">
+                    
+                    {/* Glowing Vertical Timeline Line */}
+                    <div className="absolute left-[23px] top-[24px] bottom-0 w-0.5 bg-gradient-to-b from-[var(--color-levl-cyan)] via-[var(--color-levl-magenta)] to-transparent opacity-30" />
                     
                     {/* Step 1 */}
                     <div className="relative">
-                        <div className="absolute -left-[54px] md:-left-[70px] w-12 h-12 rounded-full bg-black border border-white/20 flex items-center justify-center font-bold text-[var(--color-levl-cyan)] shadow-[0_0_20px_rgba(34,211,238,0.2)]">1</div>
-                        <h3 className="text-2xl font-bold mb-4 text-white">Ingest</h3>
-                        <p className="text-[var(--color-levl-text-secondary)] leading-relaxed mb-4">
-                            LEVL ingests scientific papers, pathway databases, hallmark-of-aging research, compound data, biomarker evidence, and real-world protocol outcomes.
-                        </p>
-                        <p className="text-white/60 leading-relaxed bg-white/5 p-4 rounded-xl border border-white/5">
-                            The platform is designed to pull longevity science out of static documents and into a structured discovery system.
-                        </p>
+                        <div className="absolute -left-[54px] md:-left-[70px] w-12 h-12 rounded-full bg-[var(--color-levl-bg)] border-2 border-[var(--color-levl-cyan)] flex items-center justify-center font-mono font-bold text-[var(--color-levl-cyan)] shadow-[0_0_20px_rgba(34,211,238,0.4)] z-10">1</div>
+                        <div className="grid md:grid-cols-2 gap-8 items-start">
+                            <div>
+                                <h3 className="text-2xl font-bold mb-4 text-white">Ingest</h3>
+                                <p className="text-[var(--color-levl-text-secondary)] leading-relaxed mb-4">
+                                    LEVL ingests scientific papers, pathway databases, hallmark-of-aging research, compound data, biomarker evidence, and real-world protocol outcomes.
+                                </p>
+                                <p className="text-white/60 leading-relaxed bg-white/5 p-4 rounded-xl border border-white/5">
+                                    The platform is designed to pull longevity science out of static documents and into a structured discovery system.
+                                </p>
+                            </div>
+                            <div className="bg-black/60 border border-white/10 rounded-xl p-4 font-mono text-xs text-[var(--color-levl-text-muted)] overflow-hidden">
+                                <div className="flex gap-2 mb-2 border-b border-white/10 pb-2">
+                                    <div className="w-2 h-2 rounded-full bg-red-500/50" />
+                                    <div className="w-2 h-2 rounded-full bg-yellow-500/50" />
+                                    <div className="w-2 h-2 rounded-full bg-green-500/50" />
+                                </div>
+                                <div className="space-y-1 opacity-70">
+                                    <p><span className="text-blue-400">GET</span> /api/ingest/literature?source=pubmed</p>
+                                    <p className="text-green-400">Success: 24,105 documents queued</p>
+                                    <p>Processing text extraction...</p>
+                                    <p>Identifying mechanistic entities...</p>
+                                    <p>Linking to hallmark ontology...</p>
+                                    <p className="animate-pulse text-[var(--color-levl-cyan)]">_</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Step 2 */}
                     <div className="relative">
-                        <div className="absolute -left-[54px] md:-left-[70px] w-12 h-12 rounded-full bg-black border border-white/20 flex items-center justify-center font-bold text-[var(--color-levl-cyan)] shadow-[0_0_20px_rgba(34,211,238,0.2)]">2</div>
-                        <h3 className="text-2xl font-bold mb-4 text-white">Structure</h3>
-                        <p className="text-[var(--color-levl-text-secondary)] leading-relaxed mb-6">
-                            The platform extracts the useful signal, answering precise biological questions:
-                        </p>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {['Which compound was studied?', 'Which pathway changed?', 'Which hallmark of aging does it affect?', 'What dose was used?', 'Was the evidence human, animal, cellular, or mechanistic?', 'What outcome changed?'].map(q => (
-                                <div key={q} className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] p-4 rounded-xl text-sm text-white/80">
-                                    {q}
+                        <div className="absolute -left-[54px] md:-left-[70px] w-12 h-12 rounded-full bg-[var(--color-levl-bg)] border-2 border-[var(--color-levl-cyan)] flex items-center justify-center font-mono font-bold text-[var(--color-levl-cyan)] shadow-[0_0_20px_rgba(34,211,238,0.4)] z-10">2</div>
+                        <div className="grid md:grid-cols-2 gap-8 items-start">
+                            <div>
+                                <h3 className="text-2xl font-bold mb-4 text-white">Structure</h3>
+                                <p className="text-[var(--color-levl-text-secondary)] leading-relaxed mb-6">
+                                    The platform extracts the useful signal, answering precise biological questions. This turns scattered papers into searchable biological intelligence.
+                                </p>
+                                <div className="space-y-2">
+                                    {['Which compound was studied?', 'Which pathway changed?', 'Which hallmark of aging does it affect?', 'What dose was used?'].map(q => (
+                                        <div key={q} className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] p-3 rounded-lg text-sm text-white/80">
+                                            {q}
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
+                            </div>
+                            <div className="bg-black/60 border border-white/10 rounded-xl p-4 font-mono text-xs text-[var(--color-levl-cyan)] overflow-hidden">
+                                <pre className="whitespace-pre-wrap opacity-80">
+{`{
+  "entity": "Fisetin",
+  "type": "flavonoid",
+  "mechanisms": [
+    {
+      "pathway": "mTORC1",
+      "effect": "inhibition",
+      "hallmark": "Nutrient Sensing"
+    },
+    {
+      "pathway": "senolysis",
+      "effect": "activation",
+      "hallmark": "Cellular Senescence"
+    }
+  ],
+  "confidence_score": 0.94
+}`}
+                                </pre>
+                            </div>
                         </div>
-                        <p className="text-[var(--color-levl-magenta)] text-sm font-medium mt-6">
-                            This turns scattered papers into searchable biological intelligence.
-                        </p>
                     </div>
 
                     {/* Step 3 */}
                     <div className="relative">
-                        <div className="absolute -left-[54px] md:-left-[70px] w-12 h-12 rounded-full bg-black border border-white/20 flex items-center justify-center font-bold text-[var(--color-levl-cyan)] shadow-[0_0_20px_rgba(34,211,238,0.2)]">3</div>
+                        <div className="absolute -left-[54px] md:-left-[70px] w-12 h-12 rounded-full bg-[var(--color-levl-bg)] border-2 border-[var(--color-levl-cyan)] flex items-center justify-center font-mono font-bold text-[var(--color-levl-cyan)] shadow-[0_0_20px_rgba(34,211,238,0.4)] z-10">3</div>
                         <h3 className="text-2xl font-bold mb-4 text-white">Score</h3>
-                        <p className="text-[var(--color-levl-text-secondary)] leading-relaxed mb-8">
+                        <p className="text-[var(--color-levl-text-secondary)] leading-relaxed mb-8 max-w-2xl">
                             Every compound and combination can be ranked across dimensions that matter:
                         </p>
-                        <div className="space-y-6">
-                            {[
-                                { title: 'Hallmark impact', desc: 'How directly does it target the biological drivers of aging?' },
-                                { title: 'Functional benefit', desc: 'Does it support outcomes people can feel or measure, such as energy, sleep, cognition, calm, metabolism, or recovery?' },
-                                { title: 'Pathway activation', desc: 'Which mechanisms are affected, and how strongly?' },
-                                { title: 'Evidence confidence', desc: 'How strong is the evidence, from human data down to early mechanistic signals?' },
-                                { title: 'Synergy potential', desc: 'Do the ingredients complement, reinforce, or unlock each other?' },
-                                { title: 'Dose and safety feasibility', desc: 'Can the effect be pursued with practical, low-toxicity, human-relevant dosing?' }
-                            ].map(item => (
-                                <div key={item.title} className="border-l-2 border-[var(--color-levl-cyan)]/30 pl-6">
-                                    <h4 className="text-white font-medium mb-1">{item.title}</h4>
-                                    <p className="text-[var(--color-levl-text-muted)] text-sm leading-relaxed">{item.desc}</p>
+                        
+                        <div className="grid md:grid-cols-2 gap-8">
+                            <div className="space-y-6">
+                                {[
+                                    { title: 'Hallmark impact', desc: 'Directly targeting biological drivers of aging.' },
+                                    { title: 'Functional benefit', desc: 'Outcomes like energy, sleep, cognition, and recovery.' },
+                                    { title: 'Pathway activation', desc: 'Which mechanisms are affected, and how strongly?' }
+                                ].map(item => (
+                                    <div key={item.title} className="border-l-2 border-[var(--color-levl-cyan)]/30 pl-6">
+                                        <h4 className="text-white font-medium mb-1">{item.title}</h4>
+                                        <p className="text-[var(--color-levl-text-muted)] text-sm leading-relaxed">{item.desc}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            
+                            {/* Mock Scoring Chart */}
+                            <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-xl p-6">
+                                <p className="text-xs font-mono text-white/50 mb-4 uppercase tracking-widest">Synergy Score Output</p>
+                                <div className="space-y-4">
+                                    {[
+                                        { label: 'Evidence Confidence', val: 85, color: 'bg-green-400' },
+                                        { label: 'Synergy Potential', val: 92, color: 'bg-[var(--color-levl-cyan)]' },
+                                        { label: 'Dose Feasibility', val: 78, color: 'bg-[var(--color-levl-magenta)]' },
+                                    ].map(stat => (
+                                        <div key={stat.label}>
+                                            <div className="flex justify-between text-xs mb-1 text-white/80 font-mono">
+                                                <span>{stat.label}</span>
+                                                <span>{stat.val}/100</span>
+                                            </div>
+                                            <div className="w-full h-1.5 bg-black rounded-full overflow-hidden">
+                                                <div className={`h-full ${stat.color} rounded-full`} style={{ width: `${stat.val}%` }} />
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
+                            </div>
                         </div>
                     </div>
 
                     {/* Step 4 */}
                     <div className="relative">
-                        <div className="absolute -left-[54px] md:-left-[70px] w-12 h-12 rounded-full bg-[var(--color-levl-cyan)]/10 border border-[var(--color-levl-cyan)]/30 flex items-center justify-center font-bold text-[var(--color-levl-cyan)] shadow-[0_0_30px_rgba(34,211,238,0.4)]">4</div>
+                        <div className="absolute -left-[54px] md:-left-[70px] w-12 h-12 rounded-full bg-[var(--color-levl-bg)] border-2 border-[var(--color-levl-magenta)] flex items-center justify-center font-mono font-bold text-[var(--color-levl-magenta)] shadow-[0_0_30px_rgba(217,70,239,0.4)] z-10">4</div>
                         <h3 className="text-2xl font-bold mb-4 text-white">Formulate</h3>
                         <p className="text-[var(--color-levl-text-secondary)] leading-relaxed mb-6">
                             LEVL uses this ranked evidence to identify high-potential combinations for <span className="text-white font-semibold">LIFESPAN+</span>, our line of science-driven formulations designed to support the biological foundations of healthy aging.
                         </p>
-                        <div className="bg-gradient-to-r from-[var(--color-levl-cyan)]/10 to-transparent border-l-4 border-[var(--color-levl-cyan)] p-6 rounded-r-xl">
+                        <div className="bg-gradient-to-r from-[var(--color-levl-magenta)]/10 to-transparent border-l-4 border-[var(--color-levl-magenta)] p-6 rounded-r-xl">
                             <p className="text-white font-medium text-lg">We do not start with trend ingredients.</p>
-                            <p className="text-[var(--color-levl-cyan)] font-bold text-lg">We start with the biology.</p>
+                            <p className="text-[var(--color-levl-magenta)] font-bold text-lg">We start with the biology.</p>
                         </div>
                     </div>
 
                     {/* Step 5 */}
                     <div className="relative">
-                        <div className="absolute -left-[54px] md:-left-[70px] w-12 h-12 rounded-full bg-black border border-white/20 flex items-center justify-center font-bold text-[var(--color-levl-cyan)] shadow-[0_0_20px_rgba(34,211,238,0.2)]">5</div>
+                        <div className="absolute -left-[54px] md:-left-[70px] w-12 h-12 rounded-full bg-[var(--color-levl-bg)] border-2 border-white/20 flex items-center justify-center font-mono font-bold text-white z-10">5</div>
                         <h3 className="text-2xl font-bold mb-4 text-white">Personalize</h3>
                         <p className="text-[var(--color-levl-text-secondary)] leading-relaxed mb-4">
                             The same platform that powers formulation discovery also informs personalized protocols.
@@ -340,7 +432,7 @@ export default function PlatformPage() {
 
                     {/* Step 6 */}
                     <div className="relative">
-                        <div className="absolute -left-[54px] md:-left-[70px] w-12 h-12 rounded-full bg-black border border-white/20 flex items-center justify-center font-bold text-[var(--color-levl-cyan)] shadow-[0_0_20px_rgba(34,211,238,0.2)]">6</div>
+                        <div className="absolute -left-[54px] md:-left-[70px] w-12 h-12 rounded-full bg-[var(--color-levl-bg)] border-2 border-white/20 flex items-center justify-center font-mono font-bold text-white z-10">6</div>
                         <h3 className="text-2xl font-bold mb-4 text-white">Learn</h3>
                         <p className="text-[var(--color-levl-text-secondary)] leading-relaxed mb-6">
                             Real-world outcomes feed back into the platform.
