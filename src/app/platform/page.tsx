@@ -122,8 +122,8 @@ export default function PlatformPage() {
                     </div>
                     
                     <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] p-8 md:p-12 rounded-3xl backdrop-blur-xl relative overflow-hidden shadow-2xl group">
-                        <div className="absolute inset-0 bg-[url('/images/platform-visual-2.png')] bg-cover bg-center opacity-30 group-hover:opacity-50 transition-opacity duration-700 pointer-events-none mix-blend-screen" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-levl-panel)] via-[var(--color-levl-panel)]/90 to-black/20 pointer-events-none" />
+                        <div className="absolute inset-y-0 right-0 w-1/2 bg-[url('/images/platform-visual-2.png')] bg-contain bg-no-repeat bg-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 pointer-events-none mix-blend-screen" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-levl-panel)] via-[var(--color-levl-panel)]/90 to-transparent pointer-events-none" />
                         
                         <div className="relative z-10">
                             <p className="text-2xl text-white font-medium mb-8 leading-relaxed">
@@ -168,8 +168,8 @@ export default function PlatformPage() {
 
                     {/* Longevity Graph */}
                     <div className="md:col-span-2 bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl backdrop-blur-xl relative overflow-hidden group">
-                        <div className="absolute inset-0 bg-[url('/images/platform-visual.png')] bg-cover bg-center opacity-40 group-hover:opacity-60 transition-opacity duration-700 pointer-events-none mix-blend-screen" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-levl-panel)] via-[var(--color-levl-panel)]/80 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 bg-[url('/images/platform-visual.png')] bg-contain bg-no-repeat bg-right-bottom opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 pointer-events-none mix-blend-screen translate-x-12 translate-y-8" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-levl-panel)] via-[var(--color-levl-panel)]/50 to-transparent pointer-events-none" />
                         
                         <div className="relative z-10 p-8 h-full flex flex-col justify-end min-h-[300px]">
                             <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 backdrop-blur-md">
