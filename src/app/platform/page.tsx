@@ -63,12 +63,16 @@ export default function PlatformPage() {
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
-                        <Button variant="primary" size="lg" className="w-full sm:w-auto gap-2">
-                            Explore the Platform <ArrowRight className="w-4 h-4" />
-                        </Button>
-                        <Button variant="secondary" size="lg" className="w-full sm:w-auto bg-white/5 hover:bg-white/10">
-                            Partner With LEVL
-                        </Button>
+                        <Link href="#platform-section" className="w-full sm:w-auto">
+                            <Button variant="primary" size="lg" className="w-full gap-2">
+                                Explore the Platform <ArrowRight className="w-4 h-4" />
+                            </Button>
+                        </Link>
+                        <a href="mailto:kylen@levlhealth.com" className="w-full sm:w-auto">
+                            <Button variant="secondary" size="lg" className="w-full bg-white/5 hover:bg-white/10">
+                                Partner With LEVL
+                            </Button>
+                        </a>
                     </div>
 
                     {/* Feature Pills */}
@@ -121,11 +125,8 @@ export default function PlatformPage() {
                         </div>
                     </div>
                     
-                    <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] p-8 md:p-12 rounded-3xl backdrop-blur-xl relative overflow-hidden shadow-2xl group">
-                        <div className="absolute inset-y-0 right-0 w-1/2 bg-[url('/images/platform-visual-2.png')] bg-contain bg-no-repeat bg-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 pointer-events-none mix-blend-screen" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-levl-panel)] via-[var(--color-levl-panel)]/90 to-transparent pointer-events-none" />
-                        
-                        <div className="relative z-10">
+                    <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl backdrop-blur-xl shadow-2xl group flex flex-col md:flex-row overflow-hidden">
+                        <div className="p-8 md:p-12 md:w-3/5 flex flex-col justify-center">
                             <p className="text-2xl text-white font-medium mb-8 leading-relaxed">
                                 But aging does not happen one pathway at a time.
                             </p>
@@ -139,13 +140,14 @@ export default function PlatformPage() {
                                 Our platform organizes longevity science into a living map of compounds, pathways, hallmarks, functional outcomes, biomarkers, doses, and real-world results, then uses that map to discover combinations that single-ingredient thinking misses.
                             </p>
                         </div>
+                        <div className="h-64 md:h-auto md:w-2/5 bg-[url('/images/platform-visual-2.png')] bg-cover bg-center opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 mix-blend-screen" />
                     </div>
                 </div>
             </Container>
         </section>
 
         {/* PLATFORM VISUAL SECTION (Bento Grid) */}
-        <section className="py-24">
+        <section id="platform-section" className="py-24">
             <Container>
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">The LEVL Platform</h2>
@@ -156,22 +158,22 @@ export default function PlatformPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {/* Literature Engine */}
-                    <div className="md:col-span-1 bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl p-8 backdrop-blur-xl hover:border-white/20 transition-colors group">
-                        <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:bg-[var(--color-levl-cyan)]/10 transition-colors">
-                            <BookOpen className="w-6 h-6 text-[var(--color-levl-cyan)]" />
+                    <div className="md:col-span-1 bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl backdrop-blur-xl transition-colors group flex flex-col overflow-hidden hover:border-white/20">
+                        <div className="h-48 w-full bg-[url('/images/literature_engine_visual.png')] bg-cover bg-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 mix-blend-screen" />
+                        <div className="p-8 flex-grow">
+                            <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:bg-[var(--color-levl-cyan)]/10 transition-colors">
+                                <BookOpen className="w-6 h-6 text-[var(--color-levl-cyan)]" />
+                            </div>
+                            <h3 className="text-xl font-bold mb-3 text-white">Literature Engine</h3>
+                            <p className="text-[var(--color-levl-text-secondary)] leading-relaxed">
+                                Reads and structures longevity research from scientific papers.
+                            </p>
                         </div>
-                        <h3 className="text-xl font-bold mb-3 text-white">Literature Engine</h3>
-                        <p className="text-[var(--color-levl-text-secondary)] leading-relaxed">
-                            Reads and structures longevity research from scientific papers.
-                        </p>
                     </div>
 
                     {/* Longevity Graph */}
-                    <div className="md:col-span-2 bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl backdrop-blur-xl relative overflow-hidden group">
-                        <div className="absolute inset-0 bg-[url('/images/platform-visual.png')] bg-contain bg-no-repeat bg-right-bottom opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 pointer-events-none mix-blend-screen translate-x-12 translate-y-8" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-levl-panel)] via-[var(--color-levl-panel)]/50 to-transparent pointer-events-none" />
-                        
-                        <div className="relative z-10 p-8 h-full flex flex-col justify-end min-h-[300px]">
+                    <div className="md:col-span-2 bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl backdrop-blur-xl overflow-hidden group flex flex-col md:flex-row hover:border-white/20 transition-colors">
+                        <div className="p-8 flex flex-col justify-center md:w-1/2">
                             <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 backdrop-blur-md">
                                 <Network className="w-6 h-6 text-[var(--color-levl-magenta)]" />
                             </div>
@@ -180,44 +182,49 @@ export default function PlatformPage() {
                                 Maps compounds, pathways, hallmarks of aging, biomarkers, and functional outcomes into a cohesive biological network.
                             </p>
                         </div>
+                        <div className="h-64 md:h-auto md:w-1/2 bg-[url('/images/platform-visual.png')] bg-cover bg-no-repeat bg-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 mix-blend-screen" />
                     </div>
 
                     {/* Synergy Engine */}
-                    <div className="md:col-span-3 bg-gradient-to-r from-[var(--color-levl-panel)] to-black/40 border border-[var(--color-levl-panel-border)] rounded-3xl p-8 md:p-12 backdrop-blur-xl relative overflow-hidden group">
-                        <div className="absolute inset-0 bg-[url('/images/deepcell_pathways_bg.png')] opacity-10 bg-cover bg-center mix-blend-screen pointer-events-none" />
-                        <div className="relative z-10 grid md:grid-cols-2 gap-8 items-center">
-                            <div>
-                                <div className="w-12 h-12 rounded-xl bg-[var(--color-levl-cyan)]/10 border border-[var(--color-levl-cyan)]/20 flex items-center justify-center mb-6">
-                                    <Zap className="w-6 h-6 text-[var(--color-levl-cyan)]" />
-                                </div>
-                                <h3 className="text-2xl font-bold mb-3 text-white">Synergy Engine</h3>
-                                <p className="text-lg text-[var(--color-levl-text-secondary)] leading-relaxed">
-                                    Ranks combinations by mechanism, evidence strength, dose feasibility, safety, and expected biological effect.
-                                </p>
+                    <div className="md:col-span-3 bg-gradient-to-r from-[var(--color-levl-panel)] to-black/40 border border-[var(--color-levl-panel-border)] rounded-3xl backdrop-blur-xl overflow-hidden group flex flex-col md:flex-row hover:border-white/20 transition-colors">
+                        <div className="p-8 md:p-12 md:w-1/2 flex flex-col justify-center">
+                            <div className="w-12 h-12 rounded-xl bg-[var(--color-levl-cyan)]/10 border border-[var(--color-levl-cyan)]/20 flex items-center justify-center mb-6">
+                                <Zap className="w-6 h-6 text-[var(--color-levl-cyan)]" />
                             </div>
+                            <h3 className="text-2xl font-bold mb-3 text-white">Synergy Engine</h3>
+                            <p className="text-lg text-[var(--color-levl-text-secondary)] leading-relaxed">
+                                Ranks combinations by mechanism, evidence strength, dose feasibility, safety, and expected biological effect.
+                            </p>
                         </div>
+                        <div className="h-64 md:h-auto md:w-1/2 bg-[url('/images/deepcell_pathways_bg.png')] bg-cover bg-center opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700 mix-blend-screen" />
                     </div>
 
                     {/* Protocol App */}
-                    <div className="md:col-span-2 bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl p-8 backdrop-blur-xl hover:border-white/20 transition-colors group">
-                        <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:bg-white/10 transition-colors">
-                            <Activity className="w-6 h-6 text-white" />
+                    <div className="md:col-span-2 bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl backdrop-blur-xl overflow-hidden group flex flex-col md:flex-row hover:border-white/20 transition-colors">
+                        <div className="h-64 md:h-auto md:w-1/2 bg-[url('/images/protocol_app_visual.png')] bg-cover bg-center opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
+                        <div className="p-8 flex flex-col justify-center md:w-1/2">
+                            <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:bg-white/10 transition-colors">
+                                <Activity className="w-6 h-6 text-white" />
+                            </div>
+                            <h3 className="text-xl font-bold mb-3 text-white">Protocol App</h3>
+                            <p className="text-[var(--color-levl-text-secondary)] leading-relaxed max-w-md">
+                                Turns discoveries into personalized interventions users can follow, measure, and improve.
+                            </p>
                         </div>
-                        <h3 className="text-xl font-bold mb-3 text-white">Protocol App</h3>
-                        <p className="text-[var(--color-levl-text-secondary)] leading-relaxed max-w-md">
-                            Turns discoveries into personalized interventions users can follow, measure, and improve.
-                        </p>
                     </div>
 
                     {/* Feedback Loop */}
-                    <div className="md:col-span-1 bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl p-8 backdrop-blur-xl hover:border-white/20 transition-colors group">
-                        <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:bg-[var(--color-levl-cyan)]/10 transition-colors">
-                            <Workflow className="w-6 h-6 text-[var(--color-levl-cyan)]" />
+                    <div className="md:col-span-1 bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl backdrop-blur-xl transition-colors group flex flex-col overflow-hidden hover:border-white/20">
+                        <div className="h-48 w-full bg-[url('/images/feedback_loop_visual.png')] bg-cover bg-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 mix-blend-screen" />
+                        <div className="p-8 flex-grow">
+                            <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:bg-[var(--color-levl-cyan)]/10 transition-colors">
+                                <Workflow className="w-6 h-6 text-[var(--color-levl-cyan)]" />
+                            </div>
+                            <h3 className="text-xl font-bold mb-3 text-white">Feedback Loop</h3>
+                            <p className="text-[var(--color-levl-text-secondary)] leading-relaxed">
+                                Learns from biomarkers, subjective outcomes, adherence, and real-world protocol results.
+                            </p>
                         </div>
-                        <h3 className="text-xl font-bold mb-3 text-white">Feedback Loop</h3>
-                        <p className="text-[var(--color-levl-text-secondary)] leading-relaxed">
-                            Learns from biomarkers, subjective outcomes, adherence, and real-world protocol results.
-                        </p>
                     </div>
                 </div>
             </Container>
