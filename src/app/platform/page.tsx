@@ -697,7 +697,9 @@ export default function PlatformPage() {
                         </p>
                         
                         <div className="flex flex-col sm:flex-row justify-center gap-4">
-                            <Button variant="secondary" className="bg-white/5 hover:bg-white/10">Partner With LEVL</Button>
+                            <a href="mailto:kylen@levlhealth.com" className="w-full sm:w-auto">
+                                <Button variant="secondary" className="w-full sm:w-auto bg-white/5 hover:bg-white/10">Partner With LEVL</Button>
+                            </a>
                             <Link href="/">
                                 <Button variant="primary" className="w-full sm:w-auto">Explore LIFESPAN+</Button>
                             </Link>
