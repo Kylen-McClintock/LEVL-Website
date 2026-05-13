@@ -7,6 +7,7 @@ import { Navbar } from '@/components/sections/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Button } from '@/components/ui/Button';
 import { BentoGrid, BentoCard } from '@/components/ui/BentoGrid';
+import { PartnerButton } from '@/components/ui/PartnerButton';
 import { 
     BookOpen, Network, Zap, CheckCircle2, FlaskConical, Users, 
     ArrowRight, Activity, Cpu, Search, Microscope, LineChart, 
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Platform | LEVL Health',
     description: 'The AI discovery platform for longevity.',
-    images: ['https://www.levlhealth.com/images/deepcell_pathways_bg.png'], // Using the deepcell pathways bg as a good tech visualization
+    images: ['https://www.levlhealth.com/images/synergy_engine_visual.png'], // Using the synergy engine bg as a good tech visualization
   },
 };
 
@@ -68,11 +69,9 @@ export default function PlatformPage() {
                                 Explore the Platform <ArrowRight className="w-4 h-4" />
                             </Button>
                         </Link>
-                        <a href="mailto:kylen@levlhealth.com" className="w-full sm:w-auto">
-                            <Button variant="secondary" size="lg" className="w-full bg-white/5 hover:bg-white/10">
-                                Partner With LEVL
-                            </Button>
-                        </a>
+                        <PartnerButton variant="secondary" size="lg" className="w-full sm:w-auto bg-white/5 hover:bg-white/10">
+                            Partner With LEVL
+                        </PartnerButton>
                     </div>
 
                     {/* Feature Pills */}
@@ -196,7 +195,7 @@ export default function PlatformPage() {
                                 Ranks combinations by mechanism, evidence strength, dose feasibility, safety, and expected biological effect.
                             </p>
                         </div>
-                        <div className="h-64 md:h-auto md:w-1/2 bg-[url('/images/deepcell_pathways_bg.png')] bg-cover bg-center opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700 mix-blend-screen" />
+                        <div className="h-64 md:h-auto md:w-1/2 bg-[url('/images/synergy_engine_visual.png')] bg-cover bg-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 mix-blend-screen" />
                     </div>
 
                     {/* Protocol App */}
@@ -697,9 +696,7 @@ export default function PlatformPage() {
                         </p>
                         
                         <div className="flex flex-col sm:flex-row justify-center gap-4">
-                            <a href="mailto:kylen@levlhealth.com" className="w-full sm:w-auto">
-                                <Button variant="secondary" className="w-full sm:w-auto bg-white/5 hover:bg-white/10">Partner With LEVL</Button>
-                            </a>
+                            <PartnerButton variant="secondary" className="w-full sm:w-auto bg-white/5 hover:bg-white/10">Partner With LEVL</PartnerButton>
                             <Link href="/">
                                 <Button variant="primary" className="w-full sm:w-auto">Explore LIFESPAN+</Button>
                             </Link>
