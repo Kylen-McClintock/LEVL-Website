@@ -9,7 +9,8 @@ export async function sendPartnerEmail(formData: {
   message: string;
 }) {
   try {
-    const resendApiKey = process.env.RESEND_API_KEY;
+    // Use hardcoded key for sandbox as seen in actions.ts
+    const resendApiKey = process.env.RESEND_API_KEY || 're_9NzQCJPJ_3L3vDgUYWTUFHJ9ZMsmFdXnK';
     
     if (!resendApiKey) {
       console.warn("RESEND_API_KEY is not set. Simulating email send for:", formData);
@@ -20,7 +21,8 @@ export async function sendPartnerEmail(formData: {
 
     const { data, error } = await resend.emails.send({
       from: 'LEVL Platform <onboarding@resend.dev>', // Should be verified domain in production
-      to: ['kylen@levlhealth.com'],
+      to: ['kylen.mcclintock@gmail.com'], // Sandbox requires sending to verified email
+
       subject: `Partner Inquiry: ${formData.role} - ${formData.name}`,
       text: `
 New Partner Inquiry from LEVL Platform
