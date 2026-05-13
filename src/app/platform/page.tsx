@@ -139,7 +139,7 @@ export default function PlatformPage() {
                                 Our platform organizes longevity science into a living map of compounds, pathways, hallmarks, functional outcomes, biomarkers, doses, and real-world results, then uses that map to discover combinations that single-ingredient thinking misses.
                             </p>
                         </div>
-                        <div className="h-64 md:h-auto md:w-2/5 bg-[url('/images/platform-visual-2.png')] bg-contain bg-no-repeat bg-center opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 mix-blend-screen" />
+                        <div className="h-64 md:h-auto md:w-2/5 bg-[url('/images/platform-visual-2.png')] bg-contain bg-no-repeat bg-center opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
                     </div>
                 </div>
             </Container>
@@ -158,7 +158,7 @@ export default function PlatformPage() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {/* Literature Engine */}
                     <div className="md:col-span-1 bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl backdrop-blur-xl transition-colors group flex flex-col overflow-hidden hover:border-white/20">
-                        <div className="h-48 w-full bg-[url('/images/literature_engine_visual.png')] bg-contain bg-no-repeat bg-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 mix-blend-screen" />
+                        <div className="h-48 w-full bg-[url('/images/literature_engine_visual.png')] bg-contain bg-no-repeat bg-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
                         <div className="p-8 flex-grow">
                             <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:bg-[var(--color-levl-cyan)]/10 transition-colors">
                                 <BookOpen className="w-6 h-6 text-[var(--color-levl-cyan)]" />
@@ -181,7 +181,7 @@ export default function PlatformPage() {
                                 Maps compounds, pathways, hallmarks of aging, biomarkers, and functional outcomes into a cohesive biological network.
                             </p>
                         </div>
-                        <div className="h-64 md:h-auto md:w-1/2 bg-[url('/images/platform-visual.png')] bg-contain bg-no-repeat bg-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 mix-blend-screen" />
+                        <div className="h-64 md:h-auto md:w-1/2 bg-[url('/images/platform-visual.png')] bg-contain bg-no-repeat bg-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
                     </div>
 
                     {/* Synergy Engine */}
@@ -195,12 +195,12 @@ export default function PlatformPage() {
                                 Ranks combinations by mechanism, evidence strength, dose feasibility, safety, and expected biological effect.
                             </p>
                         </div>
-                        <div className="h-64 md:h-auto md:w-1/2 bg-[url('/images/synergy_engine_visual.png')] bg-contain bg-no-repeat bg-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 mix-blend-screen" />
+                        <div className="h-64 md:h-auto md:w-1/2 bg-[url('/images/synergy_engine_visual.png')] bg-contain bg-no-repeat bg-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
                     </div>
 
                     {/* Protocol App */}
                     <div className="md:col-span-2 bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl backdrop-blur-xl overflow-hidden group flex flex-col md:flex-row hover:border-white/20 transition-colors">
-                        <div className="h-64 md:h-auto md:w-1/2 bg-[url('/images/protocol_app_visual.png')] bg-contain bg-no-repeat bg-center opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 mix-blend-screen" />
+                        <div className="h-64 md:h-auto md:w-1/2 bg-[url('/images/protocol_app_visual.png')] bg-contain bg-no-repeat bg-center opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
                         <div className="p-8 flex flex-col justify-center md:w-1/2">
                             <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:bg-white/10 transition-colors">
                                 <Activity className="w-6 h-6 text-white" />
@@ -214,7 +214,7 @@ export default function PlatformPage() {
 
                     {/* Feedback Loop */}
                     <div className="md:col-span-1 bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl backdrop-blur-xl transition-colors group flex flex-col overflow-hidden hover:border-white/20">
-                        <div className="h-48 w-full bg-[url('/images/feedback_loop_visual.png')] bg-contain bg-no-repeat bg-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 mix-blend-screen" />
+                        <div className="h-48 w-full bg-[url('/images/feedback_loop_visual.png')] bg-contain bg-no-repeat bg-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
                         <div className="p-8 flex-grow">
                             <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:bg-[var(--color-levl-cyan)]/10 transition-colors">
                                 <Workflow className="w-6 h-6 text-[var(--color-levl-cyan)]" />
