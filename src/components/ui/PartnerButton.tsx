@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { Button, ButtonProps } from './Button';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
+import { X, CheckCircle, Loader2 } from 'lucide-react';
+import { sendPartnerEmail } from '@/app/actions/contact';
 
 interface PartnerButtonProps extends ButtonProps {
     children: React.ReactNode;
@@ -11,6 +12,9 @@ interface PartnerButtonProps extends ButtonProps {
 
 export function PartnerButton({ children, className, ...props }: PartnerButtonProps) {
     const [isOpen, setIsOpen] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [errorMsg, setErrorMsg] = useState('');
     
     // Form state
     const [name, setName] = useState('');
@@ -18,20 +22,34 @@ export function PartnerButton({ children, className, ...props }: PartnerButtonPr
     const [role, setRole] = useState('Scientist / Researcher');
     const [message, setMessage] = useState('');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsSubmitting(true);
+        setErrorMsg('');
         
-        // Compile subject and body
-        const subject = encodeURIComponent(`Partner Inquiry: ${role} - ${name}`);
-        const body = encodeURIComponent(
-            `Name: ${name}\nEmail: ${email}\nRole: ${role}\n\nMessage:\n${message}`
-        );
-        
-        // Open mail client
-        window.location.href = `mailto:kylen@levlhealth.com?subject=${subject}&body=${body}`;
-        
-        // Close modal after brief delay
-        setTimeout(() => setIsOpen(false), 300);
+        try {
+            const res = await sendPartnerEmail({ name, email, role, message });
+            
+            if (res.success) {
+                setIsSuccess(true);
+                setTimeout(() => {
+                    setIsOpen(false);
+                    // Reset form after closing
+                    setTimeout(() => {
+                        setIsSuccess(false);
+                        setName('');
+                        setEmail('');
+                        setMessage('');
+                    }, 300);
+                }, 2000);
+            } else {
+                setErrorMsg(res.error || 'Failed to send message.');
+            }
+        } catch (error) {
+            setErrorMsg('An unexpected error occurred.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -127,13 +145,28 @@ export function PartnerButton({ children, className, ...props }: PartnerButtonPr
                                     </div>
 
                                     <div className="pt-2">
-                                        <Button type="submit" variant="primary" className="w-full h-12">
-                                            Prepare Message
+                                        <Button type="submit" variant="primary" className="w-full h-12" disabled={isSubmitting || isSuccess}>
+                                            {isSubmitting ? (
+                                                <><Loader2 className="w-5 h-5 mr-2 animate-spin" /> Sending...</>
+                                            ) : isSuccess ? (
+                                                <><CheckCircle className="w-5 h-5 mr-2 text-green-400" /> Sent Successfully</>
+                                            ) : (
+                                                "Send Message"
+                                            )}
                                         </Button>
                                     </div>
-                                    <p className="text-center text-xs text-white/40 mt-3">
-                                        This will open your default email client so you can review before sending.
-                                    </p>
+                                    
+                                    {errorMsg && (
+                                        <p className="text-center text-sm text-red-400 mt-2">
+                                            {errorMsg}
+                                        </p>
+                                    )}
+                                    
+                                    {!errorMsg && !isSuccess && (
+                                        <p className="text-center text-xs text-white/40 mt-3">
+                                            We typically respond within 24 hours.
+                                        </p>
+                                    )}
                                 </form>
                             </div>
                         </motion.div>
