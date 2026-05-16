@@ -54,10 +54,10 @@ export function StickyDesktopHeader({ product, onAddToCart }: StickyDesktopHeade
             <div className="flex items-center gap-6">
               <div className="flex flex-col items-end">
                 <span className="text-[var(--color-levl-cyan)] font-bold leading-tight">
-                  $117.00
+                  $39 / bottle
                 </span>
                 <span className="text-[10px] text-[var(--color-levl-text-muted)] uppercase tracking-wider">
-                  90-Day Supply
+                  ($117 total for 90-Day Supply)
                 </span>
               </div>
               <button

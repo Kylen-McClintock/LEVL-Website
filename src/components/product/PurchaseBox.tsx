@@ -21,9 +21,9 @@ export function PurchaseBox({ product, onCartOpen, cartId }: PurchaseBoxProps) {
   const [isAdding, setIsAdding] = useState(false);
 
   // Fallback for mock if product not passed
-  const priceDisplay = selectedPlan === 'subscribe-90' ? '$117.00' : selectedPlan === 'subscribe-30' ? '$43.00' : '$49.00';
-  const originalPrice = selectedPlan === 'subscribe-90' ? '$147.00' : selectedPlan === 'subscribe-30' ? '$49.00' : null;
-  const perBottleText = selectedPlan === 'subscribe-90' ? ' ($39.00/bottle)' : '';
+  const priceDisplay = selectedPlan === 'subscribe-90' ? '$39 / bottle' : selectedPlan === 'subscribe-30' ? '$43 / bottle' : '$49';
+  const originalPrice = selectedPlan === 'subscribe-90' ? '$49' : selectedPlan === 'subscribe-30' ? '$49' : null;
+  const perBottleText = selectedPlan === 'subscribe-90' ? '($117 total for 3 bottles)' : '';
 
   const handleAddToCart = async () => {
     setIsAdding(true);
