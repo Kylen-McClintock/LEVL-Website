@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Instagram, Linkedin } from "lucide-react";
 
 const navLinks = [
+    { name: "Platform", href: "/platform" },
     { name: "Get Early Access", href: "/#early-access" },
     { name: "Science", href: "/#science" },
     { name: "App", href: "/#app" },
