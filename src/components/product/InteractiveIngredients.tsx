@@ -53,7 +53,10 @@ export function InteractiveIngredients() {
                         {nightlyBenefits.map((benefit) => (
                             <button
                                 key={benefit}
-                                onClick={() => setSelectedBenefit(selectedBenefit === benefit ? null : benefit)}
+                                onClick={() => {
+                                    setSelectedBenefit(selectedBenefit === benefit ? null : benefit);
+                                    setSelectedHall(null);
+                                }}
                                 className={`w-full text-left px-5 py-3.5 rounded-full transition-all text-base font-medium border border-white/10 ${selectedBenefit === benefit
                                     ? "bg-[linear-gradient(to_right,rgba(229,128,99,1)_0%,rgba(159,69,118,1)_25%,rgba(45,27,84,1)_60%,rgba(16,5,36,1)_100%)] text-white shadow-[0_0_20px_rgba(229,128,99,0.4)] scale-[1.02]"
                                     : "bg-[linear-gradient(to_right,rgba(229,128,99,0.6)_0%,rgba(159,69,118,0.6)_25%,rgba(45,27,84,0.6)_60%,rgba(16,5,36,0.6)_100%)] text-white/80 hover:bg-[linear-gradient(to_right,rgba(229,128,99,1)_0%,rgba(159,69,118,1)_25%,rgba(45,27,84,1)_60%,rgba(16,5,36,1)_100%)] hover:text-white hover:scale-[1.01]"
@@ -70,7 +73,10 @@ export function InteractiveIngredients() {
                         {hallucinations.map((hall) => (
                             <button
                                 key={hall}
-                                onClick={() => setSelectedHall(selectedHall === hall ? null : hall)}
+                                onClick={() => {
+                                    setSelectedHall(selectedHall === hall ? null : hall);
+                                    setSelectedBenefit(null);
+                                }}
                                 className={`w-full text-left px-5 py-3.5 rounded-full transition-all text-base font-medium border border-white/10 ${selectedHall === hall
                                     ? "bg-[linear-gradient(to_right,rgba(229,128,99,1)_0%,rgba(159,69,118,1)_25%,rgba(45,27,84,1)_60%,rgba(16,5,36,1)_100%)] text-white shadow-[0_0_20px_rgba(229,128,99,0.4)] scale-[1.02]"
                                     : "bg-[linear-gradient(to_right,rgba(229,128,99,0.6)_0%,rgba(159,69,118,0.6)_25%,rgba(45,27,84,0.6)_60%,rgba(16,5,36,0.6)_100%)] text-white/80 hover:bg-[linear-gradient(to_right,rgba(229,128,99,1)_0%,rgba(159,69,118,1)_25%,rgba(45,27,84,1)_60%,rgba(16,5,36,1)_100%)] hover:text-white hover:scale-[1.01]"
