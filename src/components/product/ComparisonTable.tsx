@@ -24,8 +24,8 @@ export function ComparisonTable() {
           </p>
         </div>
 
-        <div className="overflow-x-auto hide-scrollbar">
-          <div className="min-w-[800px]">
+        <div className="overflow-x-auto hide-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
+          <div className="min-w-[650px] md:min-w-[800px]">
             {/* Headers */}
             <div className="grid grid-cols-5 gap-4 mb-4 items-end">
               <div className="text-left font-semibold text-white px-4 pb-4 border-b border-[var(--color-levl-panel-border)]">
@@ -71,7 +71,11 @@ export function ComparisonTable() {
                   </div>
                   <div className="text-center relative">
                     {/* Background column highlight for LEVL */}
-                    <div className="absolute inset-y-[-1.5rem] inset-x-0 bg-[var(--color-levl-cyan)]/5 border-x border-[var(--color-levl-cyan)]/20 -z-10" />
+                    <div className={cn(
+                      "absolute inset-x-0 bg-[var(--color-levl-cyan)]/5 border-x border-[var(--color-levl-cyan)]/20 -z-10",
+                      "top-[-1.5rem]",
+                      i === comparisonTable.rows.length - 1 ? "bottom-[-1.5rem] rounded-b-2xl border-b" : "bottom-[-1.5rem]"
+                    )} />
                     {renderValue(row.levl)}
                   </div>
                   <div className="text-center">{renderValue(row.generic)}</div>
@@ -79,13 +83,6 @@ export function ComparisonTable() {
                   <div className="text-center">{renderValue(row.diy)}</div>
                 </div>
               ))}
-              
-              {/* Bottom close out for LEVL highlight column */}
-              <div className="grid grid-cols-5 gap-4">
-                <div className="col-start-2 relative h-6">
-                  <div className="absolute inset-0 bg-[var(--color-levl-cyan)]/5 rounded-b-2xl border-x border-b border-[var(--color-levl-cyan)]/20 -z-10" />
-                </div>
-              </div>
             </div>
 
           </div>
