@@ -81,6 +81,7 @@ export const productContent = {
       dose: "5 mg",
       function: "Neurotransmitter synthesis",
       halls: ["Genomic Stability", "Metabolic Health"],
+      nightlyBenefits: ["Natural Deep Sleep", "Next Morning Clarity"],
       whyItMatters: "Vitamin B6 is crucial for the biosynthesis of neurotransmitters, including serotonin and dopamine. It acts as a coenzyme in the conversion of L-Tryptophan to 5-HTP and then to serotonin/melatonin.",
       evidenceTag: "Strong"
     },
@@ -89,6 +90,7 @@ export const productContent = {
       dose: "70 mg",
       function: "Nervous system calm",
       halls: ["Mitochondrial Health", "Metabolic Health", "Inflammatory Balance"],
+      nightlyBenefits: ["Natural Deep Sleep", "Overnight Cellular Tuneup", "Next Morning Clarity"],
       whyItMatters: "Magnesium is essential for ATP stability and enzymatic function. The glycinate form provides glycine, an inhibitory neurotransmitter that promotes relaxation.",
       evidenceTag: "Strong"
     },
@@ -97,6 +99,7 @@ export const productContent = {
       dose: "8 mg",
       function: "Antioxidant & DNA repair",
       halls: ["Genomic Stability", "Cellular Renewal", "Inflammatory Balance"],
+      nightlyBenefits: ["Overnight Cellular Tuneup", "Next Morning Clarity"],
       whyItMatters: "Zinc plays a critical role in DNA repair mechanisms and immune modulation. It supports SOD (Superoxide Dismutase) activity to combat oxidative stress.",
       evidenceTag: "Strong"
     },
@@ -105,6 +108,7 @@ export const productContent = {
       dose: "300 mg",
       function: "GABA modulation",
       halls: ["Cellular Renewal", "Inflammatory Balance"],
+      nightlyBenefits: ["Natural Deep Sleep"],
       whyItMatters: "Valerenic acid in Valerian root inhibits the breakdown of GABA, extending its calming effects on the nervous system.",
       evidenceTag: "Strong"
     },
@@ -113,6 +117,7 @@ export const productContent = {
       dose: "300 mg",
       function: "Telomere support",
       halls: ["Telomere Preservation", "Inflammatory Balance"],
+      nightlyBenefits: ["Overnight Cellular Tuneup"],
       whyItMatters: "Astragalus contains cycloastragenol and astragaloside IV, compounds studied for their potential to activate telomerase and protect telomere length.",
       evidenceTag: "Emerging"
     },
@@ -121,6 +126,7 @@ export const productContent = {
       dose: "250 mg",
       function: "Restlessness reduction",
       halls: ["Cellular Renewal", "Inflammatory Balance"],
+      nightlyBenefits: ["Natural Deep Sleep"],
       whyItMatters: "Rosmarinic acid in Lemon Balm has been shown to increase GABA transaminase activity, helping to maintain higher GABA levels in the brain.",
       evidenceTag: "Strong"
     },
@@ -129,6 +135,7 @@ export const productContent = {
       dose: "200 mg",
       function: "Stress reduction",
       halls: ["Mitochondrial Health", "Inflammatory Balance"],
+      nightlyBenefits: ["Natural Deep Sleep", "Next Morning Clarity"],
       whyItMatters: "L-Theanine crosses the blood-brain barrier to promote alpha wave generation, associated with a state of 'relaxed wakefulness' conducive to falling asleep.",
       evidenceTag: "Strong"
     },
@@ -137,6 +144,7 @@ export const productContent = {
       dose: "100 mg",
       function: "Serotonin/Melatonin precursor",
       halls: ["Metabolic Health", "Cellular Renewal"],
+      nightlyBenefits: ["Natural Deep Sleep"],
       whyItMatters: "Precursor to 5-HTP and Serotonin. Provides raw substrate for the body's natural melatonin production pathways.",
       evidenceTag: "Strong"
     },
@@ -145,6 +153,7 @@ export const productContent = {
       dose: "100 mg",
       function: "Mind calming",
       halls: ["Cellular Renewal", "Inflammatory Balance"],
+      nightlyBenefits: ["Natural Deep Sleep"],
       whyItMatters: "Contains flavonoids like chrysin which bind to benzodiazepine sites on GABA receptors, exerting mild anxiolytic effects.",
       evidenceTag: "Strong"
     },
@@ -153,6 +162,7 @@ export const productContent = {
       dose: "100 mg",
       function: "Sleep architecture",
       halls: ["Cellular Renewal", "Inflammatory Balance"],
+      nightlyBenefits: ["Natural Deep Sleep"],
       whyItMatters: "Humulone and lupulone in hops appear to enhance the activity of GABA, working synergistically with Valerian.",
       evidenceTag: "Moderate"
     },
@@ -161,6 +171,7 @@ export const productContent = {
       dose: "50 mg",
       function: "GABA receptor modulation",
       halls: ["Autophagy", "Cellular Renewal", "Genomic Stability"],
+      nightlyBenefits: ["Natural Deep Sleep", "Overnight Cellular Tuneup"],
       whyItMatters: "Apigenin inhibits CD38, potentially boosting NAD+ levels, and modulates GABA receptors for sleep induction.",
       evidenceTag: "Strong"
     },
@@ -169,6 +180,7 @@ export const productContent = {
       dose: "50 mg",
       function: "Microglial calming",
       halls: ["Inflammatory Balance", "Genomic Stability", "Autophagy"],
+      nightlyBenefits: ["Overnight Cellular Tuneup", "Next Morning Clarity"],
       whyItMatters: "Luteolin is a potent inhibitor of microglial activation and pro-inflammatory cytokines, supporting neuroprotection.",
       evidenceTag: "Emerging"
     },
@@ -177,6 +189,7 @@ export const productContent = {
       dose: "50 mg",
       function: "Neuroprotection",
       halls: ["Stem Cell Vitality", "Genomic Stability", "Mitochondrial Health"],
+      nightlyBenefits: ["Overnight Cellular Tuneup", "Next Morning Clarity"],
       whyItMatters: "Micro-dose lithium may support BDNF (Brain Derived Neurotrophic Factor) and autophagy pathways in neurons.",
       evidenceTag: "Emerging"
     }
