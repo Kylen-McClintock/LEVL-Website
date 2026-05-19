@@ -98,7 +98,7 @@ export function InteractiveIngredients() {
                 </div>
 
                 {/* Right Side: Ingredients Grid */}
-                <div className="lg:col-span-9 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 content-start">
+                <div className="lg:col-span-9 grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 content-start">
                     <AnimatePresence>
                         {filteredIngredients.map((ing) => (
                             <motion.div
@@ -120,7 +120,7 @@ export function InteractiveIngredients() {
                                             const mainName = match ? match[1] : ing.name;
                                             const subName = match ? match[2] : null;
                                             return (
-                                                <h4 className="font-bold text-white text-xl md:text-2xl leading-tight flex flex-col items-center justify-center gap-1">
+                                                <h4 className="font-bold text-white text-lg md:text-2xl leading-tight flex flex-col items-center justify-center gap-1">
                                                     <span>{mainName}</span>
                                                     {subName && <span className="text-xs text-[var(--color-levl-text-secondary)] font-semibold">{subName}</span>}
                                                 </h4>
