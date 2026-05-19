@@ -83,7 +83,7 @@ export function ProductGallery({ images }: ProductGalleryProps) {
                   scale: { duration: 0.3, delay: 0.1 },
                   y: { duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }
                 }}
-                className="absolute bottom-[20%] left-[5%] z-20"
+                className="absolute bottom-[10%] right-[6%] z-20"
               >
                 <div className="px-3 py-2 rounded-full flex items-center gap-2 text-xs font-semibold text-white/90 bg-black/40 backdrop-blur-md border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)] whitespace-nowrap hover:border-[var(--color-levl-cyan)]/50 transition-colors">
                     <Activity className="w-3.5 h-3.5 text-[var(--color-levl-cyan)]" />
@@ -105,7 +105,7 @@ export function ProductGallery({ images }: ProductGalleryProps) {
                   scale: { duration: 0.3, delay: 0.2 },
                   y: { duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1 }
                 }}
-                className="absolute top-[25%] left-[8%] z-20"
+                className="absolute top-[8%] left-[4%] z-20"
               >
                 <div className="px-3 py-2 rounded-full flex items-center gap-2 text-xs font-semibold text-white/90 bg-black/40 backdrop-blur-md border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)] whitespace-nowrap hover:border-[var(--color-levl-green)]/50 transition-colors">
                     <Moon className="w-3.5 h-3.5 text-[var(--color-levl-green)]" />
