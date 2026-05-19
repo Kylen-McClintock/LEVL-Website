@@ -87,7 +87,7 @@ export const productContent = {
     },
     {
       name: "Magnesium Glycinate",
-      dose: "70 mg",
+      dose: "80 mg",
       function: "Nervous system calm",
       halls: ["Mitochondrial Health", "Metabolic Health", "Inflammatory Balance"],
       nightlyBenefits: ["Natural Deep Sleep", "Overnight Cellular Tuneup", "Next Morning Clarity"],
@@ -96,7 +96,7 @@ export const productContent = {
     },
     {
       name: "Zinc (as Zinc Citrate)",
-      dose: "8 mg",
+      dose: "10 mg",
       function: "Antioxidant & DNA repair",
       halls: ["Genomic Stability", "Cellular Renewal", "Inflammatory Balance"],
       nightlyBenefits: ["Overnight Cellular Tuneup", "Next Morning Clarity"],
@@ -105,21 +105,12 @@ export const productContent = {
     },
     {
       name: "Valerian Root Extract",
-      dose: "300 mg",
+      dose: "350 mg",
       function: "GABA modulation",
       halls: ["Cellular Renewal", "Inflammatory Balance"],
       nightlyBenefits: ["Natural Deep Sleep"],
       whyItMatters: "Valerenic acid in Valerian root inhibits the breakdown of GABA, extending its calming effects on the nervous system.",
       evidenceTag: "Strong"
-    },
-    {
-      name: "Astragalus Root Extract",
-      dose: "300 mg",
-      function: "Telomere support",
-      halls: ["Telomere Preservation", "Inflammatory Balance"],
-      nightlyBenefits: ["Overnight Cellular Tuneup"],
-      whyItMatters: "Astragalus contains cycloastragenol and astragaloside IV, compounds studied for their potential to activate telomerase and protect telomere length.",
-      evidenceTag: "Emerging"
     },
     {
       name: "Lemon Balm Extract",
@@ -141,7 +132,7 @@ export const productContent = {
     },
     {
       name: "L Tryptophan",
-      dose: "100 mg",
+      dose: "200 mg",
       function: "Serotonin/Melatonin precursor",
       halls: ["Metabolic Health", "Cellular Renewal"],
       nightlyBenefits: ["Natural Deep Sleep"],
@@ -150,7 +141,7 @@ export const productContent = {
     },
     {
       name: "Passion Flower Extract",
-      dose: "100 mg",
+      dose: "250 mg",
       function: "Mind calming",
       halls: ["Cellular Renewal", "Inflammatory Balance"],
       nightlyBenefits: ["Natural Deep Sleep"],
@@ -185,13 +176,22 @@ export const productContent = {
       evidenceTag: "Emerging"
     },
     {
-      name: "Lithium Orotate",
-      dose: "50 mg",
+      name: "Lithium (as Lithium Orotate)",
+      dose: "2.5 mg",
       function: "Neuroprotection",
       halls: ["Stem Cell Vitality", "Genomic Stability", "Mitochondrial Health"],
       nightlyBenefits: ["Overnight Cellular Tuneup", "Next Morning Clarity"],
       whyItMatters: "Micro-dose lithium may support BDNF (Brain Derived Neurotrophic Factor) and autophagy pathways in neurons.",
       evidenceTag: "Emerging"
+    },
+    {
+      name: "Spermidine HCL",
+      dose: "5 mg",
+      function: "Autophagy induction",
+      halls: ["Autophagy", "Cellular Renewal"],
+      nightlyBenefits: ["Overnight Cellular Tuneup"],
+      whyItMatters: "Spermidine is a polyamine that mimics fasting to strongly induce autophagy, allowing cells to clear damaged components overnight.",
+      evidenceTag: "Strong"
     }
   ],
 

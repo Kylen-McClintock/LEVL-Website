@@ -19,19 +19,19 @@ export function SupplementFacts() {
 
         <div className="space-y-0.5 text-sm font-medium">
           <FactRow name="Vitamin B6" amount="5.0 mg" dv="290%" />
-          <FactRow name="Magnesium" sub="(as Magnesium Glycinate)" amount="70 mg" dv="15%" />
-          <FactRow name="Zinc" sub="(as Zinc Citrate)" amount="8.0 mg" dv="70%" />
+          <FactRow name="Magnesium" sub="(as Magnesium Glycinate)" amount="80 mg" dv="19%" />
+          <FactRow name="Zinc" sub="(as Zinc Citrate)" amount="10 mg" dv="70%" />
           <div className="border-t-4 border-white my-2" />
-          <FactRow name="Valerian Root Extract" amount="300 mg" dv="†" />
-          <FactRow name="Astragalus Root Extract" amount="300 mg" dv="†" />
+          <FactRow name="Valerian Root Extract" amount="350 mg" dv="†" />
+          <FactRow name="Passion Flower Extract" amount="250 mg" dv="†" />
           <FactRow name="Lemon Balm Extract" amount="250 mg" dv="†" />
           <FactRow name="L-Theanine" amount="200 mg" dv="†" />
-          <FactRow name="L-Tryptophan" amount="100 mg" dv="†" />
-          <FactRow name="Passion Flower Extract" amount="100 mg" dv="†" />
+          <FactRow name="L-Tryptophan" amount="200 mg" dv="†" />
           <FactRow name="Hops Extract" amount="100 mg" dv="†" />
           <FactRow name="Apigenin" amount="50 mg" dv="†" />
           <FactRow name="Luteolin" amount="50 mg" dv="†" />
-          <FactRow name="Lithium Orotate" amount="50 mg" dv="†" />
+          <FactRow name="Spermidine HCL" amount="5 mg" dv="†" />
+          <FactRow name="Lithium" sub="(as Lithium Orotate)" amount="2.5 mg" dv="†" />
         </div>
 
         <div className="border-t-4 border-white mt-2 pt-2 mb-4">
