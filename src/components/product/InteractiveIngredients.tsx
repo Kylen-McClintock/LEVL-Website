@@ -107,16 +107,19 @@ export function InteractiveIngredients() {
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.9 }}
-                                className="relative rounded-2xl p-[2px] flex flex-col h-full bg-gradient-to-bl from-[#2D1B54] via-[#9F4576] to-[#E58063] hover:shadow-[0_0_20px_rgba(229,128,99,0.2)] transition-shadow duration-300"
+                                className={`relative rounded-2xl p-[2px] flex flex-col bg-gradient-to-bl from-[#2D1B54] via-[#9F4576] to-[#E58063] hover:shadow-[0_0_20px_rgba(229,128,99,0.2)] transition-shadow duration-300 ${expandedIngredient === ing.name ? 'h-auto' : 'aspect-square'}`}
                             >
-                                <div className="bg-[#0B0E17] rounded-2xl p-5 flex flex-col h-full w-full">
-                                    <div className="flex flex-col items-center justify-center text-center mt-4 mb-6">
-                                        <h4 className="font-bold text-white text-xl leading-tight mb-2">{ing.name}</h4>
-                                        <span className="text-[11px] font-mono text-white/40 tracking-wider">{ing.dose}</span>
+                                <div className="bg-[#0B0E17] rounded-2xl p-4 md:p-5 flex flex-col h-full w-full relative">
+                                    <div className="absolute top-3 right-3 md:top-4 md:right-4 z-10">
+                                        <span className="text-[10px] font-mono text-white/60 tracking-widest uppercase bg-white/5 border border-white/10 px-2 py-1 rounded-md">{ing.dose}</span>
                                     </div>
 
-                                    <div className="mt-auto flex flex-col">
-                                        <p className="text-[13px] text-center text-[var(--color-levl-text-secondary)] leading-relaxed font-medium mb-5">
+                                    <div className="flex flex-col items-center justify-center text-center flex-grow pt-8 pb-4">
+                                        <h4 className="font-bold text-white text-xl md:text-2xl leading-tight">{ing.name}</h4>
+                                    </div>
+
+                                    <div className="mt-auto flex flex-col shrink-0">
+                                        <p className="text-[12px] md:text-[13px] text-center text-[var(--color-levl-text-secondary)] leading-relaxed font-medium mb-4 px-2">
                                             {ing.function}
                                         </p>
 
