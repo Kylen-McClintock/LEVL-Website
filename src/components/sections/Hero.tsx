@@ -20,14 +20,14 @@ export function Hero() {
                 </h1>
 
                 <p className="text-lg md:text-xl text-white/70 max-w-lg leading-relaxed">
-                    A melatonin-free sleep and cellular renewal stack for people who want better nights and more tomorrows.
+                    A melatonin-free sleep and cellular renewal stack designed to help you sleep deeper tonight while supporting the repair pathways your body depends on for long-term vitality.
                 </p>
 
                 <ul className="space-y-3 mb-4">
                     {[
                         "Deeper, more restorative sleep",
-                        "Designed to support autophagy and nighttime cellular cleanup",
-                        "13 active ingredients shown to improve 8 hallmarks of aging"
+                        "Supports autophagy and nighttime cellular cleanup",
+                        "13 active ingredients targeting sleep, stress, inflammation, and cellular renewal"
                     ].map((item, i) => (
                         <li key={i} className="flex items-center gap-3 text-white/80">
                             <div className="h-1.5 w-1.5 rounded-full bg-brand-copper shadow-brand-glow" />

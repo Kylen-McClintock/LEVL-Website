@@ -50,15 +50,15 @@ export function ProductHero({ product, cartId }: ProductHeroProps) {
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[var(--color-levl-cyan)] via-[var(--color-levl-magenta)] to-[#6D28D9]">in Your Sleep</span>
             </h1>
             <p className="text-xl text-[var(--color-levl-text-secondary)] mb-8">
-              A melatonin-free sleep and cellular renewal stack for people who want better nights and more tomorrows.
+              A melatonin-free sleep and cellular renewal stack designed to help you sleep deeper tonight while supporting the repair pathways your body depends on for long-term vitality.
             </p>
           </div>
 
           <ul className="space-y-4 mb-10">
               {[
                   "Deeper, more restorative sleep",
-                  "Designed to support autophagy and nighttime cellular cleanup",
-                  "13 active ingredients shown to improve 8 hallmarks of aging"
+                  "Supports autophagy and nighttime cellular cleanup",
+                  "13 active ingredients targeting sleep, stress, inflammation, and cellular renewal"
               ].map((item, i) => (
                   <li key={i} className="flex items-center gap-3 text-white/80">
                       <div className="h-1.5 w-1.5 rounded-full bg-[var(--color-levl-cyan)] shadow-[0_0_8px_var(--color-levl-cyan)]" />
