@@ -110,8 +110,8 @@ export function BenefitsAtEveryAge() {
                   </div>
                 </div>
 
-                <div className="relative z-10 p-6 md:p-8 flex flex-col items-start mt-auto w-full pb-6 md:pb-8">
-                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight drop-shadow-xl max-w-2xl px-1">
+                <div className="relative z-10 px-6 md:px-8 pt-6 flex flex-col items-start mt-auto w-full pb-3 md:pb-5">
+                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 leading-tight drop-shadow-xl max-w-2xl px-1">
                     {activeContent.title}
                   </h3>
                   
