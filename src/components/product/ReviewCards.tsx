@@ -79,10 +79,10 @@ export function ReviewCards() {
               key={i} 
               className="snap-center shrink-0 w-[85vw] md:w-[600px] bg-[linear-gradient(30deg,#742D6Be6,#E37C6033)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-8 flex flex-col h-full hover:border-[var(--color-levl-cyan)]/50 transition-all hover:shadow-[0_0_30px_rgba(14,165,233,0.15)] relative z-0 overflow-hidden"
             >
-              <div className="flex items-center gap-1 text-[var(--color-levl-cyan)] mb-6">
+              <div className="flex items-center gap-1 text-[var(--color-levl-cyan)] mb-4">
                 {[...Array(review.rating)].map((_, j) => <Star key={j} className="w-4 h-4 fill-current" />)}
               </div>
-              <p className="text-white text-lg leading-relaxed flex-1 mb-8 font-medium">
+              <p className="text-white text-base leading-relaxed flex-1 mb-6 font-medium">
                 "{review.quote}"
               </p>
               <div>
