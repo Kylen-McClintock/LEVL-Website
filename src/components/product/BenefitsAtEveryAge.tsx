@@ -5,6 +5,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Check, X } from 'lucide-react';
 import { productContent } from '../../content/productLongevity';
 import { cn } from '../cart/CheckoutButton';
+import Image from 'next/image';
+
+const imageMap: Record<string, string> = {
+  "20s": "/images/nanobanana_20s_1777504569470.png",
+  "30s": "/images/nanobanana_30s_1777504581530.png",
+  "40s": "/images/nanobanana_40s_1777504591795.png",
+  "50s": "/images/nanobanana_50s_1777504604054.png",
+  "60s": "/images/nanobanana_60s_1777504619041.png",
+};
 
 export function BenefitsAtEveryAge() {
   const [activeTab, setActiveTab] = useState(0);
@@ -70,60 +79,75 @@ export function BenefitsAtEveryAge() {
           </div>
         </div>
 
+
+// ... inside the component where the Content Area starts ...
         {/* Content Area */}
-        <div className="bg-[linear-gradient(30deg,#AC4A69e6,#f79d6533)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-3xl overflow-hidden shadow-2xl relative min-h-[400px]">
+        <div className="relative min-h-[500px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-              className="p-8 md:p-12 lg:p-16 flex flex-col h-full w-full"
+              initial={{ opacity: 0, filter: 'blur(10px)' }}
+              animate={{ opacity: 1, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, filter: 'blur(10px)' }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full w-full"
             >
               
-              <div className="flex flex-col items-center md:items-start text-center md:text-left mb-12">
-                <div className="inline-flex items-center px-3 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 bg-[var(--color-levl-cyan)]/10 text-[var(--color-levl-cyan)] text-xs font-semibold uppercase tracking-widest mb-6">
-                  {activeContent.label}
+              {/* Card 1 - Hero Image & Content */}
+              <div className="lg:col-span-7 bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl overflow-hidden relative shadow-2xl min-h-[400px] flex flex-col justify-end group">
+                <Image 
+                  src={imageMap[activeContent.id] || "/images/longevity-art.jpg"}
+                  alt={`${activeContent.label} biology`}
+                  fill
+                  className="object-cover transition-transform duration-[10s] group-hover:scale-105"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90" />
+                
+                <div className="relative z-10 p-8 md:p-10 flex flex-col items-start mt-auto">
+                  <div className="inline-flex items-center px-3 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 bg-black/40 backdrop-blur-md text-[var(--color-levl-cyan)] text-xs font-semibold uppercase tracking-widest mb-4">
+                    {activeContent.label}
+                  </div>
+                  
+                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
+                    {activeContent.title}
+                  </h3>
+                  
+                  <p className="text-[var(--color-levl-text-secondary)] leading-relaxed text-base md:text-lg max-w-2xl">
+                    {activeContent.description}
+                  </p>
                 </div>
-                
-                <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
-                  {activeContent.title}
-                </h3>
-                
-                <p className="text-[var(--color-levl-text-secondary)] leading-relaxed text-lg max-w-3xl">
-                  {activeContent.description}
-                </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mt-auto max-w-5xl">
+              {/* Card 2 & 3 - Problems and Solutions Stack */}
+              <div className="lg:col-span-5 flex flex-col gap-6">
                 
-                {/* Left Column - Problems */}
-                <div className="flex flex-col pt-6 lg:pt-8">
-                  <h4 className="text-lg font-semibold text-white mb-6">What's Happening in Your Body:</h4>
-                  <ul className="flex flex-col gap-6">
+                {/* Top Card - Problems */}
+                <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 flex-1 flex flex-col shadow-xl">
+                  <h4 className="text-sm font-bold text-white/50 uppercase tracking-wider mb-6">What's Happening in Your Body</h4>
+                  <ul className="flex flex-col gap-5 mt-auto">
                     {activeContent.bodyChanges?.map((change: string, idx: number) => (
                       <li key={idx} className="flex items-start gap-4">
-                        <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center shrink-0 mt-0.5">
-                          <X className="w-3.5 h-3.5 text-white/60" strokeWidth={3} />
+                        <div className="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center shrink-0 mt-0.5 border border-white/10">
+                          <X className="w-3 h-3 text-white/40" strokeWidth={3} />
                         </div>
-                        <span className="text-[var(--color-levl-text-secondary)] font-medium text-lg leading-snug">{change}</span>
+                        <span className="text-white/70 font-medium text-base leading-snug">{change}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                {/* Right Column - Solutions */}
-                <div className="bg-[var(--color-levl-cyan)]/5 border border-[var(--color-levl-cyan)]/20 rounded-2xl p-6 lg:p-8 flex flex-col relative overflow-hidden shadow-lg">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-levl-cyan)]/10 to-[var(--color-levl-magenta)]/5 opacity-50" />
-                  <h4 className="text-lg font-semibold text-white mb-6 relative z-10">DeepCell Longevity Benefits:</h4>
-                  <ul className="flex flex-col gap-6 relative z-10">
+                {/* Bottom Card - Solutions */}
+                <div className="bg-gradient-to-br from-[var(--color-levl-cyan)]/10 to-[var(--color-levl-magenta)]/5 border border-[var(--color-levl-cyan)]/20 rounded-3xl p-8 flex-1 flex flex-col relative overflow-hidden shadow-xl">
+                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[var(--color-levl-cyan)]/20 via-transparent to-transparent opacity-50" />
+                  <h4 className="text-sm font-bold text-[var(--color-levl-cyan)] uppercase tracking-wider mb-6 relative z-10">DeepCell Longevity Benefits</h4>
+                  <ul className="flex flex-col gap-5 mt-auto relative z-10">
                     {activeContent.levlBenefits?.map((benefit: string, idx: number) => (
                       <li key={idx} className="flex items-start gap-4">
-                        <div className="w-6 h-6 rounded-full bg-[var(--color-levl-cyan)] flex items-center justify-center shrink-0 mt-0.5 shadow-[0_0_10px_var(--color-levl-cyan)]">
-                          <Check className="w-3.5 h-3.5 text-[#0B0E17]" strokeWidth={3} />
+                        <div className="w-5 h-5 rounded-full bg-[var(--color-levl-cyan)]/20 flex items-center justify-center shrink-0 mt-0.5 border border-[var(--color-levl-cyan)]/40 shadow-[0_0_10px_rgba(14,165,233,0.3)]">
+                          <Check className="w-3 h-3 text-[var(--color-levl-cyan)]" strokeWidth={3} />
                         </div>
-                        <span className="text-white font-medium text-lg leading-snug">{benefit}</span>
+                        <span className="text-white font-medium text-base leading-snug">{benefit}</span>
                       </li>
                     ))}
                   </ul>
