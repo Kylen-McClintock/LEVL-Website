@@ -39,30 +39,30 @@ export function BentoImages() {
           </div>
 
           {/* Bottom Frosted Glass Panel (Seed formatting) */}
-          <div className="absolute bottom-6 left-6 right-6 md:bottom-12 md:left-12 md:right-12 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 p-6 md:p-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="absolute bottom-6 left-0 right-0 md:left-12 md:right-12 md:bottom-12 overflow-x-auto hide-scrollbar snap-x snap-mandatory px-6 md:px-0">
+            <div className="flex md:grid md:grid-cols-3 gap-6 md:gap-8 bg-white/10 backdrop-blur-xl border border-white/20 p-6 md:p-8 rounded-2xl w-max md:w-full">
               
-              <div className="space-y-3">
+              <div className="w-[280px] md:w-auto snap-center flex-shrink-0 space-y-3">
                 <Moon className="w-8 h-8 text-[var(--color-levl-cyan)]" strokeWidth={1.5} />
-                <h3 className="text-white font-bold text-lg md:text-xl">Deep, Restful Sleep</h3>
+                <h3 className="text-white font-bold text-lg md:text-xl">Rapid Sleep Onset</h3>
                 <p className="text-[var(--color-levl-text-secondary)] text-sm leading-relaxed">
-                  Reduces sleep latency and helps you stay asleep through the night.
+                  Modulates GABA pathways for faster sleep onset without heavy sedatives.
                 </p>
               </div>
 
-              <div className="space-y-3">
+              <div className="w-[280px] md:w-auto snap-center flex-shrink-0 space-y-3">
                 <Activity className="w-8 h-8 text-[var(--color-levl-cyan)]" strokeWidth={1.5} />
-                <h3 className="text-white font-bold text-lg md:text-xl">Restore Overnight</h3>
+                <h3 className="text-white font-bold text-lg md:text-xl">Cellular Tuneup</h3>
                 <p className="text-[var(--color-levl-text-secondary)] text-sm leading-relaxed">
-                  Lowers physical and cellular stress to promote recovery while sleeping.
+                  Activates nocturnal autophagy to clear senescent cells and regenerate ATP.
                 </p>
               </div>
 
-              <div className="space-y-3">
+              <div className="w-[280px] md:w-auto snap-center flex-shrink-0 space-y-3">
                 <Sun className="w-8 h-8 text-[var(--color-levl-cyan)]" strokeWidth={1.5} />
-                <h3 className="text-white font-bold text-lg md:text-xl">Wake Up Refreshed</h3>
+                <h3 className="text-white font-bold text-lg md:text-xl">Next Morning Clarity</h3>
                 <p className="text-[var(--color-levl-text-secondary)] text-sm leading-relaxed">
-                  Supports natural sleep architecture so you wake up without the next-day haze.
+                  Supports natural sleep architecture so you wake up energized and cognitively sharp.
                 </p>
               </div>
 
