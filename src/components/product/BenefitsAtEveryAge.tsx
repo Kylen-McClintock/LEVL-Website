@@ -96,10 +96,10 @@ export function BenefitsAtEveryAge() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mt-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mt-auto max-w-5xl">
                 
                 {/* Left Column - Problems */}
-                <div className="flex flex-col">
+                <div className="flex flex-col pt-6 lg:pt-8">
                   <h4 className="text-lg font-semibold text-white mb-6">What's Happening in Your Body:</h4>
                   <ul className="flex flex-col gap-6">
                     {activeContent.bodyChanges?.map((change: string, idx: number) => (
