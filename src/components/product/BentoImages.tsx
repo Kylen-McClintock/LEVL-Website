@@ -40,7 +40,7 @@ export function BentoImages() {
 
           {/* Bottom Frosted Glass Panel (Seed formatting) */}
           <div className="absolute bottom-6 left-0 right-0 md:left-12 md:right-12 md:bottom-12 overflow-x-auto hide-scrollbar snap-x snap-mandatory px-6 md:px-0">
-            <div className="flex md:grid md:grid-cols-3 gap-6 md:gap-8 bg-white/10 backdrop-blur-xl border border-white/20 p-6 md:p-8 rounded-2xl w-max md:w-full">
+            <div className="flex md:grid md:grid-cols-3 gap-6 md:gap-8 bg-white/5 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-2xl w-max md:w-full">
               
               <div className="w-[280px] md:w-auto snap-center flex-shrink-0 space-y-3">
                 <Moon className="w-8 h-8 text-[var(--color-levl-cyan)]" strokeWidth={1.5} />
@@ -116,7 +116,7 @@ export function BentoImages() {
             <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
             
             <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 max-w-md">
-              <h3 className="text-2xl md:text-4xl font-bold text-white leading-tight drop-shadow-lg">
+              <h3 className="text-xl md:text-2xl font-light tracking-wide text-white leading-relaxed drop-shadow-md">
                 The nightly ritual built for deeper sleep and longer horizons.
               </h3>
             </div>
