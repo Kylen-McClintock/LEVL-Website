@@ -8,11 +8,11 @@ import { cn } from '../cart/CheckoutButton';
 import Image from 'next/image';
 
 const imageMap: Record<string, string> = {
-  "20s": "/images/nanobanana_20s_1777504569470.png",
-  "30s": "/images/nanobanana_30s_1777504581530.png",
-  "40s": "/images/nanobanana_40s_1777504591795.png",
-  "50s": "/images/nanobanana_50s_1777504604054.png",
-  "60s": "/images/nanobanana_60s_1777504619041.png",
+  "20s": "/images/benefits/lifestyle_20s.png",
+  "30s": "/images/benefits/lifestyle_30s.png",
+  "40s": "/images/benefits/lifestyle_40s.png",
+  "50s": "/images/benefits/lifestyle_50s.png",
+  "60s": "/images/benefits/lifestyle_60s.png",
 };
 
 export function BenefitsAtEveryAge() {
