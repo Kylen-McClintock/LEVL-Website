@@ -98,7 +98,7 @@ export function InteractiveIngredients() {
                 </div>
 
                 {/* Right Side: Ingredients Grid */}
-                <div className="lg:col-span-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="lg:col-span-9 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <AnimatePresence mode="popLayout">
                         {filteredIngredients.map((ing) => (
                             <motion.div
@@ -107,58 +107,64 @@ export function InteractiveIngredients() {
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.9 }}
-                                className={`bg-[linear-gradient(30deg,#5D265Ee6,#AC4A6933)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-6 flex flex-col hover:border-[var(--color-levl-green)]/30 transition-all`}
+                                className="relative rounded-2xl p-[2px] flex flex-col h-full bg-gradient-to-bl from-[#2D1B54] via-[#9F4576] to-[#E58063] hover:shadow-[0_0_20px_rgba(229,128,99,0.2)] transition-shadow duration-300"
                             >
-                                <div className="flex justify-between items-start mb-2 gap-2">
-                                    <h4 className="font-bold text-white text-lg leading-tight">{ing.name}</h4>
-                                    <span className="text-xs font-mono text-[var(--color-levl-green)] bg-[var(--color-levl-green)]/10 px-2 py-0.5 rounded whitespace-nowrap">{ing.dose}</span>
-                                </div>
-                                
-                                <div className="flex items-center gap-2 mb-4">
-                                  <p className="text-sm text-[var(--color-levl-text-secondary)] leading-relaxed font-medium">{ing.function}</p>
-                                </div>
+                                <div className="bg-[#0B0E17] rounded-2xl p-5 flex flex-col h-full w-full">
+                                    <div className="flex flex-col items-center justify-center text-center mt-4 mb-6">
+                                        <h4 className="font-bold text-white text-xl leading-tight mb-2">{ing.name}</h4>
+                                        <span className="text-[11px] font-mono text-white/40 tracking-wider">{ing.dose}</span>
+                                    </div>
 
-                                <div className="flex flex-wrap gap-2 mb-4">
-                                    {ing.nightlyBenefits?.map((b: string) => (
-                                        <Badge key={b} variant="outline" className={`text-[10px] ${selectedBenefit === b ? 'bg-[var(--color-levl-copper)]/20 border-[var(--color-levl-copper)]/40 text-[var(--color-levl-copper)]' : 'bg-transparent border-white/10 text-white/50'}`}>
-                                            {b}
-                                        </Badge>
-                                    ))}
-                                    {ing.halls?.map((h: string) => (
-                                        <Badge key={h} variant="outline" className={`text-[10px] ${selectedHall === h ? 'bg-[var(--color-levl-cyan)]/20 border-[var(--color-levl-cyan)]/40 text-[var(--color-levl-cyan)]' : 'bg-transparent border-white/10 text-white/50'}`}>
-                                            {h}
-                                        </Badge>
-                                    ))}
-                                </div>
+                                    <div className="mt-auto flex flex-col">
+                                        <p className="text-[13px] text-center text-[var(--color-levl-text-secondary)] leading-relaxed font-medium mb-5">
+                                            {ing.function}
+                                        </p>
 
-                                {/* Toggleable Description (All screens) */}
-                                <div className="mt-auto pt-4 border-t border-white/10">
-                                  <button
-                                      onClick={() => setExpandedIngredient(expandedIngredient === ing.name ? null : ing.name)}
-                                      className="text-xs font-semibold text-[var(--color-levl-green)] hover:text-[var(--color-levl-green)]/80 flex items-center gap-1"
-                                  >
-                                      {expandedIngredient === ing.name ? "Show less" : "Learn more"}
-                                      {expandedIngredient === ing.name ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-                                  </button>
+                                        {/* Toggleable Description */}
+                                        <div className="pt-4 border-t border-white/10">
+                                            <button
+                                                onClick={() => setExpandedIngredient(expandedIngredient === ing.name ? null : ing.name)}
+                                                className="text-xs font-semibold text-white/60 hover:text-white flex items-center justify-center gap-1 w-full transition-colors"
+                                            >
+                                                {expandedIngredient === ing.name ? "Show less" : "Learn more"}
+                                                {expandedIngredient === ing.name ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                                            </button>
 
-                                  <AnimatePresence>
-                                    {expandedIngredient === ing.name && (
-                                        <motion.div
-                                            initial={{ opacity: 0, height: 0 }}
-                                            animate={{ opacity: 1, height: "auto" }}
-                                            exit={{ opacity: 0, height: 0 }}
-                                            className="mt-4 pt-4 border-t border-white/10 text-sm text-[var(--color-levl-text-secondary)] overflow-hidden"
-                                        >
-                                            <div className="flex items-center gap-2 mb-3">
-                                                <span className="text-xs font-semibold uppercase tracking-wider text-white/50">Evidence Level:</span>
-                                                <Badge variant="outline" className="text-[10px] bg-white/5 text-[var(--color-levl-text-secondary)] border-white/10 font-medium shrink-0">
-                                                    {ing.evidenceTag}
-                                                </Badge>
-                                            </div>
-                                            {ing.whyItMatters}
-                                        </motion.div>
-                                    )}
-                                  </AnimatePresence>
+                                            <AnimatePresence>
+                                                {expandedIngredient === ing.name && (
+                                                    <motion.div
+                                                        initial={{ opacity: 0, height: 0 }}
+                                                        animate={{ opacity: 1, height: "auto" }}
+                                                        exit={{ opacity: 0, height: 0 }}
+                                                        className="mt-5 text-sm text-[var(--color-levl-text-secondary)] overflow-hidden flex flex-col gap-5"
+                                                    >
+                                                        <div className="flex flex-wrap gap-2 justify-center">
+                                                            {ing.nightlyBenefits?.map((b: string) => (
+                                                                <Badge key={b} variant="outline" className={`text-[10px] ${selectedBenefit === b ? 'bg-[var(--color-levl-copper)]/20 border-[var(--color-levl-copper)]/40 text-[var(--color-levl-copper)]' : 'bg-transparent border-white/10 text-white/50'}`}>
+                                                                    {b}
+                                                                </Badge>
+                                                            ))}
+                                                            {ing.halls?.map((h: string) => (
+                                                                <Badge key={h} variant="outline" className={`text-[10px] ${selectedHall === h ? 'bg-[var(--color-levl-cyan)]/20 border-[var(--color-levl-cyan)]/40 text-[var(--color-levl-cyan)]' : 'bg-transparent border-white/10 text-white/50'}`}>
+                                                                    {h}
+                                                                </Badge>
+                                                            ))}
+                                                        </div>
+
+                                                        <div>
+                                                            <div className="flex items-center justify-center gap-2 mb-3">
+                                                                <span className="text-[10px] font-semibold uppercase tracking-wider text-white/40">Evidence:</span>
+                                                                <Badge variant="outline" className="text-[10px] bg-white/5 text-[var(--color-levl-text-secondary)] border-white/10 font-medium shrink-0">
+                                                                    {ing.evidenceTag}
+                                                                </Badge>
+                                                            </div>
+                                                            <p className="text-center text-[13px] leading-relaxed">{ing.whyItMatters}</p>
+                                                        </div>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </div>
+                                    </div>
                                 </div>
                             </motion.div>
                         ))}
