@@ -80,7 +80,6 @@ export function BenefitsAtEveryAge() {
         </div>
 
 
-// ... inside the component where the Content Area starts ...
         {/* Content Area */}
         <div className="relative min-h-[500px]">
           <AnimatePresence mode="wait">
@@ -104,18 +103,20 @@ export function BenefitsAtEveryAge() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
                 
-                <div className="relative z-10 p-8 md:p-10 flex flex-col items-start mt-auto bg-black/40 backdrop-blur-md border-t border-white/10 w-full">
+                <div className="relative z-10 p-8 md:p-10 flex flex-col items-start mt-auto w-full">
                   <div className="inline-flex items-center px-3 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 bg-black/40 backdrop-blur-md text-[var(--color-levl-cyan)] text-xs font-semibold uppercase tracking-widest mb-4">
                     {activeContent.label}
                   </div>
                   
-                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
+                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-2 leading-tight drop-shadow-md">
                     {activeContent.title}
                   </h3>
                   
-                  <p className="text-[var(--color-levl-text-secondary)] leading-relaxed text-base md:text-lg max-w-2xl">
-                    {activeContent.description}
-                  </p>
+                  <div className="mt-8 bg-white/5 backdrop-blur-md border border-white/10 p-5 rounded-2xl shadow-xl w-full max-w-2xl">
+                    <p className="text-[var(--color-levl-text-secondary)] leading-relaxed text-base md:text-lg">
+                      {activeContent.description}
+                    </p>
+                  </div>
                 </div>
               </div>
 
