@@ -93,7 +93,7 @@ export function BenefitsAtEveryAge() {
             >
               
               {/* Card 1 - Hero Image & Content */}
-              <div className="lg:col-span-7 bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl overflow-hidden relative shadow-2xl min-h-[400px] flex flex-col justify-end group">
+              <div className="lg:col-span-7 bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl overflow-hidden relative shadow-2xl min-h-[450px] flex flex-col group">
                 <Image 
                   src={imageMap[activeContent.id] || "/images/longevity-art.jpg"}
                   alt={`${activeContent.label} biology`}
@@ -101,19 +101,22 @@ export function BenefitsAtEveryAge() {
                   className="object-cover transition-transform duration-[10s] group-hover:scale-105"
                   priority
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-80" />
                 
-                <div className="relative z-10 p-8 md:p-10 flex flex-col items-start mt-auto w-full">
-                  <div className="inline-flex items-center px-3 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 bg-black/40 backdrop-blur-md text-[var(--color-levl-cyan)] text-xs font-semibold uppercase tracking-widest mb-4">
+                {/* Decade Tag - Top Left */}
+                <div className="absolute top-6 left-6 md:top-8 md:left-8 z-20">
+                  <div className="inline-flex items-center px-3 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 bg-black/40 backdrop-blur-md text-[var(--color-levl-cyan)] text-xs font-semibold uppercase tracking-widest shadow-lg">
                     {activeContent.label}
                   </div>
-                  
-                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-2 leading-tight drop-shadow-md">
+                </div>
+
+                <div className="relative z-10 p-6 md:p-8 flex flex-col items-start mt-auto w-full pb-6 md:pb-8">
+                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight drop-shadow-xl max-w-2xl px-1">
                     {activeContent.title}
                   </h3>
                   
-                  <div className="mt-8 bg-white/5 backdrop-blur-md border border-white/10 p-5 rounded-2xl shadow-xl w-full max-w-2xl">
-                    <p className="text-[var(--color-levl-text-secondary)] leading-relaxed text-base md:text-lg">
+                  <div className="bg-black/40 backdrop-blur-xl border border-white/10 p-5 md:p-6 rounded-2xl shadow-2xl w-full max-w-2xl">
+                    <p className="text-white/90 leading-relaxed text-base md:text-lg">
                       {activeContent.description}
                     </p>
                   </div>
