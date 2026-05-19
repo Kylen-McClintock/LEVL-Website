@@ -576,14 +576,20 @@ export default function PlatformPage() {
 
                         {/* DeepCell */}
                         <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] p-8 rounded-3xl shadow-xl">
-                            <h3 className="text-2xl font-bold text-white mb-2">DeepCell</h3>
+                            <div className="flex items-center justify-between mb-2">
+                                <h3 className="text-2xl font-bold text-white">DeepCell</h3>
+                                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-[var(--color-levl-magenta)]/30 bg-[var(--color-levl-magenta)]/10 text-[var(--color-levl-magenta)] text-[10px] font-bold tracking-widest uppercase">
+                                    <ShieldCheck className="w-3 h-3" />
+                                    Patented US 12396994 B2
+                                </div>
+                            </div>
                             <p className="text-[var(--color-levl-magenta)] font-medium mb-6">Cellular renewal, designed from the biology of fasting.</p>
                             
                             <p className="text-[var(--color-levl-text-secondary)] text-sm leading-relaxed mb-4">
-                                DeepCell is LEVL’s first platform-discovered formulation. It was built around the biology of fasting-associated cellular renewal, including nutrient sensing, autophagy, and cellular resilience.
+                                DeepCell is LEVL’s first platform-discovered formulation. The first patent from this platform is a synergistic combination of 3 ingredients that combined induces comparable levels of autophagy as Rapamycin without the negative immune suppressing side effects.
                             </p>
                             <p className="text-white/60 text-sm leading-relaxed mb-6">
-                                The goal was not to copy fasting as a lifestyle practice. The goal was to identify a practical, daily formulation that could support some of the same biological systems people pursue through fasting, without requiring caloric restriction.
+                                It is a powerful fasting mimetic that activates the same longevity enhancing pathways without the need for caloric restriction. 
                             </p>
                             <div className="border-t border-white/10 pt-4">
                                 <p className="text-white text-sm font-medium leading-relaxed">
