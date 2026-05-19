@@ -98,8 +98,8 @@ export function InteractiveIngredients() {
                 </div>
 
                 {/* Right Side: Ingredients Grid */}
-                <div className="lg:col-span-9 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <AnimatePresence mode="popLayout">
+                <div className="lg:col-span-9 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 content-start">
+                    <AnimatePresence>
                         {filteredIngredients.map((ing) => (
                             <motion.div
                                 key={ing.name}
