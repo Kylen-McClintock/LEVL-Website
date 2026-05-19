@@ -229,7 +229,7 @@ export function ScienceMechanismSection() {
                 <div className="flex justify-center mt-8 mb-12 relative z-20">
                     <button 
                         onClick={() => setShowAllMechanisms(!showAllMechanisms)}
-                        className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-black/30 backdrop-blur-md border border-[var(--color-levl-cyan)]/30 text-white font-medium hover:border-[var(--color-levl-cyan)] hover:shadow-[0_0_15px_rgba(14,165,233,0.3)] transition-all group"
+                        className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-black/30 backdrop-blur-md border border-[var(--color-levl-cyan)]/30 text-white font-bold text-lg md:text-xl hover:border-[var(--color-levl-cyan)] hover:shadow-[0_0_15px_rgba(14,165,233,0.3)] transition-all group"
                     >
                         {showAllMechanisms ? "Collapse Protocol" : "View Full Protocol"}
                         {showAllMechanisms ? (
@@ -244,9 +244,9 @@ export function ScienceMechanismSection() {
                 <div className="max-w-4xl mx-auto mt-8 bg-black/30 backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl overflow-hidden transition-colors hover:border-[var(--color-levl-cyan)]/30">
                     <button
                         onClick={() => setShowReferences(!showReferences)}
-                        className="w-full flex items-center justify-between p-6 text-left"
+                        className="w-full flex items-center justify-between p-4 md:p-6 text-left"
                     >
-                        <h3 className="text-xl font-bold text-white">Scientific Transparency (References & *Disclaimer)</h3>
+                        <h3 className="text-sm font-medium text-white/80">Scientific Transparency (References & *Disclaimer)</h3>
                         <div className={`p-2 rounded-full bg-white/5 transition-transform duration-300 ${showReferences ? "rotate-180" : ""}`}>
                             <ChevronDown className="w-5 h-5 text-white/50" />
                         </div>
