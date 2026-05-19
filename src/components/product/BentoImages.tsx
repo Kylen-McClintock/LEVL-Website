@@ -113,7 +113,7 @@ export function BentoImages() {
               className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, 66vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
             
             <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 max-w-md bg-white/5 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-2xl">
               <h3 className="text-white font-bold text-lg md:text-xl leading-relaxed drop-shadow-md">
