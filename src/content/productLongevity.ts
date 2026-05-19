@@ -82,7 +82,10 @@ export const productContent = {
       function: "Neurotransmitter synthesis",
       halls: ["Genomic Stability", "Metabolic Health"],
       nightlyBenefits: ["Natural Deep Sleep", "Next Morning Clarity"],
-      whyItMatters: "Vitamin B6 is crucial for the biosynthesis of neurotransmitters, including serotonin and dopamine. It acts as a coenzyme in the conversion of L-Tryptophan to 5-HTP and then to serotonin/melatonin.",
+      whyItMatters: "Beyond neurotransmitter synthesis, B6 is a crucial cofactor in over 100 enzymatic reactions, including those that regulate homocysteine levels, which is vital for cardiovascular health and genomic stability.",
+      sleepBenefit: "Vitamin B6 enhances sleep by supporting the natural production of melatonin via the serotonin pathway.",
+      sleepMechanism: "Vitamin B6 (Pyridoxine HCl) is essential for converting tryptophan into serotonin, and serotonin into melatonin. Without adequate vitamin B6, this conversion is inefficient, leading to lower melatonin levels and disrupted sleep. Therefore, vitamin B6 and tryptophan work together synergistically to naturally boost and regulate melatonin production to help you fall asleep faster and improve sleep quality.",
+      enhancedBenefitsWith: ["L-Tryptophan", "Magnesium", "L-Theanine", "Passion Flower", "Zinc", "Apigenin"],
       evidenceTag: "Strong"
     },
     {
@@ -91,7 +94,10 @@ export const productContent = {
       function: "Nervous system calm",
       halls: ["Mitochondrial Health", "Metabolic Health", "Inflammatory Balance"],
       nightlyBenefits: ["Natural Deep Sleep", "Overnight Cellular Tuneup", "Next Morning Clarity"],
-      whyItMatters: "Magnesium is essential for ATP stability and enzymatic function. The glycinate form provides glycine, an inhibitory neurotransmitter that promotes relaxation.",
+      whyItMatters: "Magnesium is an essential cofactor for ATP stabilization and DNA repair enzymes (like PARP-1). The glycinate form supports healthy methylation and cellular metabolic resilience.",
+      sleepBenefit: "Magnesium glycinate helps improve sleep by calming the nervous system and reducing mental and physical tension, promoting relaxation and reduced anxiety.",
+      sleepMechanism: "Magnesium glycinate contains glycine, an amino acid that acts as an inhibitory neurotransmitter, helping to calm brain activity. Combined with magnesium’s role in regulating GABA (gamma-aminobutyric acid)—a key neurotransmitter involved in sleep initiation—this form is particularly effective at helping the body and mind wind down, making it easier to fall asleep and stay asleep.",
+      enhancedBenefitsWith: ["L-Tryptophan", "Vitamin B6", "L-Theanine", "Lemon Balm", "Passion Flower", "Apigenin"],
       evidenceTag: "Strong"
     },
     {
@@ -100,7 +106,10 @@ export const productContent = {
       function: "Antioxidant & DNA repair",
       halls: ["Genomic Stability", "Cellular Renewal", "Inflammatory Balance"],
       nightlyBenefits: ["Overnight Cellular Tuneup", "Next Morning Clarity"],
-      whyItMatters: "Zinc plays a critical role in DNA repair mechanisms and immune modulation. It supports SOD (Superoxide Dismutase) activity to combat oxidative stress.",
+      whyItMatters: "Zinc plays a critical structural role in over 300 enzymes and is vital for genomic stability. It supports Superoxide Dismutase (SOD) activity to combat oxidative stress and prevents telomere shortening.",
+      sleepBenefit: "Zinc citrate supports natural melatonin production and regulation, which helps maintain healthy sleep-wake cycles by promoting more consistent and restful sleep.",
+      sleepMechanism: "Zinc is a cofactor in the enzymatic processes that convert L-tryptophan to serotonin, and serotonin to melatonin. Adequate zinc levels—especially in bioavailable forms like zinc citrate—help ensure optimal melatonin synthesis, leading to improved sleep onset and quality, particularly in people with zinc deficiency or disrupted circadian rhythms.",
+      enhancedBenefitsWith: ["L-Theanine", "Magnesium Glycinate", "Vitamin B6"],
       evidenceTag: "Strong"
     },
     {
@@ -109,7 +118,10 @@ export const productContent = {
       function: "GABA modulation",
       halls: ["Cellular Renewal", "Inflammatory Balance"],
       nightlyBenefits: ["Natural Deep Sleep"],
-      whyItMatters: "Valerenic acid in Valerian root inhibits the breakdown of GABA, extending its calming effects on the nervous system.",
+      whyItMatters: "Valerenic acid not only promotes deep relaxation but also aids in mitigating the systemic inflammatory cascade triggered by chronic stress, supporting long-term cellular health.",
+      sleepBenefit: "Valerian root extract helps you fall asleep faster by enhancing GABA signaling and calming neural activity in the brain.",
+      sleepMechanism: "Valerian root contains compounds like valerenic acid, which inhibit the breakdown of GABA (gamma-aminobutyric acid), the brain’s primary calming neurotransmitter. This leads to increased GABA availability, helping to induce drowsiness and promote sleep onset—especially in individuals with insomnia or stress-induced sleeplessness.",
+      enhancedBenefitsWith: ["Lemon balm", "Passion Flower", "Hops", "L-Theanine", "Magnesium Glycinate", "L-Tryptophan", "Apigenin"],
       evidenceTag: "Strong"
     },
     {
@@ -118,7 +130,10 @@ export const productContent = {
       function: "Restlessness reduction",
       halls: ["Cellular Renewal", "Inflammatory Balance"],
       nightlyBenefits: ["Natural Deep Sleep"],
-      whyItMatters: "Rosmarinic acid in Lemon Balm has been shown to increase GABA transaminase activity, helping to maintain higher GABA levels in the brain.",
+      whyItMatters: "Rich in rosmarinic acid, a potent antioxidant, Lemon Balm helps neutralize free radicals overnight, protecting neural cells from oxidative damage and supporting overall brain healthspan.",
+      sleepBenefit: "Lemon balm extract enhances sleep by reducing anxiety and restlessness through modulating GABA activity in the brain.",
+      sleepMechanism: "Lemon balm (melissa officinalis) contains compounds like rosmarinic acid that inhibit GABA transaminase, the enzyme that breaks down GABA. This leads to higher GABA levels, promoting a calming effect on the nervous system, which helps ease sleep onset and improves sleep in anxious or stressed individuals.",
+      enhancedBenefitsWith: ["Magnesium Glycinate", "L-Tryptophan", "Vitamin B6", "Apigenin", "Valerian Root", "Zinc"],
       evidenceTag: "Strong"
     },
     {
@@ -127,7 +142,10 @@ export const productContent = {
       function: "Stress reduction",
       halls: ["Mitochondrial Health", "Inflammatory Balance"],
       nightlyBenefits: ["Natural Deep Sleep", "Next Morning Clarity"],
-      whyItMatters: "L-Theanine crosses the blood-brain barrier to promote alpha wave generation, associated with a state of 'relaxed wakefulness' conducive to falling asleep.",
+      whyItMatters: "L-Theanine exerts neuroprotective effects by modulating glutamate receptors, reducing excitotoxicity, and supporting mitochondrial function against oxidative stress.",
+      sleepBenefit: "L-theanine supports sleep by calming the mind and reducing anxiety, without causing drowsiness.",
+      sleepMechanism: "L-theanine increases GABA, serotonin, and dopamine levels while promoting alpha waves—associated with a calm, focused, and relaxed mental state. This helps reduce anxiety and mental hyperactivity, making it easier to fall asleep naturally and improve sleep quality, especially in those with stress-related sleep issues.",
+      enhancedBenefitsWith: ["Magnesium Glycinate", "Valerian Root", "Passion Flower", "L-Tryptophan", "Hops", "Apigenin"],
       evidenceTag: "Strong"
     },
     {
@@ -136,7 +154,10 @@ export const productContent = {
       function: "Serotonin/Melatonin precursor",
       halls: ["Metabolic Health", "Cellular Renewal"],
       nightlyBenefits: ["Natural Deep Sleep"],
-      whyItMatters: "Precursor to 5-HTP and Serotonin. Provides raw substrate for the body's natural melatonin production pathways.",
+      whyItMatters: "As an essential amino acid, it supports the Kynurenine pathway, which is heavily involved in immune response regulation and maintaining systemic inflammatory balance as we age.",
+      sleepBenefit: "Tryptophan improves sleep by boosting natural melatonin production, which regulates your internal clock and promotes sleep onset.",
+      sleepMechanism: "Tryptophan is an essential amino acid that the body converts into serotonin, which is then converted into melatonin in the pineal gland. Supplementation with tryptophan leads to naturally increased melatonin production, which helps you fall asleep faster and maintain a regular circadian rhythm.",
+      enhancedBenefitsWith: ["Magnesium", "Glycine", "Zinc", "L-Theanine"],
       evidenceTag: "Strong"
     },
     {
@@ -145,7 +166,10 @@ export const productContent = {
       function: "Mind calming",
       halls: ["Cellular Renewal", "Inflammatory Balance"],
       nightlyBenefits: ["Natural Deep Sleep"],
-      whyItMatters: "Contains flavonoids like chrysin which bind to benzodiazepine sites on GABA receptors, exerting mild anxiolytic effects.",
+      whyItMatters: "The rich flavonoid profile (including chrysin) in Passion Flower provides strong neuroprotective properties, helping to blunt neuro-inflammation and preserve cognitive function.",
+      sleepBenefit: "Passion flower improves sleep by quieting the mind and calming mental overactivity through GABA modulation.",
+      sleepMechanism: "Passion flower (passiflora incarnata) increases GABA levels in the brain, which helps slow neural activity, reduce anxiety, and calm mental chatter—making it especially useful for people who have trouble falling asleep due to racing thoughts or nervous tension.",
+      enhancedBenefitsWith: ["Valerian Root", "Lemon Balm", "Hops", "L-Theanine", "Magnesium Glycinate", "Apigenin", "L-Tryptophan"],
       evidenceTag: "Strong"
     },
     {
@@ -154,7 +178,10 @@ export const productContent = {
       function: "Sleep architecture",
       halls: ["Cellular Renewal", "Inflammatory Balance"],
       nightlyBenefits: ["Natural Deep Sleep"],
-      whyItMatters: "Humulone and lupulone in hops appear to enhance the activity of GABA, working synergistically with Valerian.",
+      whyItMatters: "Xanthohumol, a prenylated flavonoid found in hops, has been shown to induce cellular autophagy and protect against DNA damage by up-regulating antioxidant defense genes.",
+      sleepBenefit: "Hops extract promotes faster sleep onset by gently sedating the nervous system through modulation of the GABAergic and adenosine pathways.",
+      sleepMechanism: "Hops (Humulus lupulus) contains alpha acids and prenylflavonoids (like xanthohumol) that enhance GABA activity and interact with adenosine and melatonin receptors, leading to mild sedative effects. This helps you fall asleep more quickly and may improve overall sleep depth, especially when combined with valerian root.",
+      enhancedBenefitsWith: ["Valerian Root", "Passion Flower", "Lemon Balm", "L-Theanine", "Magnesium Glycinate", "L-Tryptophan"],
       evidenceTag: "Moderate"
     },
     {
@@ -163,7 +190,10 @@ export const productContent = {
       function: "GABA receptor modulation",
       halls: ["Autophagy", "Cellular Renewal", "Genomic Stability"],
       nightlyBenefits: ["Natural Deep Sleep", "Overnight Cellular Tuneup"],
-      whyItMatters: "Apigenin inhibits CD38, potentially boosting NAD+ levels, and modulates GABA receptors for sleep induction.",
+      whyItMatters: "Apigenin strongly inhibits CD38, an enzyme that consumes NAD+. By preserving NAD+ pools, it supports sirtuin activity, mitochondrial health, and robust cellular renewal.",
+      sleepBenefit: "Apigenin supports sleep by promoting sedation and reducing anxiety through its binding to GABA type A receptors, helping calm the nervous system and ease sleep onset.",
+      sleepMechanism: "Apigenin, a flavonoid found in chamomile, acts as a natural GABA type A receptor agonist, similar in mechanism to benzodiazepines but much milder and non-habit-forming. This results in a calming, anxiolytic effect, helping the body wind down and fall asleep more easily.",
+      enhancedBenefitsWith: ["L-Theanine", "Magnesium Glycinate", "Lemon Balm", "Passion Flower", "L-Tryptophan"],
       evidenceTag: "Strong"
     },
     {
@@ -172,7 +202,10 @@ export const productContent = {
       function: "Microglial calming",
       halls: ["Inflammatory Balance", "Genomic Stability", "Autophagy"],
       nightlyBenefits: ["Overnight Cellular Tuneup", "Next Morning Clarity"],
-      whyItMatters: "Luteolin is a potent inhibitor of microglial activation and pro-inflammatory cytokines, supporting neuroprotection.",
+      whyItMatters: "A powerful senolytic compound, Luteolin helps clear senescent 'zombie' cells and is one of the most effective natural inhibitors of microglial activation, supporting profound neuroprotection.",
+      sleepBenefit: "Luteolin supports better sleep quality by reducing neuroinflammation, which helps restore healthy sleep regulation and circadian rhythm balance.",
+      sleepMechanism: "Chronic inflammation—especially in the brain—can impair sleep by disrupting hypothalamic and circadian signaling. Luteolin is a flavonoid with potent anti-inflammatory and antioxidant properties that can cross the blood-brain barrier. By reducing neuroinflammation, luteolin may support more restorative, deeper sleep, especially in individuals with sleep disruption linked to stress, aging, or neurodegeneration.",
+      enhancedBenefitsWith: ["Apigenin", "Magnesium Glycinate", "L-Theanine", "Lemon Balm"],
       evidenceTag: "Emerging"
     },
     {
@@ -181,7 +214,10 @@ export const productContent = {
       function: "Neuroprotection",
       halls: ["Stem Cell Vitality", "Genomic Stability", "Mitochondrial Health"],
       nightlyBenefits: ["Overnight Cellular Tuneup", "Next Morning Clarity"],
-      whyItMatters: "Micro-dose lithium may support BDNF (Brain Derived Neurotrophic Factor) and autophagy pathways in neurons.",
+      whyItMatters: "Micro-dosed lithium robustly stimulates autophagy and up-regulates BDNF (Brain-Derived Neurotrophic Factor), promoting neurogenesis and telomere preservation over time.",
+      sleepBenefit: "Lithium orotate targets several core biological systems that help regulate circadian rhythm, mood stability, and neural excitability—all of which directly influence how well you fall asleep and stay asleep.",
+      sleepMechanism: "Lithium orotate is a compound that combines lithium—a naturally occurring trace mineral—with orotic acid to enhance its bioavailability. This form of lithium is known for its calming and mood-stabilizing properties, which may help reduce stress and support deeper, more restorative sleep. Emerging research also indicates that lithium orotate could exert neuroprotective effects, contributing to overall brain health and possibly enhancing cognitive performance.",
+      enhancedBenefitsWith: ["L-Theanine", "Magnesium Glycinate", "Lemon Balm", "Passion Flower", "L-Tryptophan"],
       evidenceTag: "Emerging"
     },
     {
@@ -190,7 +226,10 @@ export const productContent = {
       function: "Autophagy induction",
       halls: ["Autophagy", "Cellular Renewal"],
       nightlyBenefits: ["Overnight Cellular Tuneup"],
-      whyItMatters: "Spermidine is a polyamine that mimics fasting to strongly induce autophagy, allowing cells to clear damaged components overnight.",
+      whyItMatters: "Spermidine is one of the most potent known inducers of autophagy. It mimics the effects of caloric restriction, actively clearing misfolded proteins and damaged mitochondria overnight.",
+      sleepBenefit: "Spermidine promotes restorative sleep quality by enhancing cellular autophagy, which supports brain health and circadian rhythm regulation over time.",
+      sleepMechanism: "Spermidine activates autophagy—a cellular 'clean-up' process critical for removing damaged proteins and organelles, especially in the brain. Healthy autophagic function in neurons is linked to better sleep architecture, reduced neuroinflammation, and stabilization of circadian rhythms, which collectively contribute to deeper, more restorative sleep over time.",
+      enhancedBenefitsWith: ["Magnesium Glycinate", "Apigenin", "L-Theanine", "Luteolin"],
       evidenceTag: "Strong"
     }
   ],

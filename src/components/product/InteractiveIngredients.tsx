@@ -107,7 +107,7 @@ export function InteractiveIngredients() {
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.9 }}
-                                className={`relative rounded-2xl p-[2px] flex flex-col bg-gradient-to-bl from-[#2D1B54] via-[#9F4576] to-[#E58063] hover:shadow-[0_0_20px_rgba(229,128,99,0.2)] transition-shadow duration-300 ${expandedIngredient === ing.name ? 'h-auto' : 'aspect-square'}`}
+                                className={`relative rounded-2xl p-[2px] flex flex-col bg-gradient-to-bl from-[#2D1B54] via-[#9F4576] to-[#E58063] hover:shadow-[0_0_20px_rgba(229,128,99,0.2)] transition-shadow duration-300 ${expandedIngredient === ing.name ? 'col-span-2 lg:col-span-4 h-auto' : 'aspect-square'}`}
                             >
                                 <div className="bg-[#0B0E17] rounded-2xl p-4 md:p-5 flex flex-col h-full w-full relative">
                                     <div className="absolute top-3 right-3 md:top-4 md:right-4 z-10">
@@ -149,7 +149,7 @@ export function InteractiveIngredients() {
                                                         initial={{ opacity: 0, height: 0 }}
                                                         animate={{ opacity: 1, height: "auto" }}
                                                         exit={{ opacity: 0, height: 0 }}
-                                                        className="mt-5 text-sm text-[var(--color-levl-text-secondary)] overflow-hidden flex flex-col gap-5"
+                                                        className="mt-5 text-sm text-[var(--color-levl-text-secondary)] overflow-hidden flex flex-col gap-6"
                                                     >
                                                         <div className="flex flex-wrap gap-2 justify-center">
                                                             {ing.nightlyBenefits?.map((b: string) => (
@@ -164,15 +164,42 @@ export function InteractiveIngredients() {
                                                             ))}
                                                         </div>
 
-                                                        <div>
-                                                            <div className="flex items-center justify-center gap-2 mb-3">
-                                                                <span className="text-[10px] font-semibold uppercase tracking-wider text-white/40">Evidence:</span>
-                                                                <Badge variant="outline" className="text-[10px] bg-white/5 text-[var(--color-levl-text-secondary)] border-white/10 font-medium shrink-0">
-                                                                    {ing.evidenceTag}
-                                                                </Badge>
-                                                            </div>
-                                                            <p className="text-center text-[13px] leading-relaxed">{ing.whyItMatters}</p>
+                                                        <div className="flex items-center justify-center gap-2 mb-2">
+                                                            <span className="text-[10px] font-semibold uppercase tracking-wider text-white/40">Evidence:</span>
+                                                            <Badge variant="outline" className="text-[10px] bg-white/5 text-[var(--color-levl-text-secondary)] border-white/10 font-medium shrink-0">
+                                                                {ing.evidenceTag}
+                                                            </Badge>
                                                         </div>
+
+                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                                                            <div className="space-y-2 bg-white/5 p-4 rounded-xl border border-white/10">
+                                                                <h5 className="text-xs font-bold text-[var(--color-levl-cyan)] uppercase tracking-wider">Longevity Mechanism</h5>
+                                                                <p className="text-[13px] leading-relaxed text-white/90">{ing.whyItMatters}</p>
+                                                            </div>
+
+                                                            <div className="space-y-2 bg-white/5 p-4 rounded-xl border border-white/10">
+                                                                <h5 className="text-xs font-bold text-[var(--color-levl-copper)] uppercase tracking-wider">Sleep Benefit</h5>
+                                                                <p className="text-[13px] leading-relaxed text-white/90">{(ing as any).sleepBenefit}</p>
+                                                            </div>
+                                                            
+                                                            <div className="space-y-2 bg-white/5 p-4 rounded-xl border border-white/10 md:col-span-2">
+                                                                <h5 className="text-xs font-bold text-white/60 uppercase tracking-wider">Mechanism for Sleep</h5>
+                                                                <p className="text-[13px] leading-relaxed text-white/80">{(ing as any).sleepMechanism}</p>
+                                                            </div>
+                                                        </div>
+
+                                                        {(ing as any).enhancedBenefitsWith && (ing as any).enhancedBenefitsWith.length > 0 && (
+                                                            <div className="mt-2 text-center pt-4 border-t border-white/10">
+                                                                <h5 className="text-[10px] font-bold text-white/40 uppercase tracking-widest mb-3">Synergistic Stack</h5>
+                                                                <div className="flex flex-wrap gap-2 justify-center">
+                                                                    {(ing as any).enhancedBenefitsWith.map((synergy: string) => (
+                                                                        <span key={synergy} className="text-[11px] px-3 py-1 rounded-full bg-black/40 border border-white/10 text-white/80">
+                                                                            + {synergy}
+                                                                        </span>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                        )}
                                                     </motion.div>
                                                 )}
                                             </AnimatePresence>
