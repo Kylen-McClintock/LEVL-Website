@@ -2,10 +2,10 @@ import React from 'react';
 
 export function SupplementFacts() {
   return (
-    <div className="absolute inset-0 z-20 bg-[var(--color-levl-bg)] text-white overflow-y-auto hide-scrollbar p-6 flex flex-col">
-      <div className="max-w-md mx-auto w-full bg-black border-2 border-white/20 p-6 shadow-2xl">
-        <h2 className="text-4xl font-black mb-1 tracking-tighter">Supplement Facts</h2>
-        <div className="flex justify-between text-sm border-b-4 border-white pb-1 mb-2 font-medium">
+    <div className="absolute inset-0 z-20 bg-[#0B0E17] text-white overflow-y-auto hide-scrollbar p-3 md:p-6 flex flex-col">
+      <div className="max-w-md mx-auto w-full bg-black border-2 border-white/20 p-4 md:p-6 shadow-2xl">
+        <h2 className="text-3xl md:text-4xl font-black mb-1 tracking-tighter">Supplement Facts</h2>
+        <div className="flex justify-between text-xs md:text-sm border-b-4 border-white pb-1 mb-2 font-medium">
           <div className="flex flex-col">
             <span>Serving Size 3 Capsules</span>
             <span>Servings Per Container 30</span>

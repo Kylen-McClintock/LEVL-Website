@@ -115,7 +115,17 @@ export function InteractiveIngredients() {
                                     </div>
 
                                     <div className="flex flex-col items-center justify-center text-center flex-grow pt-8 pb-4">
-                                        <h4 className="font-bold text-white text-xl md:text-2xl leading-tight">{ing.name}</h4>
+                                        {(() => {
+                                            const match = ing.name.match(/^(.*?)\s*(\(as.*?\))$/);
+                                            const mainName = match ? match[1] : ing.name;
+                                            const subName = match ? match[2] : null;
+                                            return (
+                                                <h4 className="font-bold text-white text-xl md:text-2xl leading-tight flex flex-col items-center justify-center gap-1">
+                                                    <span>{mainName}</span>
+                                                    {subName && <span className="text-xs text-[var(--color-levl-text-secondary)] font-semibold">{subName}</span>}
+                                                </h4>
+                                            );
+                                        })()}
                                     </div>
 
                                     <div className="mt-auto flex flex-col shrink-0">

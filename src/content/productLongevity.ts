@@ -86,7 +86,7 @@ export const productContent = {
       evidenceTag: "Strong"
     },
     {
-      name: "Magnesium Glycinate",
+      name: "Magnesium (as Magnesium Glycinate)",
       dose: "80 mg",
       function: "Nervous system calm",
       halls: ["Mitochondrial Health", "Metabolic Health", "Inflammatory Balance"],
