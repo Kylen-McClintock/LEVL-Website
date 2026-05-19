@@ -102,9 +102,9 @@ export function BenefitsAtEveryAge() {
                   className="object-cover transition-transform duration-[10s] group-hover:scale-105"
                   priority
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
                 
-                <div className="relative z-10 p-8 md:p-10 flex flex-col items-start mt-auto">
+                <div className="relative z-10 p-8 md:p-10 flex flex-col items-start mt-auto bg-black/40 backdrop-blur-md border-t border-white/10 w-full">
                   <div className="inline-flex items-center px-3 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 bg-black/40 backdrop-blur-md text-[var(--color-levl-cyan)] text-xs font-semibold uppercase tracking-widest mb-4">
                     {activeContent.label}
                   </div>
