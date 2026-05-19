@@ -101,7 +101,7 @@ export function BenefitsAtEveryAge() {
                   className="object-cover transition-transform duration-[10s] group-hover:scale-105"
                   priority
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-80" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
                 
                 {/* Decade Tag - Top Left */}
                 <div className="absolute top-6 left-6 md:top-8 md:left-8 z-20">
@@ -115,7 +115,7 @@ export function BenefitsAtEveryAge() {
                     {activeContent.title}
                   </h3>
                   
-                  <div className="bg-black/40 backdrop-blur-xl border border-white/10 p-5 md:p-6 rounded-2xl shadow-2xl w-full max-w-2xl">
+                  <div className="bg-white/5 backdrop-blur-md border border-white/10 p-5 md:p-6 rounded-2xl shadow-2xl w-full max-w-2xl">
                     <p className="text-white/90 leading-relaxed text-base md:text-lg">
                       {activeContent.description}
                     </p>

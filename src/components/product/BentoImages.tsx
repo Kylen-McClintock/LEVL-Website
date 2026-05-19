@@ -115,8 +115,8 @@ export function BentoImages() {
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
             
-            <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 max-w-md bg-black/40 backdrop-blur-xl border border-white/10 p-5 md:p-6 rounded-2xl shadow-2xl">
-              <h3 className="text-xl md:text-2xl font-medium text-white/90 leading-relaxed">
+            <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 max-w-md bg-white/5 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-2xl">
+              <h3 className="text-white font-bold text-lg md:text-xl leading-relaxed drop-shadow-md">
                 The nightly ritual built for deeper sleep and longer horizons.
               </h3>
             </div>
