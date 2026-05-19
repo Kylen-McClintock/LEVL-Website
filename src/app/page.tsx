@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { Metadata } from 'next';
 import { ShoppingBag } from 'lucide-react';
 import { ProductHero } from '../components/product/ProductHero';
+import { BentoImages } from '../components/product/BentoImages';
 import { BenefitTimeline } from '../components/sections/BenefitTimeline';
 import { BenefitsAtEveryAge } from '../components/product/BenefitsAtEveryAge';
 import { ScienceMechanismSection } from '../components/product/ScienceMechanismSection';
@@ -66,6 +67,7 @@ export default async function LongevityProductPage() {
 
         <main className="flex-grow">
           <ProductHero product={product} cartId={initialCart.id} />
+          <BentoImages />
           <BenefitTimeline />
           <div id="science"><ScienceMechanismSection /></div>
           <GuaranteeStrip />
