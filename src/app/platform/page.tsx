@@ -561,8 +561,9 @@ export default function PlatformPage() {
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[var(--color-levl-magenta)]/5 to-transparent pointer-events-none" />
             <Container>
                 <div className="grid md:grid-cols-2 gap-16 items-center">
-                    <div className="order-2 md:order-1 relative h-full">
-                        <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl p-12 flex items-center justify-center h-full relative overflow-hidden group shadow-xl">
+                    <div className="order-2 md:order-1 space-y-8">
+                        {/* DeepCell Image */}
+                        <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl p-12 flex items-center justify-center relative overflow-hidden group shadow-xl">
                             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--color-levl-magenta)_0%,transparent_60%)] opacity-10 group-hover:opacity-20 transition-opacity duration-700" />
                             <Image 
                                 src="/images/deepcell-bottle.jpg"
@@ -571,26 +572,6 @@ export default function PlatformPage() {
                                 height={600}
                                 className="relative z-10 w-3/4 max-w-[300px] h-auto rounded-2xl border border-white/10 shadow-2xl transform group-hover:scale-105 transition-transform duration-700"
                             />
-                        </div>
-                    </div>
-
-                    <div className="order-1 md:order-2 space-y-12">
-                        {/* Bridge */}
-                        <div>
-                            <div className="text-[var(--color-levl-magenta)] text-sm font-bold tracking-widest uppercase mb-4">From platform to product</div>
-                            <h2 className="text-3xl font-bold mb-4">LIFESPAN+ is the first commercial expression of the LEVL platform.</h2>
-                            <p className="text-[var(--color-levl-text-secondary)] leading-relaxed mb-6">
-                                LEVL’s discovery engine powers the development of LIFESPAN+, our line of formulations designed to support the foundations of healthy aging. Each product begins with a biological question:
-                            </p>
-                            <blockquote className="border-l-2 border-[var(--color-levl-magenta)] pl-4 italic text-white/80 mb-6">
-                                "What combination of naturally derived compounds can safely support the systems that help people feel, function, and age better?"
-                            </blockquote>
-                            <p className="text-[var(--color-levl-text-muted)] text-sm leading-relaxed mb-6">
-                                From there, LEVL evaluates mechanisms, evidence strength, hallmark coverage, dosing, safety, synergy, and real-world outcomes.
-                            </p>
-                            <p className="text-white font-medium">
-                                The result is not another supplement stack. It is a new model for building longevity products: computationally discovered, biologically mapped, and continuously improved.
-                            </p>
                         </div>
 
                         {/* DeepCell */}
@@ -610,6 +591,26 @@ export default function PlatformPage() {
                             </p>
                             <p className="text-white/60 text-sm leading-relaxed">
                                 The result is a highly refined daily formulation that supports both restorative deep sleep and fasting-associated cellular renewal, continuously improved by learning from real-world biomarker and protocol outcomes.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="order-1 md:order-2 space-y-12 flex flex-col justify-between">
+                        {/* Bridge */}
+                        <div>
+                            <div className="text-[var(--color-levl-magenta)] text-sm font-bold tracking-widest uppercase mb-4">From platform to product</div>
+                            <h2 className="text-3xl font-bold mb-4">LIFESPAN+ is the first commercial expression of the LEVL platform.</h2>
+                            <p className="text-[var(--color-levl-text-secondary)] leading-relaxed mb-6">
+                                LEVL’s discovery engine powers the development of LIFESPAN+, our line of formulations designed to support the foundations of healthy aging. Each product begins with a biological question:
+                            </p>
+                            <blockquote className="border-l-2 border-[var(--color-levl-magenta)] pl-4 italic text-white/80 mb-6">
+                                "What combination of naturally derived compounds can safely support the systems that help people feel, function, and age better?"
+                            </blockquote>
+                            <p className="text-[var(--color-levl-text-muted)] text-sm leading-relaxed mb-6">
+                                From there, LEVL evaluates mechanisms, evidence strength, hallmark coverage, dosing, safety, synergy, and real-world outcomes.
+                            </p>
+                            <p className="text-white font-medium">
+                                The result is not another supplement stack. It is a new model for building longevity products: computationally discovered, biologically mapped, and continuously improved.
                             </p>
                         </div>
 
