@@ -563,14 +563,14 @@ export default function PlatformPage() {
                 <div className="grid md:grid-cols-2 gap-16 items-center">
                     <div className="order-2 md:order-1 space-y-8">
                         {/* DeepCell Image */}
-                        <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl p-12 flex items-center justify-center relative overflow-hidden group shadow-xl">
+                        <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl p-4 flex items-center justify-center relative overflow-hidden group shadow-xl">
                             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--color-levl-magenta)_0%,transparent_60%)] opacity-10 group-hover:opacity-20 transition-opacity duration-700" />
                             <Image 
                                 src="/images/deepcell-bottle.jpg"
                                 alt="LEVL DeepCell"
-                                width={400}
-                                height={600}
-                                className="relative z-10 w-3/4 max-w-[300px] h-auto rounded-2xl border border-white/10 shadow-2xl transform group-hover:scale-105 transition-transform duration-700"
+                                width={500}
+                                height={700}
+                                className="relative z-10 w-full max-w-[400px] h-auto rounded-2xl border border-white/10 shadow-2xl transform group-hover:scale-105 transition-transform duration-700"
                             />
                         </div>
 
