@@ -57,10 +57,27 @@ export default function PlatformPage() {
                         LEVL maps the biology of aging to discover synergistic formulations and personalized protocols that help people live healthier, longer.
                     </p>
                     
-                    <p className="text-lg text-[var(--color-levl-text-muted)] max-w-2xl mx-auto">
-                        Our platform reads scientific literature, scores compounds and combinations, connects mechanisms to the hallmarks of aging, and learns from real-world biomarker and protocol outcomes.
-                        <br/><br/>
-                        <span className="text-white font-medium">We are building the intelligence layer for the next generation of longevity products.</span>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 pb-4 max-w-4xl mx-auto text-left">
+                        <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] p-5 rounded-2xl shadow-xl hover:border-white/20 transition-colors">
+                            <BookOpen className="w-5 h-5 text-[var(--color-levl-cyan)] mb-3" />
+                            <p className="text-sm text-[var(--color-levl-text-secondary)]">Reads and structures scientific literature</p>
+                        </div>
+                        <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] p-5 rounded-2xl shadow-xl hover:border-white/20 transition-colors">
+                            <Zap className="w-5 h-5 text-[var(--color-levl-magenta)] mb-3" />
+                            <p className="text-sm text-[var(--color-levl-text-secondary)]">Scores compounds and synergistic combinations</p>
+                        </div>
+                        <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] p-5 rounded-2xl shadow-xl hover:border-white/20 transition-colors">
+                            <Network className="w-5 h-5 text-[var(--color-levl-cyan)] mb-3" />
+                            <p className="text-sm text-[var(--color-levl-text-secondary)]">Connects mechanisms to hallmarks of aging</p>
+                        </div>
+                        <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] p-5 rounded-2xl shadow-xl hover:border-white/20 transition-colors">
+                            <Activity className="w-5 h-5 text-[var(--color-levl-magenta)] mb-3" />
+                            <p className="text-sm text-[var(--color-levl-text-secondary)]">Learns from real-world biomarker outcomes</p>
+                        </div>
+                    </div>
+
+                    <p className="text-lg md:text-xl text-white font-medium max-w-2xl mx-auto pb-4">
+                        We are building the intelligence layer for the next generation of longevity products.
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
@@ -544,15 +561,17 @@ export default function PlatformPage() {
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[var(--color-levl-magenta)]/5 to-transparent pointer-events-none" />
             <Container>
                 <div className="grid md:grid-cols-2 gap-16 items-center">
-                    <div className="order-2 md:order-1 relative">
-                        <div className="absolute inset-0 bg-gradient-to-tr from-[var(--color-levl-magenta)]/20 to-transparent blur-3xl rounded-full" />
-                        <Image 
-                            src="/images/deepcell-bottle.jpg"
-                            alt="LEVL DeepCell"
-                            width={600}
-                            height={800}
-                            className="relative z-10 w-full h-auto rounded-3xl border border-white/10 shadow-2xl"
-                        />
+                    <div className="order-2 md:order-1 relative h-full">
+                        <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl p-12 flex items-center justify-center h-full relative overflow-hidden group shadow-xl">
+                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--color-levl-magenta)_0%,transparent_60%)] opacity-10 group-hover:opacity-20 transition-opacity duration-700" />
+                            <Image 
+                                src="/images/deepcell-bottle.jpg"
+                                alt="LEVL DeepCell"
+                                width={400}
+                                height={600}
+                                className="relative z-10 w-3/4 max-w-[300px] h-auto rounded-2xl border border-white/10 shadow-2xl transform group-hover:scale-105 transition-transform duration-700"
+                            />
+                        </div>
                     </div>
 
                     <div className="order-1 md:order-2 space-y-12">
