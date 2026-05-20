@@ -11,7 +11,8 @@ import { PartnerButton } from '@/components/ui/PartnerButton';
 import { 
     BookOpen, Network, Zap, CheckCircle2, FlaskConical, Users, 
     ArrowRight, Activity, Cpu, Search, Microscope, LineChart, 
-    Layers, ShieldCheck, HeartPulse, Dna, BrainCircuit, Workflow, Database
+    Layers, ShieldCheck, HeartPulse, Dna, BrainCircuit, Workflow, Database,
+    Compass, Gauge
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -246,6 +247,84 @@ export default function PlatformPage() {
             </Container>
         </section>
 
+        {/* PACE OF AGING SECTION */}
+        <section className="py-24 border-t border-white/5 bg-black/40 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-levl-cyan)]/5 to-[var(--color-levl-magenta)]/5 pointer-events-none" />
+            <Container>
+                <div className="grid md:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--color-levl-cyan)]/30 bg-[var(--color-levl-cyan)]/10 text-[var(--color-levl-cyan)] text-[10px] font-bold tracking-widest uppercase mb-6">
+                            <Compass className="w-3.5 h-3.5" />
+                            The North Star Metric
+                        </div>
+                        <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-white">Pace of Aging</h2>
+                        <p className="text-xl text-[var(--color-levl-text-secondary)] mb-6 leading-relaxed">
+                            Static biological age clocks only show a snapshot of the past. The true indicator of longevity intervention success is the <span className="text-white font-semibold">Pace of Aging (PoA)</span>—the speed at which your biology is changing relative to chronological time.
+                        </p>
+                        <p className="text-[var(--color-levl-text-muted)] mb-8 leading-relaxed">
+                            Recent breakthroughs in epigenetic methylation testing (such as the DunedinPACE algorithm developed at Duke and Otago University) have made it possible to measure this rate of biological decay with high precision. By slowing down this "speedometer", we directly delay the onset of age-related decline.
+                        </p>
+                        
+                        <div className="bg-white/5 border border-white/10 p-6 rounded-2xl">
+                            <h4 className="text-white font-semibold mb-2">Why It Matters</h4>
+                            <p className="text-sm text-[var(--color-levl-text-secondary)] leading-relaxed">
+                                A clinical study or personal protocol that reduces chronological speed of aging (e.g., from 1.0 to 0.8 biological years per chronological year) represents a compounding systemic delay in disease vulnerability.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] p-8 md:p-10 rounded-3xl relative overflow-hidden shadow-2xl">
+                        <div className="absolute top-0 right-0 w-48 h-48 bg-[radial-gradient(circle_at_center,var(--color-levl-cyan)_0%,transparent_60%)] opacity-20 blur-3xl rounded-full" />
+                        
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="w-10 h-10 rounded-lg bg-[var(--color-levl-cyan)]/10 border border-[var(--color-levl-cyan)]/20 flex items-center justify-center">
+                                <Gauge className="w-5 h-5 text-[var(--color-levl-cyan)]" />
+                            </div>
+                            <h3 className="text-xl font-bold text-white">LEVL Pace of Aging Algorithm</h3>
+                        </div>
+
+                        <p className="text-sm text-[var(--color-levl-text-secondary)] leading-relaxed mb-6">
+                            Rather than requiring complex, high-cost epigenetic clocks from day one, LEVL builds a modular model that productizes open-source aging research, making benchmarking accessible with whatever data you have.
+                        </p>
+
+                        {/* Input/Output Flowchart mockup */}
+                        <div className="space-y-4 mb-8">
+                            <div className="bg-black/40 border border-white/5 rounded-xl p-4">
+                                <span className="text-xs font-mono text-white/40 uppercase block mb-2">Modular Inputs</span>
+                                <div className="grid grid-cols-2 gap-2 text-[11px] text-[var(--color-levl-text-secondary)] font-mono">
+                                    <div className="flex items-center gap-1.5 bg-white/5 p-2 rounded">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-[var(--color-levl-cyan)]" /> DNA Methylation
+                                    </div>
+                                    <div className="flex items-center gap-1.5 bg-white/5 p-2 rounded">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-[var(--color-levl-cyan)]" /> Blood Biomarkers
+                                    </div>
+                                    <div className="flex items-center gap-1.5 bg-white/5 p-2 rounded">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-[var(--color-levl-cyan)]" /> Wearables (Sleep/HRV)
+                                    </div>
+                                    <div className="flex items-center gap-1.5 bg-white/5 p-2 rounded">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-[var(--color-levl-cyan)]" /> Physical/Balance Tests
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-center my-2">
+                                <ArrowRight className="w-5 h-5 text-white/30 rotate-90" />
+                            </div>
+
+                            <div className="bg-[var(--color-levl-magenta)]/10 border border-[var(--color-levl-magenta)]/20 rounded-xl p-4 text-center">
+                                <span className="text-xs font-mono text-[var(--color-levl-magenta)] uppercase block mb-1">Standardized PoA Estimate</span>
+                                <p className="text-white font-medium text-sm">Competes & aggregates across multiple biological age models</p>
+                            </div>
+                        </div>
+
+                        <p className="text-xs text-[var(--color-levl-text-muted)] leading-relaxed">
+                            This algorithm forms the benchmarking backend for LEVL's protocol optimization engine. Over time, user results guide protocol suggestions, allowing models to output actions in a shared format and iteratively improve formulations.
+                        </p>
+                    </div>
+                </div>
+            </Container>
+        </section>
+
         {/* WHY NOW */}
         <section className="py-24 border-t border-white/5 bg-gradient-to-b from-transparent to-black/30">
             <Container>
@@ -461,6 +540,10 @@ export default function PlatformPage() {
                             Real-world outcomes feed back into the platform.
                         </p>
                         <div className="space-y-4">
+                            <div className="flex gap-4 items-start">
+                                <LineChart className="w-5 h-5 text-green-400 mt-1 shrink-0" />
+                                <p className="text-white/70 text-sm leading-relaxed">If a protocol successfully reduces your Pace of Aging (PoA) methylation rate or blood-based biological age index, that is the ultimate signal of success.</p>
+                            </div>
                             <div className="flex gap-4 items-start">
                                 <LineChart className="w-5 h-5 text-green-400 mt-1 shrink-0" />
                                 <p className="text-white/70 text-sm leading-relaxed">If a protocol improves sleep quality, energy, recovery, glucose stability, inflammatory markers, or other health signals, that matters.</p>
