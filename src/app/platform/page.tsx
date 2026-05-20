@@ -12,7 +12,7 @@ import {
     BookOpen, Network, Zap, CheckCircle2, FlaskConical, Users, 
     ArrowRight, Activity, Cpu, Search, Microscope, LineChart, 
     Layers, ShieldCheck, HeartPulse, Dna, BrainCircuit, Workflow, Database,
-    Compass, Gauge
+    Compass, Gauge, Trophy, TrendingUp
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -241,6 +241,35 @@ export default function PlatformPage() {
                             <p className="text-[var(--color-levl-text-secondary)] leading-relaxed">
                                 Learns from biomarkers, subjective outcomes, adherence, and real-world protocol results.
                             </p>
+                        </div>
+                    </div>
+
+                    {/* LEV Benchmark & Trajectory */}
+                    <div className="md:col-span-3 bg-gradient-to-r from-[var(--color-levl-panel)] to-black/40 border border-[var(--color-levl-panel-border)] rounded-3xl backdrop-blur-xl overflow-hidden group flex flex-col md:flex-row hover:border-white/20 transition-colors">
+                        <div className="p-8 md:p-12 md:w-1/2 flex flex-col justify-center border-b md:border-b-0 md:border-r border-white/5">
+                            <div className="w-12 h-12 rounded-xl bg-[var(--color-levl-cyan)]/10 border border-[var(--color-levl-cyan)]/20 flex items-center justify-center mb-6">
+                                <Trophy className="w-6 h-6 text-[var(--color-levl-cyan)]" />
+                            </div>
+                            <h3 className="text-2xl font-bold mb-3 text-white">LEV Benchmark</h3>
+                            <p className="text-[var(--color-levl-text-secondary)] leading-relaxed mb-4 text-sm">
+                                LongevityReviews.org’s public scoreboard for what actually slows aging. We rank protocols and competing longevity-recommending AIs by measured outcomes. Models output standardized actions in a shared protocol format and iteratively optimize routines over time.
+                            </p>
+                        </div>
+                        <div className="p-8 md:p-12 md:w-1/2 flex flex-col justify-center relative">
+                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--color-levl-magenta)_0%,transparent_60%)] opacity-10 pointer-events-none" />
+                            <div className="w-12 h-12 rounded-xl bg-[var(--color-levl-magenta)]/10 border border-[var(--color-levl-magenta)]/20 flex items-center justify-center mb-6">
+                                <TrendingUp className="w-6 h-6 text-[var(--color-levl-magenta)]" />
+                            </div>
+                            <h3 className="text-2xl font-bold mb-3 text-white">LEV Trajectory</h3>
+                            <p className="text-[var(--color-levl-text-secondary)] leading-relaxed mb-6 text-sm">
+                                Track your path to escape velocity. Our models use your Pace of Aging rate to project your long-term longevity horizon, showing when health improvements outpace chronological aging.
+                            </p>
+                            <Link 
+                                href="/LEVTrajectory" 
+                                className="inline-flex items-center gap-2 text-white hover:text-[var(--color-levl-magenta)] font-medium transition-colors text-sm"
+                            >
+                                Interactive LEV Trajectory Tool <ArrowRight className="w-4 h-4" />
+                            </Link>
                         </div>
                     </div>
                 </div>
