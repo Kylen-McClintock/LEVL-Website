@@ -575,21 +575,23 @@ export default function PlatformPage() {
                         </div>
 
                         {/* DeepCell */}
-                        <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] p-8 rounded-3xl shadow-xl">
-                            <h3 className="text-2xl font-bold text-white mb-2">DeepCell</h3>
-                            <p className="text-[var(--color-levl-magenta)] font-medium mb-6">Cellular renewal, designed from the biology of fasting.</p>
+                        <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] p-8 rounded-3xl shadow-xl relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--color-levl-magenta)]/10 blur-[50px] rounded-full pointer-events-none" />
+                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                                <h3 className="text-2xl font-bold text-white">DeepCell</h3>
+                                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[var(--color-levl-magenta)]/30 bg-[var(--color-levl-magenta)]/10 text-[var(--color-levl-magenta)] text-[10px] font-bold tracking-widest uppercase w-fit">
+                                    <FlaskConical className="w-3.5 h-3.5" />
+                                    Iteration 09
+                                </div>
+                            </div>
+                            <p className="text-[var(--color-levl-magenta)] font-medium mb-6">Optimized for deep sleep and longevity.</p>
                             
                             <p className="text-[var(--color-levl-text-secondary)] text-sm leading-relaxed mb-4">
-                                DeepCell is LEVL’s first platform-discovered formulation. It was built around the biology of fasting-associated cellular renewal, including nutrient sensing, autophagy, and cellular resilience.
+                                DeepCell is LEVL’s first platform-discovered formulation. Over 9 distinct iterations, our platform read scientific literature, scored synergistic compound combinations, and connected mechanisms to the hallmarks of aging to optimize this specific protocol.
                             </p>
-                            <p className="text-white/60 text-sm leading-relaxed mb-6">
-                                The goal was not to copy fasting as a lifestyle practice. The goal was to identify a practical, daily formulation that could support some of the same biological systems people pursue through fasting, without requiring caloric restriction.
+                            <p className="text-white/60 text-sm leading-relaxed">
+                                The result is a highly refined daily formulation that supports both restorative deep sleep and fasting-associated cellular renewal, continuously improved by learning from real-world biomarker and protocol outcomes.
                             </p>
-                            <div className="border-t border-white/10 pt-4">
-                                <p className="text-white text-sm font-medium leading-relaxed">
-                                    DeepCell is the first step in a broader platform strategy: use AI-powered discovery to build formulations and protocols that target the root biology beneath age-related decline.
-                                </p>
-                            </div>
                         </div>
 
                         {/* LIFESPAN+ Activate */}
