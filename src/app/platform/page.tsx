@@ -91,34 +91,6 @@ export default function PlatformPage() {
                             Partner With LEVL
                         </PartnerButton>
                     </div>
-
-                    {/* Feature Pills */}
-                    <div className="pt-16 flex flex-wrap justify-center gap-3">
-                        {['Literature-to-formulation engine', 'Hallmark and pathway scoring', 'Source-linked evidence graph', 'Biomarker feedback loop', 'LIFESPAN+ product pipeline'].map((feature) => (
-                            <div key={feature} className="px-4 py-2 rounded-full border border-white/10 bg-black/40 backdrop-blur-md text-sm text-white/80 flex items-center gap-2 shadow-lg">
-                                <CheckCircle2 className="w-4 h-4 text-[var(--color-levl-cyan)]" /> {feature}
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Trust/Data Sources Band */}
-                    <div className="pt-20 border-t border-white/5 mt-20">
-                        <p className="text-xs font-mono text-[var(--color-levl-text-muted)] uppercase tracking-widest mb-6">Continuously ingesting and structuring from</p>
-                        <div className="flex flex-wrap justify-center gap-x-12 gap-y-6 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-                            <div className="flex items-center gap-2 font-mono text-sm tracking-wide text-white">
-                                <Database className="w-4 h-4" /> PubMed & arXiv
-                            </div>
-                            <div className="flex items-center gap-2 font-mono text-sm tracking-wide text-white">
-                                <Database className="w-4 h-4" /> ClinicalTrials.gov
-                            </div>
-                            <div className="flex items-center gap-2 font-mono text-sm tracking-wide text-white">
-                                <Database className="w-4 h-4" /> DrugBank & ChEMBL
-                            </div>
-                            <div className="flex items-center gap-2 font-mono text-sm tracking-wide text-white">
-                                <Database className="w-4 h-4" /> Real-World Biomarker Data
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </Container>
         </section>
@@ -252,7 +224,7 @@ export default function PlatformPage() {
                             </div>
                             <h3 className="text-2xl font-bold mb-3 text-white">LEV Benchmark</h3>
                             <p className="text-[var(--color-levl-text-secondary)] leading-relaxed mb-4 text-sm">
-                                LongevityReviews.org’s public scoreboard for what actually slows aging. We rank protocols and competing longevity-recommending AIs by measured outcomes. Models output standardized actions in a shared protocol format and iteratively optimize routines over time.
+                                The validation layer for the platform. When users execute platform-recommended protocols in the LEVL App, their real-world outcomes are submitted to the LEV Benchmark (powered by LongevityReviews.org). This creates a public, outcome-driven scoreboard that ranks protocol-generating AIs and their specific recommendations against objective Pace of Aging (PoA) improvements in real people.
                             </p>
                         </div>
                         <div className="p-8 md:p-12 md:w-1/2 flex flex-col justify-center relative">
@@ -262,7 +234,7 @@ export default function PlatformPage() {
                             </div>
                             <h3 className="text-2xl font-bold mb-3 text-white">LEV Trajectory</h3>
                             <p className="text-[var(--color-levl-text-secondary)] leading-relaxed mb-6 text-sm">
-                                Track your path to escape velocity. Our models use your Pace of Aging rate to project your long-term longevity horizon, showing when health improvements outpace chronological aging.
+                                Projections driven by validated benchmarks. The velocity improvements proven on the LEV Benchmark directly feed your LEV Trajectory projection. This models your personal escape velocity—the threshold where biological rate of aging is slowed enough that life expectancy gains outpace chronological time. The benchmark validates the speed; the trajectory maps the horizon.
                             </p>
                             <Link 
                                 href="/LEVTrajectory" 
@@ -444,6 +416,25 @@ export default function PlatformPage() {
                                     <p>Identifying mechanistic entities...</p>
                                     <p>Linking to hallmark ontology...</p>
                                     <p className="animate-pulse text-[var(--color-levl-cyan)]">_</p>
+                                </div>
+                            </div>
+                            
+                            {/* Ingest Data Sources */}
+                            <div className="md:col-span-2 pt-6 mt-6 border-t border-white/5">
+                                <p className="text-xs font-mono text-[var(--color-levl-text-muted)] uppercase tracking-widest mb-4">Continuously ingesting and structuring from</p>
+                                <div className="flex flex-wrap gap-x-8 gap-y-3 opacity-60">
+                                    <div className="flex items-center gap-2 font-mono text-xs tracking-wide text-white">
+                                        <Database className="w-3.5 h-3.5 text-[var(--color-levl-cyan)]" /> PubMed & arXiv
+                                    </div>
+                                    <div className="flex items-center gap-2 font-mono text-xs tracking-wide text-white">
+                                        <Database className="w-3.5 h-3.5 text-[var(--color-levl-cyan)]" /> ClinicalTrials.gov
+                                    </div>
+                                    <div className="flex items-center gap-2 font-mono text-xs tracking-wide text-white">
+                                        <Database className="w-3.5 h-3.5 text-[var(--color-levl-cyan)]" /> DrugBank & ChEMBL
+                                    </div>
+                                    <div className="flex items-center gap-2 font-mono text-xs tracking-wide text-white">
+                                        <Database className="w-3.5 h-3.5 text-[var(--color-levl-cyan)]" /> Real-World Biomarker Data
+                                    </div>
                                 </div>
                             </div>
                         </div>
