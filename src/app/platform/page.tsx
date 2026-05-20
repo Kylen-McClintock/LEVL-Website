@@ -527,13 +527,10 @@ export default function PlatformPage() {
 
                         <div className="space-y-3">
                             {[
-                                "Does it support autophagy?",
-                                "Does it improve mitochondrial resilience?",
-                                "Does it affect nutrient sensing?",
-                                "Does it reduce inflammatory signaling?",
-                                "Does it influence senescent-cell burden?",
-                                "Does it support proteostasis, genomic stability, or epigenetic regulation?",
-                                "Does it produce measurable functional benefits in the real world?"
+                                "Does it support autophagy and cellular clearance?",
+                                "Does it improve mitochondrial resilience and energy production?",
+                                "Does it target senescent cell burden and chronic inflammation?",
+                                "Does it translate into measurable real-world functional benefits?"
                             ].map((q, i) => (
                                 <div key={i} className="flex gap-3 items-start">
                                     <div className="w-1.5 h-1.5 rounded-full bg-[var(--color-levl-cyan)] mt-2 shrink-0" />
