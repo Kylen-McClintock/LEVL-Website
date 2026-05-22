@@ -8,16 +8,16 @@ import Image from 'next/image';
 const ingredients = [
   { name: 'Luteolin', dose: '50 mg', price: 25 },
   { name: 'Apigenin', dose: '50 mg', price: 20 },
-  { name: 'Magnesium Glycinate', dose: '70 mg', price: 18 },
-  { name: 'Astragalus Root Extract', dose: '300 mg', price: 16 },
-  { name: 'Lithium Orotate', dose: '50 mg', price: 15 },
-  { name: 'L-Tryptophan', dose: '100 mg', price: 15 },
-  { name: 'Valerian Root Extract', dose: '300 mg', price: 14 },
+  { name: 'Magnesium Glycinate', dose: '80 mg', price: 18 },
+  { name: 'Spermidine HCL', dose: '5 mg', price: 16 },
+  { name: 'Lithium Orotate', dose: '2.5 mg', price: 15 },
+  { name: 'L-Tryptophan', dose: '200 mg', price: 15 },
+  { name: 'Valerian Root Extract', dose: '350 mg', price: 14 },
   { name: 'L-Theanine', dose: '200 mg', price: 14 },
   { name: 'Lemon Balm Extract', dose: '250 mg', price: 12 },
-  { name: 'Passion Flower Extract', dose: '100 mg', price: 12 },
+  { name: 'Passion Flower Extract', dose: '250 mg', price: 12 },
   { name: 'Hops Extract', dose: '100 mg', price: 12 },
-  { name: 'Zinc Citrate', dose: '8.0 mg', price: 12 },
+  { name: 'Zinc Citrate', dose: '10 mg', price: 12 },
   { name: 'Vitamin B6', dose: '5.0 mg', price: 10 },
 ];
 
