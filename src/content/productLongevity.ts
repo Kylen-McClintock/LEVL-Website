@@ -2,8 +2,6 @@ export const productContent = {
   name: "LEVL DeepCell",
   subtitle: "Clinically formulated for deep sleep architecture and cellular repair.",
   shortDescription: "A science-forward evening formula designed to optimize sleep cycles and support foundational pathways associated with healthy aging and recovery.",
-  
-  announcementBar: "Foundational sleep and longevity support. Free shipping on all subscription orders.",
 
   purchaseOptions: {
     disclaimer: "This statement has not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.",

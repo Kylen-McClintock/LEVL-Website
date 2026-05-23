@@ -53,12 +53,7 @@ export default async function LongevityProductPage() {
         {/* Content wrappers need relative z-index to sit above the fixed background */}
         <div className="relative z-10 flex flex-col flex-grow">
 
-        {/* Announcement Bar */}
-        <div className="bg-[var(--color-levl-panel)] border-b border-[var(--color-levl-panel-border)] text-center py-2 px-4">
-          <p className="text-sm font-medium text-[var(--color-levl-text-secondary)]">
-            {productContent.announcementBar}
-          </p>
-        </div>
+
 
         {/* Storefront Navigation */}
         <div className="relative z-50">
