@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Zap, Activity, Moon, ShieldCheck, Dna, SunMoon } from 'lucide-react';
+import { Zap, Activity, Moon } from 'lucide-react';
 import { SupplementFacts } from './SupplementFacts';
 import { ValueProposition } from './ValueProposition';
 
@@ -115,74 +115,7 @@ export function ProductGallery({ images }: ProductGalleryProps) {
             </>
           )}
 
-          {images[safeIndex].altText === '5 Core Biological Pathways' && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent z-10 flex flex-col pt-6 md:pt-10 px-4 md:px-8 pb-4 overflow-y-auto hide-scrollbar"
-            >
-              <div className="max-w-[85%] md:max-w-[70%]">
-                <h3 className="text-xl md:text-3xl font-bold text-white mb-1 md:mb-2 tracking-tight">5 SYNERGISTIC PATHWAYS</h3>
-                <p className="text-xs md:text-base text-white/80 mb-3 md:mb-6 leading-relaxed">
-                  DeepCell's formulation combines five scientifically-designed pathways that work together to target all hallmarks of aging with unprecedented precision.
-                </p>
 
-                <div className="space-y-3 md:space-y-5">
-                  <div className="flex gap-3 md:gap-4 items-center md:items-start">
-                    <div className="w-9 h-9 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-[var(--color-levl-green)]/10 flex items-center justify-center shrink-0 border border-[var(--color-levl-green)]/20 shadow-[0_0_15px_rgba(34,197,94,0.15)]">
-                      <Moon className="w-4 h-4 md:w-6 md:h-6 text-[var(--color-levl-green)]" />
-                    </div>
-                    <div className="pt-0.5">
-                      <h4 className="font-bold text-white text-sm md:text-lg leading-tight mb-0.5 md:mb-1">Deep Sleep Architecture</h4>
-                      <p className="text-[10px] md:text-sm text-white/60 leading-tight">Optimization of GABA and alpha brain waves</p>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-3 md:gap-4 items-center md:items-start">
-                    <div className="w-9 h-9 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-[var(--color-levl-cyan)]/10 flex items-center justify-center shrink-0 border border-[var(--color-levl-cyan)]/20 shadow-[0_0_15px_rgba(14,165,233,0.15)]">
-                      <Activity className="w-4 h-4 md:w-6 md:h-6 text-[var(--color-levl-cyan)]" />
-                    </div>
-                    <div className="pt-0.5">
-                      <h4 className="font-bold text-white text-sm md:text-lg leading-tight mb-0.5 md:mb-1">Overnight Cellular Tuneup</h4>
-                      <p className="text-[10px] md:text-sm text-white/60 leading-tight">Nocturnal autophagy & glymphatic clearance</p>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-3 md:gap-4 items-center md:items-start">
-                    <div className="w-9 h-9 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-[var(--color-levl-magenta)]/10 flex items-center justify-center shrink-0 border border-[var(--color-levl-magenta)]/20 shadow-[0_0_15px_rgba(217,70,239,0.15)]">
-                      <ShieldCheck className="w-4 h-4 md:w-6 md:h-6 text-[var(--color-levl-magenta)]" />
-                    </div>
-                    <div className="pt-0.5">
-                      <h4 className="font-bold text-white text-sm md:text-lg leading-tight mb-0.5 md:mb-1">Neuroprotection & Mood</h4>
-                      <p className="text-[10px] md:text-sm text-white/60 leading-tight">Inflammatory modulation & stress resilience</p>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-3 md:gap-4 items-center md:items-start">
-                    <div className="w-9 h-9 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-[var(--color-levl-cyan)]/10 flex items-center justify-center shrink-0 border border-[var(--color-levl-cyan)]/20 shadow-[0_0_15px_rgba(14,165,233,0.15)]">
-                      <Dna className="w-4 h-4 md:w-6 md:h-6 text-[var(--color-levl-cyan)]" />
-                    </div>
-                    <div className="pt-0.5">
-                      <h4 className="font-bold text-white text-sm md:text-lg leading-tight mb-0.5 md:mb-1">Nightly Cellular Rejuvenation</h4>
-                      <p className="text-[10px] md:text-sm text-white/60 leading-tight">Genomic stability & mitochondrial ATP</p>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-3 md:gap-4 items-center md:items-start">
-                    <div className="w-9 h-9 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-[var(--color-levl-magenta)]/10 flex items-center justify-center shrink-0 border border-[var(--color-levl-magenta)]/20 shadow-[0_0_15px_rgba(217,70,239,0.15)]">
-                      <SunMoon className="w-4 h-4 md:w-6 md:h-6 text-[var(--color-levl-magenta)]" />
-                    </div>
-                    <div className="pt-0.5">
-                      <h4 className="font-bold text-white text-sm md:text-lg leading-tight mb-0.5 md:mb-1">Natural Melatonin Support</h4>
-                      <p className="text-[10px] md:text-sm text-white/60 leading-tight">Providing precursors for serotonin & melatonin</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          )}
 
           {images[safeIndex].altText === 'Supplement Facts' && (
              <motion.div
