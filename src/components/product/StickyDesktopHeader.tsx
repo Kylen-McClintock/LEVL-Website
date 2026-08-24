@@ -4,15 +4,17 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { productContent } from '../../content/productLongevity';
 import { ShopifyProduct } from '../../types/shopify';
+import { useCart } from '../../context/CartContext';
 import Image from 'next/image';
 
 interface StickyDesktopHeaderProps {
   product?: ShopifyProduct;
-  onAddToCart: () => void;
+  onAddToCart?: () => void;
 }
 
-export function StickyDesktopHeader({ product, onAddToCart }: StickyDesktopHeaderProps) {
+export function StickyDesktopHeader({ product }: StickyDesktopHeaderProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const { openCart } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,12 +43,15 @@ export function StickyDesktopHeader({ product, onAddToCart }: StickyDesktopHeade
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             {/* Left side: Logo & Title */}
             <div className="flex items-center gap-6">
-              <div className="relative w-[80px] h-[24px] flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+              <div 
+                className="relative w-[80px] h-[24px] flex items-center cursor-pointer" 
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              >
                 <Image src="/images/levl_logo.png" alt="LEVL" fill className="object-contain object-left" />
               </div>
               <div className="h-6 w-px bg-white/20" />
               <span className="text-white font-semibold text-sm">
-                {product?.title || productContent.name}
+                {product?.title || 'LEVL LIFESPAN+ DeepCell'}
               </span>
             </div>
             
@@ -57,14 +62,16 @@ export function StickyDesktopHeader({ product, onAddToCart }: StickyDesktopHeade
                   $39 / bottle
                 </span>
                 <span className="text-[10px] text-[var(--color-levl-text-muted)] uppercase tracking-wider">
-                  ($117 total for 90-Day Supply)
+                  ($117 total for 90-Day Protocol)
                 </span>
               </div>
               <button
-                onClick={onAddToCart}
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
                 className="bg-[var(--color-levl-cyan)] text-black px-6 py-2 rounded-full text-sm font-semibold hover:bg-[var(--color-levl-cyan)]/90 transition-colors shadow-[0_0_15px_rgba(34,197,94,0.3)]"
               >
-                Add to Protocol
+                Select Protocol
               </button>
             </div>
           </div>

@@ -4,14 +4,16 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { productContent } from '../../content/productLongevity';
 import { ShopifyProduct } from '../../types/shopify';
+import { useCart } from '../../context/CartContext';
 
 interface StickyMobileCTAProps {
   product?: ShopifyProduct;
-  onAddToCart: () => void;
+  onAddToCart?: () => void;
 }
 
-export function StickyMobileCTA({ product, onAddToCart }: StickyMobileCTAProps) {
+export function StickyMobileCTA({ product }: StickyMobileCTAProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const { openCart } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,21 +40,20 @@ export function StickyMobileCTA({ product, onAddToCart }: StickyMobileCTAProps) 
         >
           <div className="flex flex-col">
             <span className="text-white font-semibold text-sm">
-              {product?.title || productContent.name}
+              {product?.title || 'LEVL LIFESPAN+'}
             </span>
-            <span className="text-[var(--color-levl-cyan)] font-bold text-lg">
-              From $102.00
+            <span className="text-[var(--color-levl-cyan)] font-bold text-base">
+              From $39 / mo
             </span>
           </div>
           
           <button
             onClick={() => {
               window.scrollTo({ top: 0, behavior: 'smooth' });
-              // Optional: also trigger cart open or scroll directly to purchase box
             }}
-            className="bg-[var(--color-levl-cyan)] text-black px-6 py-3 rounded-full font-semibold hover:bg-[var(--color-levl-cyan)]/90 transition-colors"
+            className="bg-[var(--color-levl-cyan)] text-black px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[var(--color-levl-cyan)]/90 transition-colors shadow-lg shadow-[var(--color-levl-cyan)]/20"
           >
-            Buy Now
+            Select Protocol
           </button>
         </motion.div>
       )}

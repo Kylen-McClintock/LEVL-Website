@@ -94,3 +94,16 @@ export type ShopifyCartLine = {
     };
   };
 };
+
+export type ShopifyCartLineInput = {
+
+  merchandiseId: string;
+  quantity: number;
+  sellingPlanId?: string;
+};
+
+export type ShopifyCartLineUpdateInput = {
+  id: string;
+  quantity: number;
+  sellingPlanId?: string;
+};

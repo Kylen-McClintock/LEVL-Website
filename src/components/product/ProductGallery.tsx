@@ -14,10 +14,11 @@ interface ProductGalleryProps {
 export function ProductGallery({ images }: ProductGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  if (!images || !images.length) return null;
+  const validImages = images?.filter(img => Boolean(img?.url)) || [];
+  if (!validImages.length) return null;
 
   // Clamp index to prevent out-of-bounds errors during Fast Refresh or when props change
-  const safeIndex = currentIndex >= images.length ? 0 : currentIndex;
+  const safeIndex = currentIndex >= validImages.length ? 0 : currentIndex;
 
   return (
     <div className="flex flex-col gap-4">
@@ -33,8 +34,8 @@ export function ProductGallery({ images }: ProductGalleryProps) {
             className="absolute inset-0 z-0"
           >
             <Image
-              src={images[safeIndex].url}
-              alt={images[safeIndex].altText}
+              src={validImages[safeIndex].url}
+              alt={validImages[safeIndex].altText}
               fill
               className="object-cover"
               priority
@@ -117,7 +118,7 @@ export function ProductGallery({ images }: ProductGalleryProps) {
 
 
 
-          {images[safeIndex].altText === 'Supplement Facts' && (
+          {validImages[safeIndex].altText === 'Supplement Facts' && (
              <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -129,7 +130,7 @@ export function ProductGallery({ images }: ProductGalleryProps) {
              </motion.div>
           )}
 
-          {images[safeIndex].altText === 'Value Proposition' && (
+          {validImages[safeIndex].altText === 'Value Proposition' && (
              <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -145,7 +146,7 @@ export function ProductGallery({ images }: ProductGalleryProps) {
 
       {/* Thumbnails */}
       <div className="flex gap-4 overflow-x-auto pb-2 snap-x hide-scrollbar">
-        {images.map((image, index) => (
+        {validImages.map((image, index) => (
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}

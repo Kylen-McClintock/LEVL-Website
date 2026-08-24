@@ -9,21 +9,24 @@ import { ShopifyProduct } from '../../types/shopify';
 import { productContent } from '../../content/productLongevity';
 import { Badge } from '../ui/Badge'; // Assume this exists or I will create it
 
-import { StorefrontContext } from '../../app/StorefrontClient';
+import { useCart } from '../../context/CartContext';
 
 interface ProductHeroProps {
   product?: ShopifyProduct;
-  cartId: string | null;
+  cartId?: string | null;
 }
 
 export function ProductHero({ product, cartId }: ProductHeroProps) {
-  const { openCart } = React.useContext(StorefrontContext);
-  const baseImages = product?.images.edges.map(e => e.node) || [
-    { url: 'https://placehold.co/800x800/0B0E17/22c55e?text=LEVL+LIFESPAN%2B+Main', altText: 'LEVL LIFESPAN+' }
-  ];
+  const { openCart } = useCart();
+
+
+  const shopifyFirstImage = product?.images?.edges?.[0]?.node;
+  const primaryImage = shopifyFirstImage?.url 
+    ? shopifyFirstImage 
+    : { url: '/images/deepcell-bottle.jpg', altText: 'LEVL LIFESPAN+ DeepCell' };
 
   const images = [
-    baseImages[0],
+    primaryImage,
     { url: '/images/deepcell_pathways_bg.png', altText: '5 Core Biological Pathways' },
     { url: '/images/supplement_facts.png', altText: 'Supplement Facts' },
     { url: '/images/value_prop_thumbnail.png', altText: 'Value Proposition' }

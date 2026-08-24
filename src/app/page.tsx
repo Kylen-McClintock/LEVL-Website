@@ -36,11 +36,11 @@ export const metadata: Metadata = {
 };
 
 export default async function LongevityProductPage() {
-  const product = await getProduct('longevity');
-  const initialCart = await createCart(); // Creates a mock cart or empty real cart
+  const product = await getProduct('lifespan-deepcell');
 
   return (
-    <StorefrontClient product={product} initialCartId={initialCart.id}>
+    <StorefrontClient product={product}>
+
       <div className="min-h-screen bg-[var(--color-levl-bg)] flex flex-col font-sans relative">
         
         {/* Global Twilight Background Orbs */}
@@ -61,8 +61,9 @@ export default async function LongevityProductPage() {
         </div>
 
         <main className="flex-grow">
-          <ProductHero product={product} cartId={initialCart.id} />
+          <ProductHero product={product} />
           <BentoImages />
+
           <BenefitTimeline />
           <div id="science"><ScienceMechanismSection /></div>
           <GuaranteeStrip />

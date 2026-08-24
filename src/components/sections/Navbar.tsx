@@ -8,6 +8,7 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Menu, X, ShoppingBag } from "lucide-react";
 import Image from "next/image";
+import { useCart } from "@/context/CartContext";
 
 const navLinks = [
     { name: "Science", href: "/#science" },
@@ -21,10 +22,13 @@ export function Navbar({ showCart = false }: { showCart?: boolean } = {}) {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { scrollY } = useScroll();
+    const { cart, openCart } = useCart();
 
     useMotionValueEvent(scrollY, "change", (latest) => {
         setIsScrolled(latest > 20);
     });
+
+    const totalQuantity = cart?.totalQuantity || 0;
 
     return (
         <nav
@@ -59,13 +63,24 @@ export function Navbar({ showCart = false }: { showCart?: boolean } = {}) {
                 {/* CTA & Mobile Menu */}
                 <div className="flex items-center gap-4">
                     {showCart && (
-                        <button id="cart-trigger" className="p-2 text-white hover:text-[var(--color-levl-cyan)] transition-colors relative">
+                        <button 
+                            id="cart-trigger" 
+                            onClick={openCart}
+                            className="p-2 text-white hover:text-[var(--color-levl-cyan)] transition-colors relative"
+                            aria-label="Open Cart"
+                        >
                             <ShoppingBag className="w-5 h-5" />
+                            {totalQuantity > 0 && (
+                                <span className="absolute -top-1 -right-1 bg-[var(--color-levl-cyan)] text-black font-bold text-[10px] w-4 h-4 rounded-full flex items-center justify-center shadow-[0_0_8px_var(--color-levl-cyan)]">
+                                    {totalQuantity}
+                                </span>
+                            )}
                         </button>
                     )}
-                    <Link href="/checkout-mock/">
+
+                    <Link href="/products/longevity/">
                         <Button variant="primary" size="sm" className="hidden md:flex">
-                            Gain Early Access
+                            Order DeepCell
                         </Button>
                     </Link>
 
@@ -99,8 +114,8 @@ export function Navbar({ showCart = false }: { showCart?: boolean } = {}) {
                             </Link>
                         )
                     })}
-                    <Link href="/checkout-mock/" onClick={() => setIsMobileMenuOpen(false)}>
-                        <Button className="w-full mt-2">Gain Early Access</Button>
+                    <Link href="/products/longevity/" onClick={() => setIsMobileMenuOpen(false)}>
+                        <Button className="w-full mt-2">Order DeepCell</Button>
                     </Link>
                 </motion.div>
             )}

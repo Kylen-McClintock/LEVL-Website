@@ -842,7 +842,7 @@ export default function PlatformPage() {
                             <Link href="/">
                                 <Button variant="primary" className="w-full sm:w-auto">Explore LIFESPAN+</Button>
                             </Link>
-                            <Link href="/checkout-mock/">
+                            <Link href="/products/longevity/">
                                 <Button variant="secondary" className="w-full sm:w-auto bg-[var(--color-levl-cyan)]/10 text-[var(--color-levl-cyan)] hover:bg-[var(--color-levl-cyan)]/20 border-none">
                                     Join the Mission
                                 </Button>
