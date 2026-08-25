@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Star, ShieldCheck, Check, MessageSquarePlus, X, Loader2, ImagePlus, Trash2, Calendar } from 'lucide-react';
+import { Star, ShieldCheck, Check, MessageSquarePlus, X, Loader2, ImagePlus, Trash2, Calendar, ChevronDown, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { JudgeMeReview, JudgeMeData } from '../../lib/judgeme';
 
@@ -14,6 +14,7 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isPaused, setIsPaused] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [expandedReviews, setExpandedReviews] = useState<Record<string | number, boolean>>({});
   
   const [reviewsList, setReviewsList] = useState<JudgeMeReview[]>(
     initialData?.reviews || [
@@ -68,6 +69,13 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
   const averageRating = initialData?.averageRating || 5.0;
   const totalReviews = reviewsList.length;
 
+  const toggleExpand = (id: string | number) => {
+    setExpandedReviews(prev => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
+
   // Modal Form State
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -99,7 +107,7 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
       if (scrollContainerRef.current) {
         const container = scrollContainerRef.current;
         const isMobile = window.innerWidth < 768;
-        const scrollAmount = isMobile ? window.innerWidth * 0.85 + 24 : 600 + 24;
+        const scrollAmount = isMobile ? window.innerWidth * 0.85 + 24 : 450 + 24;
         
         if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
           container.scrollTo({ left: 0, behavior: 'smooth' });
@@ -107,7 +115,7 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
           container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         }
       }
-    }, 5500);
+    }, 6000);
 
     return () => clearInterval(interval);
   }, [isPaused]);
@@ -187,7 +195,7 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
   return (
     <section id="reviews" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10">
       {/* Section Header */}
-      <div className="text-center mb-12 max-w-3xl mx-auto">
+      <div className="text-center mb-10 max-w-3xl mx-auto">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--color-levl-cyan)]/10 border border-[var(--color-levl-cyan)]/30 text-[var(--color-levl-cyan)] text-xs font-bold uppercase tracking-wider mb-4">
           <ShieldCheck className="w-3.5 h-3.5" />
           <span>Judge.me Verified Community Feedback</span>
@@ -196,40 +204,33 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
         <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
           Real Experiences & Clinical Feedback
         </h2>
-        <p className="text-lg text-[var(--color-levl-text-secondary)]">
+        <p className="text-base md:text-lg text-[var(--color-levl-text-secondary)]">
           Documented outcomes from early clinical testers, trial participants, and customers.
         </p>
 
         {/* Rating Aggregate Stats Bar */}
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 p-6 rounded-2xl bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] shadow-xl">
+        <div className="mt-8 flex flex-row items-center justify-between sm:justify-center gap-4 sm:gap-12 p-4 sm:p-6 rounded-2xl bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] shadow-xl max-w-lg mx-auto">
           <div className="flex items-center gap-3">
-            <span className="text-4xl font-extrabold text-white">{averageRating.toFixed(1)}</span>
+            <span className="text-3xl sm:text-4xl font-extrabold text-white">{averageRating.toFixed(1)}</span>
             <div className="flex flex-col items-start">
               <div className="flex items-center gap-0.5 text-[var(--color-levl-cyan)]">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-current" />
+                  <Star key={i} className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
                 ))}
               </div>
-              <span className="text-xs text-[var(--color-levl-text-secondary)] font-medium">
+              <span className="text-[11px] sm:text-xs text-[var(--color-levl-text-secondary)] font-medium">
                 {totalReviews} Verified Reviews
               </span>
             </div>
           </div>
 
-          <div className="hidden sm:block w-px h-10 bg-white/10" />
-
-          <div className="flex items-center gap-2 text-sm text-gray-300">
-            <span className="w-2 h-2 rounded-full bg-[var(--color-levl-green)]" />
-            <span><strong>100% 5-Star Ratings</strong> • 5 of 5 Verified Testers</span>
-          </div>
-
-          <div className="hidden sm:block w-px h-10 bg-white/10" />
+          <div className="w-px h-8 bg-white/10" />
 
           <button
             onClick={() => setIsModalOpen(true)}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-xs hover:bg-[var(--color-levl-cyan)]/90 transition-all shadow-[0_0_15px_rgba(14,165,233,0.3)] cursor-pointer"
+            className="flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-xs hover:bg-[var(--color-levl-cyan)]/90 transition-all shadow-[0_0_15px_rgba(14,165,233,0.3)] cursor-pointer shrink-0"
           >
-            <MessageSquarePlus className="w-4 h-4" />
+            <MessageSquarePlus className="w-3.5 h-3.5" />
             <span>Write a Review</span>
           </button>
         </div>
@@ -244,57 +245,74 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
         onTouchEnd={() => setTimeout(() => setIsPaused(false), 2000)}
       >
         {/* Left Gradient Mask */}
-        <div className="absolute left-0 top-0 bottom-8 w-12 md:w-32 bg-gradient-to-r from-[var(--color-levl-bg)] to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-8 w-8 md:w-24 bg-gradient-to-r from-[var(--color-levl-bg)] to-transparent z-10 pointer-events-none" />
         
         {/* Right Gradient Mask */}
-        <div className="absolute right-0 top-0 bottom-8 w-12 md:w-32 bg-gradient-to-l from-[var(--color-levl-bg)] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-8 w-8 md:w-24 bg-gradient-to-l from-[var(--color-levl-bg)] to-transparent z-10 pointer-events-none" />
 
         <div 
           ref={scrollContainerRef}
-          className="flex overflow-x-auto gap-6 pb-8 pt-4 px-4 sm:px-0 snap-x snap-mandatory hide-scrollbar"
+          className="flex overflow-x-auto gap-5 pb-8 pt-4 px-4 sm:px-0 snap-x snap-mandatory hide-scrollbar items-start"
         >
-          {reviewsList.map((review) => (
-            <div 
-              key={review.id} 
-              className="snap-center shrink-0 w-[85vw] md:w-[560px] bg-[linear-gradient(30deg,#15102aee,#281534cc)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-6 md:p-8 flex flex-col justify-between hover:border-[var(--color-levl-cyan)]/50 transition-all hover:shadow-[0_0_30px_rgba(14,165,233,0.15)] relative z-0"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-1 text-[var(--color-levl-cyan)]">
-                    {[...Array(review.rating)].map((_, j) => (
-                      <Star key={j} className="w-4 h-4 fill-current" />
-                    ))}
+          {reviewsList.map((review) => {
+            const isLong = review.body.length > 170;
+            const isExpanded = !!expandedReviews[review.id];
+
+            return (
+              <div 
+                key={review.id} 
+                className="snap-center shrink-0 w-[85vw] sm:w-[380px] md:w-[440px] bg-[linear-gradient(30deg,#15102aee,#281534cc)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-5 md:p-6 flex flex-col justify-between hover:border-[var(--color-levl-cyan)]/50 transition-all hover:shadow-[0_0_30px_rgba(14,165,233,0.15)] relative z-0"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2.5">
+                    <div className="flex items-center gap-0.5 text-[var(--color-levl-cyan)]">
+                      {[...Array(review.rating)].map((_, j) => (
+                        <Star key={j} className="w-3.5 h-3.5 fill-current" />
+                      ))}
+                    </div>
+
+                    <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-[var(--color-levl-cyan)] bg-[var(--color-levl-cyan)]/10 border border-[var(--color-levl-cyan)]/25 px-2 py-0.5 rounded-full">
+                      <Check className="w-2.5 h-2.5" />
+                      <span>{review.verifiedType || "Verified Beta Tester"}</span>
+                    </span>
                   </div>
 
-                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[var(--color-levl-cyan)] bg-[var(--color-levl-cyan)]/10 border border-[var(--color-levl-cyan)]/25 px-2.5 py-0.5 rounded-full">
-                    <Check className="w-3 h-3" />
-                    <span>{review.verifiedType || "Verified Beta Tester"}</span>
-                  </span>
+                  {review.title && (
+                    <h4 className="text-white font-bold text-sm md:text-base mb-1.5 leading-snug">
+                      {review.title}
+                    </h4>
+                  )}
+
+                  <div className="text-white/85 text-xs sm:text-sm leading-relaxed font-normal mb-3">
+                    <p>
+                      "{isLong && !isExpanded ? `${review.body.slice(0, 160)}...` : review.body}"
+                    </p>
+                    {isLong && (
+                      <button
+                        type="button"
+                        onClick={() => toggleExpand(review.id)}
+                        className="text-[var(--color-levl-cyan)] font-semibold text-xs mt-1 hover:underline inline-flex items-center gap-0.5 cursor-pointer"
+                      >
+                        <span>{isExpanded ? "Read less" : "Read more"}</span>
+                        {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                      </button>
+                    )}
+                  </div>
                 </div>
 
-                {review.title && (
-                  <h4 className="text-white font-bold text-base mb-2">
-                    {review.title}
-                  </h4>
-                )}
-
-                <p className="text-white/90 text-sm md:text-base leading-relaxed mb-6 font-normal">
-                  "{review.body}"
-                </p>
+                <div className="pt-3 border-t border-white/10 flex items-center justify-between mt-auto">
+                  <div>
+                    <p className="text-white font-bold text-xs sm:text-sm tracking-wide">{review.name}</p>
+                    <p className="text-[10px] sm:text-xs text-[var(--color-levl-text-muted)]">Verified Experience</p>
+                  </div>
+                  <div className="flex items-center gap-1 text-[11px] sm:text-xs text-[var(--color-levl-cyan)] font-medium">
+                    <Calendar className="w-3 h-3 opacity-70" />
+                    <span>{review.date}</span>
+                  </div>
+                </div>
               </div>
-
-              <div className="pt-4 border-t border-white/10 flex items-center justify-between">
-                <div>
-                  <p className="text-white font-bold text-sm tracking-wide">{review.name}</p>
-                  <p className="text-xs text-[var(--color-levl-text-muted)]">Verified Experience</p>
-                </div>
-                <div className="flex items-center gap-1.5 text-xs text-[var(--color-levl-cyan)] font-medium">
-                  <Calendar className="w-3.5 h-3.5 opacity-70" />
-                  <span>{review.date}</span>
-                </div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

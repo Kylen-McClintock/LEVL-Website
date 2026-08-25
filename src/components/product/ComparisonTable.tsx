@@ -11,113 +11,117 @@ export function ComparisonTable() {
   const renderValue = (val: string | boolean) => {
     if (val === true) {
       return (
-        <div className="w-5 h-5 md:w-6 md:h-6 mx-auto rounded-full bg-[var(--color-levl-cyan)]/20 border border-[var(--color-levl-cyan)] flex items-center justify-center">
-          <Check className="w-3 h-3 md:w-3.5 md:h-3.5 text-[var(--color-levl-cyan)]" />
+        <div className="w-5 h-5 sm:w-6 sm:h-6 mx-auto rounded-full bg-[var(--color-levl-cyan)]/20 border border-[var(--color-levl-cyan)] flex items-center justify-center">
+          <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[var(--color-levl-cyan)] stroke-[2.5]" />
         </div>
       );
     }
     if (val === false) {
-      return <Minus className="w-4 h-4 mx-auto text-[var(--color-levl-text-muted)] opacity-40" />;
+      return <Minus className="w-4 h-4 mx-auto text-white/20" />;
     }
     return (
-      <span className="text-[10px] md:text-xs font-medium text-[var(--color-levl-text-secondary)]">
+      <span className="text-[10px] sm:text-xs font-medium text-[var(--color-levl-text-secondary)]">
         {val}
       </span>
     );
   };
 
-  // Compact headers for mobile vs full headers for desktop
-  const mobileHeaders = ["Feature", "DeepCell", "Melatonin", "Pills", "DIY"];
-
   return (
     <section className="py-16 md:py-24 border-y border-[var(--color-levl-panel-border)] overflow-hidden">
-      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="text-center mb-10 md:mb-16">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             The Standard for Longevity
           </h2>
-          <p className="text-sm md:text-base text-[var(--color-levl-text-secondary)] max-w-2xl mx-auto px-4">
+          <p className="text-xs sm:text-sm md:text-base text-[var(--color-levl-text-secondary)] max-w-2xl mx-auto">
             See how LEVL DeepCell compares to traditional and fragmented sleep approaches.
           </p>
         </div>
 
-        {/* Table Container - Fits 100% without horizontal scrolling */}
-        <div className="w-full bg-[var(--color-levl-panel)]/40 border border-[var(--color-levl-panel-border)] rounded-2xl p-2 sm:p-4 md:p-6 shadow-xl">
-          {/* Headers */}
-          <div className="grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr] sm:grid-cols-[1.8fr_1fr_1fr_1fr_1fr] md:grid-cols-5 gap-1 sm:gap-2 md:gap-4 mb-2 items-end">
-            <div className="text-left font-semibold text-white text-[11px] sm:text-xs md:text-sm px-1.5 sm:px-3 pb-3 border-b border-[var(--color-levl-panel-border)]">
-              Feature
-            </div>
-            
-            {/* LEVL Highlight Header */}
-            <div className="text-center px-1 sm:px-2 md:px-4 pb-3 border-b-2 border-[var(--color-levl-cyan)] relative bg-[var(--color-levl-cyan)]/10 rounded-t-xl">
-              <span className="text-[var(--color-levl-cyan)] font-extrabold text-[11px] sm:text-xs md:text-sm block truncate">
-                <span className="md:hidden">DeepCell</span>
-                <span className="hidden md:inline">{comparisonTable.headers[1]}</span>
-              </span>
-            </div>
+        {/* Comparison Table */}
+        <div className="w-full bg-[var(--color-levl-panel)]/50 border border-[var(--color-levl-panel-border)] rounded-2xl p-2 sm:p-5 md:p-6 shadow-2xl overflow-hidden">
+          <table className="w-full table-fixed border-collapse">
+            <thead>
+              <tr className="border-b border-[var(--color-levl-panel-border)]">
+                {/* Column 1: Feature */}
+                <th className="w-[38%] sm:w-[32%] text-left py-3 px-2 sm:px-4 text-[11px] sm:text-xs md:text-sm font-semibold text-white">
+                  Feature
+                </th>
+                
+                {/* Column 2: LEVL DeepCell Highlight */}
+                <th className="w-[15.5%] sm:w-[17%] text-center py-3 px-1 sm:px-2 bg-[var(--color-levl-cyan)]/15 border-t-2 border-x border-[var(--color-levl-cyan)]/40 rounded-t-xl">
+                  <span className="text-[var(--color-levl-cyan)] font-black text-[11px] sm:text-xs md:text-sm block">
+                    <span className="md:hidden">DeepCell</span>
+                    <span className="hidden md:inline">{comparisonTable.headers[1]}</span>
+                  </span>
+                </th>
 
-            {/* Competitor 1 */}
-            <div className="text-center font-medium text-[var(--color-levl-text-secondary)] text-[10px] sm:text-xs md:text-sm px-1 sm:px-2 pb-3 border-b border-[var(--color-levl-panel-border)] truncate">
-              <span className="md:hidden">Melatonin</span>
-              <span className="hidden md:inline">{comparisonTable.headers[2]}</span>
-            </div>
+                {/* Column 3: Melatonin */}
+                <th className="w-[15.5%] sm:w-[17%] text-center py-3 px-1 sm:px-2 text-[10px] sm:text-xs md:text-sm font-medium text-[var(--color-levl-text-secondary)]">
+                  <span className="md:hidden">Melatonin</span>
+                  <span className="hidden md:inline">{comparisonTable.headers[2]}</span>
+                </th>
 
-            {/* Competitor 2 */}
-            <div className="text-center font-medium text-[var(--color-levl-text-secondary)] text-[10px] sm:text-xs md:text-sm px-1 sm:px-2 pb-3 border-b border-[var(--color-levl-panel-border)] truncate">
-              <span className="md:hidden">Pills</span>
-              <span className="hidden md:inline">{comparisonTable.headers[3]}</span>
-            </div>
+                {/* Column 4: Sleeping Pills */}
+                <th className="w-[15.5%] sm:w-[17%] text-center py-3 px-1 sm:px-2 text-[10px] sm:text-xs md:text-sm font-medium text-[var(--color-levl-text-secondary)]">
+                  <span className="md:hidden">Pills</span>
+                  <span className="hidden md:inline">{comparisonTable.headers[3]}</span>
+                </th>
 
-            {/* Competitor 3 */}
-            <div className="text-center font-medium text-[var(--color-levl-text-secondary)] text-[10px] sm:text-xs md:text-sm px-1 sm:px-2 pb-3 border-b border-[var(--color-levl-panel-border)] truncate">
-              <span className="md:hidden">DIY Stack</span>
-              <span className="hidden md:inline">{comparisonTable.headers[4]}</span>
-            </div>
-          </div>
+                {/* Column 5: DIY Stack */}
+                <th className="w-[15.5%] sm:w-[17%] text-center py-3 px-1 sm:px-2 text-[10px] sm:text-xs md:text-sm font-medium text-[var(--color-levl-text-secondary)]">
+                  <span className="md:hidden">DIY Stack</span>
+                  <span className="hidden md:inline">{comparisonTable.headers[4]}</span>
+                </th>
+              </tr>
+            </thead>
 
-          {/* Rows */}
-          <div className="flex flex-col">
-            {comparisonTable.rows.map((row, i) => (
-              <div 
-                key={i} 
-                className={cn(
-                  "grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr] sm:grid-cols-[1.8fr_1fr_1fr_1fr_1fr] md:grid-cols-5 gap-1 sm:gap-2 md:gap-4 py-3 sm:py-4 md:py-5 px-1 sm:px-3 items-center transition-colors",
-                  i !== comparisonTable.rows.length - 1 && "border-b border-white/5",
-                  "hover:bg-white/[0.02]"
-                )}
-              >
-                {/* Feature Name */}
-                <div className="text-white font-medium text-[11px] sm:text-xs md:text-sm pr-1 sm:pr-2 flex items-center gap-1 sm:gap-1.5 group relative cursor-default leading-tight">
-                  <span className="truncate sm:whitespace-normal">{row.feature}</span>
-                  {row.tooltip && (
-                    <div className="relative shrink-0">
-                      <Info className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[var(--color-levl-text-muted)] group-hover:text-[var(--color-levl-cyan)] transition-colors" />
-                      <div className="absolute left-0 bottom-full mb-2 w-48 sm:w-60 bg-[#1A1D27] border border-[var(--color-levl-panel-border)] p-2.5 rounded-lg text-[10px] sm:text-xs text-white opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-30 shadow-2xl">
-                        {row.tooltip}
-                        <div className="absolute top-full left-2 border-6 border-transparent border-t-[#1A1D27]" />
-                      </div>
+            <tbody className="divide-y divide-white/5">
+              {comparisonTable.rows.map((row, i) => (
+                <tr key={i} className="hover:bg-white/[0.02] transition-colors">
+                  {/* Feature Name & Tooltip */}
+                  <td className="py-3 sm:py-4 px-2 sm:px-4 text-left align-middle">
+                    <div className="flex items-center gap-1 sm:gap-1.5 flex-wrap">
+                      <span className="text-white font-medium text-[11px] sm:text-xs md:text-sm leading-snug break-words">
+                        {row.feature}
+                      </span>
+                      {row.tooltip && (
+                        <div className="relative group shrink-0 inline-block">
+                          <Info className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[var(--color-levl-text-muted)] group-hover:text-[var(--color-levl-cyan)] transition-colors cursor-pointer" />
+                          <div className="absolute left-0 bottom-full mb-2 w-44 sm:w-56 bg-[#1A1D27] border border-[var(--color-levl-panel-border)] p-2 rounded-lg text-[10px] sm:text-xs text-white opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-30 shadow-2xl">
+                            {row.tooltip}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
+                  </td>
 
-                {/* LEVL Value */}
-                <div className="text-center relative py-1 bg-[var(--color-levl-cyan)]/5 rounded-md">
-                  {renderValue(row.levl)}
-                </div>
+                  {/* LEVL DeepCell Value */}
+                  <td className={cn(
+                    "py-3 sm:py-4 px-1 text-center align-middle bg-[var(--color-levl-cyan)]/10 border-x border-[var(--color-levl-cyan)]/25",
+                    i === comparisonTable.rows.length - 1 && "rounded-b-xl border-b border-[var(--color-levl-cyan)]/40"
+                  )}>
+                    {renderValue(row.levl)}
+                  </td>
 
-                {/* Generic Melatonin */}
-                <div className="text-center py-1">{renderValue(row.generic)}</div>
+                  {/* Generic Melatonin */}
+                  <td className="py-3 sm:py-4 px-1 text-center align-middle">
+                    {renderValue(row.generic)}
+                  </td>
 
-                {/* Sleeping Pills */}
-                <div className="text-center py-1">{renderValue(row.single)}</div>
+                  {/* Sleeping Pills */}
+                  <td className="py-3 sm:py-4 px-1 text-center align-middle">
+                    {renderValue(row.single)}
+                  </td>
 
-                {/* DIY Stack */}
-                <div className="text-center py-1">{renderValue(row.diy)}</div>
-              </div>
-            ))}
-          </div>
-
+                  {/* DIY Stack */}
+                  <td className="py-3 sm:py-4 px-1 text-center align-middle">
+                    {renderValue(row.diy)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
