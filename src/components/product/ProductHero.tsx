@@ -7,6 +7,7 @@ import { PurchaseBox } from './PurchaseBox';
 import { StatsBar } from './StatsBar';
 import { JudgeMeStarBadge } from './JudgeMeStarBadge';
 import { ShopifyProduct } from '../../types/shopify';
+import { JudgeMeData } from '../../lib/judgeme';
 import { productContent } from '../../content/productLongevity';
 import { Badge } from '../ui/Badge'; // Assume this exists or I will create it
 
@@ -15,9 +16,10 @@ import { useCart } from '../../context/CartContext';
 interface ProductHeroProps {
   product?: ShopifyProduct;
   cartId?: string | null;
+  judgeMeData?: JudgeMeData;
 }
 
-export function ProductHero({ product, cartId }: ProductHeroProps) {
+export function ProductHero({ product, cartId, judgeMeData }: ProductHeroProps) {
   const { openCart } = useCart();
 
 
@@ -52,6 +54,8 @@ export function ProductHero({ product, cartId }: ProductHeroProps) {
             <div className="mb-5">
               <JudgeMeStarBadge 
                 productId={product?.id} 
+                rating={judgeMeData?.averageRating}
+                totalReviews={judgeMeData?.totalReviews}
                 className="px-3.5 py-1.5 rounded-full bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] hover:border-[var(--color-levl-cyan)]/50 shadow-sm" 
               />
             </div>
@@ -78,7 +82,7 @@ export function ProductHero({ product, cartId }: ProductHeroProps) {
               ))}
           </ul>
 
-          <PurchaseBox product={product} onCartOpen={openCart} cartId={cartId} />
+          <PurchaseBox product={product} onCartOpen={openCart} cartId={cartId} judgeMeData={judgeMeData} />
           <StatsBar />
         </div>
       </div>

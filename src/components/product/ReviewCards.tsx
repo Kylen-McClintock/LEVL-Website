@@ -1,17 +1,73 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Star, ShieldCheck, Check, MessageSquarePlus, X, Loader2, ImagePlus, Trash2 } from 'lucide-react';
+import { Star, ShieldCheck, Check, MessageSquarePlus, X, Loader2, ImagePlus, Trash2, Calendar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { productContent } from '../../content/productLongevity';
+import { JudgeMeReview, JudgeMeData } from '../../lib/judgeme';
 
-export function ReviewCards() {
+interface ReviewCardsProps {
+  initialData?: JudgeMeData;
+}
+
+export function ReviewCards({ initialData }: ReviewCardsProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isPaused, setIsPaused] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [reviewsList, setReviewsList] = useState(productContent.reviews);
   
+  const [reviewsList, setReviewsList] = useState<JudgeMeReview[]>(
+    initialData?.reviews || [
+      {
+        id: 1,
+        name: "Michelle G.",
+        date: "Aug 25, 2026",
+        title: "Actually Woke Up Rested",
+        body: "I fell asleep quickly, and actually stayed asleep the entire night. As a young mom, waking up feeling actually rested was so refreshing.",
+        rating: 5,
+        verifiedType: "Verified Beta Tester",
+      },
+      {
+        id: 2,
+        name: "Aaron M.",
+        date: "Aug 23, 2026",
+        title: "Better Sleep and Feeling Stronger",
+        body: "I drift into dreamland pretty easily again. From a physical standpoint, I’m gaining and retaining muscle mass easier and I haven’t done a grip strength test but my overall health outcomes seem to have leveled up since starting a nightly regiment of LEVL.",
+        rating: 5,
+        verifiedType: "Verified Beta Tester",
+      },
+      {
+        id: 3,
+        name: "Lisa M.",
+        date: "Aug 20, 2026",
+        title: "Best Sleep I've Had in Years",
+        body: "2 Capsules turned out to be perfect. It was the best night of sleep I may have ever had in years",
+        rating: 5,
+        verifiedType: "Verified Beta Tester",
+      },
+      {
+        id: 4,
+        name: "Cathleen L.",
+        date: "Aug 19, 2026",
+        title: "Sleeping Through the Night Again",
+        body: "As a postmenopausal woman I was frustrated with experiencing nights of difficulty falling asleep, staying asleep or just broken sleep. Then I tried LEVL’s DeepCell product. I was looking for a drug free sleep aid so that I would wake up rested and ready to start my day. DeepCell was the perfect choice. Beginning on night 1, I took the recommended dosage and actually felt myself drifting off into a relaxed state. Next thing I know it's a new day. I experienced a restful night which I hadn't encountered in a long time. I take LEVL on a regular schedule and can honestly say I feel so much better in the morning after sleeping through the night.",
+        rating: 5,
+        verifiedType: "Verified Beta Tester",
+      },
+      {
+        id: 5,
+        name: "Andrea S.",
+        date: "Aug 19, 2026",
+        title: "Finally Falling Asleep Without Grogginess",
+        body: "LEVL’s DeepCell product has worked tremendously for me. I typically have a hard time falling asleep, often lying awake for hours, but since I started using this, I’ve noticed a huge difference. Within an hour of taking the supplement, I feel relaxed and a sleepy wave comes over me. I’m able to drift off without the usual tossing and turning. What I love most is that I wake up feeling refreshed and energized, never groggy or drowsy. It’s been a total game changer for my nightly routine.",
+        rating: 5,
+        verifiedType: "Verified Beta Tester",
+      },
+    ]
+  );
+
+  const averageRating = initialData?.averageRating || 5.0;
+  const totalReviews = reviewsList.length;
+
   // Modal Form State
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -71,12 +127,11 @@ export function ReviewCards() {
     setIsSubmitting(true);
 
     try {
-      // Send to /api/reviews (which forwards to Judge.me REST API)
       const formData = new FormData();
       formData.append('name', name);
-      formData.append('email', email || 'tester@levlhealth.com');
+      formData.append('email', email || 'verified-tester@levlhealth.com');
       formData.append('rating', rating.toString());
-      formData.append('title', title || 'Clinical Review');
+      formData.append('title', title || 'Verified Experience');
       formData.append('body', quote);
       formData.append('productId', '9030713999558');
       if (selectedFile) {
@@ -88,14 +143,17 @@ export function ReviewCards() {
         body: formData,
       });
 
-      // Update local state so the review is visible immediately
-      const newRev = {
+      const newReview: JudgeMeReview = {
+        id: Date.now(),
         name,
+        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+        title: title || 'Verified Experience',
+        body: quote,
         rating,
-        quote,
-        type: userType
+        verifiedType: userType,
       };
-      setReviewsList([newRev, ...reviewsList]);
+
+      setReviewsList([newReview, ...reviewsList]);
       setIsSubmitted(true);
 
       setTimeout(() => {
@@ -108,7 +166,7 @@ export function ReviewCards() {
         removeFile();
       }, 1500);
     } catch (err) {
-      console.error('Error submitting review:', err);
+      console.error('Error submitting review to Judge.me:', err);
     } finally {
       setIsSubmitting(false);
     }
@@ -120,11 +178,11 @@ export function ReviewCards() {
       <div className="text-center mb-12 max-w-3xl mx-auto">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--color-levl-cyan)]/10 border border-[var(--color-levl-cyan)]/30 text-[var(--color-levl-cyan)] text-xs font-bold uppercase tracking-wider mb-4">
           <ShieldCheck className="w-3.5 h-3.5" />
-          <span>Verified Community Feedback</span>
+          <span>Judge.me Verified Community Feedback</span>
         </div>
         
         <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-          Real Experiences & Community Feedback
+          Real Experiences & Clinical Feedback
         </h2>
         <p className="text-lg text-[var(--color-levl-text-secondary)]">
           Documented outcomes from early clinical testers, trial participants, and customers.
@@ -133,7 +191,7 @@ export function ReviewCards() {
         {/* Rating Aggregate Stats Bar */}
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 p-6 rounded-2xl bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] shadow-xl">
           <div className="flex items-center gap-3">
-            <span className="text-4xl font-extrabold text-white">5.0</span>
+            <span className="text-4xl font-extrabold text-white">{averageRating.toFixed(1)}</span>
             <div className="flex flex-col items-start">
               <div className="flex items-center gap-0.5 text-[var(--color-levl-cyan)]">
                 {[...Array(5)].map((_, i) => (
@@ -141,7 +199,7 @@ export function ReviewCards() {
                 ))}
               </div>
               <span className="text-xs text-[var(--color-levl-text-secondary)] font-medium">
-                {reviewsList.length} Verified Reviews
+                {totalReviews} Verified Reviews
               </span>
             </div>
           </div>
@@ -183,13 +241,13 @@ export function ReviewCards() {
           ref={scrollContainerRef}
           className="flex overflow-x-auto gap-6 pb-8 pt-4 px-4 sm:px-0 snap-x snap-mandatory hide-scrollbar"
         >
-          {reviewsList.map((review, i) => (
+          {reviewsList.map((review) => (
             <div 
-              key={i} 
+              key={review.id} 
               className="snap-center shrink-0 w-[85vw] md:w-[560px] bg-[linear-gradient(30deg,#15102aee,#281534cc)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-6 md:p-8 flex flex-col justify-between hover:border-[var(--color-levl-cyan)]/50 transition-all hover:shadow-[0_0_30px_rgba(14,165,233,0.15)] relative z-0"
             >
               <div>
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-1 text-[var(--color-levl-cyan)]">
                     {[...Array(review.rating)].map((_, j) => (
                       <Star key={j} className="w-4 h-4 fill-current" />
@@ -198,12 +256,18 @@ export function ReviewCards() {
 
                   <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[var(--color-levl-cyan)] bg-[var(--color-levl-cyan)]/10 border border-[var(--color-levl-cyan)]/25 px-2.5 py-0.5 rounded-full">
                     <Check className="w-3 h-3" />
-                    <span>{review.type || "Verified Beta Tester"}</span>
+                    <span>{review.verifiedType || "Verified Beta Tester"}</span>
                   </span>
                 </div>
 
-                <p className="text-white text-base leading-relaxed mb-6 font-normal">
-                  "{review.quote}"
+                {review.title && (
+                  <h4 className="text-white font-bold text-base mb-2">
+                    {review.title}
+                  </h4>
+                )}
+
+                <p className="text-white/90 text-sm md:text-base leading-relaxed mb-6 font-normal">
+                  "{review.body}"
                 </p>
               </div>
 
@@ -212,9 +276,10 @@ export function ReviewCards() {
                   <p className="text-white font-bold text-sm tracking-wide">{review.name}</p>
                   <p className="text-xs text-[var(--color-levl-text-muted)]">Verified Experience</p>
                 </div>
-                <span className="text-[11px] text-[var(--color-levl-text-muted)] font-mono">
-                  August 2026
-                </span>
+                <div className="flex items-center gap-1.5 text-xs text-[var(--color-levl-cyan)] font-medium">
+                  <Calendar className="w-3.5 h-3.5 opacity-70" />
+                  <span>{review.date}</span>
+                </div>
               </div>
             </div>
           ))}
@@ -240,7 +305,7 @@ export function ReviewCards() {
 
               <h3 className="text-xl font-bold text-white mb-1">Submit Your Experience</h3>
               <p className="text-xs text-[var(--color-levl-text-secondary)] mb-6">
-                Share your clinical or personal feedback for LEVL DeepCell.
+                Share your clinical or personal feedback for LEVL DeepCell. Submissions sync with Judge.me.
               </p>
 
               {isSubmitted ? (
@@ -249,7 +314,7 @@ export function ReviewCards() {
                     <Check className="w-6 h-6" />
                   </div>
                   <h4 className="text-lg font-bold text-white">Thank You for Your Feedback!</h4>
-                  <p className="text-xs text-gray-400">Your review and media have been received and added to the community scoreboard.</p>
+                  <p className="text-xs text-gray-400">Your review and media have been submitted to Judge.me and added to the community board.</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmitReview} className="space-y-4">
@@ -392,7 +457,7 @@ export function ReviewCards() {
                     {isSubmitting ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
                     ) : (
-                      <span>Submit Review</span>
+                      <span>Submit Review to Judge.me</span>
                     )}
                   </button>
                 </form>

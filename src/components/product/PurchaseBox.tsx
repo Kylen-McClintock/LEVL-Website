@@ -7,6 +7,7 @@ import { QuantitySelector } from './QuantitySelector';
 import { JudgeMeStarBadge } from './JudgeMeStarBadge';
 import { productContent } from '../../content/productLongevity';
 import { ShopifyProduct } from '../../types/shopify';
+import { JudgeMeData } from '../../lib/judgeme';
 import { useCart } from '../../context/CartContext';
 import { cn } from '../cart/CheckoutButton';
 
@@ -14,9 +15,10 @@ interface PurchaseBoxProps {
   product?: ShopifyProduct;
   onCartOpen?: () => void;
   cartId?: string | null;
+  judgeMeData?: JudgeMeData;
 }
 
-export function PurchaseBox({ product }: PurchaseBoxProps) {
+export function PurchaseBox({ product, judgeMeData }: PurchaseBoxProps) {
   const { addToCart, instantBuy, isLoading } = useCart();
   const [selectedPlan, setSelectedPlan] = useState<PlanType>('subscribe-90');
   const [quantity, setQuantity] = useState(1);
@@ -108,7 +110,11 @@ export function PurchaseBox({ product }: PurchaseBoxProps) {
         <div className="flex items-start justify-between gap-2">
           <div className="flex flex-col">
             <div className="mb-1.5">
-              <JudgeMeStarBadge productId={product?.id} />
+              <JudgeMeStarBadge 
+                productId={product?.id} 
+                rating={judgeMeData?.averageRating}
+                totalReviews={judgeMeData?.totalReviews}
+              />
             </div>
             <h2 className="text-xl font-bold text-white tracking-wide">
               {product?.title || 'LIFESPAN+ DeepCell'}
