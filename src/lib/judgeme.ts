@@ -45,10 +45,15 @@ export async function getJudgeMeReviews(
             const scoreMatch = block.match(/data-score='([^']+)'/);
             const verifiedMatch = block.match(/data-verified-buyer='true'/);
 
-            // Extract review photos if any
-            const photoLinks = Array.from(block.matchAll(/href='(https?:\/\/[^']+\.(?:png|jpg|jpeg|webp))'/gi)).map(m => m[1]);
-            const photoImgs = Array.from(block.matchAll(/src='(https?:\/\/[^']+\.(?:png|jpg|jpeg|webp))'/gi)).map(m => m[1]);
-            const pictures = photoLinks.length > 0 ? photoLinks : (photoImgs.length > 0 ? photoImgs : undefined);
+            // Extract review photos from Judge.me pics container (handles CDN URLs with quality/width query params)
+            const picsContainer = block.match(/class='jdgm-rev__pics'[^>]*>([\s\S]*?)<\/div>/)?.[1] || "";
+            const picLinks = Array.from(picsContainer.matchAll(/class='jdgm-rev__pic-link[^\']*\'[^>]*href=\'([^\']+)\'/gi))
+              .map(m => m[1].replace(/&amp;/g, '&'))
+              .filter(u => u.startsWith('http'));
+            const fallbackImgs = Array.from(picsContainer.matchAll(/(?:data-src|src)=\'([^\']+)\'/gi))
+              .map(m => m[1].replace(/&amp;/g, '&'))
+              .filter(u => u.startsWith('http'));
+            const pictures = picLinks.length > 0 ? Array.from(new Set(picLinks)) : (fallbackImgs.length > 0 ? Array.from(new Set(fallbackImgs)) : undefined);
 
             const rawDate = dateMatch ? dateMatch[1] : null;
             let formattedDate = "August 2026";
