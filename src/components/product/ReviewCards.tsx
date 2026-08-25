@@ -80,6 +80,18 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  // Close modal on Escape key press
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsModalOpen(false);
+    };
+    if (isModalOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isModalOpen]);
+
+  // Autoscroll carousel
   useEffect(() => {
     if (isPaused) return;
 
@@ -208,7 +220,7 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
 
           <div className="flex items-center gap-2 text-sm text-gray-300">
             <span className="w-2 h-2 rounded-full bg-[var(--color-levl-green)]" />
-            <span><strong>100%</strong> would recommend to a friend</span>
+            <span><strong>100% 5-Star Ratings</strong> • 5 of 5 Verified Testers</span>
           </div>
 
           <div className="hidden sm:block w-px h-10 bg-white/10" />
@@ -286,182 +298,194 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
         </div>
       </div>
 
-      {/* Write a Review Modal */}
+      {/* Write a Review Modal (Click outside or X to close) */}
       <AnimatePresence>
         {isModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
+          <div 
+            onClick={() => setIsModalOpen(false)}
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto"
+          >
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-[#0B0E17] border border-[var(--color-levl-panel-border)] rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 shadow-2xl relative custom-scrollbar"
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-[#0B0E17] border border-[var(--color-levl-panel-border)] rounded-2xl max-w-lg w-full max-h-[88vh] overflow-y-auto shadow-2xl relative flex flex-col hide-scrollbar"
             >
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="absolute top-4 right-4 text-gray-400 hover:text-white p-1 rounded-full hover:bg-white/10 transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              <h3 className="text-xl font-bold text-white mb-1">Submit Your Experience</h3>
-              <p className="text-xs text-[var(--color-levl-text-secondary)] mb-6">
-                Share your clinical or personal feedback for LEVL DeepCell. Submissions sync with Judge.me.
-              </p>
-
-              {isSubmitted ? (
-                <div className="py-12 flex flex-col items-center justify-center text-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-[var(--color-levl-green)]/20 border border-[var(--color-levl-green)] flex items-center justify-center text-[var(--color-levl-green)]">
-                    <Check className="w-6 h-6" />
-                  </div>
-                  <h4 className="text-lg font-bold text-white">Thank You for Your Feedback!</h4>
-                  <p className="text-xs text-gray-400">Your review and media have been submitted to Judge.me and added to the community board.</p>
+              {/* Sticky Modal Header with Close Button */}
+              <div className="sticky top-0 bg-[#0B0E17]/95 backdrop-blur-md z-30 px-6 pt-5 pb-3 border-b border-white/10 flex items-start justify-between">
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-0.5">Submit Your Experience</h3>
+                  <p className="text-xs text-[var(--color-levl-text-secondary)]">
+                    Share your feedback for LEVL DeepCell. Submissions sync with Judge.me.
+                  </p>
                 </div>
-              ) : (
-                <form onSubmit={handleSubmitReview} className="space-y-4">
-                  {/* Rating */}
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-300 mb-1.5">Overall Rating</label>
-                    <div className="flex items-center gap-2">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <button
-                          key={star}
-                          type="button"
-                          onClick={() => setRating(star)}
-                          className="p-1 text-[var(--color-levl-cyan)] hover:scale-110 transition-transform cursor-pointer"
-                        >
-                          <Star className={`w-6 h-6 ${star <= rating ? 'fill-current' : 'text-gray-600'}`} />
-                        </button>
-                      ))}
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="text-gray-400 hover:text-white p-1.5 rounded-full hover:bg-white/10 transition-colors shrink-0 cursor-pointer ml-3 -mr-1"
+                  aria-label="Close modal"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="p-6">
+                {isSubmitted ? (
+                  <div className="py-12 flex flex-col items-center justify-center text-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-[var(--color-levl-green)]/20 border border-[var(--color-levl-green)] flex items-center justify-center text-[var(--color-levl-green)]">
+                      <Check className="w-6 h-6" />
                     </div>
+                    <h4 className="text-lg font-bold text-white">Thank You for Your Feedback!</h4>
+                    <p className="text-xs text-gray-400">Your review and media have been submitted to Judge.me and added to the community board.</p>
                   </div>
-
-                  {/* Name */}
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-300 mb-1">Your Name or Initials</label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. Andrea S."
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none"
-                    />
-                  </div>
-
-                  {/* Email */}
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-300 mb-1">Email Address <span className="text-gray-500 font-normal">(Private)</span></label>
-                    <input
-                      type="email"
-                      placeholder="name@example.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none"
-                    />
-                  </div>
-
-                  {/* Verification Status */}
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-300 mb-1">Verification Status</label>
-                    <select
-                      value={userType}
-                      onChange={(e) => setUserType(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none"
-                    >
-                      <option value="Beta Trial Participant">Beta Trial Participant</option>
-                      <option value="Verified Early Tester">Verified Early Tester</option>
-                      <option value="In-Store Customer">In-Store Retail Customer</option>
-                      <option value="Online Customer">Verified Online Customer</option>
-                    </select>
-                  </div>
-
-                  {/* Review Title */}
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-300 mb-1">Review Title</label>
-                    <input
-                      type="text"
-                      placeholder="e.g. Total game changer for sleep & recovery"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none"
-                    />
-                  </div>
-
-                  {/* Body */}
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-300 mb-1">Your Experience / Review</label>
-                    <textarea
-                      required
-                      rows={3}
-                      placeholder="How did DeepCell affect your sleep architecture, morning energy, or recovery?"
-                      value={quote}
-                      onChange={(e) => setQuote(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none resize-none"
-                    />
-                  </div>
-
-                  {/* Submit Photo / Video */}
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-300 mb-1.5">Add Photo or Video <span className="text-gray-500 font-normal">(Optional)</span></label>
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/*,video/*"
-                      onChange={handleFileChange}
-                      className="hidden"
-                      id="review-file-upload"
-                    />
-
-                    {filePreview ? (
-                      <div className="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-[var(--color-levl-cyan)]/40">
-                        <div className="flex items-center gap-3">
-                          <img
-                            src={filePreview}
-                            alt="Upload preview"
-                            className="w-12 h-12 object-cover rounded-lg border border-white/10"
-                          />
-                          <div>
-                            <p className="text-xs font-medium text-white truncate max-w-[200px]">
-                              {selectedFile?.name}
-                            </p>
-                            <p className="text-[10px] text-gray-400">
-                              {(selectedFile ? selectedFile.size / 1024 / 1024 : 0).toFixed(2)} MB
-                            </p>
-                          </div>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={removeFile}
-                          className="p-1.5 rounded-lg text-gray-400 hover:text-red-400 hover:bg-white/5 transition-colors"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+                ) : (
+                  <form onSubmit={handleSubmitReview} className="space-y-4">
+                    {/* Rating */}
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-300 mb-1.5">Overall Rating</label>
+                      <div className="flex items-center gap-2">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <button
+                            key={star}
+                            type="button"
+                            onClick={() => setRating(star)}
+                            className="p-1 text-[var(--color-levl-cyan)] hover:scale-110 transition-transform cursor-pointer"
+                          >
+                            <Star className={`w-6 h-6 ${star <= rating ? 'fill-current' : 'text-gray-600'}`} />
+                          </button>
+                        ))}
                       </div>
-                    ) : (
-                      <label
-                        htmlFor="review-file-upload"
-                        className="flex flex-col items-center justify-center p-4 border border-dashed border-white/20 rounded-xl hover:border-[var(--color-levl-cyan)]/50 hover:bg-white/5 transition-all cursor-pointer group"
-                      >
-                        <ImagePlus className="w-5 h-5 text-gray-400 group-hover:text-[var(--color-levl-cyan)] transition-colors mb-1" />
-                        <span className="text-xs text-gray-300 font-medium">Click to upload photo or video</span>
-                        <span className="text-[10px] text-gray-500 mt-0.5">PNG, JPG, MP4 up to 25MB</span>
-                      </label>
-                    )}
-                  </div>
+                    </div>
 
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full py-3 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-sm hover:bg-[var(--color-levl-cyan)]/90 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-[var(--color-levl-cyan)]/25 disabled:opacity-50 mt-2"
-                  >
-                    {isSubmitting ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                    ) : (
-                      <span>Submit Review to Judge.me</span>
-                    )}
-                  </button>
-                </form>
-              )}
+                    {/* Name */}
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-300 mb-1">Your Name or Initials</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. Andrea S."
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none"
+                      />
+                    </div>
+
+                    {/* Email */}
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-300 mb-1">Email Address <span className="text-gray-500 font-normal">(Private)</span></label>
+                      <input
+                        type="email"
+                        placeholder="name@example.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none"
+                      />
+                    </div>
+
+                    {/* Verification Status */}
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-300 mb-1">Verification Status</label>
+                      <select
+                        value={userType}
+                        onChange={(e) => setUserType(e.target.value)}
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none"
+                      >
+                        <option value="Beta Trial Participant">Beta Trial Participant</option>
+                        <option value="Verified Early Tester">Verified Early Tester</option>
+                        <option value="In-Store Customer">In-Store Retail Customer</option>
+                        <option value="Online Customer">Verified Online Customer</option>
+                      </select>
+                    </div>
+
+                    {/* Review Title */}
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-300 mb-1">Review Title</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Total game changer for sleep & recovery"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none"
+                      />
+                    </div>
+
+                    {/* Body */}
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-300 mb-1">Your Experience / Review</label>
+                      <textarea
+                        required
+                        rows={3}
+                        placeholder="How did DeepCell affect your sleep architecture, morning energy, or recovery?"
+                        value={quote}
+                        onChange={(e) => setQuote(e.target.value)}
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none resize-none"
+                      />
+                    </div>
+
+                    {/* Submit Photo / Video */}
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-300 mb-1.5">Add Photo or Video <span className="text-gray-500 font-normal">(Optional)</span></label>
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/*,video/*"
+                        onChange={handleFileChange}
+                        className="hidden"
+                        id="review-file-upload"
+                      />
+
+                      {filePreview ? (
+                        <div className="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-[var(--color-levl-cyan)]/40">
+                          <div className="flex items-center gap-3">
+                            <img
+                              src={filePreview}
+                              alt="Upload preview"
+                              className="w-12 h-12 object-cover rounded-lg border border-white/10"
+                            />
+                            <div>
+                              <p className="text-xs font-medium text-white truncate max-w-[200px]">
+                                {selectedFile?.name}
+                              </p>
+                              <p className="text-[10px] text-gray-400">
+                                {(selectedFile ? selectedFile.size / 1024 / 1024 : 0).toFixed(2)} MB
+                              </p>
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={removeFile}
+                            className="p-1.5 rounded-lg text-gray-400 hover:text-red-400 hover:bg-white/5 transition-colors"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      ) : (
+                        <label
+                          htmlFor="review-file-upload"
+                          className="flex flex-col items-center justify-center p-4 border border-dashed border-white/20 rounded-xl hover:border-[var(--color-levl-cyan)]/50 hover:bg-white/5 transition-all cursor-pointer group"
+                        >
+                          <ImagePlus className="w-5 h-5 text-gray-400 group-hover:text-[var(--color-levl-cyan)] transition-colors mb-1" />
+                          <span className="text-xs text-gray-300 font-medium">Click to upload photo or video</span>
+                          <span className="text-[10px] text-gray-500 mt-0.5">PNG, JPG, MP4 up to 25MB</span>
+                        </label>
+                      )}
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full py-3 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-sm hover:bg-[var(--color-levl-cyan)]/90 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-[var(--color-levl-cyan)]/25 disabled:opacity-50 mt-2"
+                    >
+                      {isSubmitting ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <span>Submit Review to Judge.me</span>
+                      )}
+                    </button>
+                  </form>
+                )}
+              </div>
             </motion.div>
           </div>
         )}
