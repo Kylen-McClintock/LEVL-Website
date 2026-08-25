@@ -46,7 +46,7 @@ export function Navbar({ showCart = true }: { showCart?: boolean } = {}) {
         <nav
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
                 isScrolled
-                    ? "bg-brand-dark/90 backdrop-blur-md border-b border-white/10 py-1"
+                    ? "bg-[#07090E]/60 backdrop-blur-xl border-b border-white/10 py-1 shadow-lg shadow-black/20"
                     : "bg-transparent py-2 md:py-3"
             }`}
         >
