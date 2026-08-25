@@ -5,11 +5,11 @@ import {
   ShopifyCartLineUpdateInput 
 } from '../types/shopify';
 
-const domain = process.env.SHOPIFY_STORE_DOMAIN || process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
-const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+const domain = process.env.SHOPIFY_STORE_DOMAIN || process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || 'h1hk4t-v3.myshopify.com';
+const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN || 'cfdfd8e0af055f2bd2e49e34a0868a40';
 const apiVersion = process.env.SHOPIFY_API_VERSION || '2026-07';
 
-// If credentials are not present, we will run in MOCK MODE seamlessly
+// Fallback to mock mode only if somehow credentials cannot be resolved
 export const isMockMode = !domain || !storefrontAccessToken;
 
 // Helper to simulate network delay for realistic mock loading states
