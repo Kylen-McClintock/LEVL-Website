@@ -1,21 +1,26 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Star, ShieldCheck, Check, Sparkles, MessageSquarePlus, X, Loader2 } from 'lucide-react';
+import { Star, ShieldCheck, Check, MessageSquarePlus, X, Loader2, ImagePlus, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { productContent } from '../../content/productLongevity';
 
 export function ReviewCards() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [isPaused, setIsPaused] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reviewsList, setReviewsList] = useState(productContent.reviews);
   
   // Modal Form State
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [rating, setRating] = useState(5);
+  const [title, setTitle] = useState('');
   const [quote, setQuote] = useState('');
   const [userType, setUserType] = useState('Beta Trial Participant');
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [filePreview, setFilePreview] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -39,13 +44,51 @@ export function ReviewCards() {
     return () => clearInterval(interval);
   }, [isPaused]);
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setSelectedFile(file);
+      const previewUrl = URL.createObjectURL(file);
+      setFilePreview(previewUrl);
+    }
+  };
+
+  const removeFile = () => {
+    setSelectedFile(null);
+    if (filePreview) {
+      URL.revokeObjectURL(filePreview);
+      setFilePreview(null);
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
   const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !quote) return;
 
     setIsSubmitting(true);
-    // Simulate instant submission & add to top of reviews list
-    setTimeout(() => {
+
+    try {
+      // Send to /api/reviews (which forwards to Judge.me REST API)
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email || 'tester@levlhealth.com');
+      formData.append('rating', rating.toString());
+      formData.append('title', title || 'Clinical Review');
+      formData.append('body', quote);
+      formData.append('productId', '9030713999558');
+      if (selectedFile) {
+        formData.append('pictures', selectedFile);
+      }
+
+      await fetch('/api/reviews', {
+        method: 'POST',
+        body: formData,
+      });
+
+      // Update local state so the review is visible immediately
       const newRev = {
         name,
         rating,
@@ -53,15 +96,22 @@ export function ReviewCards() {
         type: userType
       };
       setReviewsList([newRev, ...reviewsList]);
-      setIsSubmitting(false);
       setIsSubmitted(true);
+
       setTimeout(() => {
         setIsSubmitted(false);
         setIsModalOpen(false);
         setName('');
+        setEmail('');
+        setTitle('');
         setQuote('');
+        removeFile();
       }, 1500);
-    }, 600);
+    } catch (err) {
+      console.error('Error submitting review:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -179,7 +229,7 @@ export function ReviewCards() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-[#0B0E17] border border-[var(--color-levl-panel-border)] rounded-2xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative"
+              className="bg-[#0B0E17] border border-[var(--color-levl-panel-border)] rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 shadow-2xl relative custom-scrollbar"
             >
               <button
                 onClick={() => setIsModalOpen(false)}
@@ -199,10 +249,11 @@ export function ReviewCards() {
                     <Check className="w-6 h-6" />
                   </div>
                   <h4 className="text-lg font-bold text-white">Thank You for Your Feedback!</h4>
-                  <p className="text-xs text-gray-400">Your review has been verified and added to the community scoreboard.</p>
+                  <p className="text-xs text-gray-400">Your review and media have been received and added to the community scoreboard.</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmitReview} className="space-y-4">
+                  {/* Rating */}
                   <div>
                     <label className="block text-xs font-semibold text-gray-300 mb-1.5">Overall Rating</label>
                     <div className="flex items-center gap-2">
@@ -219,6 +270,7 @@ export function ReviewCards() {
                     </div>
                   </div>
 
+                  {/* Name */}
                   <div>
                     <label className="block text-xs font-semibold text-gray-300 mb-1">Your Name or Initials</label>
                     <input
@@ -231,6 +283,19 @@ export function ReviewCards() {
                     />
                   </div>
 
+                  {/* Email */}
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 mb-1">Email Address <span className="text-gray-500 font-normal">(Private)</span></label>
+                    <input
+                      type="email"
+                      placeholder="name@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none"
+                    />
+                  </div>
+
+                  {/* Verification Status */}
                   <div>
                     <label className="block text-xs font-semibold text-gray-300 mb-1">Verification Status</label>
                     <select
@@ -245,11 +310,24 @@ export function ReviewCards() {
                     </select>
                   </div>
 
+                  {/* Review Title */}
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 mb-1">Review Title</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Total game changer for sleep & recovery"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none"
+                    />
+                  </div>
+
+                  {/* Body */}
                   <div>
                     <label className="block text-xs font-semibold text-gray-300 mb-1">Your Experience / Review</label>
                     <textarea
                       required
-                      rows={4}
+                      rows={3}
                       placeholder="How did DeepCell affect your sleep architecture, morning energy, or recovery?"
                       value={quote}
                       onChange={(e) => setQuote(e.target.value)}
@@ -257,10 +335,59 @@ export function ReviewCards() {
                     />
                   </div>
 
+                  {/* Submit Photo / Video */}
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 mb-1.5">Add Photo or Video <span className="text-gray-500 font-normal">(Optional)</span></label>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*,video/*"
+                      onChange={handleFileChange}
+                      className="hidden"
+                      id="review-file-upload"
+                    />
+
+                    {filePreview ? (
+                      <div className="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-[var(--color-levl-cyan)]/40">
+                        <div className="flex items-center gap-3">
+                          <img
+                            src={filePreview}
+                            alt="Upload preview"
+                            className="w-12 h-12 object-cover rounded-lg border border-white/10"
+                          />
+                          <div>
+                            <p className="text-xs font-medium text-white truncate max-w-[200px]">
+                              {selectedFile?.name}
+                            </p>
+                            <p className="text-[10px] text-gray-400">
+                              {(selectedFile ? selectedFile.size / 1024 / 1024 : 0).toFixed(2)} MB
+                            </p>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={removeFile}
+                          className="p-1.5 rounded-lg text-gray-400 hover:text-red-400 hover:bg-white/5 transition-colors"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ) : (
+                      <label
+                        htmlFor="review-file-upload"
+                        className="flex flex-col items-center justify-center p-4 border border-dashed border-white/20 rounded-xl hover:border-[var(--color-levl-cyan)]/50 hover:bg-white/5 transition-all cursor-pointer group"
+                      >
+                        <ImagePlus className="w-5 h-5 text-gray-400 group-hover:text-[var(--color-levl-cyan)] transition-colors mb-1" />
+                        <span className="text-xs text-gray-300 font-medium">Click to upload photo or video</span>
+                        <span className="text-[10px] text-gray-500 mt-0.5">PNG, JPG, MP4 up to 25MB</span>
+                      </label>
+                    )}
+                  </div>
+
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-3 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-sm hover:bg-[var(--color-levl-cyan)]/90 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-[var(--color-levl-cyan)]/25 disabled:opacity-50"
+                    className="w-full py-3 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-sm hover:bg-[var(--color-levl-cyan)]/90 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-[var(--color-levl-cyan)]/25 disabled:opacity-50 mt-2"
                   >
                     {isSubmitting ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
