@@ -33,10 +33,10 @@ export function Navbar({ showCart = true }: { showCart?: boolean } = {}) {
 
     const handleActionClick = (e: React.MouseEvent) => {
         if (isProductPage) {
-            const purchaseEl = document.getElementById("purchase");
+            const purchaseEl = document.getElementById("purchase-section") || document.getElementById("purchase");
             if (purchaseEl) {
                 e.preventDefault();
-                purchaseEl.scrollIntoView({ behavior: "smooth" });
+                purchaseEl.scrollIntoView({ behavior: "smooth", block: "start" });
                 setIsMobileMenuOpen(false);
             }
         }
@@ -108,7 +108,7 @@ export function Navbar({ showCart = true }: { showCart?: boolean } = {}) {
                                 transition={{ duration: 0.2 }}
                             >
                                 <Link
-                                    href={isProductPage ? "#purchase" : "/products/longevity/#purchase"}
+                                    href={isProductPage ? "#purchase-section" : "/products/longevity/#purchase-section"}
                                     onClick={handleActionClick}
                                     className="flex items-center gap-1.5 px-3.5 py-1.5 md:px-5 md:py-2 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-xs md:text-sm hover:bg-[var(--color-levl-cyan)]/90 transition-all shadow-[0_0_15px_rgba(14,165,233,0.3)] cursor-pointer tracking-tight whitespace-nowrap"
                                 >
@@ -152,7 +152,7 @@ export function Navbar({ showCart = true }: { showCart?: boolean } = {}) {
                         );
                     })}
                     <Link
-                        href={isProductPage ? "#purchase" : "/products/longevity/#purchase"}
+                        href={isProductPage ? "#purchase-section" : "/products/longevity/#purchase-section"}
                         onClick={handleActionClick}
                         className="w-full mt-2 py-3 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-sm text-center shadow-lg block"
                     >

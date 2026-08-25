@@ -104,7 +104,7 @@ export function PurchaseBox({ product, judgeMeData }: PurchaseBoxProps) {
   };
 
   return (
-    <div className="bg-[linear-gradient(30deg,#1B1237e6,#451F5233)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-5 sm:p-6 md:p-8 flex flex-col gap-5 sm:gap-6 shadow-2xl shadow-black/50">
+    <div id="purchase-section" className="bg-[linear-gradient(30deg,#1B1237e6,#451F5233)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-5 sm:p-6 md:p-8 flex flex-col gap-5 sm:gap-6 shadow-2xl shadow-black/50 scroll-mt-20">
       {/* Top Meta: Reviews Badge */}
       <div className="flex items-center justify-between gap-2">
         <JudgeMeStarBadge 
