@@ -209,16 +209,16 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
         </p>
 
         {/* Rating Aggregate Stats Bar */}
-        <div className="mt-6 flex flex-row items-center justify-between sm:justify-center gap-4 sm:gap-12 p-3.5 sm:p-5 rounded-2xl bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] shadow-xl max-w-md mx-auto">
-          <div className="flex items-center gap-2.5">
+        <div className="mt-6 flex flex-row items-center justify-between sm:justify-center gap-4 sm:gap-10 p-3.5 sm:p-5 rounded-2xl bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] shadow-xl max-w-lg mx-auto">
+          <div className="flex items-center gap-3 shrink-0">
             <span className="text-2xl sm:text-4xl font-extrabold text-white">{averageRating.toFixed(1)}</span>
-            <div className="flex flex-col items-start">
+            <div className="flex flex-col items-start shrink-0">
               <div className="flex items-center gap-0.5 text-[var(--color-levl-cyan)]">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
                 ))}
               </div>
-              <span className="text-[11px] sm:text-xs text-[var(--color-levl-text-secondary)] font-medium">
+              <span className="text-[11px] sm:text-xs text-[var(--color-levl-text-secondary)] font-medium whitespace-nowrap">
                 {totalReviews} Verified Reviews
               </span>
             </div>
