@@ -272,8 +272,8 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
                     </div>
 
                     <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-[var(--color-levl-cyan)] bg-[var(--color-levl-cyan)]/10 border border-[var(--color-levl-cyan)]/25 px-2 py-0.5 rounded-full">
-                      <Check className="w-2.5 h-2.5" />
-                      <span>{review.verifiedType || "Verified Beta Tester"}</span>
+                      <ShieldCheck className="w-3 h-3 text-[var(--color-levl-cyan)] stroke-[2.5]" />
+                      <span>{review.verifiedType || "Verified Reviewer"}</span>
                     </span>
                   </div>
 

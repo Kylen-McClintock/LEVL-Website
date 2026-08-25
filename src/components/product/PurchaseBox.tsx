@@ -104,43 +104,52 @@ export function PurchaseBox({ product, judgeMeData }: PurchaseBoxProps) {
   };
 
   return (
-    <div className="bg-[linear-gradient(30deg,#1B1237e6,#451F5233)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-6 md:p-8 flex flex-col gap-6 shadow-2xl shadow-black/50">
-      {/* Price Header */}
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-between gap-3">
-          <h2 className="text-xl md:text-2xl font-bold text-white tracking-wide">
-            {product?.title || 'LIFESPAN+ DeepCell'}
-          </h2>
-          {selectedPlan === 'subscribe-90' ? (
-            <span className="text-xs bg-[var(--color-levl-cyan)]/15 text-[var(--color-levl-cyan)] px-3 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-semibold shrink-0">
-              Save 20% + Free US Shipping
-            </span>
-          ) : selectedPlan === 'onetime-90' ? (
-            <span className="text-xs bg-[var(--color-levl-cyan)]/15 text-[var(--color-levl-cyan)] px-3 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-semibold shrink-0">
-              Save $18 + Free US Shipping
-            </span>
-          ) : selectedPlan === 'subscribe-30' ? (
-            <span className="text-xs bg-[var(--color-levl-cyan)]/15 text-[var(--color-levl-cyan)] px-3 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-semibold shrink-0">
-              Save 12% + Free US Shipping
-            </span>
-          ) : null}
-        </div>
+    <div className="bg-[linear-gradient(30deg,#1B1237e6,#451F5233)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-5 sm:p-6 md:p-8 flex flex-col gap-5 sm:gap-6 shadow-2xl shadow-black/50">
+      {/* Top Meta: Reviews Badge + Savings Pill */}
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <JudgeMeStarBadge 
+          productId={product?.id} 
+          rating={judgeMeData?.averageRating}
+          totalReviews={judgeMeData?.totalReviews}
+          showShield={true}
+        />
+        {selectedPlan === 'subscribe-90' ? (
+          <span className="text-xs bg-[var(--color-levl-cyan)]/15 text-[var(--color-levl-cyan)] px-3 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-semibold shrink-0">
+            Save 20% + Free US Shipping
+          </span>
+        ) : selectedPlan === 'onetime-90' ? (
+          <span className="text-xs bg-[var(--color-levl-cyan)]/15 text-[var(--color-levl-cyan)] px-3 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-semibold shrink-0">
+            Save $18 + Free US Shipping
+          </span>
+        ) : selectedPlan === 'subscribe-30' ? (
+          <span className="text-xs bg-[var(--color-levl-cyan)]/15 text-[var(--color-levl-cyan)] px-3 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-semibold shrink-0">
+            Save 12% + Free US Shipping
+          </span>
+        ) : null}
+      </div>
 
-        <div className="flex items-end gap-3 flex-wrap">
-          <div className="flex items-end gap-3">
-            <span className="text-3xl font-black text-white tracking-tight">{displayPrice}</span>
-            {originalPrice && (
-              <span className="text-lg text-[var(--color-levl-text-muted)] line-through mb-1">
-                {originalPrice}
-              </span>
-            )}
-          </div>
-          {perBottleText && (
-            <span className="text-xs font-medium text-[var(--color-levl-cyan)] mb-2">
-              {perBottleText}
-            </span>
-          )}
-        </div>
+      {/* Product Title (Guaranteed ONE line) */}
+      <div>
+        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-wide whitespace-nowrap">
+          {product?.title || 'LIFESPAN+ DeepCell'}
+        </h2>
+      </div>
+
+      {/* Main Pricing Row */}
+      <div className="flex items-baseline gap-3 flex-wrap -mt-2">
+        <span className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+          {displayPrice}
+        </span>
+        {originalPrice && (
+          <span className="text-lg text-[var(--color-levl-text-muted)] line-through">
+            {originalPrice}
+          </span>
+        )}
+        {perBottleText && (
+          <span className="text-xs font-medium text-[var(--color-levl-cyan)]">
+            {perBottleText}
+          </span>
+        )}
       </div>
 
       {/* Selectors */}

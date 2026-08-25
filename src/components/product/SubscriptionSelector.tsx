@@ -62,18 +62,21 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
           </div>
 
           <div className="flex flex-col items-end shrink-0">
-            <div className="flex items-center gap-1.5">
-              <span className="text-xs line-through text-[var(--color-levl-text-muted)]">$147</span>
+            <div className="flex items-baseline gap-1">
               <span className={cn(
-                "font-bold text-lg",
+                "font-black text-xl sm:text-2xl tracking-tight",
                 activeSupply === '90' && isSubscription ? "text-[var(--color-levl-cyan)]" : "text-white"
               )}>
-                {activeSupply === '90' && !isSubscription ? "$129" : "$117"}
+                {activeSupply === '90' && !isSubscription ? "$43" : "$39"}
+              </span>
+              <span className="text-xs font-semibold text-[var(--color-levl-text-secondary)]">/ bottle</span>
+            </div>
+            <div className="flex items-center gap-1.5 mt-0.5">
+              <span className="text-[11px] line-through text-[var(--color-levl-text-muted)]">$147</span>
+              <span className="text-[11px] text-[var(--color-levl-text-muted)] font-medium">
+                {activeSupply === '90' && !isSubscription ? "($129 total)" : "($117 total)"}
               </span>
             </div>
-            <span className="text-[10px] text-[var(--color-levl-text-muted)] font-mono">
-              {activeSupply === '90' && !isSubscription ? "$43 / bottle" : "$39 / bottle"}
-            </span>
           </div>
         </div>
 
@@ -113,9 +116,11 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                     className="accent-[var(--color-levl-cyan)] w-4 h-4 cursor-pointer"
                   />
                   <div className="flex flex-col">
-                    <span className="text-xs font-bold text-white flex items-center gap-1.5">
+                    <span className="text-xs font-bold text-white flex items-center gap-1.5 flex-wrap">
                       <Sparkles className="w-3 h-3 text-[var(--color-levl-cyan)]" />
-                      Subscribe & Save: <span className="text-[var(--color-levl-cyan)] font-extrabold">$117 total ($39/bottle)</span>
+                      <span>Subscribe & Save:</span>
+                      <span className="text-[var(--color-levl-cyan)] font-extrabold">$39 / bottle</span>
+                      <span className="text-gray-400 font-normal">($117 total)</span>
                     </span>
                     <span className="text-[11px] text-[var(--color-levl-cyan)] flex items-center gap-1 font-medium mt-0.5">
                       <Truck className="w-3 h-3" /> Free US Shipping • Deliver every 90 days
@@ -149,8 +154,10 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                     className="accent-white w-4 h-4 cursor-pointer"
                   />
                   <div className="flex flex-col">
-                    <span className="text-xs font-bold text-white">
-                      One-Time Order: <span className="font-extrabold text-white">$129 total ($43/bottle)</span>
+                    <span className="text-xs font-bold text-white flex items-center gap-1.5 flex-wrap">
+                      <span>One-Time Order:</span>
+                      <span className="font-extrabold text-white">$43 / bottle</span>
+                      <span className="text-gray-400 font-normal">($129 total)</span>
                     </span>
                     <span className="text-[11px] text-gray-300 flex items-center gap-1 mt-0.5">
                       <Truck className="w-3 h-3 text-[var(--color-levl-cyan)]" /> Free US Shipping • Single 3-month delivery
@@ -199,20 +206,23 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
           </div>
 
           <div className="flex flex-col items-end shrink-0">
-            <div className="flex items-center gap-1.5">
-              {activeSupply === '30' && isSubscription && (
-                <span className="text-xs line-through text-[var(--color-levl-text-muted)]">$49</span>
-              )}
+            <div className="flex items-baseline gap-1">
               <span className={cn(
-                "font-bold text-lg",
+                "font-black text-xl sm:text-2xl tracking-tight",
                 activeSupply === '30' && isSubscription ? "text-[var(--color-levl-cyan)]" : "text-white"
               )}>
                 {activeSupply === '30' && isSubscription ? "$43" : "$49"}
               </span>
+              <span className="text-xs font-semibold text-[var(--color-levl-text-secondary)]">/ bottle</span>
             </div>
-            <span className="text-[10px] text-[var(--color-levl-text-muted)] font-mono">
-              {activeSupply === '30' && isSubscription ? "$43 / bottle" : "$49 / bottle"}
-            </span>
+            <div className="flex items-center gap-1.5 mt-0.5">
+              {activeSupply === '30' && isSubscription && (
+                <span className="text-[11px] line-through text-[var(--color-levl-text-muted)]">$49</span>
+              )}
+              <span className="text-[11px] text-[var(--color-levl-text-muted)] font-medium">
+                {activeSupply === '30' && isSubscription ? "($43 total)" : "($49 total)"}
+              </span>
+            </div>
           </div>
         </div>
 
@@ -252,9 +262,11 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                     className="accent-[var(--color-levl-cyan)] w-4 h-4 cursor-pointer"
                   />
                   <div className="flex flex-col">
-                    <span className="text-xs font-bold text-white flex items-center gap-1.5">
+                    <span className="text-xs font-bold text-white flex items-center gap-1.5 flex-wrap">
                       <Sparkles className="w-3 h-3 text-[var(--color-levl-cyan)]" />
-                      Subscribe & Save: <span className="text-[var(--color-levl-cyan)] font-extrabold">$43 / bottle</span>
+                      <span>Subscribe & Save:</span>
+                      <span className="text-[var(--color-levl-cyan)] font-extrabold">$43 / bottle</span>
+                      <span className="text-gray-400 font-normal">($43 total)</span>
                     </span>
                     <span className="text-[11px] text-[var(--color-levl-cyan)] flex items-center gap-1 font-medium mt-0.5">
                       <Truck className="w-3 h-3" /> Free US Shipping • Deliver monthly
@@ -288,8 +300,10 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                     className="accent-white w-4 h-4 cursor-pointer"
                   />
                   <div className="flex flex-col">
-                    <span className="text-xs font-bold text-white">
-                      One-Time Order: <span className="font-extrabold text-white">$49 / bottle</span>
+                    <span className="text-xs font-bold text-white flex items-center gap-1.5 flex-wrap">
+                      <span>One-Time Order:</span>
+                      <span className="font-extrabold text-white">$49 / bottle</span>
+                      <span className="text-gray-400 font-normal">($49 total)</span>
                     </span>
                     <span className="text-[11px] text-gray-400 mt-0.5">
                       Shipping calculated at checkout • Single bottle delivery
