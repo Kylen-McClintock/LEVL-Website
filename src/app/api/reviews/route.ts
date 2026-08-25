@@ -5,37 +5,50 @@ export async function POST(req: NextRequest) {
     const formData = await req.formData();
     const name = (formData.get('name') as string) || 'Verified Customer';
     const email = (formData.get('email') as string) || 'customer@levlhealth.com';
-    const rating = (formData.get('rating') as string) || '5';
-    const title = (formData.get('title') as string) || 'Verified Review';
+    const ratingStr = (formData.get('rating') as string) || '5';
+    const title = (formData.get('title') as string) || 'Verified Experience';
     const body = formData.get('body') as string;
     const productId = (formData.get('productId') as string) || '9030713999558';
 
-    const apiToken = process.env.NEXT_PUBLIC_JUDGEME_PUBLIC_TOKEN || process.env.JUDGEME_PUBLIC_TOKEN || 'Sgsy_Knj8JEYIGZBCJ7Qhxck9sk';
+    const privateToken = process.env.JUDGEME_PRIVATE_TOKEN || process.env.NEXT_PUBLIC_JUDGEME_PRIVATE_TOKEN || '9zdfl2PGLVRJimMI6EtvzLmT3Qo';
     const shopDomain = process.env.NEXT_PUBLIC_JUDGEME_SHOP_DOMAIN || 'h1hk4t-v3.myshopify.com';
 
-    // Submit review directly to Judge.me API
-    const judgeMeFormData = new FormData();
-    judgeMeFormData.append('api_token', apiToken);
-    judgeMeFormData.append('shop_domain', shopDomain);
-    judgeMeFormData.append('platform', 'shopify');
-    judgeMeFormData.append('id', productId);
-    judgeMeFormData.append('name', name);
-    judgeMeFormData.append('email', email);
-    judgeMeFormData.append('rating', rating);
-    judgeMeFormData.append('title', title);
-    judgeMeFormData.append('body', body);
-
-    // Append all media files (pictures/videos)
+    // Convert attached files to base64 data URIs for Judge.me picture_urls
+    const pictureUrls: string[] = [];
     const files = formData.getAll('pictures') as File[];
+    
     for (const file of files) {
       if (file && typeof file === 'object' && 'size' in file && file.size > 0) {
-        judgeMeFormData.append('pictures[]', file, file.name);
+        const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+        const mimeType = file.type || 'image/jpeg';
+        const base64Data = buffer.toString('base64');
+        pictureUrls.push(`data:${mimeType};base64,${base64Data}`);
       }
     }
 
-    const res = await fetch('https://judge.me/api/v1/reviews', {
+    const payload: Record<string, any> = {
+      shop_domain: shopDomain,
+      platform: 'shopify',
+      id: parseInt(productId, 10) || 9030713999558,
+      name: name,
+      email: email,
+      rating: parseInt(ratingStr, 10) || 5,
+      title: title,
+      body: body,
+    };
+
+    if (pictureUrls.length > 0) {
+      payload.picture_urls = pictureUrls;
+    }
+
+    const judgeMeUrl = `https://judge.me/api/v1/reviews?api_token=${privateToken}&shop_domain=${shopDomain}`;
+    const res = await fetch(judgeMeUrl, {
       method: 'POST',
-      body: judgeMeFormData,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
     });
 
     const responseText = await res.text();
@@ -43,11 +56,11 @@ export async function POST(req: NextRequest) {
     try {
       responseJson = JSON.parse(responseText);
     } catch {
-      // response might be raw text
+      // ignore
     }
 
     if (!res.ok) {
-      console.error('Judge.me API submission returned non-OK status:', res.status, responseText);
+      console.error('Judge.me review creation error:', res.status, responseText);
       return NextResponse.json({
         success: false,
         error: responseJson?.message || responseText || 'Failed to submit review to Judge.me',
