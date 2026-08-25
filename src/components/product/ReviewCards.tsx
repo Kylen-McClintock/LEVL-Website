@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Star, ShieldCheck, Check, MessageSquarePlus, X, Loader2, ImagePlus, Trash2, Calendar, ChevronDown, ChevronUp } from 'lucide-react';
+import { Star, ShieldCheck, Check, MessageSquarePlus, X, Loader2, ImagePlus, Trash2, Calendar, ChevronDown, ChevronUp, Plus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { JudgeMeReview, JudgeMeData } from '../../lib/judgeme';
 
@@ -71,7 +71,7 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
     initialData?.reviews?.length ? initialData.reviews : fallbackReviews
   );
 
-  // Load any local reviews that were submitted by the user on this device
+  // Load persistent reviews submitted locally on this device
   useEffect(() => {
     try {
       const stored = localStorage.getItem(LOCAL_STORAGE_REVIEWS_KEY);
@@ -89,6 +89,32 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
       // ignore
     }
   }, []);
+
+  // Lock background scroll when modal is open on Mobile & Desktop
+  useEffect(() => {
+    if (isModalOpen || previewModalImage) {
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+    } else {
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
+    }
+    return () => {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+    };
+  }, [isModalOpen, previewModalImage]);
 
   const averageRating = initialData?.averageRating || 5.0;
   const totalReviews = reviewsList.length;
@@ -145,7 +171,15 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
     return () => clearInterval(interval);
   }, [isPaused]);
 
-  // Multi-file handler
+  // Trigger file picker cleanly
+  const openFilePicker = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+      fileInputRef.current.click();
+    }
+  };
+
+  // Handle Multi-file selection
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const newFiles = Array.from(e.target.files);
@@ -162,24 +196,21 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
     setSelectedFiles(newFiles);
     const newPreviews = filePreviews.filter((_, i) => i !== index);
     setFilePreviews(newPreviews);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
   };
 
   const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !quote) return;
+    if (!name.trim() || !quote.trim()) return;
 
     setIsSubmitting(true);
 
     try {
       const formData = new FormData();
-      formData.append('name', name);
-      formData.append('email', email || 'customer@levlhealth.com');
+      formData.append('name', name.trim());
+      formData.append('email', email.trim() || 'customer@levlhealth.com');
       formData.append('rating', rating.toString());
-      formData.append('title', title || 'Verified Experience');
-      formData.append('body', quote);
+      formData.append('title', title.trim() || 'Verified Experience');
+      formData.append('body', quote.trim());
       formData.append('productId', '9030713999558');
       
       // Append all selected files
@@ -187,29 +218,27 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
         formData.append('pictures', file);
       });
 
-      // Submit to backend route -> forwards to Judge.me API
-      const res = await fetch('/api/reviews', {
+      // Submit to Next.js API -> forwards to Judge.me
+      await fetch('/api/reviews', {
         method: 'POST',
         body: formData,
       });
 
-      // Keep previews for instant local display
       const currentPreviews = [...filePreviews];
 
       const newReview: JudgeMeReview = {
         id: `local-${Date.now()}`,
-        name,
+        name: name.trim(),
         date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-        title: title || 'Verified Experience',
-        body: quote,
+        title: title.trim() || 'Verified Experience',
+        body: quote.trim(),
         rating,
         verifiedType: userType,
         pictures: currentPreviews.length > 0 ? currentPreviews : undefined,
       };
 
       // Optimistically add to state and persistent localStorage
-      const updatedList = [newReview, ...reviewsList];
-      setReviewsList(updatedList);
+      setReviewsList(prev => [newReview, ...prev]);
 
       try {
         const stored = localStorage.getItem(LOCAL_STORAGE_REVIEWS_KEY);
@@ -273,6 +302,7 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
           <div className="w-px h-7 bg-white/10" />
 
           <button
+            type="button"
             onClick={() => setIsModalOpen(true)}
             className="flex items-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-xs hover:bg-[var(--color-levl-cyan)]/90 transition-all shadow-[0_0_15px_rgba(14,165,233,0.3)] cursor-pointer shrink-0"
           >
@@ -345,7 +375,7 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
                     )}
                   </div>
 
-                  {/* Attached Photos / Videos */}
+                  {/* Attached Photos */}
                   {review.pictures && review.pictures.length > 0 && (
                     <div className="flex items-center gap-2 mb-3 overflow-x-auto hide-scrollbar py-1">
                       {review.pictures.map((picUrl, idx) => (
@@ -354,7 +384,7 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
                           src={picUrl}
                           alt="Review attachment"
                           onClick={() => setPreviewModalImage(picUrl)}
-                          className="w-14 h-14 rounded-lg object-cover border border-white/20 hover:border-[var(--color-levl-cyan)] cursor-pointer hover:scale-105 transition-all shrink-0"
+                          className="w-14 h-14 rounded-lg object-cover border border-white/20 hover:border-[var(--color-levl-cyan)] cursor-pointer hover:scale-105 transition-all shrink-0 bg-black/40"
                         />
                       ))}
                     </div>
@@ -382,7 +412,7 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
         {previewModalImage && (
           <div 
             onClick={() => setPreviewModalImage(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md cursor-pointer"
+            className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/95 backdrop-blur-md cursor-pointer"
           >
             <div className="relative max-w-2xl max-h-[85vh]">
               <img
@@ -393,62 +423,69 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
               <button
                 type="button"
                 onClick={() => setPreviewModalImage(null)}
-                className="absolute top-3 right-3 text-white bg-black/60 p-2 rounded-full hover:bg-black/80 transition-colors"
+                className="absolute top-3 right-3 text-white bg-black/80 p-2.5 rounded-full hover:bg-black transition-colors"
+                aria-label="Close image preview"
               >
-                <X className="w-5 h-5" />
+                <X className="w-6 h-6" />
               </button>
             </div>
           </div>
         )}
       </AnimatePresence>
 
-      {/* Write a Review Modal (Click outside or X to close) */}
+      {/* Write a Review Full-Screen Dialog for Mobile & Centered Modal for Desktop */}
       <AnimatePresence>
         {isModalOpen && (
           <div 
-            onClick={() => setIsModalOpen(false)}
-            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto"
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 sm:p-4 overflow-hidden"
           >
+            {/* Desktop backdrop click listener */}
+            <div 
+              onClick={() => setIsModalOpen(false)}
+              className="absolute inset-0 hidden sm:block bg-transparent"
+            />
+
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              onClick={(e) => e.stopPropagation()}
-              className="bg-[#0B0E17] border border-[var(--color-levl-panel-border)] rounded-2xl max-w-lg w-full max-h-[88vh] overflow-y-auto shadow-2xl relative flex flex-col hide-scrollbar"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.2 }}
+              className="bg-[#0B0E17] border-0 sm:border sm:border-[var(--color-levl-panel-border)] sm:rounded-2xl w-full h-[100dvh] sm:h-auto sm:max-h-[88vh] sm:max-w-lg shadow-2xl relative flex flex-col z-10"
             >
-              {/* Sticky Modal Header with Close Button */}
-              <div className="sticky top-0 bg-[#0B0E17]/95 backdrop-blur-md z-30 px-6 pt-5 pb-3 border-b border-white/10 flex items-start justify-between">
+              {/* Permanent Fixed Header with High-Visibility Close Button */}
+              <div className="h-16 px-5 border-b border-white/10 flex items-center justify-between shrink-0 bg-[#0B0E17] z-50">
                 <div>
-                  <h3 className="text-xl font-bold text-white mb-0.5">Submit Your Experience</h3>
-                  <p className="text-xs text-[var(--color-levl-text-secondary)]">
-                    Share your feedback for LEVL DeepCell. Submissions sync directly with Judge.me.
+                  <h3 className="text-lg sm:text-xl font-bold text-white leading-tight">Write a Review</h3>
+                  <p className="text-[11px] sm:text-xs text-[var(--color-levl-text-secondary)]">
+                    Share your experience with LEVL DeepCell
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="text-gray-400 hover:text-white p-1.5 rounded-full hover:bg-white/10 transition-colors shrink-0 cursor-pointer ml-3 -mr-1"
-                  aria-label="Close modal"
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer shrink-0 -mr-1"
+                  aria-label="Close dialog"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-5 h-5 stroke-[2.5]" />
                 </button>
               </div>
 
-              <div className="p-6">
+              {/* Scrollable Form Content Body */}
+              <div className="flex-1 overflow-y-auto p-5 sm:p-6 overscroll-contain">
                 {isSubmitted ? (
-                  <div className="py-12 flex flex-col items-center justify-center text-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-[var(--color-levl-green)]/20 border border-[var(--color-levl-green)] flex items-center justify-center text-[var(--color-levl-green)]">
-                      <Check className="w-6 h-6" />
+                  <div className="py-16 flex flex-col items-center justify-center text-center gap-3">
+                    <div className="w-14 h-14 rounded-full bg-[var(--color-levl-green)]/20 border border-[var(--color-levl-green)] flex items-center justify-center text-[var(--color-levl-green)]">
+                      <Check className="w-7 h-7 stroke-[2.5]" />
                     </div>
-                    <h4 className="text-lg font-bold text-white">Thank You for Your Review!</h4>
-                    <p className="text-xs text-gray-400 max-w-sm">Your review and media have been submitted directly to Judge.me and added to the board.</p>
+                    <h4 className="text-xl font-bold text-white">Thank You for Your Review!</h4>
+                    <p className="text-xs text-gray-400 max-w-sm">Your feedback and photos have been submitted to Judge.me and added to the community board.</p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmitReview} className="space-y-4">
+                  <form onSubmit={handleSubmitReview} className="space-y-4 pb-8 sm:pb-0">
                     {/* Rating */}
                     <div>
                       <label className="block text-xs font-semibold text-gray-300 mb-1.5">Overall Rating</label>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1.5">
                         {[1, 2, 3, 4, 5].map((star) => (
                           <button
                             key={star}
@@ -456,7 +493,7 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
                             onClick={() => setRating(star)}
                             className="p-1 text-[var(--color-levl-cyan)] hover:scale-110 transition-transform cursor-pointer"
                           >
-                            <Star className={`w-6 h-6 ${star <= rating ? 'fill-current' : 'text-gray-600'}`} />
+                            <Star className={`w-7 h-7 sm:w-6 sm:h-6 ${star <= rating ? 'fill-current' : 'text-gray-700'}`} />
                           </button>
                         ))}
                       </div>
@@ -471,19 +508,21 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
                         placeholder="e.g. Andrea S."
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/20 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none"
                       />
                     </div>
 
                     {/* Email */}
                     <div>
-                      <label className="block text-xs font-semibold text-gray-300 mb-1">Email Address <span className="text-gray-500 font-normal">(Private)</span></label>
+                      <label className="block text-xs font-semibold text-gray-300 mb-1">
+                        Email Address <span className="text-gray-500 font-normal">(Private)</span>
+                      </label>
                       <input
                         type="email"
                         placeholder="name@example.com"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/20 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none"
                       />
                     </div>
 
@@ -493,7 +532,7 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
                       <select
                         value={userType}
                         onChange={(e) => setUserType(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/20 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none cursor-pointer"
                       >
                         <option value="Verified Buyer">Verified Buyer</option>
                         <option value="Beta Trial Participant">Beta Trial Participant</option>
@@ -510,7 +549,7 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
                         placeholder="e.g. Total game changer for sleep & recovery"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/20 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none"
                       />
                     </div>
 
@@ -523,78 +562,95 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
                         placeholder="How did DeepCell affect your sleep architecture, morning energy, or recovery?"
                         value={quote}
                         onChange={(e) => setQuote(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none resize-none"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/20 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none resize-none"
                       />
                     </div>
 
-                    {/* Submit Photo / Video (Multiple Supported) */}
+                    {/* Submit Photos / Media (Full Multi-select Support) */}
                     <div>
-                      <label className="block text-xs font-semibold text-gray-300 mb-1.5">
-                        Add Photos or Video <span className="text-gray-500 font-normal">(Optional, up to 5)</span>
-                      </label>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="text-xs font-semibold text-gray-300">
+                          Add Photos <span className="text-gray-500 font-normal">(Up to 5 images)</span>
+                        </label>
+                        {filePreviews.length > 0 && filePreviews.length < 5 && (
+                          <button
+                            type="button"
+                            onClick={openFilePicker}
+                            className="text-[11px] text-[var(--color-levl-cyan)] hover:underline flex items-center gap-1 font-semibold cursor-pointer"
+                          >
+                            <Plus className="w-3 h-3" />
+                            <span>Add more photos</span>
+                          </button>
+                        )}
+                      </div>
+
                       <input
                         ref={fileInputRef}
                         type="file"
                         multiple
-                        accept="image/*,video/*"
+                        accept="image/png,image/jpeg,image/jpg,image/webp,image/heic,image/*"
                         onChange={handleFileChange}
                         className="hidden"
-                        id="review-file-upload"
                       />
 
                       {filePreviews.length > 0 ? (
-                        <div className="space-y-2">
-                          <div className="grid grid-cols-3 gap-2">
-                            {filePreviews.map((preview, i) => (
-                              <div key={i} className="relative group rounded-xl overflow-hidden border border-white/20 aspect-square bg-black/40">
-                                <img
-                                  src={preview}
-                                  alt="Upload preview"
-                                  className="w-full h-full object-cover"
-                                />
-                                <button
-                                  type="button"
-                                  onClick={() => removeFileAtIndex(i)}
-                                  className="absolute top-1.5 right-1.5 p-1 bg-black/70 rounded-full text-red-400 hover:bg-black transition-colors"
-                                >
-                                  <Trash2 className="w-3.5 h-3.5" />
-                                </button>
-                              </div>
-                            ))}
-                            {filePreviews.length < 5 && (
-                              <label
-                                htmlFor="review-file-upload"
-                                className="flex flex-col items-center justify-center border border-dashed border-white/20 rounded-xl hover:border-[var(--color-levl-cyan)] hover:bg-white/5 transition-all cursor-pointer aspect-square"
+                        <div className="grid grid-cols-3 gap-2.5 p-3 rounded-xl bg-black/50 border border-white/10">
+                          {filePreviews.map((preview, i) => (
+                            <div key={i} className="relative rounded-lg overflow-hidden border border-white/25 aspect-square bg-black/60">
+                              <img
+                                src={preview}
+                                alt="Upload preview"
+                                className="w-full h-full object-cover"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => removeFileAtIndex(i)}
+                                className="absolute top-1 right-1 p-1 bg-black/80 rounded-full text-red-400 hover:text-red-300 transition-colors"
+                                aria-label="Remove image"
                               >
-                                <ImagePlus className="w-5 h-5 text-gray-400 mb-1" />
-                                <span className="text-[10px] text-gray-400">+ Add More</span>
-                              </label>
-                            )}
-                          </div>
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          ))}
+
+                          {filePreviews.length < 5 && (
+                            <button
+                              type="button"
+                              onClick={openFilePicker}
+                              className="flex flex-col items-center justify-center border border-dashed border-white/30 rounded-lg hover:border-[var(--color-levl-cyan)] hover:bg-white/5 transition-all aspect-square cursor-pointer"
+                            >
+                              <Plus className="w-5 h-5 text-gray-300 mb-0.5" />
+                              <span className="text-[10px] text-gray-400 font-medium">Add Photo</span>
+                            </button>
+                          )}
                         </div>
                       ) : (
-                        <label
-                          htmlFor="review-file-upload"
-                          className="flex flex-col items-center justify-center p-4 border border-dashed border-white/20 rounded-xl hover:border-[var(--color-levl-cyan)]/50 hover:bg-white/5 transition-all cursor-pointer group"
+                        <button
+                          type="button"
+                          onClick={openFilePicker}
+                          className="w-full flex flex-col items-center justify-center p-4 border border-dashed border-white/25 rounded-xl hover:border-[var(--color-levl-cyan)]/60 hover:bg-white/5 transition-all cursor-pointer group bg-black/30"
                         >
-                          <ImagePlus className="w-5 h-5 text-gray-400 group-hover:text-[var(--color-levl-cyan)] transition-colors mb-1" />
-                          <span className="text-xs text-gray-300 font-medium">Click to upload photos or video</span>
-                          <span className="text-[10px] text-gray-500 mt-0.5">Select up to 5 photos (PNG, JPG, MP4)</span>
-                        </label>
+                          <ImagePlus className="w-6 h-6 text-gray-400 group-hover:text-[var(--color-levl-cyan)] transition-colors mb-1.5" />
+                          <span className="text-xs text-gray-200 font-medium">Click to select photos</span>
+                          <span className="text-[10px] text-gray-500 mt-0.5">Select up to 5 photos from your gallery</span>
+                        </button>
                       )}
                     </div>
 
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full py-3 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-sm hover:bg-[var(--color-levl-cyan)]/90 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-[var(--color-levl-cyan)]/25 disabled:opacity-50 mt-2"
-                    >
-                      {isSubmitting ? (
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                      ) : (
-                        <span>Submit Review to Judge.me</span>
-                      )}
-                    </button>
+                    {/* Submit Action Button */}
+                    <div className="pt-3 pb-8 sm:pb-2">
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full h-12 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-sm hover:bg-[var(--color-levl-cyan)]/90 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-[var(--color-levl-cyan)]/25 disabled:opacity-50"
+                      >
+                        {isSubmitting ? (
+                          <Loader2 className="w-5 h-5 animate-spin" />
+                        ) : (
+                          <span>Submit Review</span>
+                        )}
+                      </button>
+                    </div>
                   </form>
                 )}
               </div>
