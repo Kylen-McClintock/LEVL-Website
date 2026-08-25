@@ -2,8 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { Star, ShieldCheck, Check, MessageSquarePlus, X, Loader2, ImagePlus, Trash2, Calendar, ChevronDown, ChevronUp, Plus } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Star, ShieldCheck, Check, MessageSquarePlus, X, Loader2, ImagePlus, Trash2, Calendar, ChevronDown, ChevronUp, Plus, AlertCircle } from 'lucide-react';
 import { JudgeMeReview, JudgeMeData } from '../../lib/judgeme';
 
 interface ReviewCardsProps {
@@ -141,6 +140,7 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
   const [filePreviews, setFilePreviews] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   // Close modal on Escape key press
   useEffect(() => {
@@ -202,31 +202,99 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
     setFilePreviews(newPreviews);
   };
 
+  // Fast client-side image compression (downscales to max 1200px, 80% JPEG quality)
+  const compressImage = async (file: File): Promise<Blob> => {
+    return new Promise((resolve) => {
+      if (!file.type.startsWith('image/')) {
+        resolve(file);
+        return;
+      }
+
+      const img = new Image();
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        img.src = (e.target?.result as string) || '';
+      };
+      reader.onerror = () => resolve(file);
+
+      img.onload = () => {
+        const maxWidth = 1200;
+        const maxHeight = 1200;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth || height > maxHeight) {
+          if (width > height) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          } else {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          resolve(file);
+          return;
+        }
+
+        ctx.drawImage(img, 0, 0, width, height);
+        canvas.toBlob(
+          (blob) => {
+            resolve(blob || file);
+          },
+          'image/jpeg',
+          0.8
+        );
+      };
+
+      img.onerror = () => resolve(file);
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !quote.trim()) return;
+    if (!name.trim() || !quote.trim() || !email.trim()) {
+      setSubmitError("Please fill out your name, email, and review.");
+      return;
+    }
 
     setIsSubmitting(true);
+    setSubmitError(null);
 
     try {
       const formData = new FormData();
       formData.append('name', name.trim());
-      formData.append('email', email.trim() || 'customer@levlhealth.com');
+      formData.append('email', email.trim());
       formData.append('rating', rating.toString());
       formData.append('title', title.trim() || 'Verified Experience');
       formData.append('body', quote.trim());
       formData.append('productId', '9030713999558');
       
-      // Append all selected files
-      selectedFiles.forEach((file) => {
-        formData.append('pictures', file);
-      });
+      // Fast compress all selected files
+      for (let i = 0; i < selectedFiles.length; i++) {
+        const file = selectedFiles[i];
+        const compressedBlob = await compressImage(file);
+        formData.append('pictures', compressedBlob, file.name || `photo_${i}.jpg`);
+      }
 
       // Submit to backend
-      await fetch('/api/reviews', {
+      const res = await fetch('/api/reviews', {
         method: 'POST',
         body: formData,
       });
+
+      const resData = await res.json().catch(() => ({}));
+
+      if (!res.ok || !resData.success) {
+        throw new Error(resData.error || 'Judge.me was unable to accept this review at this moment.');
+      }
 
       const currentPreviews = [...filePreviews];
 
@@ -264,8 +332,9 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
         setSelectedFiles([]);
         setFilePreviews([]);
       }, 1500);
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error submitting review to Judge.me:', err);
+      setSubmitError(err.message || 'Unable to submit review. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -307,7 +376,10 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
 
           <button
             type="button"
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => {
+              setSubmitError(null);
+              setIsModalOpen(true);
+            }}
             className="flex items-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-xs hover:bg-[var(--color-levl-cyan)]/90 transition-all shadow-[0_0_15px_rgba(14,165,233,0.3)] cursor-pointer shrink-0"
           >
             <MessageSquarePlus className="w-3.5 h-3.5" />
@@ -470,6 +542,14 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
                 </div>
               ) : (
                 <form onSubmit={handleSubmitReview} className="space-y-5 pb-24">
+                  {/* Error Notification Banner */}
+                  {submitError && (
+                    <div className="p-4 rounded-xl bg-red-500/15 border border-red-500/30 text-red-200 text-sm flex items-start gap-3">
+                      <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+                      <span>{submitError}</span>
+                    </div>
+                  )}
+
                   {/* Rating */}
                   <div>
                     <label className="block text-xs font-semibold text-gray-300 mb-1.5">Overall Rating</label>
@@ -500,13 +580,14 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
                     />
                   </div>
 
-                  {/* Email */}
+                  {/* Email (Required by Judge.me) */}
                   <div>
                     <label className="block text-xs font-semibold text-gray-300 mb-1">
-                      Email Address <span className="text-gray-500 font-normal">(Private)</span>
+                      Email Address <span className="text-gray-500 font-normal">(Required by Judge.me)</span>
                     </label>
                     <input
                       type="email"
+                      required
                       placeholder="name@example.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -514,7 +595,7 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
                     />
                   </div>
 
-                  {/* Verification Status (No Beta Option) */}
+                  {/* Verification Status */}
                   <div>
                     <label className="block text-xs font-semibold text-gray-300 mb-1">Verification Status</label>
                     <select
@@ -632,7 +713,10 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
                       className="w-full h-14 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-base hover:bg-[var(--color-levl-cyan)]/90 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-[var(--color-levl-cyan)]/25 disabled:opacity-50"
                     >
                       {isSubmitting ? (
-                        <Loader2 className="w-5 h-5 animate-spin" />
+                        <>
+                          <Loader2 className="w-5 h-5 animate-spin" />
+                          <span>Submitting to Judge.me...</span>
+                        </>
                       ) : (
                         <span>Submit Review</span>
                       )}
