@@ -146,16 +146,15 @@ export function CartDrawer() {
 
             {/* Footer with Checkout CTA */}
             {cart && cart.lines?.edges?.length > 0 && (() => {
-              const hasSubscription = cart.lines.edges.some(e => Boolean(e.node.sellingPlanAllocation));
               const subtotalNum = parseFloat(cart.cost.subtotalAmount.amount || '0');
-              const qualifiesForFreeShipping = hasSubscription || subtotalNum >= 75;
+              const qualifiesForFreeShipping = subtotalNum >= 75;
 
               return (
                 <div className="p-6 border-t border-[var(--color-levl-panel-border)] bg-[var(--color-levl-panel)] space-y-4">
                   {/* Free shipping banner if not qualified */}
                   {!qualifiesForFreeShipping && (
                     <div className="bg-[var(--color-levl-cyan)]/10 border border-[var(--color-levl-cyan)]/20 rounded-lg p-2.5 text-center text-xs text-[var(--color-levl-cyan)] font-medium">
-                      💡 Tip: Subscriptions & 3-Bottle Bundles include <span className="font-bold underline">Free US Shipping</span>
+                      💡 Tip: 3-Bottle (90-Day) Protocols include <span className="font-bold underline">Free US Shipping</span>
                     </div>
                   )}
 

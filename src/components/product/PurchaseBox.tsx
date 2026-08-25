@@ -50,7 +50,7 @@ export function PurchaseBox({ product }: PurchaseBoxProps) {
         sellingPlanId: plan?.id || 'gid://shopify/SellingPlan/15180792006',
         displayPrice: '$43 / bottle',
         originalPrice: '$49',
-        perBottleText: '(Billed monthly • Free US Shipping)'
+        perBottleText: '(Billed monthly, cancel anytime)'
       };
     }
 
@@ -108,13 +108,13 @@ export function PurchaseBox({ product }: PurchaseBoxProps) {
           <h2 className="text-xl font-bold text-white tracking-wide">
             {product?.title || 'LIFESPAN+ DeepCell'}
           </h2>
-          {selectedPlan.includes('subscribe') ? (
+          {selectedPlan.includes('90') ? (
             <span className="text-xs bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2.5 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-medium">
-              Save Up to 20% + Free Shipping
+              Save Up to 20% + Free US Shipping
             </span>
-          ) : selectedPlan === 'onetime-90' ? (
-            <span className="text-xs bg-white/10 text-white px-2.5 py-1 rounded-full border border-white/20 font-medium">
-              3-Bottle Bundle + Free Shipping
+          ) : selectedPlan === 'subscribe-30' ? (
+            <span className="text-xs bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2.5 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-medium">
+              Save 12%
             </span>
           ) : null}
         </div>
@@ -184,7 +184,7 @@ export function PurchaseBox({ product }: PurchaseBoxProps) {
         {[
           "Secure checkout",
           "Cancel anytime",
-          "Free US shipping on sub & 3-packs",
+          "Free US shipping on 90-day supply",
           "60-day satisfaction guarantee"
         ].map((trustItem, i) => {
           const Icon = [ShieldCheck, RefreshCcw, Truck, Calendar][i % 4];

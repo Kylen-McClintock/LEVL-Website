@@ -171,15 +171,9 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
           </div>
 
           <div className="flex items-center justify-between ml-7 pt-1 border-t border-white/5 text-xs text-[var(--color-levl-text-secondary)]">
-            {isSubscription ? (
-              <span className="text-[11px] text-[var(--color-levl-cyan)] flex items-center gap-1 font-medium">
-                <Truck className="w-3 h-3" /> Free US Shipping
-              </span>
-            ) : (
-              <span className="text-[11px] text-gray-400">
-                Shipping calculated at checkout
-              </span>
-            )}
+            <span className="text-[11px] text-gray-400">
+              Shipping calculated at checkout
+            </span>
             <span className="text-[11px] text-gray-400">
               {isSubscription ? "Delivered monthly" : "Single bottle delivery"}
             </span>
