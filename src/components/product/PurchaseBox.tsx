@@ -50,7 +50,7 @@ export function PurchaseBox({ product }: PurchaseBoxProps) {
         sellingPlanId: plan?.id || 'gid://shopify/SellingPlan/15180792006',
         displayPrice: '$43 / bottle',
         originalPrice: '$49',
-        perBottleText: '(Billed monthly, cancel anytime)'
+        perBottleText: '(Billed monthly • Free US Shipping)'
       };
     }
 
@@ -108,13 +108,17 @@ export function PurchaseBox({ product }: PurchaseBoxProps) {
           <h2 className="text-xl font-bold text-white tracking-wide">
             {product?.title || 'LIFESPAN+ DeepCell'}
           </h2>
-          {selectedPlan.includes('90') ? (
+          {selectedPlan === 'subscribe-90' ? (
             <span className="text-xs bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2.5 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-medium">
-              Save Up to 20% + Free US Shipping
+              Save 20% + Free US Shipping
+            </span>
+          ) : selectedPlan === 'onetime-90' ? (
+            <span className="text-xs bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2.5 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-medium">
+              Save $18 + Free US Shipping
             </span>
           ) : selectedPlan === 'subscribe-30' ? (
             <span className="text-xs bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2.5 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-medium">
-              Save 12%
+              Save 12% + Free US Shipping
             </span>
           ) : null}
         </div>
