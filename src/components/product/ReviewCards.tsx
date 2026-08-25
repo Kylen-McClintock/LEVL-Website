@@ -193,25 +193,25 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
   };
 
   return (
-    <section id="reviews" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10">
+    <section id="reviews" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16 relative z-10">
       {/* Section Header */}
-      <div className="text-center mb-10 max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--color-levl-cyan)]/10 border border-[var(--color-levl-cyan)]/30 text-[var(--color-levl-cyan)] text-xs font-bold uppercase tracking-wider mb-4">
+      <div className="text-center mb-6 sm:mb-8 max-w-3xl mx-auto">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--color-levl-cyan)]/10 border border-[var(--color-levl-cyan)]/30 text-[var(--color-levl-cyan)] text-xs font-bold uppercase tracking-wider mb-3">
           <ShieldCheck className="w-3.5 h-3.5" />
           <span>Judge.me Verified Community Feedback</span>
         </div>
         
-        <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+        <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-2 sm:mb-4">
           Real Experiences & Clinical Feedback
         </h2>
-        <p className="text-base md:text-lg text-[var(--color-levl-text-secondary)]">
+        <p className="text-sm sm:text-base md:text-lg text-[var(--color-levl-text-secondary)]">
           Documented outcomes from early clinical testers, trial participants, and customers.
         </p>
 
         {/* Rating Aggregate Stats Bar */}
-        <div className="mt-8 flex flex-row items-center justify-between sm:justify-center gap-4 sm:gap-12 p-4 sm:p-6 rounded-2xl bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] shadow-xl max-w-lg mx-auto">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl sm:text-4xl font-extrabold text-white">{averageRating.toFixed(1)}</span>
+        <div className="mt-6 flex flex-row items-center justify-between sm:justify-center gap-4 sm:gap-12 p-3.5 sm:p-5 rounded-2xl bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] shadow-xl max-w-md mx-auto">
+          <div className="flex items-center gap-2.5">
+            <span className="text-2xl sm:text-4xl font-extrabold text-white">{averageRating.toFixed(1)}</span>
             <div className="flex flex-col items-start">
               <div className="flex items-center gap-0.5 text-[var(--color-levl-cyan)]">
                 {[...Array(5)].map((_, i) => (
@@ -224,11 +224,11 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
             </div>
           </div>
 
-          <div className="w-px h-8 bg-white/10" />
+          <div className="w-px h-7 bg-white/10" />
 
           <button
             onClick={() => setIsModalOpen(true)}
-            className="flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-xs hover:bg-[var(--color-levl-cyan)]/90 transition-all shadow-[0_0_15px_rgba(14,165,233,0.3)] cursor-pointer shrink-0"
+            className="flex items-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-xs hover:bg-[var(--color-levl-cyan)]/90 transition-all shadow-[0_0_15px_rgba(14,165,233,0.3)] cursor-pointer shrink-0"
           >
             <MessageSquarePlus className="w-3.5 h-3.5" />
             <span>Write a Review</span>
@@ -245,23 +245,23 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
         onTouchEnd={() => setTimeout(() => setIsPaused(false), 2000)}
       >
         {/* Left Gradient Mask */}
-        <div className="absolute left-0 top-0 bottom-8 w-8 md:w-24 bg-gradient-to-r from-[var(--color-levl-bg)] to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-4 w-6 md:w-20 bg-gradient-to-r from-[var(--color-levl-bg)] to-transparent z-10 pointer-events-none" />
         
         {/* Right Gradient Mask */}
-        <div className="absolute right-0 top-0 bottom-8 w-8 md:w-24 bg-gradient-to-l from-[var(--color-levl-bg)] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-4 w-6 md:w-20 bg-gradient-to-l from-[var(--color-levl-bg)] to-transparent z-10 pointer-events-none" />
 
         <div 
           ref={scrollContainerRef}
-          className="flex overflow-x-auto gap-5 pb-8 pt-4 px-4 sm:px-0 snap-x snap-mandatory hide-scrollbar items-start"
+          className="flex overflow-x-auto gap-4 sm:gap-5 pb-3 sm:pb-5 pt-2 px-4 sm:px-0 snap-x snap-mandatory hide-scrollbar items-start"
         >
           {reviewsList.map((review) => {
-            const isLong = review.body.length > 170;
+            const isLong = review.body.length > 260;
             const isExpanded = !!expandedReviews[review.id];
 
             return (
               <div 
                 key={review.id} 
-                className="snap-center shrink-0 w-[85vw] sm:w-[380px] md:w-[440px] bg-[linear-gradient(30deg,#15102aee,#281534cc)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-5 md:p-6 flex flex-col justify-between hover:border-[var(--color-levl-cyan)]/50 transition-all hover:shadow-[0_0_30px_rgba(14,165,233,0.15)] relative z-0"
+                className="snap-center shrink-0 w-[85vw] sm:w-[380px] md:w-[460px] bg-[linear-gradient(30deg,#15102aee,#281534cc)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-5 md:p-6 flex flex-col justify-between hover:border-[var(--color-levl-cyan)]/50 transition-all hover:shadow-[0_0_30px_rgba(14,165,233,0.15)] relative z-0"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2.5">
@@ -283,9 +283,9 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
                     </h4>
                   )}
 
-                  <div className="text-white/85 text-xs sm:text-sm leading-relaxed font-normal mb-3">
+                  <div className="text-white/90 text-xs sm:text-sm leading-relaxed font-normal mb-3">
                     <p>
-                      "{isLong && !isExpanded ? `${review.body.slice(0, 160)}...` : review.body}"
+                      "{isLong && !isExpanded ? `${review.body.slice(0, 240)}...` : review.body}"
                     </p>
                     {isLong && (
                       <button

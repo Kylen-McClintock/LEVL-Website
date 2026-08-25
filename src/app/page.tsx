@@ -17,6 +17,7 @@ import { Footer } from '../components/sections/Footer';
 import { CartDrawer } from '../components/cart/CartDrawer';
 import { productContent } from '../content/productLongevity';
 import { getProduct, createCart } from '../lib/shopify';
+import { getJudgeMeReviews } from '../lib/judgeme';
 import { StorefrontClient } from './StorefrontClient';
 
 export const metadata: Metadata = {
@@ -36,7 +37,10 @@ export const metadata: Metadata = {
 };
 
 export default async function LongevityProductPage() {
-  const product = await getProduct('lifespan-deepcell');
+  const [product, judgeMeData] = await Promise.all([
+    getProduct('lifespan-deepcell'),
+    getJudgeMeReviews('lifespan-deepcell')
+  ]);
 
   return (
     <StorefrontClient product={product}>
@@ -61,15 +65,15 @@ export default async function LongevityProductPage() {
         </div>
 
         <main className="flex-grow">
-          <ProductHero product={product} />
+          <ProductHero product={product} judgeMeData={judgeMeData} />
           <BentoImages />
 
           <BenefitTimeline />
+          <ReviewCards initialData={judgeMeData} />
           <div id="science"><ScienceMechanismSection /></div>
           <GuaranteeStrip />
           <div id="ingredients"><InteractiveIngredients /></div>
           <ComparisonTable />
-          <div id="reviews"><ReviewCards /></div>
           <BenefitsAtEveryAge />
           <div id="faq"><ProductFAQ /></div>
         </main>

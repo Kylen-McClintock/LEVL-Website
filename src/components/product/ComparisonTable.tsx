@@ -43,34 +43,34 @@ export function ComparisonTable() {
           <table className="w-full table-fixed border-collapse">
             <thead>
               <tr className="border-b border-[var(--color-levl-panel-border)]">
-                {/* Column 1: Feature */}
-                <th className="w-[38%] sm:w-[32%] text-left py-3 px-2 sm:px-4 text-[11px] sm:text-xs md:text-sm font-semibold text-white">
+                {/* Column 1: Feature (Compact width on mobile) */}
+                <th className="w-[28%] sm:w-[32%] text-left py-3 px-1.5 sm:px-4 text-[11px] sm:text-xs md:text-sm font-semibold text-white">
                   Feature
                 </th>
                 
                 {/* Column 2: LEVL DeepCell Highlight */}
-                <th className="w-[15.5%] sm:w-[17%] text-center py-3 px-1 sm:px-2 bg-[var(--color-levl-cyan)]/15 border-t-2 border-x border-[var(--color-levl-cyan)]/40 rounded-t-xl">
-                  <span className="text-[var(--color-levl-cyan)] font-black text-[11px] sm:text-xs md:text-sm block">
+                <th className="w-[18%] sm:w-[17%] text-center py-3 px-1 bg-[var(--color-levl-cyan)]/15 border-t-2 border-x border-[var(--color-levl-cyan)]/40 rounded-t-xl">
+                  <span className="text-[var(--color-levl-cyan)] font-black text-xs sm:text-xs md:text-sm block">
                     <span className="md:hidden">DeepCell</span>
                     <span className="hidden md:inline">{comparisonTable.headers[1]}</span>
                   </span>
                 </th>
 
                 {/* Column 3: Melatonin */}
-                <th className="w-[15.5%] sm:w-[17%] text-center py-3 px-1 sm:px-2 text-[10px] sm:text-xs md:text-sm font-medium text-[var(--color-levl-text-secondary)]">
+                <th className="w-[18%] sm:w-[17%] text-center py-3 px-1 text-[11px] sm:text-xs md:text-sm font-medium text-[var(--color-levl-text-secondary)]">
                   <span className="md:hidden">Melatonin</span>
                   <span className="hidden md:inline">{comparisonTable.headers[2]}</span>
                 </th>
 
                 {/* Column 4: Sleeping Pills */}
-                <th className="w-[15.5%] sm:w-[17%] text-center py-3 px-1 sm:px-2 text-[10px] sm:text-xs md:text-sm font-medium text-[var(--color-levl-text-secondary)]">
+                <th className="w-[18%] sm:w-[17%] text-center py-3 px-1 text-[11px] sm:text-xs md:text-sm font-medium text-[var(--color-levl-text-secondary)]">
                   <span className="md:hidden">Pills</span>
                   <span className="hidden md:inline">{comparisonTable.headers[3]}</span>
                 </th>
 
                 {/* Column 5: DIY Stack */}
-                <th className="w-[15.5%] sm:w-[17%] text-center py-3 px-1 sm:px-2 text-[10px] sm:text-xs md:text-sm font-medium text-[var(--color-levl-text-secondary)]">
-                  <span className="md:hidden">DIY Stack</span>
+                <th className="w-[18%] sm:w-[17%] text-center py-3 px-1 text-[11px] sm:text-xs md:text-sm font-medium text-[var(--color-levl-text-secondary)]">
+                  <span className="md:hidden">DIY</span>
                   <span className="hidden md:inline">{comparisonTable.headers[4]}</span>
                 </th>
               </tr>

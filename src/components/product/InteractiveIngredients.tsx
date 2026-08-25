@@ -107,43 +107,43 @@ export function InteractiveIngredients() {
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.9 }}
-                                className={`relative rounded-2xl p-[2px] flex flex-col bg-gradient-to-bl from-[#2D1B54] via-[#9F4576] to-[#E58063] hover:shadow-[0_0_20px_rgba(229,128,99,0.2)] transition-shadow duration-300 ${expandedIngredient === ing.name ? 'col-span-2 lg:col-span-4 h-auto' : 'min-h-[250px] md:min-h-[270px] h-full'}`}
+                                className={`relative rounded-2xl p-[2px] flex flex-col bg-gradient-to-bl from-[#2D1B54] via-[#9F4576] to-[#E58063] hover:shadow-[0_0_20px_rgba(229,128,99,0.2)] transition-shadow duration-300 ${expandedIngredient === ing.name ? 'col-span-2 lg:col-span-4 h-auto aspect-auto' : 'aspect-square w-full'}`}
                             >
-                                <div className="bg-[#0B0E17] rounded-2xl p-4 md:p-5 flex flex-col justify-between h-full w-full relative overflow-hidden">
-                                    <div className="absolute top-3 right-3 md:top-4 md:right-4 z-10">
-                                        <span className="text-[10px] font-mono text-white/60 tracking-widest uppercase bg-white/5 border border-white/10 px-2 py-1 rounded-md">{ing.dose}</span>
+                                <div className="bg-[#0B0E17] rounded-2xl p-3 sm:p-3.5 md:p-4 flex flex-col justify-between h-full w-full relative overflow-hidden">
+                                    <div className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10">
+                                        <span className="text-[9px] sm:text-[10px] font-mono text-white/60 tracking-widest uppercase bg-white/5 border border-white/10 px-1.5 py-0.5 rounded">{ing.dose}</span>
                                     </div>
 
                                     {/* Ingredient Name & Subtitle */}
-                                    <div className="flex flex-col items-center justify-center text-center pt-6 pb-2">
+                                    <div className="flex flex-col items-center justify-center text-center pt-5 sm:pt-6 pb-1 flex-grow">
                                         {(() => {
                                             const match = ing.name.match(/^(.*?)\s*(\(as.*?\))$/);
                                             const mainName = match ? match[1] : ing.name;
                                             const subName = match ? match[2] : null;
                                             return (
-                                                <h4 className="font-bold text-white text-base md:text-xl leading-tight flex flex-col items-center justify-center gap-1">
+                                                <h4 className="font-bold text-white text-sm sm:text-base md:text-lg leading-tight flex flex-col items-center justify-center gap-0.5">
                                                     <span>{mainName}</span>
-                                                    {subName && <span className="text-[11px] md:text-xs text-[var(--color-levl-text-secondary)] font-semibold">{subName}</span>}
+                                                    {subName && <span className="text-[10px] sm:text-[11px] text-[var(--color-levl-text-secondary)] font-medium">{subName}</span>}
                                                 </h4>
                                             );
                                         })()}
                                     </div>
 
                                     {/* Bottom Area with Function and Learn More */}
-                                    <div className="mt-auto flex flex-col shrink-0 pt-2">
-                                        <p className="text-[11px] md:text-xs text-center text-[var(--color-levl-text-secondary)] leading-relaxed font-medium mb-3 px-1">
+                                    <div className="mt-auto flex flex-col shrink-0">
+                                        <p className="text-[10px] sm:text-[11px] md:text-xs text-center text-[var(--color-levl-text-secondary)] leading-snug line-clamp-2 mb-2 px-0.5">
                                             {ing.function}
                                         </p>
 
                                         {/* Toggleable Description */}
-                                        <div className="pt-3 border-t border-white/10">
+                                        <div className="pt-2 border-t border-white/10">
                                             <button
                                                 type="button"
                                                 onClick={() => setExpandedIngredient(expandedIngredient === ing.name ? null : ing.name)}
-                                                className="text-xs font-semibold text-white/60 hover:text-white flex items-center justify-center gap-1 w-full transition-colors cursor-pointer py-1"
+                                                className="text-[10px] sm:text-xs font-semibold text-white/60 hover:text-white flex items-center justify-center gap-1 w-full transition-colors cursor-pointer py-0.5"
                                             >
                                                 {expandedIngredient === ing.name ? "Show less" : "Learn more"}
-                                                {expandedIngredient === ing.name ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                                                {expandedIngredient === ing.name ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                                             </button>
 
                                             <AnimatePresence>

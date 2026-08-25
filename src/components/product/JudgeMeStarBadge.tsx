@@ -37,12 +37,8 @@ export function JudgeMeStarBadge({
       <span className="font-bold text-white text-xs group-hover:text-[var(--color-levl-cyan)] transition-colors">
         {rating.toFixed(1)}
       </span>
-      <span className="text-[var(--color-levl-text-secondary)] text-xs font-medium">
+      <span className="text-[var(--color-levl-text-secondary)] text-xs font-normal">
         ({totalReviews} Reviews)
-      </span>
-      <span className="text-gray-500 text-xs">•</span>
-      <span className="text-[11px] font-semibold text-[var(--color-levl-cyan)]">
-        100% Verified
       </span>
     </button>
   );
