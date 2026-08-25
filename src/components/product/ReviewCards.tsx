@@ -71,6 +71,18 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
     initialData?.reviews?.length ? initialData.reviews : fallbackReviews
   );
 
+  // Sync when initialData changes from server revalidation
+  useEffect(() => {
+    if (initialData?.reviews?.length) {
+      setReviewsList(prev => {
+        const localOnly = prev.filter(r => typeof r.id === 'string' && r.id.startsWith('local-'));
+        const existingLiveIds = new Set(initialData.reviews.map(r => r.id));
+        const filteredLocal = localOnly.filter(r => !existingLiveIds.has(r.id));
+        return [...filteredLocal, ...initialData.reviews];
+      });
+    }
+  }, [initialData]);
+
   // Load persistent reviews submitted locally on this device
   useEffect(() => {
     try {

@@ -24,9 +24,9 @@ export async function getJudgeMeReviews(
   const shopDomain = process.env.NEXT_PUBLIC_JUDGEME_SHOP_DOMAIN || "h1hk4t-v3.myshopify.com";
 
   try {
-    const url = `https://judge.me/api/v1/widgets/product_review?api_token=${publicToken}&shop_domain=${shopDomain}&handle=${productHandle}`;
+    const url = `https://judge.me/api/v1/widgets/product_review?api_token=${publicToken}&shop_domain=${shopDomain}&handle=${productHandle}&per_page=100`;
     const res = await fetch(url, {
-      next: { revalidate: 60 }, // Revalidate cache every 60 seconds
+      next: { revalidate: 10 }, // Revalidate cache every 10 seconds
     });
 
     if (res.ok) {
@@ -81,7 +81,7 @@ export async function getJudgeMeReviews(
           });
 
           const avgRating = data.average_rating ? parseFloat(data.average_rating) : 5.0;
-          const totalCount = data.number_of_reviews ? parseInt(data.number_of_reviews, 10) : parsedReviews.length;
+          const totalCount = Math.max(parsedReviews.length, data.number_of_reviews ? parseInt(data.number_of_reviews, 10) : 0);
 
           return {
             reviews: parsedReviews,
