@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from 'react';
-import { ShieldCheck, Calendar, Truck, RefreshCcw, Loader2, Zap } from 'lucide-react';
+import { ShieldCheck, Calendar, Truck, RefreshCcw, Loader2, Zap, Star } from 'lucide-react';
 import { SubscriptionSelector, PlanType } from './SubscriptionSelector';
 import { QuantitySelector } from './QuantitySelector';
 import { productContent } from '../../content/productLongevity';
@@ -104,20 +104,38 @@ export function PurchaseBox({ product }: PurchaseBoxProps) {
     <div className="bg-[linear-gradient(30deg,#1B1237e6,#451F5233)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-6 md:p-8 flex flex-col gap-6 shadow-2xl shadow-black/50">
       {/* Price Header */}
       <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-white tracking-wide">
-            {product?.title || 'LIFESPAN+ DeepCell'}
-          </h2>
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex flex-col">
+            <button
+              type="button"
+              onClick={() => {
+                const el = document.getElementById('reviews');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="flex items-center gap-1.5 text-xs text-[var(--color-levl-cyan)] hover:underline cursor-pointer mb-1.5 w-fit"
+            >
+              <div className="flex items-center gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-3 h-3 fill-current text-[var(--color-levl-cyan)]" />
+                ))}
+              </div>
+              <span className="font-bold text-white">5.0</span>
+              <span className="text-[var(--color-levl-text-secondary)] font-normal">(24 Reviews)</span>
+            </button>
+            <h2 className="text-xl font-bold text-white tracking-wide">
+              {product?.title || 'LIFESPAN+ DeepCell'}
+            </h2>
+          </div>
           {selectedPlan === 'subscribe-90' ? (
-            <span className="text-xs bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2.5 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-medium">
+            <span className="text-xs bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2.5 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-medium shrink-0">
               Save 20% + Free US Shipping
             </span>
           ) : selectedPlan === 'onetime-90' ? (
-            <span className="text-xs bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2.5 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-medium">
+            <span className="text-xs bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2.5 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-medium shrink-0">
               Save $18 + Free US Shipping
             </span>
           ) : selectedPlan === 'subscribe-30' ? (
-            <span className="text-xs bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2.5 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-medium">
+            <span className="text-xs bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2.5 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-medium shrink-0">
               Save 12% + Free US Shipping
             </span>
           ) : null}

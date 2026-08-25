@@ -58,11 +58,11 @@ export default async function LongevityProductPage() {
           <BentoImages />
 
           <BenefitTimeline />
+          <div id="reviews"><ReviewCards /></div>
           <div id="science"><ScienceMechanismSection /></div>
           <GuaranteeStrip />
           <div id="ingredients"><InteractiveIngredients /></div>
           <ComparisonTable />
-          <div id="reviews"><ReviewCards /></div>
           <BenefitsAtEveryAge />
           <div id="faq"><ProductFAQ /></div>
         </main>
