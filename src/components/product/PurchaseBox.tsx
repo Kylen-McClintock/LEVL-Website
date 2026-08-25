@@ -105,27 +105,14 @@ export function PurchaseBox({ product, judgeMeData }: PurchaseBoxProps) {
 
   return (
     <div className="bg-[linear-gradient(30deg,#1B1237e6,#451F5233)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-5 sm:p-6 md:p-8 flex flex-col gap-5 sm:gap-6 shadow-2xl shadow-black/50">
-      {/* Top Meta: Reviews Badge + Savings Pill */}
-      <div className="flex items-center justify-between gap-2 flex-wrap">
+      {/* Top Meta: Reviews Badge */}
+      <div className="flex items-center justify-between gap-2">
         <JudgeMeStarBadge 
           productId={product?.id} 
           rating={judgeMeData?.averageRating}
           totalReviews={judgeMeData?.totalReviews}
           showShield={true}
         />
-        {selectedPlan === 'subscribe-90' ? (
-          <span className="text-xs bg-[var(--color-levl-cyan)]/15 text-[var(--color-levl-cyan)] px-3 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-semibold shrink-0">
-            Save 20% + Free US Shipping
-          </span>
-        ) : selectedPlan === 'onetime-90' ? (
-          <span className="text-xs bg-[var(--color-levl-cyan)]/15 text-[var(--color-levl-cyan)] px-3 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-semibold shrink-0">
-            Save $18 + Free US Shipping
-          </span>
-        ) : selectedPlan === 'subscribe-30' ? (
-          <span className="text-xs bg-[var(--color-levl-cyan)]/15 text-[var(--color-levl-cyan)] px-3 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-semibold shrink-0">
-            Save 12% + Free US Shipping
-          </span>
-        ) : null}
       </div>
 
       {/* Product Title (Guaranteed ONE line) */}
@@ -136,20 +123,39 @@ export function PurchaseBox({ product, judgeMeData }: PurchaseBoxProps) {
       </div>
 
       {/* Main Pricing Row */}
-      <div className="flex items-baseline gap-3 flex-wrap -mt-2">
-        <span className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-          {displayPrice}
-        </span>
-        {originalPrice && (
-          <span className="text-lg text-[var(--color-levl-text-muted)] line-through">
-            {originalPrice}
+      <div className="flex flex-col gap-1.5 -mt-2">
+        <div className="flex items-baseline gap-3">
+          <span className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+            {displayPrice}
           </span>
-        )}
-        {perBottleText && (
-          <span className="text-xs font-medium text-[var(--color-levl-cyan)]">
-            {perBottleText}
-          </span>
-        )}
+          {originalPrice && (
+            <span className="text-lg text-[var(--color-levl-text-muted)] line-through">
+              {originalPrice}
+            </span>
+          )}
+        </div>
+
+        {/* Secondary Blue Line with Total Price + Clean Savings Pill */}
+        <div className="flex items-center gap-2.5 flex-wrap">
+          {perBottleText && (
+            <span className="text-xs font-medium text-[var(--color-levl-cyan)]">
+              {perBottleText}
+            </span>
+          )}
+          {selectedPlan === 'subscribe-90' ? (
+            <span className="text-[11px] bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2.5 py-0.5 rounded-full border border-[var(--color-levl-cyan)]/40 font-bold shrink-0">
+              Save 20%
+            </span>
+          ) : selectedPlan === 'onetime-90' ? (
+            <span className="text-[11px] bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2.5 py-0.5 rounded-full border border-[var(--color-levl-cyan)]/40 font-bold shrink-0">
+              Save $18
+            </span>
+          ) : selectedPlan === 'subscribe-30' ? (
+            <span className="text-[11px] bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2.5 py-0.5 rounded-full border border-[var(--color-levl-cyan)]/40 font-bold shrink-0">
+              Save 12%
+            </span>
+          ) : null}
+        </div>
       </div>
 
       {/* Selectors */}
