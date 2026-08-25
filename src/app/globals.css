@@ -131,3 +131,89 @@ body {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.15) rgba(0, 0, 0, 0.2);
 }
+
+/* ======================================================== */
+/* Judge.me Reviews Custom Dark-Mode Styles                 */
+/* ======================================================== */
+.jdgm-widget {
+  color: var(--color-levl-text-primary) !important;
+  font-family: inherit !important;
+}
+
+.jdgm-rev-widg {
+  border: none !important;
+  background: transparent !important;
+}
+
+.jdgm-rev-widg__title {
+  color: #ffffff !important;
+}
+
+.jdgm-rev-widg__summary,
+.jdgm-rev__body,
+.jdgm-rev__author-wrapper,
+.jdgm-rev__title {
+  color: #ffffff !important;
+}
+
+.jdgm-rev__timestamp,
+.jdgm-rev-widg__summary-text {
+  color: var(--color-levl-text-secondary) !important;
+}
+
+.jdgm-star {
+  color: var(--color-levl-cyan) !important;
+}
+
+.jdgm-btn,
+.jdgm-write-rev-link {
+  background: var(--color-levl-cyan) !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  border-radius: 9999px !important;
+  border: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.jdgm-btn:hover,
+.jdgm-write-rev-link:hover {
+  opacity: 0.9 !important;
+  box-shadow: 0 0 15px rgba(14, 165, 233, 0.4) !important;
+}
+
+.jdgm-form input,
+.jdgm-form textarea,
+.jdgm-form select {
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid var(--color-levl-panel-border) !important;
+  color: #ffffff !important;
+  border-radius: 0.75rem !important;
+}
+
+.jdgm-form input:focus,
+.jdgm-form textarea:focus {
+  border-color: var(--color-levl-cyan) !important;
+  outline: none !important;
+}
+
+.jdgm-form-wrapper {
+  background: rgba(11, 14, 23, 0.95) !important;
+  border: 1px solid var(--color-levl-panel-border) !important;
+  border-radius: 1rem !important;
+  padding: 1.5rem !important;
+}
+
+.jdgm-rev {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  padding: 1.25rem 0 !important;
+}
+
+.jdgm-preview-badge .jdgm-star {
+  color: var(--color-levl-cyan) !important;
+}
+
+.jdgm-preview-badge .jdgm-prev-badge__text {
+  color: var(--color-levl-text-secondary) !important;
+  font-size: 0.75rem !important;
+  margin-left: 0.25rem !important;
+}

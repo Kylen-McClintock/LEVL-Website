@@ -9,7 +9,7 @@ import { BenefitsAtEveryAge } from '../../../components/product/BenefitsAtEveryA
 import { ScienceMechanismSection } from '../../../components/product/ScienceMechanismSection';
 import { InteractiveIngredients } from '../../../components/product/InteractiveIngredients';
 import { ComparisonTable } from '../../../components/product/ComparisonTable';
-import { ReviewCards } from '../../../components/product/ReviewCards';
+import { JudgeMeReviews } from '../../../components/product/JudgeMeReviews';
 import { GuaranteeStrip } from '../../../components/product/GuaranteeStrip';
 import { ProductFAQ } from '../../../components/product/ProductFAQ';
 import { Navbar } from '../../../components/sections/Navbar';
@@ -58,7 +58,7 @@ export default async function LongevityProductPage() {
           <BentoImages />
 
           <BenefitTimeline />
-          <div id="reviews"><ReviewCards /></div>
+          <JudgeMeReviews productId={product?.id} />
           <div id="science"><ScienceMechanismSection /></div>
           <GuaranteeStrip />
           <div id="ingredients"><InteractiveIngredients /></div>

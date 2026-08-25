@@ -5,6 +5,7 @@ import { Star, Moon } from 'lucide-react';
 import { ProductGallery } from './ProductGallery';
 import { PurchaseBox } from './PurchaseBox';
 import { StatsBar } from './StatsBar';
+import { JudgeMeStarBadge } from './JudgeMeStarBadge';
 import { ShopifyProduct } from '../../types/shopify';
 import { productContent } from '../../content/productLongevity';
 import { Badge } from '../ui/Badge'; // Assume this exists or I will create it
@@ -48,30 +49,12 @@ export function ProductHero({ product, cartId }: ProductHeroProps) {
         >
           {/* Title and Rating */}
           <div className="mb-8">
-            <button 
-              type="button"
-              onClick={() => {
-                const el = document.getElementById('reviews');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] hover:border-[var(--color-levl-cyan)]/50 transition-all cursor-pointer group mb-5 w-fit shadow-sm"
-            >
-              <div className="flex items-center text-[var(--color-levl-cyan)] gap-0.5">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                ))}
-              </div>
-              <span className="text-xs font-bold text-white group-hover:text-[var(--color-levl-cyan)] transition-colors">
-                5.0
-              </span>
-              <span className="text-xs text-[var(--color-levl-text-secondary)]">
-                (24 Reviews)
-              </span>
-              <span className="text-gray-500">•</span>
-              <span className="text-[11px] font-medium text-[var(--color-levl-cyan)]">
-                96% Improved Sleep Score
-              </span>
-            </button>
+            <div className="mb-5">
+              <JudgeMeStarBadge 
+                productId={product?.id} 
+                className="px-3.5 py-1.5 rounded-full bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] hover:border-[var(--color-levl-cyan)]/50 shadow-sm" 
+              />
+            </div>
 
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter text-white leading-[1.05] mb-6">
               OutPace Aging <br />

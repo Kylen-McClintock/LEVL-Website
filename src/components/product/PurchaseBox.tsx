@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { ShieldCheck, Calendar, Truck, RefreshCcw, Loader2, Zap, Star } from 'lucide-react';
 import { SubscriptionSelector, PlanType } from './SubscriptionSelector';
 import { QuantitySelector } from './QuantitySelector';
+import { JudgeMeStarBadge } from './JudgeMeStarBadge';
 import { productContent } from '../../content/productLongevity';
 import { ShopifyProduct } from '../../types/shopify';
 import { useCart } from '../../context/CartContext';
@@ -106,22 +107,9 @@ export function PurchaseBox({ product }: PurchaseBoxProps) {
       <div className="flex flex-col gap-2">
         <div className="flex items-start justify-between gap-2">
           <div className="flex flex-col">
-            <button
-              type="button"
-              onClick={() => {
-                const el = document.getElementById('reviews');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="flex items-center gap-1.5 text-xs text-[var(--color-levl-cyan)] hover:underline cursor-pointer mb-1.5 w-fit"
-            >
-              <div className="flex items-center gap-0.5">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3 h-3 fill-current text-[var(--color-levl-cyan)]" />
-                ))}
-              </div>
-              <span className="font-bold text-white">5.0</span>
-              <span className="text-[var(--color-levl-text-secondary)] font-normal">(24 Reviews)</span>
-            </button>
+            <div className="mb-1.5">
+              <JudgeMeStarBadge productId={product?.id} />
+            </div>
             <h2 className="text-xl font-bold text-white tracking-wide">
               {product?.title || 'LIFESPAN+ DeepCell'}
             </h2>
