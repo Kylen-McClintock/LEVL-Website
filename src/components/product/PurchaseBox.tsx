@@ -34,11 +34,11 @@ export function PurchaseBox({ product }: PurchaseBoxProps) {
       const activeVariant = variant90 || variant30;
       const plan = activeVariant?.sellingPlanAllocations?.edges?.[0]?.node?.sellingPlan;
       return {
-        variantId: activeVariant?.id || 'gid://shopify/ProductVariant/mock-variant-90',
-        sellingPlanId: plan?.id || undefined,
+        variantId: activeVariant?.id || 'gid://shopify/ProductVariant/46955690295494',
+        sellingPlanId: plan?.id || 'gid://shopify/SellingPlan/15180759238',
         displayPrice: '$39 / bottle',
         originalPrice: '$49',
-        perBottleText: '($117 total for 3-Month Protocol)'
+        perBottleText: '($117 total • Free US Shipping)'
       };
     }
 
@@ -46,18 +46,29 @@ export function PurchaseBox({ product }: PurchaseBoxProps) {
       const activeVariant = variant30;
       const plan = activeVariant?.sellingPlanAllocations?.edges?.[0]?.node?.sellingPlan;
       return {
-        variantId: activeVariant?.id || 'gid://shopify/ProductVariant/mock-variant-30',
-        sellingPlanId: plan?.id || undefined,
+        variantId: activeVariant?.id || 'gid://shopify/ProductVariant/46955690262726',
+        sellingPlanId: plan?.id || 'gid://shopify/SellingPlan/15180792006',
         displayPrice: '$43 / bottle',
         originalPrice: '$49',
-        perBottleText: '(Billed monthly, cancel anytime)'
+        perBottleText: '(Billed monthly • Free US Shipping)'
       };
     }
 
-    // One-Time
+    if (selectedPlan === 'onetime-90') {
+      const activeVariant = variant90 || variant30;
+      return {
+        variantId: activeVariant?.id || 'gid://shopify/ProductVariant/46955690295494',
+        sellingPlanId: undefined,
+        displayPrice: '$46.33 / bottle',
+        originalPrice: '$49',
+        perBottleText: '($139 total • Free US Shipping)'
+      };
+    }
+
+    // onetime-30
     const activeVariant = variant30;
     return {
-      variantId: activeVariant?.id || 'gid://shopify/ProductVariant/mock-variant-30',
+      variantId: activeVariant?.id || 'gid://shopify/ProductVariant/46955690262726',
       sellingPlanId: undefined,
       displayPrice: '$49',
       originalPrice: null,
@@ -97,11 +108,15 @@ export function PurchaseBox({ product }: PurchaseBoxProps) {
           <h2 className="text-xl font-bold text-white tracking-wide">
             {product?.title || 'LIFESPAN+ DeepCell'}
           </h2>
-          {selectedPlan.includes('subscribe') && (
+          {selectedPlan.includes('subscribe') ? (
             <span className="text-xs bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2.5 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 font-medium">
-              Save Up to 20%
+              Save Up to 20% + Free Shipping
             </span>
-          )}
+          ) : selectedPlan === 'onetime-90' ? (
+            <span className="text-xs bg-white/10 text-white px-2.5 py-1 rounded-full border border-white/20 font-medium">
+              3-Bottle Bundle + Free Shipping
+            </span>
+          ) : null}
         </div>
 
         <div className="flex items-end gap-3 flex-wrap">
@@ -132,7 +147,7 @@ export function PurchaseBox({ product }: PurchaseBoxProps) {
             onClick={handleAddToCart}
             disabled={isAdding || isLoading || isExpressBuying}
             className={cn(
-              "flex-1 h-12 rounded-full font-semibold transition-all duration-300 shadow-lg",
+              "flex-1 h-12 rounded-full font-semibold transition-all duration-300 shadow-lg cursor-pointer",
               selectedPlan.includes('subscribe')
                 ? "bg-[var(--color-levl-cyan)] text-black hover:bg-[var(--color-levl-cyan)]/90 shadow-[0_0_20px_rgba(34,197,94,0.25)]"
                 : "bg-white text-black hover:bg-gray-200",
@@ -151,7 +166,7 @@ export function PurchaseBox({ product }: PurchaseBoxProps) {
         <button
           onClick={handleExpressBuy}
           disabled={isExpressBuying || isAdding || isLoading}
-          className="w-full h-11 rounded-full bg-[#5A31F4]/20 hover:bg-[#5A31F4]/30 border border-[#5A31F4]/50 text-white font-medium text-xs tracking-wide flex items-center justify-center gap-2 transition-all duration-300 active:scale-[0.99] disabled:opacity-50"
+          className="w-full h-11 rounded-full bg-[#5A31F4]/20 hover:bg-[#5A31F4]/30 border border-[#5A31F4]/50 text-white font-medium text-xs tracking-wide flex items-center justify-center gap-2 transition-all duration-300 active:scale-[0.99] disabled:opacity-50 cursor-pointer"
         >
           {isExpressBuying ? (
             <Loader2 className="w-4 h-4 animate-spin text-[#9B80FA]" />
@@ -166,7 +181,12 @@ export function PurchaseBox({ product }: PurchaseBoxProps) {
 
       {/* Trust Badges */}
       <div className="pt-4 border-t border-[var(--color-levl-panel-border)] grid grid-cols-2 gap-3">
-        {productContent.purchaseOptions.trustRow.map((trustItem, i) => {
+        {[
+          "Secure checkout",
+          "Cancel anytime",
+          "Free US shipping on sub & 3-packs",
+          "60-day satisfaction guarantee"
+        ].map((trustItem, i) => {
           const Icon = [ShieldCheck, RefreshCcw, Truck, Calendar][i % 4];
           return (
             <div key={i} className="flex items-center gap-2 text-xs text-[var(--color-levl-text-secondary)]">

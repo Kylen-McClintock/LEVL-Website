@@ -42,8 +42,8 @@ export function StickyMobileCTA({ product }: StickyMobileCTAProps) {
             <span className="text-white font-semibold text-sm">
               {product?.title || 'LEVL LIFESPAN+'}
             </span>
-            <span className="text-[var(--color-levl-cyan)] font-bold text-base">
-              From $39 / mo
+            <span className="text-[var(--color-levl-cyan)] font-bold text-sm">
+              From $39 / mo • Free Shipping
             </span>
           </div>
           

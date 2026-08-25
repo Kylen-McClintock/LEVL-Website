@@ -145,36 +145,59 @@ export function CartDrawer() {
             </div>
 
             {/* Footer with Checkout CTA */}
-            {cart && cart.lines?.edges?.length > 0 && (
-              <div className="p-6 border-t border-[var(--color-levl-panel-border)] bg-[var(--color-levl-panel)] space-y-4">
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between text-[var(--color-levl-text-secondary)]">
-                    <span>Subtotal</span>
-                    <span className="font-semibold text-white text-base">
-                      ${cart.cost.subtotalAmount.amount}
-                    </span>
+            {cart && cart.lines?.edges?.length > 0 && (() => {
+              const hasSubscription = cart.lines.edges.some(e => Boolean(e.node.sellingPlanAllocation));
+              const subtotalNum = parseFloat(cart.cost.subtotalAmount.amount || '0');
+              const qualifiesForFreeShipping = hasSubscription || subtotalNum >= 75;
+
+              return (
+                <div className="p-6 border-t border-[var(--color-levl-panel-border)] bg-[var(--color-levl-panel)] space-y-4">
+                  {/* Free shipping banner if not qualified */}
+                  {!qualifiesForFreeShipping && (
+                    <div className="bg-[var(--color-levl-cyan)]/10 border border-[var(--color-levl-cyan)]/20 rounded-lg p-2.5 text-center text-xs text-[var(--color-levl-cyan)] font-medium">
+                      💡 Tip: Subscriptions & 3-Bottle Bundles include <span className="font-bold underline">Free US Shipping</span>
+                    </div>
+                  )}
+
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between text-[var(--color-levl-text-secondary)]">
+                      <span>Subtotal</span>
+                      <span className="font-semibold text-white text-base">
+                        ${cart.cost.subtotalAmount.amount}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span className="text-[var(--color-levl-text-muted)]">Shipping</span>
+                      {qualifiesForFreeShipping ? (
+                        <span className="text-[var(--color-levl-cyan)] font-bold flex items-center gap-1">
+                          FREE ✓
+                        </span>
+                      ) : (
+                        <span className="text-[var(--color-levl-text-muted)]">Calculated at checkout</span>
+                      )}
+                    </div>
+                    <div className="flex justify-between text-xs text-[var(--color-levl-text-muted)]">
+                      <span>Estimated Taxes</span>
+                      <span>Calculated at checkout</span>
+                    </div>
                   </div>
-                  <div className="flex justify-between text-xs text-[var(--color-levl-text-muted)]">
-                    <span>Shipping & Taxes</span>
-                    <span>Calculated at checkout</span>
+
+                  <CheckoutButton 
+                    checkoutUrl={cart.checkoutUrl} 
+                    disabled={isLoading}
+                    className="bg-[var(--color-levl-cyan)] text-black hover:bg-[var(--color-levl-cyan)]/90 shadow-[0_0_20px_rgba(34,197,94,0.25)] flex items-center justify-center gap-2 cursor-pointer font-bold"
+                  >
+                    <span>Proceed to Checkout</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </CheckoutButton>
+
+                  <div className="flex items-center justify-center gap-2 text-[11px] text-[var(--color-levl-text-muted)]">
+                    <ShieldCheck className="w-3.5 h-3.5 text-[var(--color-levl-cyan)]" />
+                    <span>Secure 1-Click Checkout powered by Shopify & Shop Pay</span>
                   </div>
                 </div>
-
-                <CheckoutButton 
-                  checkoutUrl={cart.checkoutUrl} 
-                  disabled={isLoading}
-                  className="bg-[var(--color-levl-cyan)] text-black hover:bg-[var(--color-levl-cyan)]/90 shadow-[0_0_20px_rgba(34,197,94,0.25)] flex items-center justify-center gap-2"
-                >
-                  <span>Proceed to Checkout</span>
-                  <ArrowRight className="w-4 h-4" />
-                </CheckoutButton>
-
-                <div className="flex items-center justify-center gap-2 text-[11px] text-[var(--color-levl-text-muted)]">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[var(--color-levl-cyan)]" />
-                  <span>Secure 1-Click Checkout powered by Shopify & Shop Pay</span>
-                </div>
-              </div>
-            )}
+              );
+            })()}
           </motion.div>
         </>
       )}
