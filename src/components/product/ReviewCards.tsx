@@ -9,62 +9,86 @@ interface ReviewCardsProps {
   initialData?: JudgeMeData;
 }
 
+const LOCAL_STORAGE_REVIEWS_KEY = "levl_local_submitted_reviews";
+
 export function ReviewCards({ initialData }: ReviewCardsProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isPaused, setIsPaused] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expandedReviews, setExpandedReviews] = useState<Record<string | number, boolean>>({});
-  
+  const [previewModalImage, setPreviewModalImage] = useState<string | null>(null);
+
+  const fallbackReviews: JudgeMeReview[] = [
+    {
+      id: 1,
+      name: "Michelle G.",
+      date: "Aug 25, 2026",
+      title: "Actually Woke Up Rested",
+      body: "I fell asleep quickly, and actually stayed asleep the entire night. As a young mom, waking up feeling actually rested was so refreshing.",
+      rating: 5,
+      verifiedType: "Verified Beta Tester",
+    },
+    {
+      id: 2,
+      name: "Aaron M.",
+      date: "Aug 23, 2026",
+      title: "Better Sleep and Feeling Stronger",
+      body: "I drift into dreamland pretty easily again. From a physical standpoint, I’m gaining and retaining muscle mass easier and I haven’t done a grip strength test but my overall health outcomes seem to have leveled up since starting a nightly regiment of LEVL.",
+      rating: 5,
+      verifiedType: "Verified Beta Tester",
+    },
+    {
+      id: 3,
+      name: "Lisa M.",
+      date: "Aug 20, 2026",
+      title: "Best Sleep I've Had in Years",
+      body: "2 Capsules turned out to be perfect. It was the best night of sleep I may have ever had in years",
+      rating: 5,
+      verifiedType: "Verified Beta Tester",
+    },
+    {
+      id: 4,
+      name: "Cathleen L.",
+      date: "Aug 19, 2026",
+      title: "Sleeping Through the Night Again",
+      body: "As a postmenopausal woman I was frustrated with experiencing nights of difficulty falling asleep, staying asleep or just broken sleep. Then I tried LEVL’s DeepCell product. I was looking for a drug free sleep aid so that I would wake up rested and ready to start my day. DeepCell was the perfect choice. Beginning on night 1, I took the recommended dosage and actually felt myself drifting off into a relaxed state. Next thing I know it's a new day. I experienced a restful night which I hadn't encountered in a long time. I take LEVL on a regular schedule and can honestly say I feel so much better in the morning after sleeping through the night.",
+      rating: 5,
+      verifiedType: "Verified Beta Tester",
+    },
+    {
+      id: 5,
+      name: "Andrea S.",
+      date: "Aug 19, 2026",
+      title: "Finally Falling Asleep Without Grogginess",
+      body: "LEVL’s DeepCell product has worked tremendously for me. I typically have a hard time falling asleep, often lying awake for hours, but since I started using this, I’ve noticed a huge difference. Within an hour of taking the supplement, I feel relaxed and a sleepy wave comes over me. I’m able to drift off without the usual tossing and turning. What I love most is that I wake up feeling refreshed and energized, never groggy or drowsy. It’s been a total game changer for my nightly routine.",
+      rating: 5,
+      verifiedType: "Verified Beta Tester",
+    },
+  ];
+
   const [reviewsList, setReviewsList] = useState<JudgeMeReview[]>(
-    initialData?.reviews || [
-      {
-        id: 1,
-        name: "Michelle G.",
-        date: "Aug 25, 2026",
-        title: "Actually Woke Up Rested",
-        body: "I fell asleep quickly, and actually stayed asleep the entire night. As a young mom, waking up feeling actually rested was so refreshing.",
-        rating: 5,
-        verifiedType: "Verified Beta Tester",
-      },
-      {
-        id: 2,
-        name: "Aaron M.",
-        date: "Aug 23, 2026",
-        title: "Better Sleep and Feeling Stronger",
-        body: "I drift into dreamland pretty easily again. From a physical standpoint, I’m gaining and retaining muscle mass easier and I haven’t done a grip strength test but my overall health outcomes seem to have leveled up since starting a nightly regiment of LEVL.",
-        rating: 5,
-        verifiedType: "Verified Beta Tester",
-      },
-      {
-        id: 3,
-        name: "Lisa M.",
-        date: "Aug 20, 2026",
-        title: "Best Sleep I've Had in Years",
-        body: "2 Capsules turned out to be perfect. It was the best night of sleep I may have ever had in years",
-        rating: 5,
-        verifiedType: "Verified Beta Tester",
-      },
-      {
-        id: 4,
-        name: "Cathleen L.",
-        date: "Aug 19, 2026",
-        title: "Sleeping Through the Night Again",
-        body: "As a postmenopausal woman I was frustrated with experiencing nights of difficulty falling asleep, staying asleep or just broken sleep. Then I tried LEVL’s DeepCell product. I was looking for a drug free sleep aid so that I would wake up rested and ready to start my day. DeepCell was the perfect choice. Beginning on night 1, I took the recommended dosage and actually felt myself drifting off into a relaxed state. Next thing I know it's a new day. I experienced a restful night which I hadn't encountered in a long time. I take LEVL on a regular schedule and can honestly say I feel so much better in the morning after sleeping through the night.",
-        rating: 5,
-        verifiedType: "Verified Beta Tester",
-      },
-      {
-        id: 5,
-        name: "Andrea S.",
-        date: "Aug 19, 2026",
-        title: "Finally Falling Asleep Without Grogginess",
-        body: "LEVL’s DeepCell product has worked tremendously for me. I typically have a hard time falling asleep, often lying awake for hours, but since I started using this, I’ve noticed a huge difference. Within an hour of taking the supplement, I feel relaxed and a sleepy wave comes over me. I’m able to drift off without the usual tossing and turning. What I love most is that I wake up feeling refreshed and energized, never groggy or drowsy. It’s been a total game changer for my nightly routine.",
-        rating: 5,
-        verifiedType: "Verified Beta Tester",
-      },
-    ]
+    initialData?.reviews?.length ? initialData.reviews : fallbackReviews
   );
+
+  // Load any local reviews that were submitted by the user on this device
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(LOCAL_STORAGE_REVIEWS_KEY);
+      if (stored) {
+        const localReviews: JudgeMeReview[] = JSON.parse(stored);
+        if (localReviews.length) {
+          setReviewsList(prev => {
+            const existingIds = new Set(prev.map(r => r.id));
+            const newToAdd = localReviews.filter(r => !existingIds.has(r.id));
+            return [...newToAdd, ...prev];
+          });
+        }
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
 
   const averageRating = initialData?.averageRating || 5.0;
   const totalReviews = reviewsList.length;
@@ -82,22 +106,23 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
   const [rating, setRating] = useState(5);
   const [title, setTitle] = useState('');
   const [quote, setQuote] = useState('');
-  const [userType, setUserType] = useState('Beta Trial Participant');
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [filePreview, setFilePreview] = useState<string | null>(null);
+  const [userType, setUserType] = useState('Verified Customer');
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [filePreviews, setFilePreviews] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Close modal on Escape key press
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsModalOpen(false);
+      if (e.key === 'Escape') {
+        setIsModalOpen(false);
+        setPreviewModalImage(null);
+      }
     };
-    if (isModalOpen) {
-      window.addEventListener('keydown', handleKeyDown);
-    }
+    window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isModalOpen]);
+  }, []);
 
   // Autoscroll carousel
   useEffect(() => {
@@ -107,7 +132,7 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
       if (scrollContainerRef.current) {
         const container = scrollContainerRef.current;
         const isMobile = window.innerWidth < 768;
-        const scrollAmount = isMobile ? window.innerWidth * 0.85 + 24 : 450 + 24;
+        const scrollAmount = isMobile ? window.innerWidth * 0.85 + 20 : 460 + 20;
         
         if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
           container.scrollTo({ left: 0, behavior: 'smooth' });
@@ -120,21 +145,23 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
     return () => clearInterval(interval);
   }, [isPaused]);
 
+  // Multi-file handler
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setSelectedFile(file);
-      const previewUrl = URL.createObjectURL(file);
-      setFilePreview(previewUrl);
+    if (e.target.files && e.target.files.length > 0) {
+      const newFiles = Array.from(e.target.files);
+      const combinedFiles = [...selectedFiles, ...newFiles].slice(0, 5); // max 5
+      setSelectedFiles(combinedFiles);
+
+      const previews = combinedFiles.map(file => URL.createObjectURL(file));
+      setFilePreviews(previews);
     }
   };
 
-  const removeFile = () => {
-    setSelectedFile(null);
-    if (filePreview) {
-      URL.revokeObjectURL(filePreview);
-      setFilePreview(null);
-    }
+  const removeFileAtIndex = (index: number) => {
+    const newFiles = selectedFiles.filter((_, i) => i !== index);
+    setSelectedFiles(newFiles);
+    const newPreviews = filePreviews.filter((_, i) => i !== index);
+    setFilePreviews(newPreviews);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -149,31 +176,49 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
     try {
       const formData = new FormData();
       formData.append('name', name);
-      formData.append('email', email || 'verified-tester@levlhealth.com');
+      formData.append('email', email || 'customer@levlhealth.com');
       formData.append('rating', rating.toString());
       formData.append('title', title || 'Verified Experience');
       formData.append('body', quote);
       formData.append('productId', '9030713999558');
-      if (selectedFile) {
-        formData.append('pictures', selectedFile);
-      }
+      
+      // Append all selected files
+      selectedFiles.forEach((file) => {
+        formData.append('pictures', file);
+      });
 
-      await fetch('/api/reviews', {
+      // Submit to backend route -> forwards to Judge.me API
+      const res = await fetch('/api/reviews', {
         method: 'POST',
         body: formData,
       });
 
+      // Keep previews for instant local display
+      const currentPreviews = [...filePreviews];
+
       const newReview: JudgeMeReview = {
-        id: Date.now(),
+        id: `local-${Date.now()}`,
         name,
         date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
         title: title || 'Verified Experience',
         body: quote,
         rating,
         verifiedType: userType,
+        pictures: currentPreviews.length > 0 ? currentPreviews : undefined,
       };
 
-      setReviewsList([newReview, ...reviewsList]);
+      // Optimistically add to state and persistent localStorage
+      const updatedList = [newReview, ...reviewsList];
+      setReviewsList(updatedList);
+
+      try {
+        const stored = localStorage.getItem(LOCAL_STORAGE_REVIEWS_KEY);
+        const prevLocal: JudgeMeReview[] = stored ? JSON.parse(stored) : [];
+        localStorage.setItem(LOCAL_STORAGE_REVIEWS_KEY, JSON.stringify([newReview, ...prevLocal]));
+      } catch {
+        // ignore
+      }
+
       setIsSubmitted(true);
 
       setTimeout(() => {
@@ -183,7 +228,8 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
         setEmail('');
         setTitle('');
         setQuote('');
-        removeFile();
+        setSelectedFiles([]);
+        setFilePreviews([]);
       }, 1500);
     } catch (err) {
       console.error('Error submitting review to Judge.me:', err);
@@ -298,6 +344,21 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
                       </button>
                     )}
                   </div>
+
+                  {/* Attached Photos / Videos */}
+                  {review.pictures && review.pictures.length > 0 && (
+                    <div className="flex items-center gap-2 mb-3 overflow-x-auto hide-scrollbar py-1">
+                      {review.pictures.map((picUrl, idx) => (
+                        <img
+                          key={idx}
+                          src={picUrl}
+                          alt="Review attachment"
+                          onClick={() => setPreviewModalImage(picUrl)}
+                          className="w-14 h-14 rounded-lg object-cover border border-white/20 hover:border-[var(--color-levl-cyan)] cursor-pointer hover:scale-105 transition-all shrink-0"
+                        />
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div className="pt-3 border-t border-white/10 flex items-center justify-between mt-auto">
@@ -315,6 +376,31 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
           })}
         </div>
       </div>
+
+      {/* Image Lightbox Modal */}
+      <AnimatePresence>
+        {previewModalImage && (
+          <div 
+            onClick={() => setPreviewModalImage(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md cursor-pointer"
+          >
+            <div className="relative max-w-2xl max-h-[85vh]">
+              <img
+                src={previewModalImage}
+                alt="Enlarged review attachment"
+                className="rounded-2xl max-h-[80vh] w-auto object-contain shadow-2xl border border-white/20"
+              />
+              <button
+                type="button"
+                onClick={() => setPreviewModalImage(null)}
+                className="absolute top-3 right-3 text-white bg-black/60 p-2 rounded-full hover:bg-black/80 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Write a Review Modal (Click outside or X to close) */}
       <AnimatePresence>
@@ -335,7 +421,7 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
                 <div>
                   <h3 className="text-xl font-bold text-white mb-0.5">Submit Your Experience</h3>
                   <p className="text-xs text-[var(--color-levl-text-secondary)]">
-                    Share your feedback for LEVL DeepCell. Submissions sync with Judge.me.
+                    Share your feedback for LEVL DeepCell. Submissions sync directly with Judge.me.
                   </p>
                 </div>
                 <button
@@ -354,8 +440,8 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
                     <div className="w-12 h-12 rounded-full bg-[var(--color-levl-green)]/20 border border-[var(--color-levl-green)] flex items-center justify-center text-[var(--color-levl-green)]">
                       <Check className="w-6 h-6" />
                     </div>
-                    <h4 className="text-lg font-bold text-white">Thank You for Your Feedback!</h4>
-                    <p className="text-xs text-gray-400">Your review and media have been submitted to Judge.me and added to the community board.</p>
+                    <h4 className="text-lg font-bold text-white">Thank You for Your Review!</h4>
+                    <p className="text-xs text-gray-400 max-w-sm">Your review and media have been submitted directly to Judge.me and added to the board.</p>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmitReview} className="space-y-4">
@@ -409,9 +495,9 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
                         onChange={(e) => setUserType(e.target.value)}
                         className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none"
                       >
+                        <option value="Verified Buyer">Verified Buyer</option>
                         <option value="Beta Trial Participant">Beta Trial Participant</option>
                         <option value="Verified Early Tester">Verified Early Tester</option>
-                        <option value="In-Store Customer">In-Store Retail Customer</option>
                         <option value="Online Customer">Verified Online Customer</option>
                       </select>
                     </div>
@@ -441,42 +527,50 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
                       />
                     </div>
 
-                    {/* Submit Photo / Video */}
+                    {/* Submit Photo / Video (Multiple Supported) */}
                     <div>
-                      <label className="block text-xs font-semibold text-gray-300 mb-1.5">Add Photo or Video <span className="text-gray-500 font-normal">(Optional)</span></label>
+                      <label className="block text-xs font-semibold text-gray-300 mb-1.5">
+                        Add Photos or Video <span className="text-gray-500 font-normal">(Optional, up to 5)</span>
+                      </label>
                       <input
                         ref={fileInputRef}
                         type="file"
+                        multiple
                         accept="image/*,video/*"
                         onChange={handleFileChange}
                         className="hidden"
                         id="review-file-upload"
                       />
 
-                      {filePreview ? (
-                        <div className="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-[var(--color-levl-cyan)]/40">
-                          <div className="flex items-center gap-3">
-                            <img
-                              src={filePreview}
-                              alt="Upload preview"
-                              className="w-12 h-12 object-cover rounded-lg border border-white/10"
-                            />
-                            <div>
-                              <p className="text-xs font-medium text-white truncate max-w-[200px]">
-                                {selectedFile?.name}
-                              </p>
-                              <p className="text-[10px] text-gray-400">
-                                {(selectedFile ? selectedFile.size / 1024 / 1024 : 0).toFixed(2)} MB
-                              </p>
-                            </div>
+                      {filePreviews.length > 0 ? (
+                        <div className="space-y-2">
+                          <div className="grid grid-cols-3 gap-2">
+                            {filePreviews.map((preview, i) => (
+                              <div key={i} className="relative group rounded-xl overflow-hidden border border-white/20 aspect-square bg-black/40">
+                                <img
+                                  src={preview}
+                                  alt="Upload preview"
+                                  className="w-full h-full object-cover"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={() => removeFileAtIndex(i)}
+                                  className="absolute top-1.5 right-1.5 p-1 bg-black/70 rounded-full text-red-400 hover:bg-black transition-colors"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                            ))}
+                            {filePreviews.length < 5 && (
+                              <label
+                                htmlFor="review-file-upload"
+                                className="flex flex-col items-center justify-center border border-dashed border-white/20 rounded-xl hover:border-[var(--color-levl-cyan)] hover:bg-white/5 transition-all cursor-pointer aspect-square"
+                              >
+                                <ImagePlus className="w-5 h-5 text-gray-400 mb-1" />
+                                <span className="text-[10px] text-gray-400">+ Add More</span>
+                              </label>
+                            )}
                           </div>
-                          <button
-                            type="button"
-                            onClick={removeFile}
-                            className="p-1.5 rounded-lg text-gray-400 hover:text-red-400 hover:bg-white/5 transition-colors"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
                         </div>
                       ) : (
                         <label
@@ -484,8 +578,8 @@ export function ReviewCards({ initialData }: ReviewCardsProps) {
                           className="flex flex-col items-center justify-center p-4 border border-dashed border-white/20 rounded-xl hover:border-[var(--color-levl-cyan)]/50 hover:bg-white/5 transition-all cursor-pointer group"
                         >
                           <ImagePlus className="w-5 h-5 text-gray-400 group-hover:text-[var(--color-levl-cyan)] transition-colors mb-1" />
-                          <span className="text-xs text-gray-300 font-medium">Click to upload photo or video</span>
-                          <span className="text-[10px] text-gray-500 mt-0.5">PNG, JPG, MP4 up to 25MB</span>
+                          <span className="text-xs text-gray-300 font-medium">Click to upload photos or video</span>
+                          <span className="text-[10px] text-gray-500 mt-0.5">Select up to 5 photos (PNG, JPG, MP4)</span>
                         </label>
                       )}
                     </div>

@@ -7,6 +7,7 @@ export interface JudgeMeReview {
   verifiedType?: string;
   date: string;
   rawDate?: string;
+  pictures?: string[];
 }
 
 export interface JudgeMeData {
@@ -44,6 +45,11 @@ export async function getJudgeMeReviews(
             const scoreMatch = block.match(/data-score='([^']+)'/);
             const verifiedMatch = block.match(/data-verified-buyer='true'/);
 
+            // Extract review photos if any
+            const photoLinks = Array.from(block.matchAll(/href='(https?:\/\/[^']+\.(?:png|jpg|jpeg|webp))'/gi)).map(m => m[1]);
+            const photoImgs = Array.from(block.matchAll(/src='(https?:\/\/[^']+\.(?:png|jpg|jpeg|webp))'/gi)).map(m => m[1]);
+            const pictures = photoLinks.length > 0 ? photoLinks : (photoImgs.length > 0 ? photoImgs : undefined);
+
             const rawDate = dateMatch ? dateMatch[1] : null;
             let formattedDate = "August 2026";
             if (rawDate) {
@@ -70,6 +76,7 @@ export async function getJudgeMeReviews(
               body: bodyMatch ? decodeHtml(bodyMatch[1].replace(/<[^>]+>/g, "").trim()) : "",
               rating: scoreMatch ? parseInt(scoreMatch[1], 10) : 5,
               verifiedType: verifiedMatch ? "Verified Buyer" : "Verified Beta Tester",
+              pictures: pictures && pictures.length > 0 ? pictures : undefined,
             };
           });
 
