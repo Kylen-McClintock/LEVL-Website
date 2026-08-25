@@ -330,7 +330,7 @@ export const productContent = {
       { feature: "Avoids morning grogginess", tooltip: "No synthetic melatonin or heavy sedatives that cause morning hangovers.", levl: true, generic: false, single: false, diy: "Varies" },
       { feature: "Supports natural sleep architecture & non-habit forming", tooltip: "Enhances your endogenous sleep cycles without creating chemical dependency.", levl: true, generic: false, single: false, diy: "Varies" },
       { feature: "Designed for nocturnal cellular repair", tooltip: "Specific ingredients target overnight ATP regeneration and DNA repair.", levl: true, generic: false, single: false, diy: "Varies" },
-      { feature: "Transparent clinical dosing", tooltip: "No proprietary blends. Every ingredient matches the dosage used in clinical studies.", levl: true, generic: false, single: true, diy: true }
+      { feature: "Transparent clinical dosing", tooltip: "No proprietary blends. Every ingredient matches the dosage used in clinical studies.", levl: true, generic: "Varies", single: true, diy: "Varies" }
     ]
   },
 

@@ -64,7 +64,7 @@ export function ComparisonTable() {
 
                 {/* Column 4: Sleeping Pills */}
                 <th className="w-[18%] sm:w-[17%] text-center py-3 px-1 text-[11px] sm:text-xs md:text-sm font-medium text-[var(--color-levl-text-secondary)]">
-                  <span className="md:hidden">Pills</span>
+                  <span className="md:hidden leading-tight block">Sleeping Pills</span>
                   <span className="hidden md:inline">{comparisonTable.headers[3]}</span>
                 </th>
 
