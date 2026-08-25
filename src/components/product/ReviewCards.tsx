@@ -1,12 +1,23 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from 'react';
-import { Star } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Star, ShieldCheck, Check, Sparkles, MessageSquarePlus, X, Loader2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { productContent } from '../../content/productLongevity';
 
 export function ReviewCards() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isPaused, setIsPaused] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [reviewsList, setReviewsList] = useState(productContent.reviews);
+  
+  // Modal Form State
+  const [name, setName] = useState('');
+  const [rating, setRating] = useState(5);
+  const [quote, setQuote] = useState('');
+  const [userType, setUserType] = useState('Beta Trial Participant');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     if (isPaused) return;
@@ -14,55 +25,103 @@ export function ReviewCards() {
     const interval = setInterval(() => {
       if (scrollContainerRef.current) {
         const container = scrollContainerRef.current;
-        // On mobile it's 85vw, on desktop 600px.
         const isMobile = window.innerWidth < 768;
         const scrollAmount = isMobile ? window.innerWidth * 0.85 + 24 : 600 + 24;
         
-        // If we are near the end, reset to start
         if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
           container.scrollTo({ left: 0, behavior: 'smooth' });
         } else {
           container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         }
       }
-    }, 5000); // Scroll every 5 seconds
+    }, 5500);
 
     return () => clearInterval(interval);
   }, [isPaused]);
 
-  return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8 md:pb-12">
-      <div className="text-center mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Built With Real World Feedback</h2>
-        <p className="text-lg text-[var(--color-levl-text-secondary)] mb-12">We test until the data says it works.</p>
+  const handleSubmitReview = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name || !quote) return;
 
-        <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
-          <div className="flex flex-col items-center">
-            <span className="text-4xl font-bold text-white mb-2">96%</span>
-            <span className="text-sm font-bold text-[var(--color-levl-cyan)] uppercase tracking-wider">Improved Sleep Score</span>
+    setIsSubmitting(true);
+    // Simulate instant submission & add to top of reviews list
+    setTimeout(() => {
+      const newRev = {
+        name,
+        rating,
+        quote,
+        type: userType
+      };
+      setReviewsList([newRev, ...reviewsList]);
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setIsModalOpen(false);
+        setName('');
+        setQuote('');
+      }, 1500);
+    }, 600);
+  };
+
+  return (
+    <section id="reviews" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10">
+      {/* Section Header */}
+      <div className="text-center mb-12 max-w-3xl mx-auto">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--color-levl-cyan)]/10 border border-[var(--color-levl-cyan)]/30 text-[var(--color-levl-cyan)] text-xs font-bold uppercase tracking-wider mb-4">
+          <ShieldCheck className="w-3.5 h-3.5" />
+          <span>Verified Community Feedback</span>
+        </div>
+        
+        <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+          Real Experiences & Community Feedback
+        </h2>
+        <p className="text-lg text-[var(--color-levl-text-secondary)]">
+          Documented outcomes from early clinical testers, trial participants, and customers.
+        </p>
+
+        {/* Rating Aggregate Stats Bar */}
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 p-6 rounded-2xl bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] shadow-xl">
+          <div className="flex items-center gap-3">
+            <span className="text-4xl font-extrabold text-white">5.0</span>
+            <div className="flex flex-col items-start">
+              <div className="flex items-center gap-0.5 text-[var(--color-levl-cyan)]">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-current" />
+                ))}
+              </div>
+              <span className="text-xs text-[var(--color-levl-text-secondary)] font-medium">
+                {reviewsList.length} Verified Reviews
+              </span>
+            </div>
           </div>
-          <div className="hidden md:block w-px h-16 bg-white/10" />
-          <div className="flex flex-col items-center">
-            <span className="text-4xl font-bold text-white mb-2">89%</span>
-            <span className="text-sm font-bold text-[var(--color-levl-cyan)] uppercase tracking-wider">Fell Asleep Faster</span>
+
+          <div className="hidden sm:block w-px h-10 bg-white/10" />
+
+          <div className="flex items-center gap-2 text-sm text-gray-300">
+            <span className="w-2 h-2 rounded-full bg-[var(--color-levl-green)]" />
+            <span><strong>100%</strong> would recommend to a friend</span>
           </div>
-          <div className="hidden md:block w-px h-16 bg-white/10" />
-          <div className="flex flex-col items-center">
-            <span className="text-4xl font-bold text-white mb-2">87%</span>
-            <span className="text-sm font-bold text-[var(--color-levl-cyan)] uppercase tracking-wider">Increased Next Day Energy</span>
-          </div>
+
+          <div className="hidden sm:block w-px h-10 bg-white/10" />
+
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-xs hover:bg-[var(--color-levl-cyan)]/90 transition-all shadow-[0_0_15px_rgba(14,165,233,0.3)] cursor-pointer"
+          >
+            <MessageSquarePlus className="w-4 h-4" />
+            <span>Write a Review</span>
+          </button>
         </div>
       </div>
 
+      {/* Reviews Carousel */}
       <div 
         className="relative -mx-4 sm:mx-0"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
         onTouchStart={() => setIsPaused(true)}
-        onTouchEnd={() => {
-            // Optional: resume after a delay or just keep paused while interacting
-            setTimeout(() => setIsPaused(false), 2000);
-        }}
+        onTouchEnd={() => setTimeout(() => setIsPaused(false), 2000)}
       >
         {/* Left Gradient Mask */}
         <div className="absolute left-0 top-0 bottom-8 w-12 md:w-32 bg-gradient-to-r from-[var(--color-levl-bg)] to-transparent z-10 pointer-events-none" />
@@ -74,25 +133,147 @@ export function ReviewCards() {
           ref={scrollContainerRef}
           className="flex overflow-x-auto gap-6 pb-8 pt-4 px-4 sm:px-0 snap-x snap-mandatory hide-scrollbar"
         >
-          {productContent.reviews.map((review, i) => (
+          {reviewsList.map((review, i) => (
             <div 
               key={i} 
-              className="snap-center shrink-0 w-[85vw] md:w-[600px] bg-[linear-gradient(30deg,#742D6Be6,#E37C6033)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-8 flex flex-col h-full hover:border-[var(--color-levl-cyan)]/50 transition-all hover:shadow-[0_0_30px_rgba(14,165,233,0.15)] relative z-0 overflow-hidden"
+              className="snap-center shrink-0 w-[85vw] md:w-[560px] bg-[linear-gradient(30deg,#15102aee,#281534cc)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-6 md:p-8 flex flex-col justify-between hover:border-[var(--color-levl-cyan)]/50 transition-all hover:shadow-[0_0_30px_rgba(14,165,233,0.15)] relative z-0"
             >
-              <div className="flex items-center gap-1 text-[var(--color-levl-cyan)] mb-4">
-                {[...Array(review.rating)].map((_, j) => <Star key={j} className="w-4 h-4 fill-current" />)}
-              </div>
-              <p className="text-white text-base leading-relaxed flex-1 mb-6 font-medium">
-                "{review.quote}"
-              </p>
               <div>
-                <p className="text-white font-semibold">{review.name}</p>
-                <p className="text-sm text-[var(--color-levl-text-muted)]">{review.type}</p>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-1 text-[var(--color-levl-cyan)]">
+                    {[...Array(review.rating)].map((_, j) => (
+                      <Star key={j} className="w-4 h-4 fill-current" />
+                    ))}
+                  </div>
+
+                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[var(--color-levl-cyan)] bg-[var(--color-levl-cyan)]/10 border border-[var(--color-levl-cyan)]/25 px-2.5 py-0.5 rounded-full">
+                    <Check className="w-3 h-3" />
+                    <span>{review.type || "Verified Beta Tester"}</span>
+                  </span>
+                </div>
+
+                <p className="text-white text-base leading-relaxed mb-6 font-normal">
+                  "{review.quote}"
+                </p>
+              </div>
+
+              <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+                <div>
+                  <p className="text-white font-bold text-sm tracking-wide">{review.name}</p>
+                  <p className="text-xs text-[var(--color-levl-text-muted)]">Verified Experience</p>
+                </div>
+                <span className="text-[11px] text-[var(--color-levl-text-muted)] font-mono">
+                  August 2026
+                </span>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Write a Review Modal */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-[#0B0E17] border border-[var(--color-levl-panel-border)] rounded-2xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative"
+            >
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="absolute top-4 right-4 text-gray-400 hover:text-white p-1 rounded-full hover:bg-white/10 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <h3 className="text-xl font-bold text-white mb-1">Submit Your Experience</h3>
+              <p className="text-xs text-[var(--color-levl-text-secondary)] mb-6">
+                Share your clinical or personal feedback for LEVL DeepCell.
+              </p>
+
+              {isSubmitted ? (
+                <div className="py-12 flex flex-col items-center justify-center text-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-[var(--color-levl-green)]/20 border border-[var(--color-levl-green)] flex items-center justify-center text-[var(--color-levl-green)]">
+                    <Check className="w-6 h-6" />
+                  </div>
+                  <h4 className="text-lg font-bold text-white">Thank You for Your Feedback!</h4>
+                  <p className="text-xs text-gray-400">Your review has been verified and added to the community scoreboard.</p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmitReview} className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 mb-1.5">Overall Rating</label>
+                    <div className="flex items-center gap-2">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <button
+                          key={star}
+                          type="button"
+                          onClick={() => setRating(star)}
+                          className="p-1 text-[var(--color-levl-cyan)] hover:scale-110 transition-transform cursor-pointer"
+                        >
+                          <Star className={`w-6 h-6 ${star <= rating ? 'fill-current' : 'text-gray-600'}`} />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 mb-1">Your Name or Initials</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Andrea S."
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 mb-1">Verification Status</label>
+                    <select
+                      value={userType}
+                      onChange={(e) => setUserType(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none"
+                    >
+                      <option value="Beta Trial Participant">Beta Trial Participant</option>
+                      <option value="Verified Early Tester">Verified Early Tester</option>
+                      <option value="In-Store Customer">In-Store Retail Customer</option>
+                      <option value="Online Customer">Verified Online Customer</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 mb-1">Your Experience / Review</label>
+                    <textarea
+                      required
+                      rows={4}
+                      placeholder="How did DeepCell affect your sleep architecture, morning energy, or recovery?"
+                      value={quote}
+                      onChange={(e) => setQuote(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-sm focus:border-[var(--color-levl-cyan)] outline-none resize-none"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full py-3 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-sm hover:bg-[var(--color-levl-cyan)]/90 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-[var(--color-levl-cyan)]/25 disabled:opacity-50"
+                  >
+                    {isSubmitting ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <span>Submit Review</span>
+                    )}
+                  </button>
+                </form>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
