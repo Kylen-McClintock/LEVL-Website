@@ -59,9 +59,9 @@ export function PurchaseBox({ product }: PurchaseBoxProps) {
       return {
         variantId: activeVariant?.id || 'gid://shopify/ProductVariant/46955690295494',
         sellingPlanId: undefined,
-        displayPrice: '$46.33 / bottle',
+        displayPrice: '$43 / bottle',
         originalPrice: '$49',
-        perBottleText: '($139 total • Free US Shipping)'
+        perBottleText: '($129 total • Free US Shipping)'
       };
     }
 

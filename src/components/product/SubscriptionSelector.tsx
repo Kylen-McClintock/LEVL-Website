@@ -104,11 +104,11 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                   "font-bold text-base",
                   isSubscription ? "text-[var(--color-levl-cyan)]" : "text-white"
                 )}>
-                  {isSubscription ? "$117" : "$139"}
+                  {isSubscription ? "$117" : "$129"}
                 </span>
               </div>
               <span className="text-[10px] text-[var(--color-levl-text-muted)] font-mono">
-                {isSubscription ? "$39 / bottle" : "$46.33 / bottle"}
+                {isSubscription ? "$39 / bottle" : "$43 / bottle"}
               </span>
             </div>
           </div>
