@@ -4,8 +4,9 @@ import React from 'react';
 import { Check, Sparkles, Truck } from 'lucide-react';
 import { cn } from '../cart/CheckoutButton';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useFounder } from '../../context/FounderContext';
 
-export type PlanType = 'subscribe-90' | 'subscribe-30' | 'onetime-90' | 'onetime-30';
+export type PlanType = 'subscribe-90' | 'subscribe-30' | 'onetime-90' | 'onetime-30' | 'founder-90' | 'founder-30';
 
 interface SubscriptionSelectorProps {
   selectedPlan: PlanType;
@@ -13,14 +14,32 @@ interface SubscriptionSelectorProps {
 }
 
 export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSelectorProps) {
-  const isSubscription = selectedPlan.startsWith('subscribe');
+  const { isFounder } = useFounder();
+  const isSubscription = selectedPlan.startsWith('subscribe') || selectedPlan.startsWith('founder');
+  const isFounderPlan = selectedPlan.startsWith('founder');
   const activeSupply = selectedPlan.endsWith('90') ? '90' : '30';
 
   const handleSupplySelect = (supply: '90' | '30') => {
     if (supply === '90') {
-      onChange(isSubscription ? 'subscribe-90' : 'onetime-90');
+      if (selectedPlan === 'founder-30' || (isFounder && selectedPlan === 'subscribe-30')) {
+        onChange('founder-90');
+      } else if (selectedPlan === 'subscribe-30') {
+        onChange('subscribe-90');
+      } else if (selectedPlan === 'onetime-30') {
+        onChange('onetime-90');
+      } else {
+        onChange(isFounder ? 'founder-90' : 'subscribe-90');
+      }
     } else {
-      onChange(isSubscription ? 'subscribe-30' : 'onetime-30');
+      if (selectedPlan === 'founder-90' || (isFounder && selectedPlan === 'subscribe-90')) {
+        onChange('founder-30');
+      } else if (selectedPlan === 'subscribe-90') {
+        onChange('subscribe-30');
+      } else if (selectedPlan === 'onetime-90') {
+        onChange('onetime-30');
+      } else {
+        onChange(isFounder ? 'founder-30' : 'subscribe-30');
+      }
     }
   };
 
@@ -52,7 +71,7 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                 <span className="font-bold text-white text-base tracking-tight">3-Month Protocol</span>
                 <span className="text-xs text-[var(--color-levl-text-secondary)] font-medium">(3 Bottles)</span>
                 <span className="text-[10px] font-extrabold uppercase tracking-wider bg-gradient-to-r from-[var(--color-levl-cyan)] to-emerald-400 text-black px-2.5 py-0.5 rounded-full shadow-sm">
-                  Best Value
+                  {isFounder && isFounderPlan ? "Founder Tier • Best Value" : "Best Value"}
                 </span>
               </div>
               <p className="text-xs text-[var(--color-levl-cyan)]/90 mt-1 font-medium">
@@ -67,14 +86,20 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                 "font-black text-xl sm:text-2xl tracking-tight",
                 activeSupply === '90' && isSubscription ? "text-[var(--color-levl-cyan)]" : "text-white"
               )}>
-                {activeSupply === '90' && !isSubscription ? "$49" : "$44"}
+                {activeSupply === '90' 
+                  ? (selectedPlan === 'founder-90' ? "$31" : (!isSubscription ? "$49" : "$44"))
+                  : (isFounder ? "$31" : "$44")}
               </span>
               <span className="text-xs font-semibold text-[var(--color-levl-text-secondary)]">/ bottle</span>
             </div>
             <div className="flex items-center gap-1.5 mt-0.5">
-              <span className="text-[11px] line-through text-[var(--color-levl-text-muted)]">$59</span>
+              <span className="text-[11px] line-through text-[var(--color-levl-text-muted)]">
+                {selectedPlan === 'founder-90' ? "$44" : "$59"}
+              </span>
               <span className="text-[11px] text-[var(--color-levl-text-muted)] font-medium">
-                {activeSupply === '90' && !isSubscription ? "($147 total)" : "($132 total)"}
+                {activeSupply === '90' 
+                  ? (selectedPlan === 'founder-90' ? "($93 total)" : (!isSubscription ? "($147 total)" : "($132 total)"))
+                  : (isFounder ? "($93 total)" : "($132 total)")}
               </span>
             </div>
           </div>
@@ -94,7 +119,53 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                 Select Delivery & Billing:
               </span>
 
-              {/* Option A: Subscribe & Save */}
+              {/* Founder Option A: Only shown if isFounder */}
+              {isFounder && (
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onChange('founder-90');
+                  }}
+                  className={cn(
+                    "flex items-center justify-between p-3.5 rounded-xl border-2 transition-all cursor-pointer relative overflow-hidden",
+                    selectedPlan === 'founder-90'
+                      ? "border-[var(--color-levl-cyan)] bg-gradient-to-r from-[var(--color-levl-cyan)]/20 via-[var(--color-levl-cyan)]/10 to-transparent shadow-[0_0_20px_rgba(34,197,94,0.2)]"
+                      : "border-[var(--color-levl-cyan)]/30 bg-black/40 hover:border-[var(--color-levl-cyan)]/70"
+                  )}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <input
+                      type="radio"
+                      name="billing-90"
+                      checked={selectedPlan === 'founder-90'}
+                      onChange={() => onChange('founder-90')}
+                      className="accent-[var(--color-levl-cyan)] w-4 h-4 cursor-pointer"
+                    />
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <Sparkles className="w-3.5 h-3.5 text-[var(--color-levl-cyan)]" />
+                        <span className="text-xs font-black text-white">Founder Protocol:</span>
+                        <span className="text-sm font-black text-[var(--color-levl-cyan)]">$31 / bottle</span>
+                        <span className="text-xs text-white font-bold">($93 total)</span>
+                        <span className="text-[11px] line-through text-gray-400">vs. $132 public</span>
+                      </div>
+                      <span className="text-[11px] text-[var(--color-levl-cyan)] flex items-center gap-1 font-medium mt-0.5">
+                        <Truck className="w-3 h-3" /> Free US Shipping • Deliver every 90 days • 30% off for life
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-end shrink-0 pl-2">
+                    <span className="text-[10px] bg-gradient-to-r from-[var(--color-levl-cyan)] to-emerald-400 text-black px-2 py-0.5 rounded font-black tracking-wider uppercase shadow-sm">
+                      30% Off For Life
+                    </span>
+                    <span className="text-[10px] text-[var(--color-levl-cyan)] font-bold mt-0.5">
+                      Save $39 vs public
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* Standard Option: Subscribe & Save */}
               <div
                 onClick={(e) => {
                   e.stopPropagation();
@@ -102,24 +173,24 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                 }}
                 className={cn(
                   "flex items-center justify-between p-3 rounded-xl border transition-all cursor-pointer",
-                  isSubscription
+                  selectedPlan === 'subscribe-90'
                     ? "border-[var(--color-levl-cyan)] bg-[var(--color-levl-cyan)]/15 shadow-sm"
-                    : "border-white/10 bg-white/5 hover:border-white/20"
+                    : (isFounder ? "border-white/10 bg-white/5 opacity-80 hover:opacity-100 hover:border-white/20" : "border-white/10 bg-white/5 hover:border-white/20")
                 )}
               >
                 <div className="flex items-center gap-2.5">
                   <input
                     type="radio"
                     name="billing-90"
-                    checked={isSubscription}
+                    checked={selectedPlan === 'subscribe-90'}
                     onChange={() => onChange('subscribe-90')}
                     className="accent-[var(--color-levl-cyan)] w-4 h-4 cursor-pointer"
                   />
                   <div className="flex flex-col">
                     <span className="text-xs font-bold text-white flex items-center gap-1.5 flex-wrap">
-                      <Sparkles className="w-3 h-3 text-[var(--color-levl-cyan)]" />
-                      <span>Subscribe & Save:</span>
-                      <span className="text-[var(--color-levl-cyan)] font-extrabold">$44 / bottle</span>
+                      {!isFounder && <Sparkles className="w-3 h-3 text-[var(--color-levl-cyan)]" />}
+                      <span>{isFounder ? "Standard Public Subscription:" : "Subscribe & Save:"}</span>
+                      <span className={isFounder ? "font-bold text-white" : "text-[var(--color-levl-cyan)] font-extrabold"}>$44 / bottle</span>
                       <span className="text-gray-400 font-normal">($132 total)</span>
                     </span>
                     <span className="text-[11px] text-[var(--color-levl-cyan)] flex items-center gap-1 font-medium mt-0.5">
@@ -127,12 +198,17 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                     </span>
                   </div>
                 </div>
-                <span className="text-[10px] bg-gradient-to-r from-[var(--color-levl-cyan)]/25 to-emerald-500/25 text-[var(--color-levl-cyan)] px-2.5 py-0.5 rounded font-bold border border-[var(--color-levl-cyan)]/40 shrink-0">
-                  Best Value • Save 25%
+                <span className={cn(
+                  "text-[10px] px-2.5 py-0.5 rounded font-bold border shrink-0",
+                  isFounder
+                    ? "bg-white/10 text-gray-300 border-white/20 font-medium"
+                    : "bg-gradient-to-r from-[var(--color-levl-cyan)]/25 to-emerald-500/25 text-[var(--color-levl-cyan)] border-[var(--color-levl-cyan)]/40"
+                )}>
+                  {isFounder ? "Public Price" : "Best Value • Save 25%"}
                 </span>
               </div>
 
-              {/* Option B: One-Time Order */}
+              {/* Standard Option: One-Time Order */}
               <div
                 onClick={(e) => {
                   e.stopPropagation();
@@ -140,7 +216,7 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                 }}
                 className={cn(
                   "flex items-center justify-between p-3 rounded-xl border transition-all cursor-pointer",
-                  !isSubscription
+                  selectedPlan === 'onetime-90'
                     ? "border-white bg-white/15 shadow-sm"
                     : "border-white/10 bg-white/5 hover:border-white/20"
                 )}
@@ -149,7 +225,7 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                   <input
                     type="radio"
                     name="billing-90"
-                    checked={!isSubscription}
+                    checked={selectedPlan === 'onetime-90'}
                     onChange={() => onChange('onetime-90')}
                     className="accent-white w-4 h-4 cursor-pointer"
                   />
@@ -211,16 +287,20 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                 "font-black text-xl sm:text-2xl tracking-tight",
                 activeSupply === '30' && isSubscription ? "text-[var(--color-levl-cyan)]" : "text-white"
               )}>
-                {activeSupply === '30' && isSubscription ? "$49" : "$59"}
+                {activeSupply === '30' 
+                  ? (selectedPlan === 'founder-30' ? "$35" : (isSubscription ? "$49" : "$59"))
+                  : (isFounder ? "$35" : "$49")}
               </span>
               <span className="text-xs font-semibold text-[var(--color-levl-text-secondary)]">/ bottle</span>
             </div>
             <div className="flex items-center gap-1.5 mt-0.5">
-              {activeSupply === '30' && isSubscription && (
-                <span className="text-[11px] line-through text-[var(--color-levl-text-muted)]">$59</span>
-              )}
+              <span className="text-[11px] line-through text-[var(--color-levl-text-muted)]">
+                {isFounder ? "$49" : "$59"}
+              </span>
               <span className="text-[11px] text-[var(--color-levl-text-muted)] font-medium">
-                {activeSupply === '30' && isSubscription ? "($49 total)" : "($59 total)"}
+                {activeSupply === '30' 
+                  ? (selectedPlan === 'founder-30' ? "($35 total)" : (isSubscription ? "($49 total)" : "($59 total)"))
+                  : (isFounder ? "($35 total)" : "($49 total)")}
               </span>
             </div>
           </div>
@@ -240,7 +320,53 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                 Select Delivery & Billing:
               </span>
 
-              {/* Option A: Subscribe & Save */}
+              {/* Founder Option A: Only shown if isFounder */}
+              {isFounder && (
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onChange('founder-30');
+                  }}
+                  className={cn(
+                    "flex items-center justify-between p-3.5 rounded-xl border-2 transition-all cursor-pointer relative overflow-hidden",
+                    selectedPlan === 'founder-30'
+                      ? "border-[var(--color-levl-cyan)] bg-gradient-to-r from-[var(--color-levl-cyan)]/20 via-[var(--color-levl-cyan)]/10 to-transparent shadow-[0_0_20px_rgba(34,197,94,0.2)]"
+                      : "border-[var(--color-levl-cyan)]/30 bg-black/40 hover:border-[var(--color-levl-cyan)]/70"
+                  )}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <input
+                      type="radio"
+                      name="billing-30"
+                      checked={selectedPlan === 'founder-30'}
+                      onChange={() => onChange('founder-30')}
+                      className="accent-[var(--color-levl-cyan)] w-4 h-4 cursor-pointer"
+                    />
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <Sparkles className="w-3.5 h-3.5 text-[var(--color-levl-cyan)]" />
+                        <span className="text-xs font-black text-white">Founder Protocol:</span>
+                        <span className="text-sm font-black text-[var(--color-levl-cyan)]">$35 / bottle</span>
+                        <span className="text-xs text-white font-bold">($35/mo)</span>
+                        <span className="text-[11px] line-through text-gray-400">vs. $49 public</span>
+                      </div>
+                      <span className="text-[11px] text-[var(--color-levl-cyan)] flex items-center gap-1 font-medium mt-0.5">
+                        <Truck className="w-3 h-3" /> Free US Shipping • Deliver monthly • 30% off for life
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-end shrink-0 pl-2">
+                    <span className="text-[10px] bg-gradient-to-r from-[var(--color-levl-cyan)] to-emerald-400 text-black px-2 py-0.5 rounded font-black tracking-wider uppercase shadow-sm">
+                      30% Off For Life
+                    </span>
+                    <span className="text-[10px] text-[var(--color-levl-cyan)] font-bold mt-0.5">
+                      Save $14/mo vs public
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* Standard Option: Subscribe & Save */}
               <div
                 onClick={(e) => {
                   e.stopPropagation();
@@ -248,24 +374,24 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                 }}
                 className={cn(
                   "flex items-center justify-between p-3 rounded-xl border transition-all cursor-pointer",
-                  isSubscription
+                  selectedPlan === 'subscribe-30'
                     ? "border-[var(--color-levl-cyan)] bg-[var(--color-levl-cyan)]/15 shadow-sm"
-                    : "border-white/10 bg-white/5 hover:border-white/20"
+                    : (isFounder ? "border-white/10 bg-white/5 opacity-80 hover:opacity-100 hover:border-white/20" : "border-white/10 bg-white/5 hover:border-white/20")
                 )}
               >
                 <div className="flex items-center gap-2.5">
                   <input
                     type="radio"
                     name="billing-30"
-                    checked={isSubscription}
+                    checked={selectedPlan === 'subscribe-30'}
                     onChange={() => onChange('subscribe-30')}
                     className="accent-[var(--color-levl-cyan)] w-4 h-4 cursor-pointer"
                   />
                   <div className="flex flex-col">
                     <span className="text-xs font-bold text-white flex items-center gap-1.5 flex-wrap">
-                      <Sparkles className="w-3 h-3 text-[var(--color-levl-cyan)]" />
-                      <span>Subscribe & Save:</span>
-                      <span className="text-[var(--color-levl-cyan)] font-extrabold">$49 / bottle</span>
+                      {!isFounder && <Sparkles className="w-3 h-3 text-[var(--color-levl-cyan)]" />}
+                      <span>{isFounder ? "Standard Public Subscription:" : "Subscribe & Save:"}</span>
+                      <span className={isFounder ? "font-bold text-white" : "text-[var(--color-levl-cyan)] font-extrabold"}>$49 / bottle</span>
                       <span className="text-gray-400 font-normal">($49 total)</span>
                     </span>
                     <span className="text-[11px] text-[var(--color-levl-cyan)] flex items-center gap-1 font-medium mt-0.5">
@@ -273,12 +399,17 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                     </span>
                   </div>
                 </div>
-                <span className="text-[10px] bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2 py-0.5 rounded font-bold border border-[var(--color-levl-cyan)]/30 shrink-0">
-                  Save 17%
+                <span className={cn(
+                  "text-[10px] px-2.5 py-0.5 rounded font-bold border shrink-0",
+                  isFounder
+                    ? "bg-white/10 text-gray-300 border-white/20 font-medium"
+                    : "bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] border-[var(--color-levl-cyan)]/30"
+                )}>
+                  {isFounder ? "Public Price" : "Save 17%"}
                 </span>
               </div>
 
-              {/* Option B: One-Time Order */}
+              {/* Standard Option: One-Time Order */}
               <div
                 onClick={(e) => {
                   e.stopPropagation();
@@ -286,7 +417,7 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                 }}
                 className={cn(
                   "flex items-center justify-between p-3 rounded-xl border transition-all cursor-pointer",
-                  !isSubscription
+                  selectedPlan === 'onetime-30'
                     ? "border-white bg-white/15 shadow-sm"
                     : "border-white/10 bg-white/5 hover:border-white/20"
                 )}
@@ -295,7 +426,7 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                   <input
                     type="radio"
                     name="billing-30"
-                    checked={!isSubscription}
+                    checked={selectedPlan === 'onetime-30'}
                     onChange={() => onChange('onetime-30')}
                     className="accent-white w-4 h-4 cursor-pointer"
                   />
@@ -318,3 +449,4 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
     </div>
   );
 }
+

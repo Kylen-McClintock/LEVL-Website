@@ -544,11 +544,21 @@ export async function addToCart(
                    line.merchandiseId.includes('90') || 
                    line.merchandiseId === 'gid://shopify/ProductVariant/46955690295494';
 
+      let isFounderAccess = false;
+      if (typeof document !== 'undefined') {
+        isFounderAccess = Boolean(document.cookie.match(/(^| )levl_founder_code=([^;]+)/));
+      }
+
       if (is90) {
         title = '90-Day Supply (3 Bottles)';
         if (line.sellingPlanId) {
-          price = 132.00;
-          planName = 'Quarterly Protocol ($132 every 3 months - $44/bottle)';
+          if (isFounderAccess) {
+            price = 93.00;
+            planName = 'Founder Protocol ($93 every 3 months - $31/bottle)';
+          } else {
+            price = 132.00;
+            planName = 'Quarterly Protocol ($132 every 3 months - $44/bottle)';
+          }
         } else {
           price = 147.00;
           planName = 'One-Time Purchase';
@@ -556,8 +566,13 @@ export async function addToCart(
       } else {
         title = '30-Day Supply (1 Bottle)';
         if (line.sellingPlanId) {
-          price = 49.00;
-          planName = 'Monthly Protocol ($49/month)';
+          if (isFounderAccess) {
+            price = 35.00;
+            planName = 'Founder Protocol ($35/month)';
+          } else {
+            price = 49.00;
+            planName = 'Monthly Protocol ($49/month)';
+          }
         } else {
           price = 59.00;
           planName = 'One-Time Purchase';

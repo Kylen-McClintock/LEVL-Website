@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { productContent } from '../../content/productLongevity';
 import { ShopifyProduct } from '../../types/shopify';
 import { useCart } from '../../context/CartContext';
+import { useFounder } from '../../context/FounderContext';
 import Image from 'next/image';
 
 interface StickyDesktopHeaderProps {
@@ -15,6 +16,7 @@ interface StickyDesktopHeaderProps {
 export function StickyDesktopHeader({ product }: StickyDesktopHeaderProps) {
   const [isVisible, setIsVisible] = useState(false);
   const { openCart } = useCart();
+  const { isFounder } = useFounder();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,17 +61,24 @@ export function StickyDesktopHeader({ product }: StickyDesktopHeaderProps) {
             <div className="flex items-center gap-6">
               <div className="flex flex-col items-end">
                 <span className="text-[var(--color-levl-cyan)] font-bold leading-tight">
-                  $44 / bottle • Free Shipping
+                  {isFounder ? '$31 / bottle • Free Shipping' : '$44 / bottle • Free Shipping'}
                 </span>
                 <span className="text-[10px] text-[var(--color-levl-text-muted)] uppercase tracking-wider">
-                  ($132 for 90-Day Protocol • Save 25%)
+                  {isFounder 
+                    ? '($93 for 90-Day Protocol • 30% Off For Life)' 
+                    : '($132 for 90-Day Protocol • Save 25%)'}
                 </span>
               </div>
               <button
                 onClick={() => {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  const purchaseEl = document.getElementById("purchase-section") || document.getElementById("purchase");
+                  if (purchaseEl) {
+                    purchaseEl.scrollIntoView({ behavior: 'smooth' });
+                  } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
                 }}
-                className="bg-[var(--color-levl-cyan)] text-black px-6 py-2 rounded-full text-sm font-semibold hover:bg-[var(--color-levl-cyan)]/90 transition-colors shadow-[0_0_15px_rgba(34,197,94,0.3)]"
+                className="bg-[var(--color-levl-cyan)] text-black px-6 py-2 rounded-full text-sm font-semibold hover:bg-[var(--color-levl-cyan)]/90 transition-colors shadow-[0_0_15px_rgba(34,197,94,0.3)] cursor-pointer"
               >
                 Select Protocol
               </button>

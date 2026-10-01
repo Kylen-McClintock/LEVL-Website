@@ -1,14 +1,25 @@
 "use client";
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ShoppingBag, Trash2, Plus, Minus, ArrowRight, ShieldCheck, Truck } from 'lucide-react';
+import { X, ShoppingBag, Trash2, Plus, Minus, ArrowRight, ShieldCheck, Truck, Sparkles } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
+import { useFounder } from '../../context/FounderContext';
 import { CheckoutButton } from './CheckoutButton';
 import Image from 'next/image';
 
 export function CartDrawer() {
   const { cart, isCartOpen, closeCart, isLoading, updateQuantity, removeItem } = useCart();
+  const { isFounder, founderCode } = useFounder();
+
+  const finalCheckoutUrl = useMemo(() => {
+    if (!cart?.checkoutUrl) return undefined;
+    if (isFounder && founderCode) {
+      const sep = cart.checkoutUrl.includes('?') ? '&' : '?';
+      return `${cart.checkoutUrl}${sep}discount=${encodeURIComponent(founderCode)}`;
+    }
+    return cart.checkoutUrl;
+  }, [cart?.checkoutUrl, isFounder, founderCode]);
 
   return (
     <AnimatePresence>
@@ -48,6 +59,24 @@ export function CartDrawer() {
               </button>
             </div>
 
+            {/* Founder Status Banner in Cart */}
+            {isFounder && (
+              <div className="mx-6 mt-4 p-3 rounded-xl bg-gradient-to-r from-emerald-950/70 via-[var(--color-levl-cyan)]/15 to-transparent border border-[var(--color-levl-cyan)]/40 flex items-center gap-2.5 text-xs shadow-sm">
+                <Sparkles className="w-4 h-4 text-[var(--color-levl-cyan)] shrink-0 animate-pulse" />
+                <div className="flex flex-col">
+                  <span className="font-extrabold text-white flex items-center gap-1.5">
+                    Founder Pricing Applied
+                    <span className="bg-[var(--color-levl-cyan)] text-black text-[10px] font-black px-1.5 py-0.2 rounded">
+                      {founderCode}
+                    </span>
+                  </span>
+                  <span className="text-[11px] text-[var(--color-levl-cyan)] mt-0.5">
+                    30% off for life auto-applied to subscriptions at checkout
+                  </span>
+                </div>
+              </div>
+            )}
+
             {/* Cart Body */}
             <div className="flex-1 overflow-y-auto p-6 space-y-4">
               {isLoading && !cart ? (
@@ -64,31 +93,30 @@ export function CartDrawer() {
                     titleLower.includes('quarterly') || 
                     node.merchandise.id?.includes('90');
 
-                  // Frontend pricing:
-                  // 30-day one-time: $59 total ($59/bottle)
-                  // 30-day subscription: $49/month ($49/bottle)
-                  // 90-day one-time: $147 total ($49/bottle)
-                  // 90-day subscription: $132 every 3 months ($44/bottle)
-                  const unitPrice = is90Day 
-                    ? (isSubscription ? 132 : 147) 
-                    : (isSubscription ? 49 : 59);
+                  // Pricing resolution:
+                  // Founder Pricing: 90-day sub = $93 ($31/bottle), 30-day sub = $35 ($35/bottle)
+                  // Standard Public: 90-day sub = $132 ($44/bottle), 90-day onetime = $147 ($49/bottle)
+                  //                  30-day sub = $49 ($49/bottle),  30-day onetime = $59 ($59/bottle)
+                  const unitPrice = isFounder && isSubscription
+                    ? (is90Day ? 93 : 35)
+                    : (is90Day ? (isSubscription ? 132 : 147) : (isSubscription ? 49 : 59));
 
-                  const pricePerBottle = is90Day 
-                    ? (isSubscription ? 44 : 49) 
-                    : (isSubscription ? 49 : 59);
+                  const pricePerBottle = isFounder && isSubscription
+                    ? (is90Day ? 31 : 35)
+                    : (is90Day ? (isSubscription ? 44 : 49) : (isSubscription ? 49 : 59));
 
                   const lineTotal = unitPrice * node.quantity;
 
                   // Blue pill delivery text:
-                  // "And in the blue pill say free delivery every month or 3 months depending on the order."
                   const deliveryPillText = isSubscription
                     ? (is90Day ? 'Free delivery every 3 months' : 'Free delivery every month')
                     : (is90Day ? 'Free US delivery' : null);
 
                   // Billing text:
-                  // "90-day subscription clearly states $132 billed every 3 months, while emphasizing $44/bottle."
                   const billingScheduleText = isSubscription
-                    ? (is90Day ? '$132 billed every 3 months' : '$49 billed monthly')
+                    ? (isFounder
+                        ? (is90Day ? '$93 billed every 3 months' : '$35 billed monthly')
+                        : (is90Day ? '$132 billed every 3 months' : '$49 billed monthly'))
                     : (is90Day ? '$147 one-time purchase' : '$59 one-time purchase');
 
                   return (
@@ -159,7 +187,7 @@ export function CartDrawer() {
                             <button 
                               onClick={() => updateQuantity(node.id, node.quantity - 1)}
                               disabled={isLoading}
-                              className="text-gray-400 hover:text-white p-0.5 disabled:opacity-40 transition-colors"
+                              className="text-gray-400 hover:text-white p-0.5 disabled:opacity-40 transition-colors cursor-pointer"
                               aria-label="Decrease quantity"
                             >
                               <Minus className="w-3.5 h-3.5" />
@@ -170,7 +198,7 @@ export function CartDrawer() {
                             <button 
                               onClick={() => updateQuantity(node.id, node.quantity + 1)}
                               disabled={isLoading}
-                              className="text-gray-400 hover:text-white p-0.5 disabled:opacity-40 transition-colors"
+                              className="text-gray-400 hover:text-white p-0.5 disabled:opacity-40 transition-colors cursor-pointer"
                               aria-label="Increase quantity"
                             >
                               <Plus className="w-3.5 h-3.5" />
@@ -180,7 +208,7 @@ export function CartDrawer() {
                           <button
                             onClick={() => removeItem(node.id)}
                             disabled={isLoading}
-                            className="text-gray-500 hover:text-red-400 p-1.5 transition-colors disabled:opacity-40"
+                            className="text-gray-500 hover:text-red-400 p-1.5 transition-colors disabled:opacity-40 cursor-pointer"
                             title="Remove item"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -209,7 +237,9 @@ export function CartDrawer() {
                 const isSub = Boolean(node.sellingPlanAllocation);
                 const tLower = `${node.merchandise.title || ''} ${node.sellingPlanAllocation?.sellingPlan?.name || ''}`.toLowerCase();
                 const is90 = tLower.includes('90') || tLower.includes('3 bottle') || tLower.includes('quarterly') || node.merchandise.id?.includes('90');
-                const uPrice = is90 ? (isSub ? 132 : 147) : (isSub ? 49 : 59);
+                const uPrice = isFounder && isSub
+                  ? (is90 ? 93 : 35)
+                  : (is90 ? (isSub ? 132 : 147) : (isSub ? 49 : 59));
                 return sum + uPrice * node.quantity;
               }, 0);
 
@@ -253,7 +283,7 @@ export function CartDrawer() {
                   </div>
 
                   <CheckoutButton 
-                    checkoutUrl={cart.checkoutUrl} 
+                    checkoutUrl={finalCheckoutUrl} 
                     disabled={isLoading}
                     className="bg-[var(--color-levl-cyan)] text-black hover:bg-[var(--color-levl-cyan)]/90 shadow-[0_0_20px_rgba(34,197,94,0.25)] flex items-center justify-center gap-2 cursor-pointer font-bold"
                   >

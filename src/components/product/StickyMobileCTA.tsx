@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { productContent } from '../../content/productLongevity';
 import { ShopifyProduct } from '../../types/shopify';
 import { useCart } from '../../context/CartContext';
+import { useFounder } from '../../context/FounderContext';
 
 interface StickyMobileCTAProps {
   product?: ShopifyProduct;
@@ -14,6 +15,7 @@ interface StickyMobileCTAProps {
 export function StickyMobileCTA({ product }: StickyMobileCTAProps) {
   const [isVisible, setIsVisible] = useState(false);
   const { openCart } = useCart();
+  const { isFounder } = useFounder();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,15 +45,20 @@ export function StickyMobileCTA({ product }: StickyMobileCTAProps) {
               {product?.title || 'LEVL LIFESPAN+'}
             </span>
             <span className="text-[var(--color-levl-cyan)] font-bold text-sm">
-              From $44 / bottle • Free Shipping
+              {isFounder ? 'From $31 / bottle • Free Shipping' : 'From $44 / bottle • Free Shipping'}
             </span>
           </div>
           
           <button
             onClick={() => {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              const purchaseEl = document.getElementById("purchase-section") || document.getElementById("purchase");
+              if (purchaseEl) {
+                purchaseEl.scrollIntoView({ behavior: 'smooth' });
+              } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
             }}
-            className="bg-[var(--color-levl-cyan)] text-black px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[var(--color-levl-cyan)]/90 transition-colors shadow-lg shadow-[var(--color-levl-cyan)]/20"
+            className="bg-[var(--color-levl-cyan)] text-black px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[var(--color-levl-cyan)]/90 transition-colors shadow-lg shadow-[var(--color-levl-cyan)]/20 cursor-pointer"
           >
             Select Protocol
           </button>

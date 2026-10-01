@@ -5,9 +5,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { Container } from "@/components/ui/Container";
-import { Menu, X, ShoppingBag, ArrowRight } from "lucide-react";
+import { Menu, X, ShoppingBag, ArrowRight, Sparkles } from "lucide-react";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
+import { useFounder } from "@/context/FounderContext";
 
 const navLinks = [
     { name: "Science", href: "/#science" },
@@ -23,6 +24,7 @@ export function Navbar({ showCart = true }: { showCart?: boolean } = {}) {
     const pathname = usePathname();
     const { scrollY } = useScroll();
     const { cart, openCart } = useCart();
+    const { isFounder, founderCode, bannerHeadline, bannerSubtext } = useFounder();
 
     useMotionValueEvent(scrollY, "change", (latest) => {
         setIsScrolled(latest > 15);
@@ -50,6 +52,23 @@ export function Navbar({ showCart = true }: { showCart?: boolean } = {}) {
                     : "bg-transparent py-2 md:py-3"
             }`}
         >
+            {/* Top Founder Announcement Strip (Shown ONLY when founder access is active) */}
+            {isFounder && (
+                <div className="w-full bg-gradient-to-r from-emerald-950 via-teal-900 to-emerald-950 border-b border-[var(--color-levl-cyan)]/30 text-white text-xs py-1.5 px-4 shadow-lg mb-1 -mt-2 md:-mt-3">
+                    <Container className="flex items-center justify-center gap-2 text-center flex-wrap">
+                        <span className="inline-flex items-center gap-1 bg-[var(--color-levl-cyan)] text-black text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-sm">
+                            <Sparkles className="w-3 h-3 text-black" />
+                            {founderCode}
+                        </span>
+                        <span className="font-bold text-white tracking-tight">
+                            {bannerHeadline}
+                        </span>
+                        <span className="hidden sm:inline text-[var(--color-levl-cyan)] font-medium text-[11px]">
+                            • {bannerSubtext}
+                        </span>
+                    </Container>
+                </div>
+            )}
             <Container className="flex items-center justify-between h-12 md:h-14">
                 {/* Logo */}
                 <Link href="/" className="flex items-center">

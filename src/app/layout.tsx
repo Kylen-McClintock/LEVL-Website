@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
-
 import { Analytics } from "@vercel/analytics/react";
+import { FounderProvider } from "@/context/FounderContext";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -48,7 +48,9 @@ export default function RootLayout({
       <body
         className={`${outfit.variable} antialiased bg-brand-dark text-white`}
       >
-        {children}
+        <FounderProvider>
+          {children}
+        </FounderProvider>
         <Analytics />
       </body>
     </html>
