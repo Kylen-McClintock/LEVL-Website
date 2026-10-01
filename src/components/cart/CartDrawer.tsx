@@ -71,7 +71,7 @@ export function CartDrawer() {
                     </span>
                   </span>
                   <span className="text-[11px] text-[var(--color-levl-cyan)] mt-0.5">
-                    30% off for life auto-applied to subscriptions at checkout
+                    Additional 30% off for life auto-applied to subscriptions at checkout
                   </span>
                 </div>
               </div>

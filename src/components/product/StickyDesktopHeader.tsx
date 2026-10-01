@@ -65,7 +65,7 @@ export function StickyDesktopHeader({ product }: StickyDesktopHeaderProps) {
                 </span>
                 <span className="text-[10px] text-[var(--color-levl-text-muted)] uppercase tracking-wider">
                   {isFounder 
-                    ? '($93 for 90-Day Protocol • 30% Off For Life)' 
+                    ? '($93 for 90-Day Protocol • Additional 30% Off)' 
                     : '($132 for 90-Day Protocol • Save 25%)'}
                 </span>
               </div>

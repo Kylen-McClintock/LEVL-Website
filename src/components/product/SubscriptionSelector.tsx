@@ -71,7 +71,7 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                 <span className="font-bold text-white text-base tracking-tight">3-Month Protocol</span>
                 <span className="text-xs text-[var(--color-levl-text-secondary)] font-medium">(3 Bottles)</span>
                 <span className="text-[10px] font-extrabold uppercase tracking-wider bg-gradient-to-r from-[var(--color-levl-cyan)] to-emerald-400 text-black px-2.5 py-0.5 rounded-full shadow-sm">
-                  {isFounder && isFounderPlan ? "Founder Tier • Best Value" : "Best Value"}
+                  {isFounder && isFounderPlan ? "Founder Pricing • Best Value" : "Best Value"}
                 </span>
               </div>
               <p className="text-xs text-[var(--color-levl-cyan)]/90 mt-1 font-medium">
@@ -144,19 +144,19 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                     <div className="flex flex-col">
                       <div className="flex items-center gap-1.5 flex-wrap">
                         <Sparkles className="w-3.5 h-3.5 text-[var(--color-levl-cyan)]" />
-                        <span className="text-xs font-black text-white">Founder Protocol:</span>
+                        <span className="text-xs font-black text-white">Founder Pricing:</span>
                         <span className="text-sm font-black text-[var(--color-levl-cyan)]">$31 / bottle</span>
                         <span className="text-xs text-white font-bold">($93 total)</span>
                         <span className="text-[11px] line-through text-gray-400">vs. $132 public</span>
                       </div>
                       <span className="text-[11px] text-[var(--color-levl-cyan)] flex items-center gap-1 font-medium mt-0.5">
-                        <Truck className="w-3 h-3" /> Free US Shipping • Deliver every 90 days • 30% off for life
+                        <Truck className="w-3 h-3" /> Free US Shipping • Deliver every 90 days • Additional 30% off for life
                       </span>
                     </div>
                   </div>
                   <div className="flex flex-col items-end shrink-0 pl-2">
                     <span className="text-[10px] bg-gradient-to-r from-[var(--color-levl-cyan)] to-emerald-400 text-black px-2 py-0.5 rounded font-black tracking-wider uppercase shadow-sm">
-                      30% Off For Life
+                      Additional 30% Off
                     </span>
                     <span className="text-[10px] text-[var(--color-levl-cyan)] font-bold mt-0.5">
                       Save $39 vs public
@@ -345,19 +345,19 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                     <div className="flex flex-col">
                       <div className="flex items-center gap-1.5 flex-wrap">
                         <Sparkles className="w-3.5 h-3.5 text-[var(--color-levl-cyan)]" />
-                        <span className="text-xs font-black text-white">Founder Protocol:</span>
+                        <span className="text-xs font-black text-white">Founder Pricing:</span>
                         <span className="text-sm font-black text-[var(--color-levl-cyan)]">$35 / bottle</span>
                         <span className="text-xs text-white font-bold">($35/mo)</span>
                         <span className="text-[11px] line-through text-gray-400">vs. $49 public</span>
                       </div>
                       <span className="text-[11px] text-[var(--color-levl-cyan)] flex items-center gap-1 font-medium mt-0.5">
-                        <Truck className="w-3 h-3" /> Free US Shipping • Deliver monthly • 30% off for life
+                        <Truck className="w-3 h-3" /> Free US Shipping • Deliver monthly • Additional 30% off for life
                       </span>
                     </div>
                   </div>
                   <div className="flex flex-col items-end shrink-0 pl-2">
                     <span className="text-[10px] bg-gradient-to-r from-[var(--color-levl-cyan)] to-emerald-400 text-black px-2 py-0.5 rounded font-black tracking-wider uppercase shadow-sm">
-                      30% Off For Life
+                      Additional 30% Off
                     </span>
                     <span className="text-[10px] text-[var(--color-levl-cyan)] font-bold mt-0.5">
                       Save $14/mo vs public

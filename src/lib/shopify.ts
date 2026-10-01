@@ -554,7 +554,7 @@ export async function addToCart(
         if (line.sellingPlanId) {
           if (isFounderAccess) {
             price = 93.00;
-            planName = 'Founder Protocol ($93 every 3 months - $31/bottle)';
+            planName = 'Founder Pricing ($93 every 3 months - $31/bottle)';
           } else {
             price = 132.00;
             planName = 'Quarterly Protocol ($132 every 3 months - $44/bottle)';
@@ -568,7 +568,7 @@ export async function addToCart(
         if (line.sellingPlanId) {
           if (isFounderAccess) {
             price = 35.00;
-            planName = 'Founder Protocol ($35/month)';
+            planName = 'Founder Pricing ($35/month)';
           } else {
             price = 49.00;
             planName = 'Monthly Protocol ($49/month)';

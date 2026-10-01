@@ -164,8 +164,8 @@ export function FounderProvider({ children }: { children: React.ReactNode }) {
 
   // Specific copy dictated by user requirements:
   const bannerHeadline = isFounderDirect
-    ? "You've unlocked Founder Pricing — 30% off for life"
-    : "You've unlocked Founder Pricing for Friends and Family — 30% off for life";
+    ? "You've unlocked Founder Pricing — Additional 30% off for life"
+    : "You've unlocked Founder Pricing for Friends and Family — Additional 30% off for life";
   const bannerSubtext = "Thank you for being among our earliest supporters!";
 
   return (

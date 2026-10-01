@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { ShieldCheck, Calendar, Truck, RefreshCcw, Loader2, Zap, Star, Sparkles } from 'lucide-react';
+import { ShieldCheck, Calendar, Truck, RefreshCcw, Loader2, Zap, Star } from 'lucide-react';
 import { SubscriptionSelector, PlanType } from './SubscriptionSelector';
 import { QuantitySelector } from './QuantitySelector';
 import { JudgeMeStarBadge } from './JudgeMeStarBadge';
@@ -21,7 +21,7 @@ interface PurchaseBoxProps {
 
 export function PurchaseBox({ product, judgeMeData }: PurchaseBoxProps) {
   const { addToCart, instantBuy, isLoading } = useCart();
-  const { isFounder, founderCode, bannerHeadline, bannerSubtext } = useFounder();
+  const { isFounder } = useFounder();
   const [selectedPlan, setSelectedPlan] = useState<PlanType>(isFounder ? 'founder-90' : 'subscribe-90');
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
@@ -148,63 +148,6 @@ export function PurchaseBox({ product, judgeMeData }: PurchaseBoxProps) {
         />
       </div>
 
-      {/* Founder Unlocked Callout Banner (Shown ONLY to verified referral visitors) */}
-      {isFounder && (
-        <div className="relative overflow-hidden rounded-2xl border-2 border-[var(--color-levl-cyan)]/60 bg-gradient-to-br from-emerald-950/80 via-[var(--color-levl-cyan)]/15 to-[#07090E]/90 p-4 sm:p-5 shadow-[0_0_35px_rgba(34,197,94,0.22)]">
-          <div className="flex items-start gap-3.5">
-            <div className="w-9 h-9 rounded-full bg-[var(--color-levl-cyan)]/20 border border-[var(--color-levl-cyan)] flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
-              <Sparkles className="w-5 h-5 text-[var(--color-levl-cyan)] animate-pulse" />
-            </div>
-            <div className="flex flex-col flex-1 min-w-0">
-              <div className="flex items-center gap-2 flex-wrap mb-1">
-                <span className="text-[10px] font-black uppercase tracking-wider bg-[var(--color-levl-cyan)] text-black px-2 py-0.5 rounded shadow-sm">
-                  {founderCode} Unlocked
-                </span>
-                <span className="text-[10px] font-bold text-[var(--color-levl-cyan)] border border-[var(--color-levl-cyan)]/40 px-2 py-0.5 rounded">
-                  VIP Lifetime Access
-                </span>
-              </div>
-              <p className="text-sm sm:text-base font-black text-white tracking-tight leading-snug">
-                {bannerHeadline}
-              </p>
-              <p className="text-xs sm:text-sm text-[var(--color-levl-cyan)] mt-1 font-medium">
-                {bannerSubtext}
-              </p>
-            </div>
-          </div>
-
-          {/* Quick Comparison Ribbon */}
-          <div className="mt-3.5 pt-3.5 border-t border-[var(--color-levl-cyan)]/25 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-            <div className="bg-black/50 rounded-xl p-2.5 border border-white/10 flex flex-col justify-between">
-              <div>
-                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">90-Day Protocol (3 Bottles)</span>
-                <div className="flex items-baseline gap-2 mt-1">
-                  <span className="font-black text-[var(--color-levl-cyan)] text-base">$31 / bottle</span>
-                  <span className="text-xs text-white font-bold">($93)</span>
-                  <span className="text-[11px] line-through text-gray-400">vs. $132</span>
-                </div>
-              </div>
-              <span className="text-[11px] text-emerald-400 font-extrabold mt-1">
-                Save 30% for life ($39 savings)
-              </span>
-            </div>
-            <div className="bg-black/50 rounded-xl p-2.5 border border-white/10 flex flex-col justify-between">
-              <div>
-                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">30-Day Supply (1 Bottle)</span>
-                <div className="flex items-baseline gap-2 mt-1">
-                  <span className="font-black text-[var(--color-levl-cyan)] text-base">$35 / bottle</span>
-                  <span className="text-xs text-white font-bold">($35/mo)</span>
-                  <span className="text-[11px] line-through text-gray-400">vs. $49</span>
-                </div>
-              </div>
-              <span className="text-[11px] text-emerald-400 font-extrabold mt-1">
-                Save 30% for life ($14/mo savings)
-              </span>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Product Title (Guaranteed ONE line) */}
       <div>
         <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-wide whitespace-nowrap">
@@ -234,11 +177,11 @@ export function PurchaseBox({ product, judgeMeData }: PurchaseBoxProps) {
           )}
           {selectedPlan === 'founder-90' ? (
             <span className="text-[11px] bg-gradient-to-r from-[var(--color-levl-cyan)] to-emerald-400 text-black px-2.5 py-0.5 rounded-full font-black uppercase tracking-wider shadow-sm">
-              Founder Pricing • 30% Off For Life
+              Founder Pricing • Additional 30% Off
             </span>
           ) : selectedPlan === 'founder-30' ? (
             <span className="text-[11px] bg-gradient-to-r from-[var(--color-levl-cyan)] to-emerald-400 text-black px-2.5 py-0.5 rounded-full font-black uppercase tracking-wider shadow-sm">
-              Founder Pricing • 30% Off For Life
+              Founder Pricing • Additional 30% Off
             </span>
           ) : selectedPlan === 'subscribe-90' ? (
             <span className="text-[11px] bg-gradient-to-r from-[var(--color-levl-cyan)]/25 to-emerald-500/25 text-[var(--color-levl-cyan)] px-2.5 py-0.5 rounded-full border border-[var(--color-levl-cyan)]/40 font-bold shrink-0">
