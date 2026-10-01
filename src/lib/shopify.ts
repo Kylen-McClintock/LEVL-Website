@@ -540,9 +540,12 @@ export async function addToCart(
       let planName = 'One-Time Purchase';
       let title = '30-Day Supply (1 Bottle)';
       
-      const is90 = line.sellingPlanId?.includes('90') || 
-                   line.merchandiseId.includes('90') || 
-                   line.merchandiseId === 'gid://shopify/ProductVariant/46955690295494';
+      const is90 = line.sellingPlanId?.includes('15180759238') || 
+                   line.sellingPlanId?.includes('15367602374') || 
+                   line.sellingPlanId?.includes('mock-plan-90') ||
+                   line.merchandiseId === 'gid://shopify/ProductVariant/46955690295494' ||
+                   line.merchandiseId.endsWith('295494') ||
+                   line.merchandiseId.includes('mock-variant-90');
 
       let isFounderAccess = false;
       if (typeof document !== 'undefined') {

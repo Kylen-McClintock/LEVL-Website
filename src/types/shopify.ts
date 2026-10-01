@@ -81,6 +81,7 @@ export type ShopifyCartLine = {
   merchandise: {
     id: string;
     title: string;
+    sku?: string;
     product: {
       title: string;
       handle: string;

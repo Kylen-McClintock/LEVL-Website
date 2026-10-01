@@ -39,15 +39,31 @@ export function PurchaseBox({ product, judgeMeData }: PurchaseBoxProps) {
     const variants = product?.variants?.edges?.map(e => e.node) || [];
     
     // Find 90-day variant (or 3-pack) vs 30-day variant (or single)
-    const variant90 = variants.find(v => v.title.toLowerCase().includes('90') || v.title.toLowerCase().includes('3 bottle') || v.sku?.includes('90')) || variants[1] || variants[0];
-    const variant30 = variants.find(v => v.title.toLowerCase().includes('30') || v.title.toLowerCase().includes('1 bottle') || v.sku?.includes('30')) || variants[0];
+    const variant90 = variants.find(v => 
+      v.id === 'gid://shopify/ProductVariant/46955690295494' ||
+      v.id?.endsWith('295494') ||
+      v.sku === 'LEVL-DC-90' ||
+      v.title.toLowerCase().includes('90') || 
+      v.title.toLowerCase().includes('3 bottle')
+    ) || variants[1] || variants[0];
+
+    const variant30 = variants.find(v => 
+      v.id === 'gid://shopify/ProductVariant/46955690262726' ||
+      v.id?.endsWith('262726') ||
+      v.sku === 'LEVL-DC-30' ||
+      v.title.toLowerCase().includes('30') || 
+      v.title.toLowerCase().includes('1 bottle')
+    ) || variants[0];
 
     if (selectedPlan === 'founder-90') {
-      const activeVariant = variant90 || variant30;
-      const plan = activeVariant?.sellingPlanAllocations?.edges?.[0]?.node?.sellingPlan;
+      const activeVariant = variant90;
+      const plan = activeVariant?.sellingPlanAllocations?.edges?.find(e => 
+        e.node.sellingPlan.id.includes('15367602374') || 
+        e.node.sellingPlan.name.includes('93')
+      )?.node?.sellingPlan;
       return {
         variantId: activeVariant?.id || 'gid://shopify/ProductVariant/46955690295494',
-        sellingPlanId: plan?.id || 'gid://shopify/SellingPlan/15180759238',
+        sellingPlanId: plan?.id || 'gid://shopify/SellingPlan/15367602374',
         displayPrice: '$31 / bottle',
         originalPrice: '$44',
         perBottleText: '($93 billed every 3 months • Free US Shipping)'
@@ -56,10 +72,13 @@ export function PurchaseBox({ product, judgeMeData }: PurchaseBoxProps) {
 
     if (selectedPlan === 'founder-30') {
       const activeVariant = variant30;
-      const plan = activeVariant?.sellingPlanAllocations?.edges?.[0]?.node?.sellingPlan;
+      const plan = activeVariant?.sellingPlanAllocations?.edges?.find(e => 
+        e.node.sellingPlan.id.includes('15367569606') || 
+        e.node.sellingPlan.name.includes('35')
+      )?.node?.sellingPlan;
       return {
         variantId: activeVariant?.id || 'gid://shopify/ProductVariant/46955690262726',
-        sellingPlanId: plan?.id || 'gid://shopify/SellingPlan/15180792006',
+        sellingPlanId: plan?.id || 'gid://shopify/SellingPlan/15367569606',
         displayPrice: '$35 / bottle',
         originalPrice: '$49',
         perBottleText: '($35/mo • Free US Shipping)'
@@ -67,8 +86,11 @@ export function PurchaseBox({ product, judgeMeData }: PurchaseBoxProps) {
     }
 
     if (selectedPlan === 'subscribe-90') {
-      const activeVariant = variant90 || variant30;
-      const plan = activeVariant?.sellingPlanAllocations?.edges?.[0]?.node?.sellingPlan;
+      const activeVariant = variant90;
+      const plan = activeVariant?.sellingPlanAllocations?.edges?.find(e => 
+        e.node.sellingPlan.id.includes('15180759238') || 
+        e.node.sellingPlan.name.includes('132')
+      )?.node?.sellingPlan;
       return {
         variantId: activeVariant?.id || 'gid://shopify/ProductVariant/46955690295494',
         sellingPlanId: plan?.id || 'gid://shopify/SellingPlan/15180759238',
@@ -80,7 +102,10 @@ export function PurchaseBox({ product, judgeMeData }: PurchaseBoxProps) {
 
     if (selectedPlan === 'subscribe-30') {
       const activeVariant = variant30;
-      const plan = activeVariant?.sellingPlanAllocations?.edges?.[0]?.node?.sellingPlan;
+      const plan = activeVariant?.sellingPlanAllocations?.edges?.find(e => 
+        e.node.sellingPlan.id.includes('15180792006') || 
+        e.node.sellingPlan.name.includes('49')
+      )?.node?.sellingPlan;
       return {
         variantId: activeVariant?.id || 'gid://shopify/ProductVariant/46955690262726',
         sellingPlanId: plan?.id || 'gid://shopify/SellingPlan/15180792006',
@@ -91,7 +116,7 @@ export function PurchaseBox({ product, judgeMeData }: PurchaseBoxProps) {
     }
 
     if (selectedPlan === 'onetime-90') {
-      const activeVariant = variant90 || variant30;
+      const activeVariant = variant90;
       return {
         variantId: activeVariant?.id || 'gid://shopify/ProductVariant/46955690295494',
         sellingPlanId: undefined,
