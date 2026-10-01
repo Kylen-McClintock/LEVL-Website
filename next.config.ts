@@ -29,7 +29,7 @@ const nextConfig: NextConfig = {
   async redirects() {
     const founderCodes = [
       'TOM30', 'CAT30', 'MARK30', 'TAYLOR30', 'LAM30',
-      'KYLEN30', 'DAN30', 'EMMETT30', 'KEGAN30', 'LAROCCA30',
+      'KYLEN30', 'DAN30', 'EMMETT30', 'KEGAN30', 'LAROCCA30', 'AARON30',
       'FOUNDER30'
     ];
     const founderRedirects = founderCodes.flatMap(code => [

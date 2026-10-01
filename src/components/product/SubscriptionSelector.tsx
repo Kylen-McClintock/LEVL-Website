@@ -198,7 +198,7 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                   </div>
                 </div>
                 <span className="text-[10px] px-2.5 py-0.5 rounded font-bold border shrink-0 bg-gradient-to-r from-[var(--color-levl-cyan)]/25 to-emerald-500/25 text-[var(--color-levl-cyan)] border-[var(--color-levl-cyan)]/40">
-                  Best Value • Save 25%
+                  {isFounder ? "Save 25%" : "Best Value • Save 25%"}
                 </span>
               </div>
 
