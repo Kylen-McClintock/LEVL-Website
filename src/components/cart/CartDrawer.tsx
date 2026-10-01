@@ -71,7 +71,7 @@ export function CartDrawer() {
                     </span>
                   </span>
                   <span className="text-[11px] text-[var(--color-levl-cyan)] mt-0.5">
-                    Additional 30% off for life auto-applied to subscriptions at checkout
+                    Additional 30% off auto-applied to subscriptions & one-time orders at checkout
                   </span>
                 </div>
               </div>
@@ -90,19 +90,7 @@ export function CartDrawer() {
                   const planName = (node.sellingPlanAllocation?.sellingPlan?.name || '').toLowerCase();
                   const titleLower = `${node.merchandise.title || ''} ${planName}`.toLowerCase();
 
-                  const is30Day = 
-                    node.merchandise.id === 'gid://shopify/ProductVariant/46955690262726' ||
-                    node.merchandise.id?.endsWith('262726') ||
-                    node.merchandise.id?.includes('mock-variant-30') ||
-                    (node.merchandise as any)?.sku === 'LEVL-DC-30' ||
-                    planId.includes('15180792006') ||
-                    planId.includes('15367569606') ||
-                    titleLower.includes('30-day') ||
-                    titleLower.includes('30 day') ||
-                    titleLower.includes('1 bottle') ||
-                    titleLower.includes('month');
-
-                  const is90Day = !is30Day && (
+                  const is90Day = 
                     node.merchandise.id === 'gid://shopify/ProductVariant/46955690295494' ||
                     node.merchandise.id?.endsWith('295494') ||
                     node.merchandise.id?.includes('mock-variant-90') ||
@@ -111,8 +99,10 @@ export function CartDrawer() {
                     planId.includes('15367602374') ||
                     titleLower.includes('90') ||
                     titleLower.includes('3 bottle') ||
-                    titleLower.includes('quarterly')
-                  );
+                    titleLower.includes('3 month') ||
+                    titleLower.includes('quarterly');
+
+                  const is30Day = !is90Day;
 
                   // Detect whether this specific line item has founder pricing applied:
                   // It is founder pricing if the selling plan ID is the founder plan (15367602374 or 15367569606),
@@ -289,17 +279,7 @@ export function CartDrawer() {
                 const planId = node.sellingPlanAllocation?.sellingPlan?.id || '';
                 const planName = (node.sellingPlanAllocation?.sellingPlan?.name || '').toLowerCase();
                 const tLower = `${node.merchandise?.title || ''} ${planName}`.toLowerCase();
-                const is30 = node.merchandise?.id === 'gid://shopify/ProductVariant/46955690262726' ||
-                             node.merchandise?.id?.endsWith('262726') ||
-                             node.merchandise?.id?.includes('mock-variant-30') ||
-                             (node.merchandise as any)?.sku === 'LEVL-DC-30' ||
-                             planId.includes('15180792006') ||
-                             planId.includes('15367569606') ||
-                             tLower.includes('30-day') ||
-                             tLower.includes('30 day') ||
-                             tLower.includes('1 bottle') ||
-                             tLower.includes('month');
-                const is90 = !is30 && (
+                const is90 = 
                   node.merchandise?.id === 'gid://shopify/ProductVariant/46955690295494' ||
                   node.merchandise?.id?.endsWith('295494') ||
                   node.merchandise?.id?.includes('mock-variant-90') ||
@@ -308,8 +288,8 @@ export function CartDrawer() {
                   planId.includes('15367602374') ||
                   tLower.includes('90') ||
                   tLower.includes('3 bottle') ||
-                  tLower.includes('quarterly')
-                );
+                  tLower.includes('3 month') ||
+                  tLower.includes('quarterly');
                 const isFounderPlan = isSub && (
                   planId.includes('15367602374') || 
                   planId.includes('15367569606') || 
