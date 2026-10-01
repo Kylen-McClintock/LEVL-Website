@@ -86,14 +86,17 @@ export function CartDrawer() {
               ) : cart?.lines?.edges?.length ? (
                 cart.lines.edges.map(({ node }) => {
                   const isSubscription = Boolean(node.sellingPlanAllocation);
-                  const titleLower = `${node.merchandise.title || ''} ${node.sellingPlanAllocation?.sellingPlan?.name || ''}`.toLowerCase();
+                  const planId = node.sellingPlanAllocation?.sellingPlan?.id || '';
+                  const planName = (node.sellingPlanAllocation?.sellingPlan?.name || '').toLowerCase();
+                  const titleLower = `${node.merchandise.title || ''} ${planName}`.toLowerCase();
+
                   const is30Day = 
                     node.merchandise.id === 'gid://shopify/ProductVariant/46955690262726' ||
                     node.merchandise.id?.endsWith('262726') ||
                     node.merchandise.id?.includes('mock-variant-30') ||
-                    node.merchandise.sku === 'LEVL-DC-30' ||
-                    node.sellingPlanAllocation?.sellingPlan?.id?.includes('15180792006') ||
-                    node.sellingPlanAllocation?.sellingPlan?.id?.includes('15367569606') ||
+                    (node.merchandise as any)?.sku === 'LEVL-DC-30' ||
+                    planId.includes('15180792006') ||
+                    planId.includes('15367569606') ||
                     titleLower.includes('30-day') ||
                     titleLower.includes('30 day') ||
                     titleLower.includes('1 bottle') ||
@@ -103,37 +106,69 @@ export function CartDrawer() {
                     node.merchandise.id === 'gid://shopify/ProductVariant/46955690295494' ||
                     node.merchandise.id?.endsWith('295494') ||
                     node.merchandise.id?.includes('mock-variant-90') ||
-                    node.merchandise.sku === 'LEVL-DC-90' ||
+                    (node.merchandise as any)?.sku === 'LEVL-DC-90' ||
+                    planId.includes('15180759238') ||
+                    planId.includes('15367602374') ||
                     titleLower.includes('90') ||
                     titleLower.includes('3 bottle') ||
                     titleLower.includes('quarterly')
                   );
 
-                  // Pricing resolution:
-                  // Founder Pricing: 90-day sub = $93 ($31/bottle), 30-day sub = $35 ($35/bottle)
-                  // Standard Public: 90-day sub = $132 ($44/bottle), 90-day onetime = $147 ($49/bottle)
-                  //                  30-day sub = $49 ($49/bottle),  30-day onetime = $59 ($59/bottle)
-                  const unitPrice = isFounder && isSubscription
-                    ? (is90Day ? 93 : 35)
-                    : (is90Day ? (isSubscription ? 132 : 147) : (isSubscription ? 49 : 59));
+                  // Detect whether this specific line item has founder pricing applied:
+                  // It is founder pricing if the selling plan ID is the founder plan (15367602374 or 15367569606),
+                  // or the plan name mentions 93/35, or founder access is active and it's not explicitly the standard plan.
+                  const isFounderPlan = isSubscription && (
+                    planId.includes('15367602374') || 
+                    planId.includes('15367569606') || 
+                    planName.includes('93') || 
+                    planName.includes('35') ||
+                    (isFounder && !planId.includes('15180759238') && !planId.includes('15180792006'))
+                  );
 
-                  const pricePerBottle = isFounder && isSubscription
-                    ? (is90Day ? 31 : 35)
-                    : (is90Day ? (isSubscription ? 44 : 49) : (isSubscription ? 49 : 59));
+                  let unitPrice = 59;
+                  let pricePerBottle = 59;
+                  let billingScheduleText = '$59 one-time purchase';
+                  let deliveryPillText: string | null = null;
+
+                  if (isFounderPlan) {
+                    if (is90Day) {
+                      unitPrice = 93;
+                      pricePerBottle = 31;
+                      billingScheduleText = '$93 billed every 3 months';
+                      deliveryPillText = 'Free delivery every 3 months';
+                    } else {
+                      unitPrice = 35;
+                      pricePerBottle = 35;
+                      billingScheduleText = '$35 billed monthly';
+                      deliveryPillText = 'Free delivery every month';
+                    }
+                  } else if (isSubscription) {
+                    if (is90Day) {
+                      unitPrice = 132;
+                      pricePerBottle = 44;
+                      billingScheduleText = '$132 billed every 3 months';
+                      deliveryPillText = 'Free delivery every 3 months';
+                    } else {
+                      unitPrice = 49;
+                      pricePerBottle = 49;
+                      billingScheduleText = '$49 billed monthly';
+                      deliveryPillText = 'Free delivery every month';
+                    }
+                  } else {
+                    if (is90Day) {
+                      unitPrice = 147;
+                      pricePerBottle = 49;
+                      billingScheduleText = '$147 one-time purchase';
+                      deliveryPillText = 'Free US delivery';
+                    } else {
+                      unitPrice = 59;
+                      pricePerBottle = 59;
+                      billingScheduleText = '$59 one-time purchase';
+                      deliveryPillText = null;
+                    }
+                  }
 
                   const lineTotal = unitPrice * node.quantity;
-
-                  // Blue pill delivery text:
-                  const deliveryPillText = isSubscription
-                    ? (is90Day ? 'Free delivery every 3 months' : 'Free delivery every month')
-                    : (is90Day ? 'Free US delivery' : null);
-
-                  // Billing text:
-                  const billingScheduleText = isSubscription
-                    ? (isFounder
-                        ? (is90Day ? '$93 billed every 3 months' : '$35 billed monthly')
-                        : (is90Day ? '$132 billed every 3 months' : '$49 billed monthly'))
-                    : (is90Day ? '$147 one-time purchase' : '$59 one-time purchase');
 
                   return (
                     <div 
@@ -249,41 +284,57 @@ export function CartDrawer() {
 
             {/* Footer with Checkout CTA */}
             {cart && cart.lines?.edges?.length > 0 && (() => {
-              const isLine90 = (node: any) => {
-                const tLower = `${node.merchandise?.title || ''} ${node.sellingPlanAllocation?.sellingPlan?.name || ''}`.toLowerCase();
+              const getLineCost = (node: any) => {
+                const isSub = Boolean(node.sellingPlanAllocation);
+                const planId = node.sellingPlanAllocation?.sellingPlan?.id || '';
+                const planName = (node.sellingPlanAllocation?.sellingPlan?.name || '').toLowerCase();
+                const tLower = `${node.merchandise?.title || ''} ${planName}`.toLowerCase();
                 const is30 = node.merchandise?.id === 'gid://shopify/ProductVariant/46955690262726' ||
                              node.merchandise?.id?.endsWith('262726') ||
                              node.merchandise?.id?.includes('mock-variant-30') ||
-                             node.merchandise?.sku === 'LEVL-DC-30' ||
-                             node.sellingPlanAllocation?.sellingPlan?.id?.includes('15180792006') ||
-                             node.sellingPlanAllocation?.sellingPlan?.id?.includes('15367569606') ||
+                             (node.merchandise as any)?.sku === 'LEVL-DC-30' ||
+                             planId.includes('15180792006') ||
+                             planId.includes('15367569606') ||
                              tLower.includes('30-day') ||
                              tLower.includes('30 day') ||
                              tLower.includes('1 bottle') ||
                              tLower.includes('month');
-                return !is30 && (
+                const is90 = !is30 && (
                   node.merchandise?.id === 'gid://shopify/ProductVariant/46955690295494' ||
                   node.merchandise?.id?.endsWith('295494') ||
                   node.merchandise?.id?.includes('mock-variant-90') ||
-                  node.merchandise?.sku === 'LEVL-DC-90' ||
+                  (node.merchandise as any)?.sku === 'LEVL-DC-90' ||
+                  planId.includes('15180759238') ||
+                  planId.includes('15367602374') ||
                   tLower.includes('90') ||
                   tLower.includes('3 bottle') ||
                   tLower.includes('quarterly')
                 );
+                const isFounderPlan = isSub && (
+                  planId.includes('15367602374') || 
+                  planId.includes('15367569606') || 
+                  planName.includes('93') || 
+                  planName.includes('35') ||
+                  (isFounder && !planId.includes('15180759238') && !planId.includes('15180792006'))
+                );
+                let price = 59;
+                if (isFounderPlan) {
+                  price = is90 ? 93 : 35;
+                } else if (isSub) {
+                  price = is90 ? 132 : 49;
+                } else {
+                  price = is90 ? 147 : 59;
+                }
+                return { is90, isSub, price };
               };
 
               const calculatedSubtotal = cart.lines.edges.reduce((sum, { node }) => {
-                const isSub = Boolean(node.sellingPlanAllocation);
-                const is90 = isLine90(node);
-                const uPrice = isFounder && isSub
-                  ? (is90 ? 93 : 35)
-                  : (is90 ? (isSub ? 132 : 147) : (isSub ? 49 : 59));
-                return sum + uPrice * node.quantity;
+                const { price } = getLineCost(node);
+                return sum + price * node.quantity;
               }, 0);
 
               const qualifiesForFreeShipping = cart.lines.edges.some(({ node }) => {
-                const isSub = Boolean(node.sellingPlanAllocation);
-                const is90 = isLine90(node);
+                const { isSub, is90 } = getLineCost(node);
                 return isSub || is90;
               }) || calculatedSubtotal >= 75;
 

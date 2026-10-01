@@ -236,7 +236,7 @@ export function PurchaseBox({ product, judgeMeData }: PurchaseBoxProps) {
             disabled={isAdding || isLoading || isExpressBuying}
             className={cn(
               "flex-1 h-12 rounded-full font-semibold transition-all duration-300 shadow-lg cursor-pointer",
-              selectedPlan.includes('subscribe')
+              selectedPlan.includes('subscribe') || selectedPlan.includes('founder')
                 ? "bg-[var(--color-levl-cyan)] text-black hover:bg-[var(--color-levl-cyan)]/90 shadow-[0_0_20px_rgba(34,197,94,0.25)]"
                 : "bg-white text-black hover:bg-gray-200",
               "disabled:opacity-50 flex items-center justify-center gap-2"
