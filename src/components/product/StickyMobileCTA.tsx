@@ -43,7 +43,7 @@ export function StickyMobileCTA({ product }: StickyMobileCTAProps) {
               {product?.title || 'LEVL LIFESPAN+'}
             </span>
             <span className="text-[var(--color-levl-cyan)] font-bold text-sm">
-              From $39 / mo • Free Shipping
+              From $44 / bottle • Free Shipping
             </span>
           </div>
           

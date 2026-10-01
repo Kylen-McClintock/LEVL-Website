@@ -51,8 +51,8 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="font-bold text-white text-base tracking-tight">3-Month Protocol</span>
                 <span className="text-xs text-[var(--color-levl-text-secondary)] font-medium">(3 Bottles)</span>
-                <span className="text-[10px] font-extrabold uppercase tracking-wider bg-[var(--color-levl-cyan)] text-black px-2 py-0.5 rounded-full shadow-sm">
-                  Recommended
+                <span className="text-[10px] font-extrabold uppercase tracking-wider bg-gradient-to-r from-[var(--color-levl-cyan)] to-emerald-400 text-black px-2.5 py-0.5 rounded-full shadow-sm">
+                  Best Value
                 </span>
               </div>
               <p className="text-xs text-[var(--color-levl-cyan)]/90 mt-1 font-medium">
@@ -67,14 +67,14 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                 "font-black text-xl sm:text-2xl tracking-tight",
                 activeSupply === '90' && isSubscription ? "text-[var(--color-levl-cyan)]" : "text-white"
               )}>
-                {activeSupply === '90' && !isSubscription ? "$43" : "$39"}
+                {activeSupply === '90' && !isSubscription ? "$49" : "$44"}
               </span>
               <span className="text-xs font-semibold text-[var(--color-levl-text-secondary)]">/ bottle</span>
             </div>
             <div className="flex items-center gap-1.5 mt-0.5">
-              <span className="text-[11px] line-through text-[var(--color-levl-text-muted)]">$147</span>
+              <span className="text-[11px] line-through text-[var(--color-levl-text-muted)]">$59</span>
               <span className="text-[11px] text-[var(--color-levl-text-muted)] font-medium">
-                {activeSupply === '90' && !isSubscription ? "($129 total)" : "($117 total)"}
+                {activeSupply === '90' && !isSubscription ? "($147 total)" : "($132 total)"}
               </span>
             </div>
           </div>
@@ -119,16 +119,16 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                     <span className="text-xs font-bold text-white flex items-center gap-1.5 flex-wrap">
                       <Sparkles className="w-3 h-3 text-[var(--color-levl-cyan)]" />
                       <span>Subscribe & Save:</span>
-                      <span className="text-[var(--color-levl-cyan)] font-extrabold">$39 / bottle</span>
-                      <span className="text-gray-400 font-normal">($117 total)</span>
+                      <span className="text-[var(--color-levl-cyan)] font-extrabold">$44 / bottle</span>
+                      <span className="text-gray-400 font-normal">($132 total)</span>
                     </span>
                     <span className="text-[11px] text-[var(--color-levl-cyan)] flex items-center gap-1 font-medium mt-0.5">
                       <Truck className="w-3 h-3" /> Free US Shipping • Deliver every 90 days
                     </span>
                   </div>
                 </div>
-                <span className="text-[10px] bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2 py-0.5 rounded font-bold border border-[var(--color-levl-cyan)]/30 shrink-0">
-                  Save 20%
+                <span className="text-[10px] bg-gradient-to-r from-[var(--color-levl-cyan)]/25 to-emerald-500/25 text-[var(--color-levl-cyan)] px-2.5 py-0.5 rounded font-bold border border-[var(--color-levl-cyan)]/40 shrink-0">
+                  Best Value • Save 25%
                 </span>
               </div>
 
@@ -156,8 +156,8 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                   <div className="flex flex-col">
                     <span className="text-xs font-bold text-white flex items-center gap-1.5 flex-wrap">
                       <span>One-Time Order:</span>
-                      <span className="font-extrabold text-white">$43 / bottle</span>
-                      <span className="text-gray-400 font-normal">($129 total)</span>
+                      <span className="font-extrabold text-white">$49 / bottle</span>
+                      <span className="text-gray-400 font-normal">($147 total)</span>
                     </span>
                     <span className="text-[11px] text-gray-300 flex items-center gap-1 mt-0.5">
                       <Truck className="w-3 h-3 text-[var(--color-levl-cyan)]" /> Free US Shipping • Single 3-month delivery
@@ -165,7 +165,7 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                   </div>
                 </div>
                 <span className="text-[10px] bg-white/10 text-gray-300 px-2 py-0.5 rounded font-medium border border-white/15 shrink-0">
-                  Save $18
+                  Save 17%
                 </span>
               </div>
             </motion.div>
@@ -211,16 +211,16 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                 "font-black text-xl sm:text-2xl tracking-tight",
                 activeSupply === '30' && isSubscription ? "text-[var(--color-levl-cyan)]" : "text-white"
               )}>
-                {activeSupply === '30' && isSubscription ? "$43" : "$49"}
+                {activeSupply === '30' && isSubscription ? "$49" : "$59"}
               </span>
               <span className="text-xs font-semibold text-[var(--color-levl-text-secondary)]">/ bottle</span>
             </div>
             <div className="flex items-center gap-1.5 mt-0.5">
               {activeSupply === '30' && isSubscription && (
-                <span className="text-[11px] line-through text-[var(--color-levl-text-muted)]">$49</span>
+                <span className="text-[11px] line-through text-[var(--color-levl-text-muted)]">$59</span>
               )}
               <span className="text-[11px] text-[var(--color-levl-text-muted)] font-medium">
-                {activeSupply === '30' && isSubscription ? "($43 total)" : "($49 total)"}
+                {activeSupply === '30' && isSubscription ? "($49 total)" : "($59 total)"}
               </span>
             </div>
           </div>
@@ -265,8 +265,8 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                     <span className="text-xs font-bold text-white flex items-center gap-1.5 flex-wrap">
                       <Sparkles className="w-3 h-3 text-[var(--color-levl-cyan)]" />
                       <span>Subscribe & Save:</span>
-                      <span className="text-[var(--color-levl-cyan)] font-extrabold">$43 / bottle</span>
-                      <span className="text-gray-400 font-normal">($43 total)</span>
+                      <span className="text-[var(--color-levl-cyan)] font-extrabold">$49 / bottle</span>
+                      <span className="text-gray-400 font-normal">($49 total)</span>
                     </span>
                     <span className="text-[11px] text-[var(--color-levl-cyan)] flex items-center gap-1 font-medium mt-0.5">
                       <Truck className="w-3 h-3" /> Free US Shipping • Deliver monthly
@@ -274,7 +274,7 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                   </div>
                 </div>
                 <span className="text-[10px] bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2 py-0.5 rounded font-bold border border-[var(--color-levl-cyan)]/30 shrink-0">
-                  Save 12%
+                  Save 17%
                 </span>
               </div>
 
@@ -302,8 +302,8 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                   <div className="flex flex-col">
                     <span className="text-xs font-bold text-white flex items-center gap-1.5 flex-wrap">
                       <span>One-Time Order:</span>
-                      <span className="font-extrabold text-white">$49 / bottle</span>
-                      <span className="text-gray-400 font-normal">($49 total)</span>
+                      <span className="font-extrabold text-white">$59 / bottle</span>
+                      <span className="text-gray-400 font-normal">($59 total)</span>
                     </span>
                     <span className="text-[11px] text-gray-400 mt-0.5">
                       Shipping calculated at checkout • Single bottle delivery

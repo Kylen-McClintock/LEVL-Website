@@ -59,10 +59,10 @@ export function StickyDesktopHeader({ product }: StickyDesktopHeaderProps) {
             <div className="flex items-center gap-6">
               <div className="flex flex-col items-end">
                 <span className="text-[var(--color-levl-cyan)] font-bold leading-tight">
-                  $39 / bottle • Free Shipping
+                  $44 / bottle • Free Shipping
                 </span>
                 <span className="text-[10px] text-[var(--color-levl-text-muted)] uppercase tracking-wider">
-                  ($117 for 90-Day Protocol)
+                  ($132 for 90-Day Protocol • Save 25%)
                 </span>
               </div>
               <button

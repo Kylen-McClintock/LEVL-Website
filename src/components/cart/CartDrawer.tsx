@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ShoppingBag, Trash2, Plus, Minus, ArrowRight, ShieldCheck } from 'lucide-react';
+import { X, ShoppingBag, Trash2, Plus, Minus, ArrowRight, ShieldCheck, Truck } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { CheckoutButton } from './CheckoutButton';
 import Image from 'next/image';
@@ -55,82 +55,141 @@ export function CartDrawer() {
                   <div className="animate-spin w-8 h-8 border-2 border-[var(--color-levl-cyan)] border-t-transparent rounded-full" />
                 </div>
               ) : cart?.lines?.edges?.length ? (
-                cart.lines.edges.map(({ node }) => (
-                  <div 
-                    key={node.id} 
-                    className="flex gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 transition-all"
-                  >
-                    <div className="relative w-20 h-20 rounded-lg overflow-hidden bg-[#060913] shrink-0 border border-white/5">
-                      {node.merchandise.image ? (
-                        <Image
-                          src={node.merchandise.image.url}
-                          alt={node.merchandise.image.altText || node.merchandise.title}
-                          fill
-                          className="object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-xs text-gray-500">
-                          LEVL
-                        </div>
-                      )}
-                    </div>
+                cart.lines.edges.map(({ node }) => {
+                  const isSubscription = Boolean(node.sellingPlanAllocation);
+                  const titleLower = `${node.merchandise.title || ''} ${node.sellingPlanAllocation?.sellingPlan?.name || ''}`.toLowerCase();
+                  const is90Day = 
+                    titleLower.includes('90') || 
+                    titleLower.includes('3 bottle') || 
+                    titleLower.includes('quarterly') || 
+                    node.merchandise.id?.includes('90');
 
-                    <div className="flex flex-col flex-1">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h3 className="font-semibold text-white text-sm">
-                            {node.merchandise.product?.title || 'LEVL LIFESPAN+'}
-                          </h3>
-                          <p className="text-xs text-[var(--color-levl-text-secondary)] mt-0.5">
-                            {node.merchandise.title}
-                          </p>
-                          {node.sellingPlanAllocation && (
-                            <span className="inline-block text-[11px] font-medium text-[var(--color-levl-cyan)] bg-[var(--color-levl-cyan)]/10 px-2 py-0.5 rounded-full border border-[var(--color-levl-cyan)]/20 mt-1">
-                              {node.sellingPlanAllocation.sellingPlan.name}
+                  // Frontend pricing:
+                  // 30-day one-time: $59 total ($59/bottle)
+                  // 30-day subscription: $49/month ($49/bottle)
+                  // 90-day one-time: $147 total ($49/bottle)
+                  // 90-day subscription: $132 every 3 months ($44/bottle)
+                  const unitPrice = is90Day 
+                    ? (isSubscription ? 132 : 147) 
+                    : (isSubscription ? 49 : 59);
+
+                  const pricePerBottle = is90Day 
+                    ? (isSubscription ? 44 : 49) 
+                    : (isSubscription ? 49 : 59);
+
+                  const lineTotal = unitPrice * node.quantity;
+
+                  // Blue pill delivery text:
+                  // "And in the blue pill say free delivery every month or 3 months depending on the order."
+                  const deliveryPillText = isSubscription
+                    ? (is90Day ? 'Free delivery every 3 months' : 'Free delivery every month')
+                    : (is90Day ? 'Free US delivery' : null);
+
+                  // Billing text:
+                  // "90-day subscription clearly states $132 billed every 3 months, while emphasizing $44/bottle."
+                  const billingScheduleText = isSubscription
+                    ? (is90Day ? '$132 billed every 3 months' : '$49 billed monthly')
+                    : (is90Day ? '$147 one-time purchase' : '$59 one-time purchase');
+
+                  return (
+                    <div 
+                      key={node.id} 
+                      className="flex gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 transition-all"
+                    >
+                      <div className="relative w-20 h-20 rounded-lg overflow-hidden bg-[#060913] shrink-0 border border-white/5">
+                        {node.merchandise.image ? (
+                          <Image
+                            src={node.merchandise.image.url}
+                            alt={node.merchandise.image.altText || node.merchandise.title}
+                            fill
+                            className="object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-xs text-gray-500">
+                            LEVL
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="flex flex-col flex-1 min-w-0">
+                        <div className="flex justify-between items-start gap-2">
+                          <div className="min-w-0 flex-1">
+                            <h3 className="font-semibold text-white text-sm leading-snug">
+                              {node.merchandise.product?.title || 'LEVL LIFESPAN+ DeepCell'}
+                            </h3>
+                            <p className="text-xs text-[var(--color-levl-text-secondary)] mt-0.5">
+                              {is90Day ? '90-Day Supply (3 Bottles)' : '30-Day Supply (1 Bottle)'}
+                            </p>
+                          </div>
+
+                          {/* Top Right Price & Emphasized per-bottle cost */}
+                          <div className="text-right shrink-0">
+                            <p className="font-bold text-white text-base leading-tight">
+                              ${lineTotal.toFixed(2)}
+                            </p>
+                            <span className="text-xs font-bold text-[var(--color-levl-cyan)] block">
+                              ${pricePerBottle}/bottle
                             </span>
-                          )}
-                        </div>
-                        <p className="font-semibold text-white text-sm">
-                          ${node.cost.totalAmount.amount}
-                        </p>
-                      </div>
-                      
-                      {/* Quantity & Delete */}
-                      <div className="flex items-center justify-between mt-auto pt-3">
-                        <div className="flex items-center gap-2 bg-black/50 rounded-full px-2.5 py-1 border border-white/10">
-                          <button 
-                            onClick={() => updateQuantity(node.id, node.quantity - 1)}
-                            disabled={isLoading}
-                            className="text-gray-400 hover:text-white p-0.5 disabled:opacity-40 transition-colors"
-                            aria-label="Decrease quantity"
-                          >
-                            <Minus className="w-3.5 h-3.5" />
-                          </button>
-                          <span className="text-xs font-semibold w-4 text-center text-white">
-                            {node.quantity}
-                          </span>
-                          <button 
-                            onClick={() => updateQuantity(node.id, node.quantity + 1)}
-                            disabled={isLoading}
-                            className="text-gray-400 hover:text-white p-0.5 disabled:opacity-40 transition-colors"
-                            aria-label="Increase quantity"
-                          >
-                            <Plus className="w-3.5 h-3.5" />
-                          </button>
+                          </div>
                         </div>
 
-                        <button
-                          onClick={() => removeItem(node.id)}
-                          disabled={isLoading}
-                          className="text-gray-500 hover:text-red-400 p-1.5 transition-colors disabled:opacity-40"
-                          title="Remove item"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+                        {/* Blue Delivery Pill */}
+                        {deliveryPillText && (
+                          <div className="mt-2">
+                            <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[var(--color-levl-cyan)] bg-[var(--color-levl-cyan)]/10 px-2.5 py-0.5 rounded-full border border-[var(--color-levl-cyan)]/25 whitespace-nowrap">
+                              <Truck className="w-3 h-3 shrink-0" />
+                              {deliveryPillText}
+                            </span>
+                          </div>
+                        )}
+
+                        {/* Billing Schedule & Emphasized Price Per Bottle */}
+                        <div className="mt-2 flex items-center gap-2 flex-wrap text-xs">
+                          <span className="text-gray-300 font-medium">
+                            {billingScheduleText}
+                          </span>
+                          <span className="text-[11px] font-extrabold text-[var(--color-levl-cyan)] bg-[var(--color-levl-cyan)]/15 px-2 py-0.5 rounded-md border border-[var(--color-levl-cyan)]/30">
+                            ${pricePerBottle}/bottle
+                          </span>
+                        </div>
+                        
+                        {/* Quantity & Delete */}
+                        <div className="flex items-center justify-between mt-auto pt-3">
+                          <div className="flex items-center gap-2 bg-black/50 rounded-full px-2.5 py-1 border border-white/10">
+                            <button 
+                              onClick={() => updateQuantity(node.id, node.quantity - 1)}
+                              disabled={isLoading}
+                              className="text-gray-400 hover:text-white p-0.5 disabled:opacity-40 transition-colors"
+                              aria-label="Decrease quantity"
+                            >
+                              <Minus className="w-3.5 h-3.5" />
+                            </button>
+                            <span className="text-xs font-semibold w-4 text-center text-white">
+                              {node.quantity}
+                            </span>
+                            <button 
+                              onClick={() => updateQuantity(node.id, node.quantity + 1)}
+                              disabled={isLoading}
+                              className="text-gray-400 hover:text-white p-0.5 disabled:opacity-40 transition-colors"
+                              aria-label="Increase quantity"
+                            >
+                              <Plus className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+
+                          <button
+                            onClick={() => removeItem(node.id)}
+                            disabled={isLoading}
+                            className="text-gray-500 hover:text-red-400 p-1.5 transition-colors disabled:opacity-40"
+                            title="Remove item"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))
+                  );
+                })
               ) : (
                 <div className="flex flex-col items-center justify-center py-16 text-center">
                   <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center mb-4 border border-white/10">
@@ -146,15 +205,27 @@ export function CartDrawer() {
 
             {/* Footer with Checkout CTA */}
             {cart && cart.lines?.edges?.length > 0 && (() => {
-              const subtotalNum = parseFloat(cart.cost.subtotalAmount.amount || '0');
-              const qualifiesForFreeShipping = subtotalNum >= 75;
+              const calculatedSubtotal = cart.lines.edges.reduce((sum, { node }) => {
+                const isSub = Boolean(node.sellingPlanAllocation);
+                const tLower = `${node.merchandise.title || ''} ${node.sellingPlanAllocation?.sellingPlan?.name || ''}`.toLowerCase();
+                const is90 = tLower.includes('90') || tLower.includes('3 bottle') || tLower.includes('quarterly') || node.merchandise.id?.includes('90');
+                const uPrice = is90 ? (isSub ? 132 : 147) : (isSub ? 49 : 59);
+                return sum + uPrice * node.quantity;
+              }, 0);
+
+              const qualifiesForFreeShipping = cart.lines.edges.some(({ node }) => {
+                const isSub = Boolean(node.sellingPlanAllocation);
+                const tLower = `${node.merchandise.title || ''} ${node.sellingPlanAllocation?.sellingPlan?.name || ''}`.toLowerCase();
+                const is90 = tLower.includes('90') || tLower.includes('3 bottle') || tLower.includes('quarterly') || node.merchandise.id?.includes('90');
+                return isSub || is90;
+              }) || calculatedSubtotal >= 75;
 
               return (
                 <div className="p-6 border-t border-[var(--color-levl-panel-border)] bg-[var(--color-levl-panel)] space-y-4">
                   {/* Free shipping banner if not qualified */}
                   {!qualifiesForFreeShipping && (
                     <div className="bg-[var(--color-levl-cyan)]/10 border border-[var(--color-levl-cyan)]/20 rounded-lg p-2.5 text-center text-xs text-[var(--color-levl-cyan)] font-medium">
-                      💡 Tip: 3-Bottle (90-Day) Protocols include <span className="font-bold underline">Free US Shipping</span>
+                      💡 Tip: 3-Bottle (90-Day) Protocols & all subscriptions include <span className="font-bold underline">Free US Shipping</span>
                     </div>
                   )}
 
@@ -162,7 +233,7 @@ export function CartDrawer() {
                     <div className="flex justify-between text-[var(--color-levl-text-secondary)]">
                       <span>Subtotal</span>
                       <span className="font-semibold text-white text-base">
-                        ${cart.cost.subtotalAmount.amount}
+                        ${calculatedSubtotal.toFixed(2)}
                       </span>
                     </div>
                     <div className="flex justify-between text-xs">

@@ -297,7 +297,7 @@ const MOCK_PRODUCT: ShopifyProduct = {
   },
   priceRange: {
     minVariantPrice: { amount: '49.00', currencyCode: 'USD' },
-    maxVariantPrice: { amount: '117.00', currencyCode: 'USD' },
+    maxVariantPrice: { amount: '147.00', currencyCode: 'USD' },
   },
   variants: {
     edges: [
@@ -306,7 +306,7 @@ const MOCK_PRODUCT: ShopifyProduct = {
           id: 'gid://shopify/ProductVariant/mock-variant-30',
           title: '30-Day Supply (1 Bottle)',
           availableForSale: true,
-          price: { amount: '49.00', currencyCode: 'USD' },
+          price: { amount: '59.00', currencyCode: 'USD' },
           sku: 'LVL-DC-30',
           image: { url: '/images/deepcell-bottle.jpg', altText: 'LEVL DeepCell 30-Day' },
           sellingPlanAllocations: {
@@ -315,12 +315,12 @@ const MOCK_PRODUCT: ShopifyProduct = {
                 node: {
                   sellingPlan: {
                     id: 'gid://shopify/SellingPlan/mock-plan-30',
-                    name: 'Subscribe & Save 30-Day ($43/mo)',
+                    name: 'Subscribe & Save ($49/month)',
                     options: [{ name: 'Delivery every', value: '30 Days' }],
                     priceAdjustments: [
                       {
                         adjustmentValue: {
-                          adjustmentPercentage: 12
+                          adjustmentPercentage: 17
                         }
                       }
                     ]
@@ -345,12 +345,12 @@ const MOCK_PRODUCT: ShopifyProduct = {
                 node: {
                   sellingPlan: {
                     id: 'gid://shopify/SellingPlan/mock-plan-90',
-                    name: 'Quarterly Protocol ($39/mo - $117 total)',
+                    name: 'Quarterly Protocol ($132 every 3 months - $44/bottle)',
                     options: [{ name: 'Delivery every', value: '90 Days' }],
                     priceAdjustments: [
                       {
                         adjustmentValue: {
-                          adjustmentPercentage: 20
+                          adjustmentPercentage: 25
                         }
                       }
                     ]
@@ -536,18 +536,32 @@ export async function addToCart(
     await mockDelay(300);
     
     const newEdges = lines.map(line => {
-      let price = 49.00;
+      let price = 59.00;
       let planName = 'One-Time Purchase';
-      let title = '30-Day Supply';
+      let title = '30-Day Supply (1 Bottle)';
       
-      if (line.sellingPlanId?.includes('90') || line.merchandiseId.includes('90')) {
-        price = 117.00;
+      const is90 = line.sellingPlanId?.includes('90') || 
+                   line.merchandiseId.includes('90') || 
+                   line.merchandiseId === 'gid://shopify/ProductVariant/46955690295494';
+
+      if (is90) {
         title = '90-Day Supply (3 Bottles)';
-        planName = 'Quarterly Protocol ($39/mo - $117 total)';
-      } else if (line.sellingPlanId?.includes('30')) {
-        price = 43.00;
+        if (line.sellingPlanId) {
+          price = 132.00;
+          planName = 'Quarterly Protocol ($132 every 3 months - $44/bottle)';
+        } else {
+          price = 147.00;
+          planName = 'One-Time Purchase';
+        }
+      } else {
         title = '30-Day Supply (1 Bottle)';
-        planName = 'Subscribe & Save (30-Day)';
+        if (line.sellingPlanId) {
+          price = 49.00;
+          planName = 'Monthly Protocol ($49/month)';
+        } else {
+          price = 59.00;
+          planName = 'One-Time Purchase';
+        }
       }
 
       return {

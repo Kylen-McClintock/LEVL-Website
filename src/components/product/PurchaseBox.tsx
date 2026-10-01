@@ -39,9 +39,9 @@ export function PurchaseBox({ product, judgeMeData }: PurchaseBoxProps) {
       return {
         variantId: activeVariant?.id || 'gid://shopify/ProductVariant/46955690295494',
         sellingPlanId: plan?.id || 'gid://shopify/SellingPlan/15180759238',
-        displayPrice: '$39 / bottle',
-        originalPrice: '$49',
-        perBottleText: '($117 total • Free US Shipping)'
+        displayPrice: '$44 / bottle',
+        originalPrice: '$59',
+        perBottleText: '($132 total • Free US Shipping)'
       };
     }
 
@@ -51,9 +51,9 @@ export function PurchaseBox({ product, judgeMeData }: PurchaseBoxProps) {
       return {
         variantId: activeVariant?.id || 'gid://shopify/ProductVariant/46955690262726',
         sellingPlanId: plan?.id || 'gid://shopify/SellingPlan/15180792006',
-        displayPrice: '$43 / bottle',
-        originalPrice: '$49',
-        perBottleText: '(Billed monthly • Free US Shipping)'
+        displayPrice: '$49 / bottle',
+        originalPrice: '$59',
+        perBottleText: '($49/mo • Free US Shipping)'
       };
     }
 
@@ -62,9 +62,9 @@ export function PurchaseBox({ product, judgeMeData }: PurchaseBoxProps) {
       return {
         variantId: activeVariant?.id || 'gid://shopify/ProductVariant/46955690295494',
         sellingPlanId: undefined,
-        displayPrice: '$43 / bottle',
-        originalPrice: '$49',
-        perBottleText: '($129 total • Free US Shipping)'
+        displayPrice: '$49 / bottle',
+        originalPrice: '$59',
+        perBottleText: '($147 total • Free US Shipping)'
       };
     }
 
@@ -73,7 +73,7 @@ export function PurchaseBox({ product, judgeMeData }: PurchaseBoxProps) {
     return {
       variantId: activeVariant?.id || 'gid://shopify/ProductVariant/46955690262726',
       sellingPlanId: undefined,
-      displayPrice: '$49',
+      displayPrice: '$59',
       originalPrice: null,
       perBottleText: '(Single bottle, one-time delivery)'
     };
@@ -143,16 +143,16 @@ export function PurchaseBox({ product, judgeMeData }: PurchaseBoxProps) {
             </span>
           )}
           {selectedPlan === 'subscribe-90' ? (
-            <span className="text-[11px] bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2.5 py-0.5 rounded-full border border-[var(--color-levl-cyan)]/40 font-bold shrink-0">
-              Save 20%
+            <span className="text-[11px] bg-gradient-to-r from-[var(--color-levl-cyan)]/25 to-emerald-500/25 text-[var(--color-levl-cyan)] px-2.5 py-0.5 rounded-full border border-[var(--color-levl-cyan)]/40 font-bold shrink-0">
+              Best Value • Save 25%
             </span>
           ) : selectedPlan === 'onetime-90' ? (
             <span className="text-[11px] bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2.5 py-0.5 rounded-full border border-[var(--color-levl-cyan)]/40 font-bold shrink-0">
-              Save $18
+              Save 17%
             </span>
           ) : selectedPlan === 'subscribe-30' ? (
             <span className="text-[11px] bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] px-2.5 py-0.5 rounded-full border border-[var(--color-levl-cyan)]/40 font-bold shrink-0">
-              Save 12%
+              Save 17%
             </span>
           ) : null}
         </div>

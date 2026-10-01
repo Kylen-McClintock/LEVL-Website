@@ -343,7 +343,7 @@ export const productContent = {
   ],
 
   faqs: [
-    { question: "How do subscriptions work?", answer: "When you subscribe, you save 15-20% and receive deliveries automatically every 30 or 90 days. You can pause, modify, or cancel your subscription at any time through your account portal." },
+    { question: "How do subscriptions work?", answer: "When you subscribe, you save up to 25% (25% on the 90-day protocol at $44/bottle, or 17% on the 30-day protocol at $49/bottle, compared to the $59 single-bottle baseline) and receive free deliveries automatically every 30 or 90 days. You can pause, modify, or cancel your subscription at any time through your account portal." },
     { question: "Can I cancel anytime?", answer: "Yes. There are no long-term commitments. You can cancel your subscription at any time with one click." },
     { question: "When should I take it?", answer: "We recommend taking DeepCell 30 to 60 minutes before your desired bedtime, ideally as part of a consistent evening wind-down routine." },
     { question: "Does it contain melatonin?", answer: "DeepCell does not contain exogenous melatonin. Instead, it provides the precursors (like L-Tryptophan and Vitamin B6) to help your body produce its own melatonin naturally." },

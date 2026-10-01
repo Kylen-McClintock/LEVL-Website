@@ -23,8 +23,8 @@ const ingredients = [
 
 export function ValueProposition() {
   const totalValue = ingredients.reduce((sum, item) => sum + item.price, 0);
-  const levlPrice = 39;
-  const percentSavings = 80;
+  const levlPrice = 44;
+  const percentSavings = 76;
 
   return (
     <div className="absolute inset-0 z-20 bg-[var(--color-levl-bg)] flex flex-col items-center justify-center p-3 md:p-6">
