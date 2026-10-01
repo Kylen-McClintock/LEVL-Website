@@ -142,24 +142,23 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                       className="accent-[var(--color-levl-cyan)] w-4 h-4 cursor-pointer"
                     />
                     <div className="flex flex-col">
-                      <div className="flex items-center gap-1.5 flex-wrap">
+                      <span className="text-xs font-bold text-white flex items-center gap-1.5 flex-wrap">
                         <Sparkles className="w-3.5 h-3.5 text-[var(--color-levl-cyan)]" />
-                        <span className="text-xs font-black text-white">Founder Pricing:</span>
-                        <span className="text-sm font-black text-[var(--color-levl-cyan)]">$31 / bottle</span>
-                        <span className="text-xs text-white font-bold">($93 total)</span>
-                        <span className="text-[11px] line-through text-gray-400">vs. $132 public</span>
-                      </div>
+                        <span>Founder Pricing:</span>
+                        <span className="font-extrabold text-white">$31 / bottle</span>
+                        <span className="text-gray-400 font-normal">($93 total)</span>
+                      </span>
                       <span className="text-[11px] text-[var(--color-levl-cyan)] flex items-center gap-1 font-medium mt-0.5">
-                        <Truck className="w-3 h-3" /> Free US Shipping • Deliver every 90 days • Additional 30% off for life
+                        <Truck className="w-3 h-3" /> Free US Shipping • Deliver every 90 days
                       </span>
                     </div>
                   </div>
-                  <div className="flex flex-col items-end shrink-0 pl-2">
+                  <div className="flex flex-col items-end gap-1 shrink-0 pl-2">
                     <span className="text-[10px] bg-gradient-to-r from-[var(--color-levl-cyan)] to-emerald-400 text-black px-2 py-0.5 rounded font-black tracking-wider uppercase shadow-sm">
                       Additional 30% Off
                     </span>
-                    <span className="text-[10px] text-[var(--color-levl-cyan)] font-bold mt-0.5">
-                      Save $39 vs public
+                    <span className="text-[10px] bg-white/10 text-gray-300 px-2 py-0.5 rounded font-medium border border-white/15 shrink-0">
+                      Save 47% total
                     </span>
                   </div>
                 </div>
@@ -198,13 +197,8 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                     </span>
                   </div>
                 </div>
-                <span className={cn(
-                  "text-[10px] px-2.5 py-0.5 rounded font-bold border shrink-0",
-                  isFounder
-                    ? "bg-white/10 text-gray-300 border-white/20 font-medium"
-                    : "bg-gradient-to-r from-[var(--color-levl-cyan)]/25 to-emerald-500/25 text-[var(--color-levl-cyan)] border-[var(--color-levl-cyan)]/40"
-                )}>
-                  {isFounder ? "Public Price" : "Best Value • Save 25%"}
+                <span className="text-[10px] px-2.5 py-0.5 rounded font-bold border shrink-0 bg-gradient-to-r from-[var(--color-levl-cyan)]/25 to-emerald-500/25 text-[var(--color-levl-cyan)] border-[var(--color-levl-cyan)]/40">
+                  Best Value • Save 25%
                 </span>
               </div>
 
@@ -235,8 +229,8 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                       <span className="font-extrabold text-white">$49 / bottle</span>
                       <span className="text-gray-400 font-normal">($147 total)</span>
                     </span>
-                    <span className="text-[11px] text-gray-300 flex items-center gap-1 mt-0.5">
-                      <Truck className="w-3 h-3 text-[var(--color-levl-cyan)]" /> Free US Shipping • Single 3-month delivery
+                    <span className="text-[11px] text-[var(--color-levl-cyan)] flex items-center gap-1 font-medium mt-0.5">
+                      <Truck className="w-3 h-3" /> Free US Shipping • Single 3-month delivery
                     </span>
                   </div>
                 </div>
@@ -343,24 +337,23 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                       className="accent-[var(--color-levl-cyan)] w-4 h-4 cursor-pointer"
                     />
                     <div className="flex flex-col">
-                      <div className="flex items-center gap-1.5 flex-wrap">
+                      <span className="text-xs font-bold text-white flex items-center gap-1.5 flex-wrap">
                         <Sparkles className="w-3.5 h-3.5 text-[var(--color-levl-cyan)]" />
-                        <span className="text-xs font-black text-white">Founder Pricing:</span>
-                        <span className="text-sm font-black text-[var(--color-levl-cyan)]">$35 / bottle</span>
-                        <span className="text-xs text-white font-bold">($35/mo)</span>
-                        <span className="text-[11px] line-through text-gray-400">vs. $49 public</span>
-                      </div>
+                        <span>Founder Pricing:</span>
+                        <span className="font-extrabold text-white">$35 / bottle</span>
+                        <span className="text-gray-400 font-normal">($35 total)</span>
+                      </span>
                       <span className="text-[11px] text-[var(--color-levl-cyan)] flex items-center gap-1 font-medium mt-0.5">
-                        <Truck className="w-3 h-3" /> Free US Shipping • Deliver monthly • Additional 30% off for life
+                        <Truck className="w-3 h-3" /> Free US Shipping • Deliver monthly
                       </span>
                     </div>
                   </div>
-                  <div className="flex flex-col items-end shrink-0 pl-2">
+                  <div className="flex flex-col items-end gap-1 shrink-0 pl-2">
                     <span className="text-[10px] bg-gradient-to-r from-[var(--color-levl-cyan)] to-emerald-400 text-black px-2 py-0.5 rounded font-black tracking-wider uppercase shadow-sm">
                       Additional 30% Off
                     </span>
-                    <span className="text-[10px] text-[var(--color-levl-cyan)] font-bold mt-0.5">
-                      Save $14/mo vs public
+                    <span className="text-[10px] bg-white/10 text-gray-300 px-2 py-0.5 rounded font-medium border border-white/15 shrink-0">
+                      Save 41% total
                     </span>
                   </div>
                 </div>
@@ -399,13 +392,8 @@ export function SubscriptionSelector({ selectedPlan, onChange }: SubscriptionSel
                     </span>
                   </div>
                 </div>
-                <span className={cn(
-                  "text-[10px] px-2.5 py-0.5 rounded font-bold border shrink-0",
-                  isFounder
-                    ? "bg-white/10 text-gray-300 border-white/20 font-medium"
-                    : "bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] border-[var(--color-levl-cyan)]/30"
-                )}>
-                  {isFounder ? "Public Price" : "Save 17%"}
+                <span className="text-[10px] px-2.5 py-0.5 rounded font-bold border shrink-0 bg-[var(--color-levl-cyan)]/20 text-[var(--color-levl-cyan)] border-[var(--color-levl-cyan)]/30">
+                  Save 17%
                 </span>
               </div>
 

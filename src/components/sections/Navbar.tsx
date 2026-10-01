@@ -55,20 +55,17 @@ export function Navbar({ showCart = true }: { showCart?: boolean } = {}) {
             {/* Top Founder Announcement Strip (Shown ONLY when founder access is active) */}
             {isFounder && (
                 <div className="w-full bg-gradient-to-r from-emerald-950 via-teal-900 to-emerald-950 border-b border-[var(--color-levl-cyan)]/30 text-white text-xs py-2 px-3 sm:px-4 shadow-lg mb-1 -mt-2 md:-mt-3">
-                    <Container className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 text-center">
-                        <div className="flex items-center justify-center gap-2 flex-wrap">
-                            <span className="hidden sm:inline-flex items-center gap-1 bg-[var(--color-levl-cyan)] text-black text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-sm">
+                    <Container className="flex flex-col items-center justify-center text-center">
+                        <p className="text-xs sm:text-sm font-bold text-white tracking-tight leading-snug">
+                            <span className="inline-flex items-center gap-1 bg-[var(--color-levl-cyan)] text-black text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-sm mr-2 align-middle shrink-0">
                                 <Sparkles className="w-3 h-3 text-black" />
                                 {founderCode}
                             </span>
-                            <span className="font-bold text-white tracking-tight text-xs sm:text-sm">
-                                {bannerHeadline}
-                            </span>
-                        </div>
-                        <span className="text-[var(--color-levl-cyan)] font-medium text-[11px] sm:text-xs">
-                            <span className="hidden sm:inline mr-1">•</span>
+                            <span>{bannerHeadline}</span>
+                        </p>
+                        <p className="text-[11px] sm:text-xs text-[var(--color-levl-cyan)] font-medium leading-tight mt-1">
                             {bannerSubtext}
-                        </span>
+                        </p>
                     </Container>
                 </div>
             )}
