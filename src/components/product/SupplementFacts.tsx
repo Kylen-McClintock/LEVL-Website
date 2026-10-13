@@ -41,6 +41,10 @@ export function SupplementFacts() {
         <p className="text-xs">
           <span className="font-bold">Other Ingredients:</span> Cellulose Capsule, Rice Flour, Magnesium Stearate (vegetable source).
         </p>
+
+        <p className="text-[11px] text-white/60 mt-3 pt-3 border-t border-white/20">
+          Manufactured in the USA in a GMP-compliant facility (Richardson, TX) for LEVL, Inc.
+        </p>
       </div>
     </div>
   );

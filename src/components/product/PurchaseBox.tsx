@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { ShieldCheck, Calendar, Truck, RefreshCcw, Loader2, Zap, Star } from 'lucide-react';
+import { ShieldCheck, Calendar, Truck, RefreshCcw, Loader2, Zap, Star, Award, Factory } from 'lucide-react';
 import { SubscriptionSelector, PlanType } from './SubscriptionSelector';
 import { QuantitySelector } from './QuantitySelector';
 import { JudgeMeStarBadge } from './JudgeMeStarBadge';
@@ -270,19 +270,18 @@ export function PurchaseBox({ product, judgeMeData }: PurchaseBoxProps) {
       {/* Trust Badges */}
       <div className="pt-4 border-t border-[var(--color-levl-panel-border)] grid grid-cols-2 gap-3">
         {[
-          "Secure checkout",
-          "Cancel anytime",
-          "Free US shipping on 90-day supply",
-          "60-day satisfaction guarantee"
-        ].map((trustItem, i) => {
-          const Icon = [ShieldCheck, RefreshCcw, Truck, Calendar][i % 4];
-          return (
-            <div key={i} className="flex items-center gap-2 text-xs text-[var(--color-levl-text-secondary)]">
-              <Icon className="w-3.5 h-3.5 text-[var(--color-levl-cyan)] shrink-0" />
-              <span>{trustItem}</span>
-            </div>
-          );
-        })}
+          { text: "Secure checkout", icon: ShieldCheck },
+          { text: "Cancel anytime", icon: RefreshCcw },
+          { text: "Free US shipping on 90-day supply", icon: Truck },
+          { text: "60-day satisfaction guarantee", icon: Calendar },
+          { text: "Manufactured in the USA", icon: Award },
+          { text: "GMP factory (Richardson, TX)", icon: Factory }
+        ].map((item, i) => (
+          <div key={i} className="flex items-center gap-2 text-xs text-[var(--color-levl-text-secondary)]">
+            <item.icon className="w-3.5 h-3.5 text-[var(--color-levl-cyan)] shrink-0" />
+            <span>{item.text}</span>
+          </div>
+        ))}
       </div>
 
       <p className="text-[11px] text-[var(--color-levl-text-muted)] text-center">

@@ -45,31 +45,34 @@ export function Navbar({ showCart = true }: { showCart?: boolean } = {}) {
     };
 
     return (
-        <nav
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-                isScrolled
-                    ? "bg-[#07090E]/60 backdrop-blur-xl border-b border-white/10 py-1 shadow-lg shadow-black/20"
-                    : "bg-transparent py-2 md:py-3"
-            }`}
-        >
-            {/* Top Founder Announcement Strip (Shown ONLY when founder access is active) */}
-            {isFounder && (
-                <div className="w-full bg-gradient-to-r from-emerald-950 via-teal-900 to-emerald-950 border-b border-[var(--color-levl-cyan)]/30 text-white text-xs py-2 px-3 sm:px-4 shadow-lg mb-1 -mt-2 md:-mt-3">
-                    <Container className="flex flex-col items-center justify-center text-center">
-                        <p className="text-xs sm:text-sm font-bold text-white tracking-tight leading-snug">
-                            <span className="inline-flex items-center gap-1 bg-[var(--color-levl-cyan)] text-black text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-sm mr-2 align-middle shrink-0">
-                                <Sparkles className="w-3 h-3 text-black" />
-                                {founderCode}
-                            </span>
-                            <span>{bannerHeadline}</span>
-                        </p>
-                        <p className="text-[11px] sm:text-xs text-[var(--color-levl-cyan)] font-medium leading-tight mt-1">
-                            {bannerSubtext}
-                        </p>
-                    </Container>
-                </div>
-            )}
-            <Container className="flex items-center justify-between h-12 md:h-14">
+        <>
+            <nav
+                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+                    isScrolled
+                        ? "bg-[#07090E]/60 backdrop-blur-xl border-b border-white/10 py-1 shadow-lg shadow-black/20"
+                        : "bg-transparent py-2 md:py-3"
+                }`}
+            >
+                {/* Top Founder Announcement Strip (Shown ONLY when founder access is active) */}
+                {isFounder && (
+                    <div 
+                        className="w-full bg-gradient-to-r from-emerald-950 via-teal-900 to-emerald-950 border-b border-[var(--color-levl-cyan)]/30 text-white text-xs py-2 px-3 sm:px-4 shadow-lg mb-1 -mt-2 md:-mt-3"
+                    >
+                        <Container className="flex flex-col items-center justify-center text-center">
+                            <p className="text-xs sm:text-sm font-bold text-white tracking-tight leading-snug">
+                                <span className="inline-flex items-center gap-1 bg-[var(--color-levl-cyan)] text-black text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-sm mr-2 align-middle shrink-0">
+                                    <Sparkles className="w-3 h-3 text-black" />
+                                    {founderCode}
+                                </span>
+                                <span>{bannerHeadline}</span>
+                            </p>
+                            <p className="text-[11px] sm:text-xs text-[var(--color-levl-cyan)] font-medium leading-tight mt-1">
+                                {bannerSubtext}
+                            </p>
+                        </Container>
+                    </div>
+                )}
+                <Container className="flex items-center justify-between h-12 md:h-14">
                 {/* Logo */}
                 <Link href="/" className="flex items-center">
                     <Image
@@ -180,5 +183,14 @@ export function Navbar({ showCart = true }: { showCart?: boolean } = {}) {
                 </motion.div>
             )}
         </nav>
+
+        {/* Spacer to push page content down when top founder banner is active */}
+        {isFounder && (
+            <div 
+                aria-hidden="true" 
+                className="w-full h-[68px] sm:h-[60px] md:h-[46px] pointer-events-none shrink-0" 
+            />
+        )}
+    </>
     );
 }

@@ -32,7 +32,7 @@ export function Footer() {
                         <p className="text-white/60 mb-6 max-w-sm">
                             Advanced Longevity Supplements to Extend Healthy Lifespan
                         </p>
-                        <p className="text-white/40 text-sm mb-6">© 2026 LEVL Health</p>
+                        <p className="text-white/40 text-sm mb-6">© 2026 LEVL, Inc. • Manufactured in the USA</p>
                         <div className="flex items-center gap-5">
                             <a href="https://www.linkedin.com/company/longevity-escape-velocity-labs" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white transition-colors" aria-label="LinkedIn">
                                 <Linkedin className="w-5 h-5" />
@@ -61,9 +61,12 @@ export function Footer() {
 
                     <div>
                         <h3 className="font-bold text-white mb-4">Legal</h3>
-                        <p className="text-xs text-white/30 leading-relaxed">
+                        <p className="text-xs text-white/30 leading-relaxed mb-3">
                             These statements have not been evaluated by the Food and Drug Administration.
                             This product is not intended to diagnose, treat, cure, or prevent any disease.
+                        </p>
+                        <p className="text-xs text-white/30 leading-relaxed">
+                            Manufactured in a GMP-compliant facility in Richardson, Texas for LEVL, Inc.
                         </p>
                     </div>
                 </div>

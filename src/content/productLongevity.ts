@@ -348,7 +348,8 @@ export const productContent = {
     { question: "When should I take it?", answer: "We recommend taking DeepCell 30 to 60 minutes before your desired bedtime, ideally as part of a consistent evening wind-down routine." },
     { question: "Does it contain melatonin?", answer: "DeepCell does not contain exogenous melatonin. Instead, it provides the precursors (like L-Tryptophan and Vitamin B6) to help your body produce its own melatonin naturally." },
     { question: "Is it vegan?", answer: "Yes, the formula is 100% vegan, gluten-free, and contains no artificial colors or preservatives." },
-    { question: "Will it make me groggy?", answer: "No. By avoiding heavy sedatives and massive doses of synthetic melatonin, DeepCell supports your natural sleep architecture so you wake up feeling refreshed, not groggy." }
+    { question: "Will it make me groggy?", answer: "No. By avoiding heavy sedatives and massive doses of synthetic melatonin, DeepCell supports your natural sleep architecture so you wake up feeling refreshed, not groggy." },
+    { question: "Where is LEVL DeepCell manufactured?", answer: "DeepCell is proudly formulated and manufactured in the USA in a GMP-compliant factory located in Richardson, Texas. Every batch is produced under strict quality control standards and undergoes rigorous third-party testing for purity, potency, and safety." }
   ],
 
   bottomCTA: {
