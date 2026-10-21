@@ -40,8 +40,8 @@ export function BentoImages() {
           </div>
 
           {/* Bottom Frosted Glass Panel (Seed formatting) */}
-          <div className="absolute bottom-6 left-0 right-0 md:left-12 md:right-12 md:bottom-12 overflow-x-auto hide-scrollbar snap-x snap-mandatory px-6 md:px-0">
-            <div className="flex md:grid md:grid-cols-3 gap-6 md:gap-8 bg-white/5 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-2xl w-max md:w-full">
+          <div className="absolute bottom-6 left-0 right-0 md:left-12 md:right-12 md:bottom-8 overflow-x-auto hide-scrollbar snap-x snap-mandatory px-6 md:px-0">
+            <div className="flex md:grid md:grid-cols-3 gap-6 md:gap-8 bg-white/5 backdrop-blur-md border border-white/10 p-6 md:px-8 md:py-6 rounded-2xl w-max md:w-full">
               
               <div className="w-[280px] md:w-auto snap-center flex-shrink-0 space-y-3">
                 <Moon className="w-8 h-8 text-[var(--color-levl-cyan)]" strokeWidth={1.5} />
