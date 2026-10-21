@@ -21,7 +21,8 @@ export function BentoImages() {
             src="/images/bento-bed.jpg"
             alt="Better Nights. More Tomorrows."
             fill
-            className="object-cover transition-transform duration-700 group-hover:scale-105"
+            quality={95}
+            className="object-cover object-bottom transition-transform duration-700 group-hover:scale-105"
             sizes="100vw"
             priority
           />
