@@ -1151,19 +1151,18 @@ export default function LevlAppShowcasePage() {
             </span>
             <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
               <span className="block">Follow Leading Longevity Protocols.</span>
-              <span className="block mt-1">
+              <span className="inline-flex items-baseline justify-center mt-1 whitespace-nowrap">
                 <span
-                  className="bg-clip-text text-transparent"
+                  className="bg-clip-text text-transparent mr-[0.26em]"
                   style={{
                     backgroundImage: isDark
                       ? "linear-gradient(135deg, #0ea5e9 0%, #10B981 100%)"
                       : "linear-gradient(135deg, #0284C7 0%, #0D9488 100%)",
                   }}
                 >
-                  Personalized to <em className="italic">Your</em>{" "}
+                  Personalized to <em className="italic">Your</em>
                 </span>
                 <span
-                  key={ROTATING_PERSONALIZATION_WORDS[rotatingWordIdx]}
                   onClick={() =>
                     setRotatingWordIdx(
                       (prev) =>
@@ -1171,14 +1170,29 @@ export default function LevlAppShowcasePage() {
                     )
                   }
                   title="Click to cycle"
-                  className="inline-block bg-clip-text text-transparent cursor-pointer transition-all duration-500 animate-fade-in"
-                  style={{
-                    backgroundImage: isDark
-                      ? "linear-gradient(135deg, #10B981 0%, #38BDF8 45%, #e879f9 100%)"
-                      : "linear-gradient(135deg, #0D9488 0%, #0284C7 45%, #4F46E5 100%)",
-                  }}
+                  className="inline-grid text-left cursor-pointer align-baseline"
                 >
-                  {ROTATING_PERSONALIZATION_WORDS[rotatingWordIdx]}
+                  {ROTATING_PERSONALIZATION_WORDS.map((word, idx) => {
+                    const isActive = idx === rotatingWordIdx;
+                    return (
+                      <span
+                        key={word}
+                        aria-hidden={!isActive}
+                        className={`col-start-1 row-start-1 justify-self-start text-left bg-clip-text text-transparent transition-all duration-300 whitespace-nowrap ${
+                          isActive
+                            ? "opacity-100 translate-y-0"
+                            : "opacity-0 translate-y-2 pointer-events-none select-none"
+                        }`}
+                        style={{
+                          backgroundImage: isDark
+                            ? "linear-gradient(135deg, #10B981 0%, #38BDF8 45%, #e879f9 100%)"
+                            : "linear-gradient(135deg, #0D9488 0%, #0284C7 45%, #4F46E5 100%)",
+                        }}
+                      >
+                        {word}
+                      </span>
+                    );
+                  })}
                 </span>
               </span>
             </h2>
