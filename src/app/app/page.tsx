@@ -20,7 +20,6 @@ import {
   type ShowcaseTheme,
   type CircadianPhaseId,
   type FamousProtocolId,
-  type BiologyProfileId,
 } from "@/components/app-showcase/IPhoneShowcaseFrame";
 import {
   EarlyAccessModal,
@@ -73,173 +72,112 @@ const HERO_SCREEN_OPTIONS: HeroScreenOption[] = [
 
 /* ============================================================================
  * LEADING PROTOCOLS × PERSONALIZED TO YOU (#famous-protocols)
+ * Single-Screen 5-Protocol Interactive Selector + Synced @3x Screenshots
  * ============================================================================ */
 
-interface FamousProtocolOption {
+interface LeadingProtocolSpec {
   id: FamousProtocolId;
-  pillLabel: string;
+  emoji: string;
+  title: string;
   shortName: string;
-  highlight?: boolean;
-}
-
-const FAMOUS_PROTOCOLS: FamousProtocolOption[] = [
-  {
-    id: "blueprint",
-    pillLabel: "🧬 Bryan Johnson — Blueprint",
-    shortName: "Blueprint",
-  },
-  {
-    id: "huberman",
-    pillLabel: "☀️ Andrew Huberman — Neuro-Circadian",
-    shortName: "Huberman Neuro-Circadian",
-  },
-  {
-    id: "attia",
-    pillLabel: "🫀 Peter Attia — Outlive 3.0",
-    shortName: "Attia Outlive 3.0",
-  },
-  {
-    id: "patrick",
-    pillLabel: "🔥 Rhonda Patrick — FoundMyFitness",
-    shortName: "Patrick FoundMyFitness",
-  },
-  {
-    id: "combined",
-    pillLabel: "✨ Combine All 4 Protocols",
-    shortName: "Combined 4-Protocol Stack",
-    highlight: true,
-  },
-];
-
-interface BiologyProfileSpec {
-  id: BiologyProfileId;
-  pillLabel: string;
-  label: string;
+  badge: string;
   screenshotSlug: ShowcaseSlug;
   blockedStrikethrough: string;
   blockedAction: string;
-  blockedClinicalWhy: string;
-  blockedPathways: string[];
   upgradeOneLiner: string;
-  upgradeClinicalWhy: string;
-  upgradePathways: string[];
-  beforeAfterSummary: string;
+  clinicalWhy: string;
+  pathways: string[];
   vectorScore: number;
   paceOfAging: string;
+  highlight?: boolean;
 }
 
-const BIOLOGY_PROFILES: BiologyProfileSpec[] = [
+const LEADING_PROTOCOLS: LeadingProtocolSpec[] = [
   {
-    id: "lifting-apob",
-    pillLabel: "🏋️ Lifting Heavy Today + High ApoB",
-    label: "Lifting Heavy Today + High ApoB",
+    id: "blueprint",
+    emoji: "🧬",
+    title: "Bryan Johnson — Blueprint",
+    shortName: "Bryan Johnson Blueprint",
+    badge: "Multi-Modality Synergy",
     screenshotSlug: "today-protocols",
-    blockedStrikethrough: "Post-Lift Cold Plunge (50°F)",
-    blockedAction: "Auto-Moved to Rest Day",
-    blockedClinicalWhy:
-      "Cold immersion or AMPK agonists (Metformin) within 4 hours after heavy resistance training blunts mTORC1, IGF-1, and ribosomal muscle protein synthesis by up to 24%.",
-    blockedPathways: [
-      "mTORC1 Protected",
-      "IGF-1 Preserved",
-      "p70S6K Ribosomal Synthesis",
-    ],
+    blockedStrikethrough: "11:00 AM Final Meal Cutoff & 50+ Daily Pills",
+    blockedAction: "Adapted to 12.5h Social Window & 6 Core Evidence Anchors",
     upgradeOneLiner:
-      "+ High-Polyphenol EVOO (15mL), Berberine & Post-Lift Sauna (174°F+)",
-    upgradeClinicalWhy:
-      "Elevates soluble fiber, Berberine/PCSK9 support, High-Polyphenol EVOO, and 20-minute post-lift Finnish dry sauna (174°F+) to drive ApoB <65 mg/dL, +eNOS endothelial compliance, and +3.2x HSP70.",
-    upgradePathways: [
-      "ApoB <65 mg/dL",
-      "+eNOS Nitric Oxide",
-      "+3.2x HSP70 Heat-Shock",
-    ],
-    beforeAfterSummary:
-      "Raw protocol post-lift ice bath & Metformin clash removed; lipid-lowering EVOO + post-lift 174°F+ sauna scheduled in Afternoon Dip window.",
-    vectorScore: 93,
+      "+ High-Polyphenol EVOO (15mL), Morning Sunlight & 65°F Sleep Sanctuary",
+    clinicalWhy:
+      "Extracts Blueprint’s highest-ROI clinical anchors while removing extreme 18-hour fasting cutoffs that disrupt thyroid T3, kisspeptin, and evening social dinners.",
+    pathways: ["ApoB <65 mg/dL", "mTOR/AMPK Balance", "0.72 DunedinPACE"],
+    vectorScore: 94,
     paceOfAging: "0.72 DunedinPACE",
   },
   {
-    id: "female-biology",
-    pillLabel: "🧬 Female Biology (Hormone & Thyroid Protected)",
-    label: "Female Biology (Hormone & Thyroid Protected)",
-    screenshotSlug: "today-morning-tasks",
-    blockedStrikethrough: "Extreme 18h Fast (11 AM Cutoff) + Fasted HIIT",
-    blockedAction: "Converted to 12.5h Window + 30g Morning Protein",
-    blockedClinicalWhy:
-      "Aggressive 18-hour fasting windows and fasted high-intensity intervals in female physiology downregulate kisspeptin neurons and T3 thyroid conversion while spiking morning HPA-axis cortisol.",
-    blockedPathways: [
-      "Kisspeptin Protected",
-      "Free T3 Thyroid Shield",
-      "HPA-Axis Cortisol Calm",
-    ],
+    id: "huberman",
+    emoji: "☀️",
+    title: "Andrew Huberman — Neuro-Circadian",
+    shortName: "Huberman Neuro-Circadian",
+    badge: "Circadian & Dopamine",
+    screenshotSlug: "protocol-huberman",
+    blockedStrikethrough: "50°F Ice Bath Immediately After Heavy Lifting",
+    blockedAction: "Auto-Moved to Rest Day (mTORC1 Hypertrophy Protected)",
     upgradeOneLiner:
-      "+ 30g Protein Within 45m of Waking, Piezo1 Axial Loading & 56°F Cold Calibration",
-    upgradeClinicalWhy:
-      "Prioritizes Heavy Axial Resistance + Plyometrics (Piezo1 osteoblast activation for Bone Density), Ferritin/Iron tracking, and warms Cold Plunge to 55°F–58°F to prevent luteal vasoconstriction.",
-    upgradePathways: [
-      "Piezo1 Bone Density",
-      "HPG Endocrine Axis",
-      "Ferritin & Luteal Shield",
-    ],
-    beforeAfterSummary:
-      "18h extreme fast & fasted HIIT replaced with hormone-safe 12.5h circadian feeding, morning protein anchor, and heavy axial bone loading.",
+      "+ 12m Morning Outdoor Sun, 90m Caffeine Delay & 20m Afternoon NSDR",
+    clinicalWhy:
+      "Anchors your suprachiasmatic nucleus (SCN) cortisol peak on waking, clears morning adenosine to eliminate the 2 PM crash, and restores striatal dopamine with afternoon NSDR.",
+    pathways: ["SCN Phase Lock", "+65% Striatal Dopamine", "mTORC1 Protected"],
+    vectorScore: 93,
+    paceOfAging: "0.73 DunedinPACE",
+  },
+  {
+    id: "attia",
+    emoji: "🫀",
+    title: "Peter Attia — Outlive 3.0",
+    shortName: "Peter Attia Outlive 3.0",
+    badge: "VO2 Max & Four Horsemen",
+    screenshotSlug: "protocol-attia",
+    blockedStrikethrough: "Norwegian 4x4 Intervals on <6h Sleep / Low HRV Day",
+    blockedAction: "Swapped to Zone 2 Recovery & Rescheduled to High-HRV Day",
+    upgradeOneLiner:
+      "+ 45m Zone 2 Mitochondrial Base, Centenarian Grip/Axial Load & ApoB Shield",
+    clinicalWhy:
+      "Protects your autonomic nervous system when overnight HRV drops while keeping weekly Zone 2 lactate clearance (<2.0 mmol/L), Piezo1 axial loading, and ApoB lipid targets on track.",
+    pathways: ["VO2 Max Top 2.5%", "Zone 2 Mitochondria", "ApoB <60 mg/dL"],
+    vectorScore: 95,
+    paceOfAging: "0.71 DunedinPACE",
+  },
+  {
+    id: "patrick",
+    emoji: "🔥",
+    title: "Rhonda Patrick — FoundMyFitness",
+    shortName: "Rhonda Patrick FoundMyFitness",
+    badge: "Sauna HSP70 & NRF2",
+    screenshotSlug: "protocol-patrick",
+    blockedStrikethrough: "Unverified Supplement Stacking & Pre-Lift Heat Fatigue",
+    blockedAction: "Sequenced 174°F+ Sauna Post-Lift & Verified Dose Triage",
+    upgradeOneLiner:
+      "+ 20m Post-Lift 174°F+ Sauna (+3.2x HSP70), Sulforaphane & Omega-3 >8%",
+    clinicalWhy:
+      "Places Finnish dry sauna immediately after resistance training to amplify heat-shock proteins (HSP70) and endothelial nitric oxide (eNOS) while activating cellular NRF2 detox.",
+    pathways: ["+3.2x HSP70", "NRF2 Glutathione", "Omega-3 Index >8%"],
     vectorScore: 92,
     paceOfAging: "0.73 DunedinPACE",
   },
   {
-    id: "sleep-debt",
-    pillLabel: "😴 Slept 5.5 Hours (Low HRV)",
-    label: "Slept 5.5 Hours (Low HRV)",
-    screenshotSlug: "adaptive-sleep-triage",
-    blockedStrikethrough: "Norwegian 4x4 VO2 Max & 50°F Cold Plunge",
-    blockedAction: "Auto-Benched Today by Adaptive Sleep Triage",
-    blockedClinicalWhy:
-      "Executing 95% HRmax sympathetic intervals on <6 hours of sleep compounds autonomic strain, spikes afternoon cortisol, and suppresses overnight HRV rebound.",
-    blockedPathways: [
-      "CNS Overtraining Blocked",
-      "Autonomic HRV Protected",
-      "Cortisol Capped",
-    ],
+    id: "combined",
+    emoji: "✨",
+    title: "Combine Multiple Protocols",
+    shortName: "Combined Multi-Protocol Stack",
+    badge: "4 Protocols Merged & De-Conflicted",
+    screenshotSlug: "protocol-combined",
+    blockedStrikethrough: "4x Duplicate Magnesium/Omega Doses & Cold-After-Lift Clash",
+    blockedAction: "Auto-Merged into 1 Safe Dose & Separated Competing Pathways",
     upgradeOneLiner:
-      "+ 20m Afternoon NSDR (14:00–16:00) & Acute 10g Creatine Prefrontal ATP Buffer",
-    upgradeClinicalWhy:
-      "Doubles Creatine Monohydrate from 5g → 10g to restore sleep-deprived prefrontal cortex phosphocreatine ATP and injects a guided 20-minute Non-Sleep Deep Rest (NSDR) parasympathetic reset.",
-    upgradePathways: [
-      "Prefrontal ATP Repletion",
-      "+Vagal Parasympathetic Tone",
-      "Adenosine Clearance",
-    ],
-    beforeAfterSummary:
-      "High-CNS 4x4 intervals automatically moved to Thursday; today's feed recalibrated for cognitive ATP recovery and early slow-wave sleep.",
-    vectorScore: 88,
-    paceOfAging: "0.75 DunedinPACE",
-  },
-  {
-    id: "busy-travel",
-    pillLabel: "⏱️ Busy Day (Only Have 20 Mins)",
-    label: "Busy Day (Only Have 20 Mins)",
-    screenshotSlug: "adaptive-8020-shield",
-    blockedStrikethrough: "20 Secondary & Marginal Protocol Steps",
-    blockedAction: "Auto-Deferred (Streak Protected)",
-    blockedClinicalWhy:
-      "Trying to force a rigid 24-step routine on a packed travel or executive workday causes 'all-or-nothing' protocol abandonment. Deferring Tier-2/Tier-3 items preserves consistency.",
-    blockedPathways: [
-      "Zero Burnout",
-      "Streak Preserved",
-      "Pareto 80/20 Filter",
-    ],
-    upgradeOneLiner:
-      "+ Locks In Top 4 Tier-1 Pareto Anchors (94% Benefits Retained)",
-    upgradeClinicalWhy:
-      "Filters your entire day down to core Tier-1 anchors: Outdoor Morning Sunlight, 10g Creatine + Essential Lipids, 60s Cool Shower Rinse, and Evening Mg L-Threonate + 3g Glycine.",
-    upgradePathways: [
-      "SCN Phase Lock",
-      "GLUT4 Glucose Disposal",
-      "100% Adherence Shield",
-    ],
-    beforeAfterSummary:
-      "Full checklist compressed into portable Tier-1 anchors you can execute anywhere in under 20 minutes while retaining 94% biological benefits.",
-    vectorScore: 89,
-    paceOfAging: "0.74 DunedinPACE",
+      "+ Blueprint EVOO + Huberman Sun/NSDR + Attia Zone 2 + Patrick 174°F Sauna",
+    clinicalWhy:
+      "When you subscribe to multiple protocols at once, LEVL de-duplicates overlapping supplements to cap upper-limit toxicity and separates AMPK/cold from mTORC1 heavy lifting.",
+    pathways: ["96% Protocol Synergy", "Zero Dose Overlap", "0.71 DunedinPACE"],
+    vectorScore: 96,
+    paceOfAging: "0.71 DunedinPACE",
+    highlight: true,
   },
 ];
 
@@ -815,18 +753,9 @@ export default function LevlAppShowcasePage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalInitialTab, setModalInitialTab] = useState<ModalTab>("waitlist");
 
-  // Leading Protocols × Personalized to You state
+  // Leading Protocols × Personalized to You state (5 Leading Protocols)
   const [selectedProtocolId, setSelectedProtocolId] =
     useState<FamousProtocolId>("blueprint");
-  const [selectedProfileId, setSelectedProfileId] =
-    useState<BiologyProfileId>("lifting-apob");
-  const [expandedXrayCards, setExpandedXrayCards] = useState<
-    Record<string, boolean>
-  >({
-    blocked: false,
-    upgraded: false,
-    result: false,
-  });
 
   // Section 2 (#adaptive-8020): 3-State Interactive Mode Switcher
   const [governorMode, setGovernorMode] =
@@ -907,10 +836,6 @@ export default function LevlAppShowcasePage() {
     setModalOpen(true);
   };
 
-  const toggleXrayCard = (key: "blocked" | "upgraded" | "result") => {
-    setExpandedXrayCards((prev) => ({ ...prev, [key]: !prev[key] }));
-  };
-
   const activeHeroIndex = Math.max(
     0,
     HERO_SCREEN_OPTIONS.findIndex((o) => o.slug === heroActiveSlug)
@@ -925,12 +850,8 @@ export default function LevlAppShowcasePage() {
     HERO_SCREEN_OPTIONS[(activeHeroIndex + 1) % HERO_SCREEN_OPTIONS.length];
 
   const activeProtocolSpec =
-    FAMOUS_PROTOCOLS.find((p) => p.id === selectedProtocolId) ||
-    FAMOUS_PROTOCOLS[0];
-
-  const activeProfileSpec =
-    BIOLOGY_PROFILES.find((p) => p.id === selectedProfileId) ||
-    BIOLOGY_PROFILES[0];
+    LEADING_PROTOCOLS.find((p) => p.id === selectedProtocolId) ||
+    LEADING_PROTOCOLS[0];
 
   const activeGovernorSpec =
     ADAPTIVE_GOVERNOR_MODES.find((m) => m.id === governorMode) ||
@@ -1290,7 +1211,7 @@ export default function LevlAppShowcasePage() {
             </div>
 
             {/* Desktop 3-Phone Perspective Stage (All Real @3x Retina Screenshots) */}
-            <div className="hidden lg:flex items-center justify-center relative min-h-[710px]">
+            <div className="hidden lg:flex items-center justify-center relative min-h-[620px]">
               {/* Left Tilted Phone (-8deg, scale-90): Adjacent Hero View */}
               <div
                 onClick={() => setHeroActiveSlug(leftHeroOption.slug)}
@@ -1336,7 +1257,7 @@ export default function LevlAppShowcasePage() {
             SOCIAL PROOF & CLINICAL RIGOR TICKER
            ==================================================================== */}
         <section
-          className="border-y py-6 backdrop-blur-xl"
+          className="border-y py-5 backdrop-blur-xl"
           style={{
             backgroundColor: tokens.cardBg,
             borderColor: tokens.cardBorder,
@@ -1373,404 +1294,293 @@ export default function LevlAppShowcasePage() {
         </section>
 
         {/* ====================================================================
-            SECTION 2 — SIMPLIFIED "LEADING PROTOCOLS × PERSONALIZED TO YOU" (#famous-protocols)
-            Sleek 1-Line Selector Pills + Click-to-Expand Result Cards + Real @3x Screenshot
+            SECTION 2 — "LEADING PROTOCOLS × PERSONALIZED TO YOU" (#famous-protocols)
+            Single-Screen 2-Column Layout: Left Header + 5 Clickable Protocol Cards | Right Synced <RealPhoneFrame />
            ==================================================================== */}
         <section
           id="famous-protocols"
-          className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28"
+          className="py-14 lg:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28"
         >
           <div id="mastermind-stacks" className="scroll-mt-28" />
 
-          {/* Section Header */}
-          <div className="text-center max-w-4xl mx-auto mb-12">
-            <span
-              className="text-xs sm:text-sm font-mono uppercase tracking-widest font-bold block mb-3"
-              style={{ color: tokens.accentCyan }}
-            >
-              LEADING PROTOCOLS × PERSONALIZED TO YOU
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
-              <span className="block">Follow Leading Longevity Protocols.</span>
-              <span className="inline-flex items-baseline justify-center mt-1 whitespace-nowrap">
-                <span
-                  className="bg-clip-text text-transparent mr-[0.26em]"
-                  style={{
-                    backgroundImage: isDark
-                      ? "linear-gradient(135deg, #0ea5e9 0%, #10B981 100%)"
-                      : "linear-gradient(135deg, #0284C7 0%, #0D9488 100%)",
-                  }}
-                >
-                  Personalized to <em className="italic">Your</em>
-                </span>
-                <span
-                  onClick={() =>
-                    setRotatingWordIdx(
-                      (prev) =>
-                        (prev + 1) % ROTATING_PERSONALIZATION_WORDS.length
-                    )
-                  }
-                  title="Click to cycle"
-                  className="inline-grid text-left cursor-pointer align-baseline"
-                >
-                  {ROTATING_PERSONALIZATION_WORDS.map((word, idx) => {
-                    const isActive = idx === rotatingWordIdx;
-                    return (
-                      <span
-                        key={word}
-                        aria-hidden={!isActive}
-                        className={`col-start-1 row-start-1 justify-self-start text-left bg-clip-text text-transparent transition-all duration-300 whitespace-nowrap ${
-                          isActive
-                            ? "opacity-100 translate-y-0"
-                            : "opacity-0 translate-y-2 pointer-events-none select-none"
-                        }`}
-                        style={{
-                          backgroundImage: isDark
-                            ? "linear-gradient(135deg, #10B981 0%, #38BDF8 45%, #e879f9 100%)"
-                            : "linear-gradient(135deg, #0D9488 0%, #0284C7 45%, #4F46E5 100%)",
-                        }}
-                      >
-                        {word}
-                      </span>
-                    );
-                  })}
-                </span>
-              </span>
-            </h2>
-            <p
-              className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto"
-              style={{ color: tokens.textSecondary }}
-            >
-              Bryan Johnson’s Blueprint was built for a 47-year-old male eating
-              his last meal at 11:00 AM with a full-time medical team—not you.
-              Pick a protocol and click your biology profile below to see how{" "}
-              <strong style={{ color: tokens.textPrimary }}>
-                LEVL: OutPace Aging
-              </strong>{" "}
-              adapts it in one tap.
-            </p>
-          </div>
-
-          {/* STEP 1 — Pick a Protocol (Sleek Horizontal 1-Line Pill Bar) */}
-          <div className="mb-6">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-extrabold uppercase bg-sky-500/20 text-sky-400 border border-sky-500/30">
-                Step 1
-              </span>
-              <span className="text-sm sm:text-base font-extrabold tracking-tight">
-                Pick a Protocol
-              </span>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2.5">
-              {FAMOUS_PROTOCOLS.map((proto) => {
-                const isSelected = proto.id === selectedProtocolId;
-                return (
-                  <button
-                    key={proto.id}
-                    type="button"
-                    onClick={() => setSelectedProtocolId(proto.id)}
-                    className="px-4 py-2.5 rounded-full border text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer hover:scale-[1.01]"
-                    style={{
-                      backgroundColor: isSelected
-                        ? isDark
-                          ? "rgba(14, 165, 233, 0.20)"
-                          : "rgba(2, 132, 199, 0.14)"
-                        : tokens.cardBg,
-                      borderColor: isSelected
-                        ? tokens.accentCyan
-                        : proto.highlight
-                        ? "rgba(232, 121, 249, 0.4)"
-                        : tokens.cardBorder,
-                      boxShadow: isSelected
-                        ? "0 0 20px -5px rgba(14, 165, 233, 0.35)"
-                        : "none",
-                    }}
-                  >
-                    <span>{proto.pillLabel}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* STEP 2 — Pick Your Biology Today (Sleek Horizontal 1-Line Pill Bar) */}
-          <div className="mb-10">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-extrabold uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                Step 2
-              </span>
-              <span className="text-sm sm:text-base font-extrabold tracking-tight">
-                Pick Your Biology Today
-              </span>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2.5">
-              {BIOLOGY_PROFILES.map((profile) => {
-                const isSelected = profile.id === selectedProfileId;
-                return (
-                  <button
-                    key={profile.id}
-                    type="button"
-                    onClick={() => setSelectedProfileId(profile.id)}
-                    className="px-4 py-2.5 rounded-full border text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer hover:scale-[1.01]"
-                    style={{
-                      backgroundColor: isSelected
-                        ? isDark
-                          ? "rgba(16, 185, 129, 0.20)"
-                          : "rgba(13, 148, 136, 0.14)"
-                        : tokens.cardBg,
-                      borderColor: isSelected
-                        ? tokens.accentEmerald
-                        : tokens.cardBorder,
-                      boxShadow: isSelected
-                        ? "0 0 20px -5px rgba(16, 185, 129, 0.35)"
-                        : "none",
-                    }}
-                  >
-                    <span>{profile.pillLabel}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* RESULT CARDS (Left Column: 1-Line Headlines + Click-to-Expand "Why? ▾") + Synced <RealPhoneFrame /> (Right Column) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-            {/* Left 7 Cols: 3 Sleek Scannable Cards with Progressive Disclosure */}
+            {/* Left 7 Cols: Compact Header + 5 Click-to-Expand Leading Protocol Cards */}
             <div className="lg:col-span-7 space-y-4">
-              {/* CARD 1: 🛑 BLOCKED / MOVED FOR YOU */}
-              <div
-                className="p-5 sm:p-6 rounded-3xl border backdrop-blur-xl transition-all"
-                style={{
-                  backgroundColor: isDark
-                    ? "rgba(239, 68, 68, 0.08)"
-                    : "rgba(254, 226, 226, 0.65)",
-                  borderColor: isDark
-                    ? "rgba(239, 68, 68, 0.35)"
-                    : "rgba(239, 68, 68, 0.4)",
-                }}
-              >
-                <div className="flex items-center justify-between gap-2 mb-2">
-                  <span className="text-xs font-mono font-extrabold uppercase tracking-wider text-red-400 flex items-center gap-1.5">
-                    <OctagonAlert className="w-4 h-4 shrink-0" />
-                    🛑 BLOCKED / MOVED FOR YOU
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => toggleXrayCard("blocked")}
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-mono font-bold border border-red-500/30 bg-red-500/10 text-red-400 cursor-pointer hover:bg-red-500/20 transition-all"
-                  >
-                    <span>Clinical Why?</span>
-                    <ChevronDown
-                      className={`w-3.5 h-3.5 transition-transform ${
-                        expandedXrayCards.blocked ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-                </div>
-
-                {/* Always-visible 1-line headline */}
-                <div className="text-base sm:text-lg font-bold leading-snug">
-                  <span className="line-through opacity-70 mr-2">
-                    {activeProfileSpec.blockedStrikethrough}
-                  </span>
-                  <span className="font-extrabold text-amber-400">
-                    → {activeProfileSpec.blockedAction}
-                  </span>
-                </div>
-
-                {/* Click-to-expand Clinical Why */}
-                {expandedXrayCards.blocked && (
-                  <div
-                    className="mt-3.5 pt-3.5 border-t space-y-2.5 text-sm sm:text-[15px] leading-relaxed"
-                    style={{
-                      borderColor: "rgba(239, 68, 68, 0.25)",
-                      color: tokens.textSecondary,
-                    }}
-                  >
-                    <p>
-                      <strong style={{ color: tokens.textPrimary }}>
-                        Clinical Mechanism:
-                      </strong>{" "}
-                      {activeProfileSpec.blockedClinicalWhy}
-                    </p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {activeProfileSpec.blockedPathways.map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-red-500/15 text-red-300 border border-red-500/30 font-semibold"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* CARD 2: ⚡ UPGRADED FOR YOUR BIOLOGY */}
-              <div
-                className="p-5 sm:p-6 rounded-3xl border backdrop-blur-xl transition-all"
-                style={{
-                  backgroundColor: isDark
-                    ? "rgba(16, 185, 129, 0.09)"
-                    : "rgba(209, 250, 229, 0.65)",
-                  borderColor: isDark
-                    ? "rgba(16, 185, 129, 0.38)"
-                    : "rgba(13, 148, 136, 0.4)",
-                }}
-              >
-                <div className="flex items-center justify-between gap-2 mb-2">
-                  <span
-                    className="text-xs font-mono font-extrabold uppercase tracking-wider flex items-center gap-1.5"
-                    style={{ color: tokens.accentEmerald }}
-                  >
-                    <Zap className="w-4 h-4 shrink-0" />
-                    ⚡ UPGRADED FOR YOUR BIOLOGY
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => toggleXrayCard("upgraded")}
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-mono font-bold border cursor-pointer transition-all"
-                    style={{
-                      borderColor: tokens.accentEmerald,
-                      color: tokens.accentEmerald,
-                      backgroundColor: isDark
-                        ? "rgba(16, 185, 129, 0.12)"
-                        : "rgba(13, 148, 136, 0.10)",
-                    }}
-                  >
-                    <span>Clinical Why?</span>
-                    <ChevronDown
-                      className={`w-3.5 h-3.5 transition-transform ${
-                        expandedXrayCards.upgraded ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-                </div>
-
-                {/* Always-visible 1-line headline */}
-                <div className="text-base sm:text-lg font-extrabold leading-snug">
-                  {activeProfileSpec.upgradeOneLiner}
-                </div>
-
-                {/* Click-to-expand Clinical Why */}
-                {expandedXrayCards.upgraded && (
-                  <div
-                    className="mt-3.5 pt-3.5 border-t space-y-2.5 text-sm sm:text-[15px] leading-relaxed"
-                    style={{
-                      borderColor: "rgba(16, 185, 129, 0.25)",
-                      color: tokens.textSecondary,
-                    }}
-                  >
-                    <p>
-                      <strong style={{ color: tokens.textPrimary }}>
-                        Targeted Pathway Upgrade:
-                      </strong>{" "}
-                      {activeProfileSpec.upgradeClinicalWhy}
-                    </p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {activeProfileSpec.upgradePathways.map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-semibold"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* CARD 3: ✅ YOUR RESULTING SCORE & TODAY FEED */}
-              <div
-                className="p-5 sm:p-6 rounded-3xl border backdrop-blur-xl space-y-4 transition-all"
-                style={{
-                  backgroundColor: tokens.cardBg,
-                  borderColor: tokens.accentCyan,
-                }}
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <span
-                    className="text-xs font-mono font-extrabold uppercase tracking-wider"
-                    style={{ color: tokens.accentCyan }}
-                  >
-                    ✅ YOUR RESULTING SCORE &amp; TODAY FEED
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => toggleXrayCard("result")}
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-mono font-bold border border-sky-500/30 bg-sky-500/10 text-sky-400 cursor-pointer hover:bg-sky-500/20 transition-all"
-                  >
-                    <span>Before / After ▾</span>
-                  </button>
-                </div>
-
-                {/* Always-visible 1-line headline */}
-                <div className="text-base sm:text-lg font-extrabold leading-snug flex flex-wrap items-center gap-2">
-                  <span className="text-emerald-400">
-                    Longevity Score: {activeProfileSpec.vectorScore}/100 (+7
-                    Surplus)
-                  </span>
-                  <span className="opacity-50">•</span>
-                  <span className="text-sky-400">
-                    Pace: {activeProfileSpec.paceOfAging}
-                  </span>
-                </div>
-
-                {/* Click-to-expand details */}
-                {expandedXrayCards.result && (
-                  <div
-                    className="pt-3 border-t text-sm sm:text-[15px] leading-relaxed"
-                    style={{
-                      borderColor: tokens.cardBorder,
-                      color: tokens.textSecondary,
-                    }}
-                  >
-                    <strong style={{ color: tokens.textPrimary }}>
-                      {activeProtocolSpec.shortName} × {activeProfileSpec.label}:
-                    </strong>{" "}
-                    {activeProfileSpec.beforeAfterSummary}
-                  </div>
-                )}
-
-                <button
-                  type="button"
-                  onClick={() => openModal("waitlist")}
-                  className="w-full py-3.5 px-6 rounded-2xl font-extrabold text-sm sm:text-base bg-gradient-to-r from-emerald-500 via-teal-400 to-sky-400 text-slate-950 shadow-xl shadow-emerald-500/20 hover:opacity-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              <div>
+                <span
+                  className="text-xs font-mono uppercase tracking-widest font-bold block mb-2"
+                  style={{ color: tokens.accentCyan }}
                 >
-                  <span>Personalize in LEVL: OutPace Aging →</span>
-                </button>
+                  LEADING PROTOCOLS × PERSONALIZED TO YOU
+                </span>
+                <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight mb-2.5 leading-tight">
+                  <span className="block">
+                    Follow Leading Longevity Protocols.
+                  </span>
+                  <span className="inline-flex items-baseline mt-0.5 whitespace-nowrap">
+                    <span
+                      className="bg-clip-text text-transparent mr-[0.26em]"
+                      style={{
+                        backgroundImage: isDark
+                          ? "linear-gradient(135deg, #0ea5e9 0%, #10B981 100%)"
+                          : "linear-gradient(135deg, #0284C7 0%, #0D9488 100%)",
+                      }}
+                    >
+                      Personalized to <em className="italic">Your</em>
+                    </span>
+                    <span
+                      onClick={() =>
+                        setRotatingWordIdx(
+                          (prev) =>
+                            (prev + 1) % ROTATING_PERSONALIZATION_WORDS.length
+                        )
+                      }
+                      title="Click to cycle"
+                      className="inline-grid text-left cursor-pointer align-baseline"
+                    >
+                      {ROTATING_PERSONALIZATION_WORDS.map((word, idx) => {
+                        const isActive = idx === rotatingWordIdx;
+                        return (
+                          <span
+                            key={word}
+                            aria-hidden={!isActive}
+                            className={`col-start-1 row-start-1 justify-self-start text-left bg-clip-text text-transparent transition-all duration-300 whitespace-nowrap ${
+                              isActive
+                                ? "opacity-100 translate-y-0"
+                                : "opacity-0 translate-y-2 pointer-events-none select-none"
+                            }`}
+                            style={{
+                              backgroundImage: isDark
+                                ? "linear-gradient(135deg, #10B981 0%, #38BDF8 45%, #e879f9 100%)"
+                                : "linear-gradient(135deg, #0D9488 0%, #0284C7 45%, #4F46E5 100%)",
+                            }}
+                          >
+                            {word}
+                          </span>
+                        );
+                      })}
+                    </span>
+                  </span>
+                </h2>
+                <p
+                  className="text-sm sm:text-base leading-relaxed"
+                  style={{ color: tokens.textSecondary }}
+                >
+                  Famous routines were built for one person’s lab panels, budget,
+                  and schedule—not yours. Click any protocol below to see its
+                  live{" "}
+                  <strong style={{ color: tokens.textPrimary }}>
+                    LEVL: OutPace Aging
+                  </strong>{" "}
+                  screen and how it adapts to your biology in one tap.
+                </p>
+              </div>
+
+              {/* 5 Click-to-Expand Protocol Cards (Only Active Card Expands) */}
+              <div className="space-y-2.5">
+                {LEADING_PROTOCOLS.map((proto) => {
+                  const isSelected = proto.id === selectedProtocolId;
+                  const panelId = `protocol-panel-${proto.id}`;
+                  return (
+                    <div
+                      key={proto.id}
+                      className="rounded-2xl border backdrop-blur-xl transition-all"
+                      style={{
+                        backgroundColor: isSelected
+                          ? isDark
+                            ? "rgba(14, 165, 233, 0.11)"
+                            : "rgba(224, 242, 254, 0.75)"
+                          : tokens.cardBg,
+                        borderColor: isSelected
+                          ? tokens.accentCyan
+                          : proto.highlight
+                          ? "rgba(232, 121, 249, 0.38)"
+                          : tokens.cardBorder,
+                        boxShadow: isSelected
+                          ? "0 0 24px -6px rgba(14, 165, 233, 0.28)"
+                          : "none",
+                      }}
+                    >
+                      <h3 className="m-0">
+                        <button
+                          type="button"
+                          aria-expanded={isSelected}
+                          aria-controls={panelId}
+                          onClick={() => setSelectedProtocolId(proto.id)}
+                          className="w-full px-4 py-3 sm:px-5 sm:py-3.5 text-left flex items-center justify-between gap-3 cursor-pointer"
+                        >
+                          <span className="flex items-center gap-3 min-w-0">
+                            <span className="text-xl leading-none shrink-0">
+                              {proto.emoji}
+                            </span>
+                            <span className="flex flex-wrap items-center gap-2 min-w-0">
+                              <span className="font-extrabold text-sm sm:text-base tracking-tight">
+                                {proto.title}
+                              </span>
+                              <span
+                                className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded-full border"
+                                style={{
+                                  borderColor: tokens.cardBorder,
+                                  color: proto.highlight
+                                    ? tokens.accentMagenta
+                                    : tokens.accentCyan,
+                                }}
+                              >
+                                {proto.badge}
+                              </span>
+                            </span>
+                          </span>
+
+                          <ChevronDown
+                            className={`w-4 h-4 shrink-0 transition-transform ${
+                              isSelected
+                                ? "rotate-180 text-sky-400"
+                                : "opacity-60"
+                            }`}
+                          />
+                        </button>
+                      </h3>
+
+                      {isSelected && (
+                        <div
+                          id={panelId}
+                          className="px-4 sm:px-5 pb-4 pt-3 border-t space-y-2.5 text-xs sm:text-sm leading-relaxed"
+                          style={{
+                            borderColor: tokens.cardBorder,
+                          }}
+                        >
+                          {/* Row 1: 🛑 Raw Protocol Blind Spot Blocked */}
+                          <div
+                            className="p-2.5 sm:p-3 rounded-xl border"
+                            style={{
+                              backgroundColor: isDark
+                                ? "rgba(239, 68, 68, 0.08)"
+                                : "rgba(254, 226, 226, 0.65)",
+                              borderColor: "rgba(239, 68, 68, 0.30)",
+                            }}
+                          >
+                            <div className="text-[10px] font-mono font-extrabold uppercase tracking-wider text-red-400 mb-0.5 flex items-center gap-1">
+                              <OctagonAlert className="w-3.5 h-3.5 shrink-0" />
+                              <span>🛑 RAW PROTOCOL BLIND SPOT ADJUSTED</span>
+                            </div>
+                            <div className="font-bold leading-snug">
+                              <span className="line-through opacity-70 mr-1.5">
+                                {proto.blockedStrikethrough}
+                              </span>
+                              <span className="text-amber-400 font-extrabold">
+                                → {proto.blockedAction}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Row 2: ⚡ Personalized Upgrade */}
+                          <div
+                            className="p-2.5 sm:p-3 rounded-xl border"
+                            style={{
+                              backgroundColor: isDark
+                                ? "rgba(16, 185, 129, 0.08)"
+                                : "rgba(209, 250, 229, 0.65)",
+                              borderColor: "rgba(16, 185, 129, 0.32)",
+                            }}
+                          >
+                            <div
+                              className="text-[10px] font-mono font-extrabold uppercase tracking-wider mb-0.5 flex items-center gap-1"
+                              style={{ color: tokens.accentEmerald }}
+                            >
+                              <Zap className="w-3.5 h-3.5 shrink-0" />
+                              <span>⚡ PERSONALIZED FOR YOUR BIOLOGY</span>
+                            </div>
+                            <div className="font-extrabold leading-snug mb-1">
+                              {proto.upgradeOneLiner}
+                            </div>
+                            <p
+                              className="text-xs leading-relaxed"
+                              style={{ color: tokens.textSecondary }}
+                            >
+                              {proto.clinicalWhy}
+                            </p>
+                          </div>
+
+                          {/* Footer Bar: Pathways + Resulting Longevity Score */}
+                          <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5">
+                            <div className="flex flex-wrap gap-1.5">
+                              {proto.pathways.map((tag) => (
+                                <span
+                                  key={tag}
+                                  className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-semibold"
+                                >
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                            <span className="text-xs font-mono font-extrabold text-sky-400">
+                              Score: {proto.vectorScore}/100 • {proto.paceOfAging}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
-            {/* Right 5 Cols: Synced Real @3x Screenshot Inside <RealPhoneFrame /> */}
-            <div className="lg:col-span-5 flex justify-center">
+            {/* Right 5 Cols: Quick Protocol Switcher Pills + Synced Real @3x Screenshot */}
+            <div className="lg:col-span-5 flex flex-col items-center">
+              <div className="flex flex-wrap items-center justify-center gap-1.5 mb-3">
+                {LEADING_PROTOCOLS.map((proto) => {
+                  const active = proto.id === selectedProtocolId;
+                  return (
+                    <button
+                      key={proto.id}
+                      type="button"
+                      onClick={() => setSelectedProtocolId(proto.id)}
+                      className={`px-2.5 py-1 rounded-full text-[11px] font-bold border transition-all cursor-pointer ${
+                        active
+                          ? "bg-sky-400 text-slate-950 border-sky-300 shadow-md"
+                          : "opacity-75 hover:opacity-100"
+                      }`}
+                      style={
+                        !active
+                          ? {
+                              backgroundColor: tokens.cardBg,
+                              borderColor: tokens.cardBorder,
+                            }
+                          : undefined
+                      }
+                    >
+                      {proto.emoji}{" "}
+                      {proto.id === "combined"
+                        ? "Combined"
+                        : proto.title.split(" — ")[0].split(" ").slice(-1)[0]}
+                    </button>
+                  );
+                })}
+              </div>
+
               <RealPhoneFrame
                 src={getShowcaseImage(
-                  activeProfileSpec.screenshotSlug,
+                  activeProtocolSpec.screenshotSlug,
                   previewTheme
                 )}
-                alt={`LEVL: OutPace Aging — ${activeProtocolSpec.shortName} × ${activeProfileSpec.label}`}
-                caption={`${activeProtocolSpec.shortName} × ${activeProfileSpec.label}`}
+                alt={`LEVL: OutPace Aging — ${activeProtocolSpec.shortName}`}
+                caption={`${activeProtocolSpec.shortName} (${activeProtocolSpec.badge})`}
               />
             </div>
           </div>
         </section>
 
         {/* ====================================================================
-            SECTION 2 (#adaptive-8020):
+            SECTION 3 (#adaptive-8020):
             "Toggle Your Biology & Daily Reality"
             3-State Interactive Mode Switcher + <RealPhoneFrame />
            ==================================================================== */}
         <section
           id="adaptive-8020"
-          className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28"
+          className="py-14 lg:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            <div className="lg:col-span-7 space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+            <div className="lg:col-span-7 space-y-5">
               <div>
                 <span
                   className="text-xs font-mono uppercase tracking-widest font-bold block mb-2"
@@ -1778,14 +1588,14 @@ export default function LevlAppShowcasePage() {
                 >
                   TOGGLE YOUR BIOLOGY &amp; DAILY REALITY • ADAPTIVE ROUTINE GOVERNOR
                 </span>
-                <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
+                <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight mb-2.5 leading-tight">
                   Toggle Your Biology &amp; Daily Reality:{" "}
                   <span style={{ color: tokens.accentEmerald }}>
                     80/20 Survival Shield &amp; Poor Sleep Triage.
                   </span>
                 </h2>
                 <p
-                  className="text-base sm:text-lg leading-relaxed"
+                  className="text-sm sm:text-base leading-relaxed"
                   style={{ color: tokens.textSecondary }}
                 >
                   Rigid 25-step checklists cause “all-or-nothing burnout” on
@@ -1800,7 +1610,7 @@ export default function LevlAppShowcasePage() {
               </div>
 
               {/* 3-State Interactive Mode Switcher Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                 {ADAPTIVE_GOVERNOR_MODES.map((m) => {
                   const active = governorMode === m.id;
                   return (
@@ -1808,7 +1618,7 @@ export default function LevlAppShowcasePage() {
                       key={m.id}
                       type="button"
                       onClick={() => setGovernorMode(m.id)}
-                      className="p-4 rounded-2xl border text-left transition-all cursor-pointer hover:scale-[1.01]"
+                      className="p-3.5 rounded-2xl border text-left transition-all cursor-pointer hover:scale-[1.01]"
                       style={{
                         backgroundColor: active
                           ? isDark
@@ -1824,7 +1634,7 @@ export default function LevlAppShowcasePage() {
                       }}
                     >
                       <span
-                        className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-emerald-500/15 inline-block mb-1.5"
+                        className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-emerald-500/15 inline-block mb-1"
                         style={{ color: tokens.accentEmerald }}
                       >
                         {m.stateLabel} • {m.badge}
@@ -1833,7 +1643,7 @@ export default function LevlAppShowcasePage() {
                         {m.title}
                       </div>
                       <div
-                        className="text-xs mt-1"
+                        className="text-xs mt-0.5"
                         style={{ color: tokens.textSecondary }}
                       >
                         {m.sub}
@@ -1845,14 +1655,14 @@ export default function LevlAppShowcasePage() {
 
               {/* Active Mode Details Card */}
               <div
-                className="p-6 rounded-3xl border backdrop-blur-xl space-y-4"
+                className="p-5 rounded-3xl border backdrop-blur-xl space-y-3"
                 style={{
                   backgroundColor: tokens.cardBg,
                   borderColor: tokens.cardBorder,
                 }}
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <h3 className="text-lg sm:text-xl font-extrabold">
+                  <h3 className="text-base sm:text-lg font-extrabold">
                     {activeGovernorSpec.headline}
                   </h3>
                   <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
@@ -1860,16 +1670,16 @@ export default function LevlAppShowcasePage() {
                   </span>
                 </div>
                 <p
-                  className="text-[15px] sm:text-base"
+                  className="text-sm sm:text-[15px]"
                   style={{ color: tokens.textSecondary }}
                 >
                   {activeGovernorSpec.summary}
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-sm font-semibold">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm font-semibold">
                   {activeGovernorSpec.bullets.map((step) => (
                     <div
                       key={step}
-                      className="p-3 rounded-xl border flex items-start gap-2"
+                      className="p-2.5 rounded-xl border flex items-start gap-2"
                       style={{ borderColor: tokens.cardBorder }}
                     >
                       <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
@@ -1882,7 +1692,7 @@ export default function LevlAppShowcasePage() {
 
             {/* Right 5 Cols: Real @3x Screenshot Inside <RealPhoneFrame /> + Quick Pill Switcher Above Phone */}
             <div className="lg:col-span-5 flex flex-col items-center">
-              <div className="flex flex-wrap items-center justify-center gap-1.5 mb-4">
+              <div className="flex flex-wrap items-center justify-center gap-1.5 mb-3">
                 {ADAPTIVE_GOVERNOR_MODES.map((m) => {
                   const active = governorMode === m.id;
                   return (
@@ -1890,7 +1700,7 @@ export default function LevlAppShowcasePage() {
                       key={m.id}
                       type="button"
                       onClick={() => setGovernorMode(m.id)}
-                      className={`px-3 py-1.5 rounded-full text-[11px] font-bold border transition-all cursor-pointer ${
+                      className={`px-3 py-1 rounded-full text-[11px] font-bold border transition-all cursor-pointer ${
                         active
                           ? "bg-emerald-500 text-slate-950 border-emerald-400 shadow-md"
                           : "opacity-75 hover:opacity-100"
@@ -1920,135 +1730,142 @@ export default function LevlAppShowcasePage() {
         </section>
 
         {/* ====================================================================
-            SECTION 3 (#modality-applets):
-            "Modality-Specific Interactive Applets" (All 8 Applets + <RealPhoneFrame />)
+            SECTION 4 (#modality-applets):
+            "Modality-Specific Interactive Applets"
+            Single-Screen Layout: Left Header + 2x4 Applet Selector Grid + Active Detail Card | Right <RealPhoneFrame />
            ==================================================================== */}
         <section
           id="modality-applets"
-          className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28"
+          className="py-14 lg:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28"
         >
-          <div className="text-center max-w-4xl mx-auto mb-14">
-            <span
-              className="text-xs sm:text-sm font-mono uppercase tracking-widest font-bold block mb-3"
-              style={{ color: tokens.accentEmerald }}
-            >
-              MODALITY-SPECIFIC INTERACTIVE APPLETS
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
-              Don’t Just Check a Box.{" "}
-              <span
-                className="bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: isDark
-                    ? "linear-gradient(135deg, #10B981 0%, #38BDF8 60%, #A855F7 100%)"
-                    : "linear-gradient(135deg, #0D9488 0%, #0284C7 60%, #4F46E5 100%)",
-                }}
-              >
-                Execute Every Modality with Built-In Clinical Applets.
-              </span>
-            </h2>
-            <p
-              className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto"
-              style={{ color: tokens.textSecondary }}
-            >
-              Click any of the 8 modality-specific interactive applets below to
-              expand its clinical guidance and preview the real `@3x` screen
-              inside{" "}
-              <strong style={{ color: tokens.textPrimary }}>
-                LEVL: OutPace Aging
-              </strong>
-              .
-            </p>
-          </div>
-
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-            {/* Left Column: 8 Click-to-Expand Applet Cards */}
-            <div className="lg:col-span-7 space-y-3">
-              {MODALITY_APPLETS.map((applet) => {
-                const isSelected = applet.id === activeAppletId;
-                const panelId = `applet-panel-${applet.id}`;
-                return (
-                  <div
-                    key={applet.id}
-                    className="rounded-2xl border backdrop-blur-xl transition-all"
+            {/* Left Column: Section Header + 2x4 Compact Selector Grid + Active Applet Clinical Spec Card */}
+            <div className="lg:col-span-7 space-y-4">
+              <div>
+                <span
+                  className="text-xs font-mono uppercase tracking-widest font-bold block mb-2"
+                  style={{ color: tokens.accentEmerald }}
+                >
+                  MODALITY-SPECIFIC INTERACTIVE APPLETS
+                </span>
+                <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight mb-2.5 leading-tight">
+                  Don’t Just Check a Box.{" "}
+                  <span
+                    className="bg-clip-text text-transparent"
                     style={{
-                      backgroundColor: isSelected
-                        ? isDark
-                          ? "rgba(14, 165, 233, 0.12)"
-                          : "rgba(224, 242, 254, 0.75)"
-                        : tokens.cardBg,
-                      borderColor: isSelected
-                        ? tokens.accentCyan
-                        : tokens.cardBorder,
-                      boxShadow: isSelected
-                        ? "0 0 25px -5px rgba(14, 165, 233, 0.30)"
-                        : "none",
+                      backgroundImage: isDark
+                        ? "linear-gradient(135deg, #10B981 0%, #38BDF8 60%, #A855F7 100%)"
+                        : "linear-gradient(135deg, #0D9488 0%, #0284C7 60%, #4F46E5 100%)",
                     }}
                   >
-                    <h3 className="m-0">
-                      <button
-                        type="button"
-                        aria-expanded={isSelected}
-                        aria-controls={panelId}
-                        onClick={() => setActiveAppletId(applet.id)}
-                        className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-3 cursor-pointer"
-                      >
-                        <span className="flex items-center gap-3 min-w-0">
-                          <span className="text-2xl leading-none shrink-0">
-                            {applet.emoji}
+                    Execute Every Modality with Built-In Clinical Applets.
+                  </span>
+                </h2>
+                <p
+                  className="text-sm sm:text-base leading-relaxed"
+                  style={{ color: tokens.textSecondary }}
+                >
+                  Select any of the 8 built-in clinical applets below to inspect
+                  its biological execution guidance and live screen inside{" "}
+                  <strong style={{ color: tokens.textPrimary }}>
+                    LEVL: OutPace Aging
+                  </strong>
+                  .
+                </p>
+              </div>
+
+              {/* 2x4 Compact Applet Selector Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                {MODALITY_APPLETS.map((applet) => {
+                  const isSelected = applet.id === activeAppletId;
+                  return (
+                    <button
+                      key={applet.id}
+                      type="button"
+                      onClick={() => setActiveAppletId(applet.id)}
+                      className="p-3 sm:p-3.5 rounded-2xl border text-left flex items-center justify-between gap-2.5 transition-all cursor-pointer hover:scale-[1.01]"
+                      style={{
+                        backgroundColor: isSelected
+                          ? isDark
+                            ? "rgba(14, 165, 233, 0.14)"
+                            : "rgba(224, 242, 254, 0.80)"
+                          : tokens.cardBg,
+                        borderColor: isSelected
+                          ? tokens.accentCyan
+                          : tokens.cardBorder,
+                        boxShadow: isSelected
+                          ? "0 0 22px -6px rgba(14, 165, 233, 0.30)"
+                          : "none",
+                      }}
+                    >
+                      <span className="flex items-center gap-2.5 min-w-0">
+                        <span className="text-xl leading-none shrink-0">
+                          {applet.emoji}
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block font-extrabold text-xs sm:text-sm tracking-tight truncate">
+                            {applet.title}
                           </span>
-                          <span className="flex flex-wrap items-center gap-2 min-w-0">
-                            <span className="font-extrabold text-base sm:text-lg tracking-tight">
-                              {applet.title}
-                            </span>
-                            <span
-                              className="text-xs font-mono font-normal px-2 py-0.5 rounded-full border"
-                              style={{
-                                borderColor: tokens.cardBorder,
-                                color: tokens.accentCyan,
-                              }}
-                            >
-                              {applet.subtitle}
-                            </span>
+                          <span
+                            className="block text-[11px] font-mono truncate"
+                            style={{ color: tokens.accentCyan }}
+                          >
+                            {applet.subtitle}
                           </span>
                         </span>
+                      </span>
+                      <span
+                        className={`w-2 h-2 rounded-full shrink-0 ${
+                          isSelected ? "bg-sky-400" : "bg-white/15"
+                        }`}
+                      />
+                    </button>
+                  );
+                })}
+              </div>
 
-                        <ChevronDown
-                          className={`w-4 h-4 shrink-0 transition-transform ${
-                            isSelected
-                              ? "rotate-180 text-sky-400"
-                              : "opacity-60"
-                          }`}
-                        />
-                      </button>
+              {/* Active Applet Expanded Clinical Detail Box */}
+              <div
+                className="p-4 sm:p-5 rounded-3xl border backdrop-blur-xl space-y-2.5"
+                style={{
+                  backgroundColor: tokens.cardBg,
+                  borderColor: tokens.accentCyan,
+                }}
+              >
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl">{activeAppletSpec.emoji}</span>
+                    <h3 className="text-base sm:text-lg font-extrabold">
+                      {activeAppletSpec.title}
                     </h3>
-
-                    {/* Expanded Clinical Execution Specs (Shown ONLY when expanded) */}
-                    {isSelected && (
-                      <div
-                        id={panelId}
-                        className="px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 border-t space-y-3 text-sm sm:text-[15px] leading-relaxed"
-                        style={{
-                          borderColor: tokens.cardBorder,
-                          color: tokens.textSecondary,
-                        }}
-                      >
-                        <p>{applet.details}</p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {applet.badges.map((b) => (
-                            <span
-                              key={b}
-                              className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-semibold"
-                            >
-                              {b}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
                   </div>
-                );
-              })}
+                  <span
+                    className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full border"
+                    style={{
+                      borderColor: tokens.cardBorder,
+                      color: tokens.accentCyan,
+                    }}
+                  >
+                    {activeAppletSpec.subtitle}
+                  </span>
+                </div>
+                <p
+                  className="text-xs sm:text-sm leading-relaxed"
+                  style={{ color: tokens.textSecondary }}
+                >
+                  {activeAppletSpec.details}
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {activeAppletSpec.badges.map((b) => (
+                    <span
+                      key={b}
+                      className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-semibold"
+                    >
+                      {b}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Right Column: Synced <RealPhoneFrame /> */}
@@ -2063,52 +1880,16 @@ export default function LevlAppShowcasePage() {
         </section>
 
         {/* ====================================================================
-            SECTION 4 (#core-intelligence):
+            SECTION 5 (#core-intelligence):
             "Identify what actually works to slow your pace of aging"
-            (Biological Intelligence & Outcome Attribution Engine)
+            Single-Screen Layout: Left <RealPhoneFrame /> | Right Header + 6 Compact Intelligence Cards
            ==================================================================== */}
         <section
           id="core-intelligence"
-          className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28"
+          className="py-14 lg:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28"
         >
           <div id="vector-score" className="scroll-mt-28" />
           <div id="clinical-evidence" className="scroll-mt-28" />
-
-          <div className="text-center max-w-4xl mx-auto mb-14">
-            <span
-              className="text-xs sm:text-sm font-mono uppercase tracking-widest font-bold block mb-3"
-              style={{ color: tokens.accentCyan }}
-            >
-              BIOLOGICAL INTELLIGENCE &amp; OUTCOME ATTRIBUTION ENGINE
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
-              Identify what <em className="italic font-serif">actually</em> works
-              to{" "}
-              <span
-                className="bg-clip-text text-transparent"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(135deg, #34D399 0%, #38BDF8 50%, #F472B6 100%)",
-                }}
-              >
-                slow your pace of aging
-              </span>
-            </h2>
-            <p
-              className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto"
-              style={{ color: tokens.textSecondary }}
-            >
-              Most health apps just give you a static checklist.{" "}
-              <strong style={{ color: tokens.textPrimary }}>
-                LEVL: OutPace Aging
-              </strong>{" "}
-              closes the loop—connecting your daily protocol adherence to your
-              live 0–100 Longevity Score, N-of-1 Outcome &amp; Biomarker
-              Attribution, 8 Biological Vectors &amp; Hallmarks of Aging Radar,
-              Physiological &amp; Epigenetic Age Testing, Daily Emotion Check-in,
-              and AI Longevity Coach.
-            </p>
-          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             {/* Left Column: Synced <RealPhoneFrame /> */}
@@ -2120,93 +1901,128 @@ export default function LevlAppShowcasePage() {
               />
             </div>
 
-            {/* Right Column: 6 Click-to-Expand Intelligence Cards */}
-            <div className="lg:col-span-7 space-y-3 order-1 lg:order-2">
-              {CORE_INTELLIGENCE_CARDS.map((card) => {
-                const isSelected = card.id === activeIntelId;
-                const panelId = `intel-panel-${card.id}`;
-                return (
-                  <div
-                    key={card.id}
-                    className="rounded-2xl border backdrop-blur-xl transition-all"
+            {/* Right Column: Compact Section Header + 6 Click-to-Expand Intelligence Cards */}
+            <div className="lg:col-span-7 space-y-4 order-1 lg:order-2">
+              <div>
+                <span
+                  className="text-xs font-mono uppercase tracking-widest font-bold block mb-2"
+                  style={{ color: tokens.accentCyan }}
+                >
+                  BIOLOGICAL INTELLIGENCE &amp; OUTCOME ATTRIBUTION ENGINE
+                </span>
+                <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight mb-2.5 leading-tight">
+                  Identify what <em className="italic font-serif">actually</em>{" "}
+                  works to{" "}
+                  <span
+                    className="bg-clip-text text-transparent"
                     style={{
-                      backgroundColor: isSelected
-                        ? isDark
-                          ? "rgba(16, 185, 129, 0.12)"
-                          : "rgba(209, 250, 229, 0.70)"
-                        : tokens.cardBg,
-                      borderColor: isSelected
-                        ? tokens.accentEmerald
-                        : tokens.cardBorder,
-                      boxShadow: isSelected
-                        ? "0 0 25px -5px rgba(16, 185, 129, 0.30)"
-                        : "none",
+                      backgroundImage:
+                        "linear-gradient(135deg, #34D399 0%, #38BDF8 50%, #F472B6 100%)",
                     }}
                   >
-                    <h3 className="m-0">
-                      <button
-                        type="button"
-                        aria-expanded={isSelected}
-                        aria-controls={panelId}
-                        onClick={() => setActiveIntelId(card.id)}
-                        className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-3 cursor-pointer"
-                      >
-                        <span className="flex items-center gap-3 min-w-0">
-                          <span className="text-2xl leading-none shrink-0">
-                            {card.emoji}
-                          </span>
-                          <span className="flex flex-wrap items-center gap-2 min-w-0">
-                            <span className="font-extrabold text-base sm:text-lg tracking-tight">
-                              {card.title}
-                            </span>
-                            <span
-                              className="text-xs font-mono font-normal px-2 py-0.5 rounded-full border"
-                              style={{
-                                borderColor: tokens.cardBorder,
-                                color: tokens.accentEmerald,
-                              }}
-                            >
-                              {card.subtitle}
-                            </span>
-                          </span>
-                        </span>
+                    slow your pace of aging
+                  </span>
+                </h2>
+                <p
+                  className="text-sm sm:text-base leading-relaxed"
+                  style={{ color: tokens.textSecondary }}
+                >
+                  <strong style={{ color: tokens.textPrimary }}>
+                    LEVL: OutPace Aging
+                  </strong>{" "}
+                  closes the loop—connecting your daily adherence to your 0–100
+                  Longevity Score, N-of-1 Biomarker Attribution, Hallmarks of
+                  Aging Radar, Functional Age Testing, and AI Coach.
+                </p>
+              </div>
 
-                        <ChevronDown
-                          className={`w-4 h-4 shrink-0 transition-transform ${
-                            isSelected
-                              ? "rotate-180 text-emerald-400"
-                              : "opacity-60"
-                          }`}
-                        />
-                      </button>
-                    </h3>
-
-                    {/* Expanded Details (Shown ONLY when expanded) */}
-                    {isSelected && (
-                      <div
-                        id={panelId}
-                        className="px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 border-t space-y-3 text-sm sm:text-[15px] leading-relaxed"
-                        style={{
-                          borderColor: tokens.cardBorder,
-                          color: tokens.textSecondary,
-                        }}
-                      >
-                        <p>{card.details}</p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {card.badges.map((b) => (
-                            <span
-                              key={b}
-                              className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-sky-500/15 text-sky-400 border border-sky-500/30 font-semibold"
-                            >
-                              {b}
+              <div className="space-y-2">
+                {CORE_INTELLIGENCE_CARDS.map((card) => {
+                  const isSelected = card.id === activeIntelId;
+                  const panelId = `intel-panel-${card.id}`;
+                  return (
+                    <div
+                      key={card.id}
+                      className="rounded-2xl border backdrop-blur-xl transition-all"
+                      style={{
+                        backgroundColor: isSelected
+                          ? isDark
+                            ? "rgba(16, 185, 129, 0.12)"
+                            : "rgba(209, 250, 229, 0.70)"
+                          : tokens.cardBg,
+                        borderColor: isSelected
+                          ? tokens.accentEmerald
+                          : tokens.cardBorder,
+                        boxShadow: isSelected
+                          ? "0 0 22px -6px rgba(16, 185, 129, 0.28)"
+                          : "none",
+                      }}
+                    >
+                      <h3 className="m-0">
+                        <button
+                          type="button"
+                          aria-expanded={isSelected}
+                          aria-controls={panelId}
+                          onClick={() => setActiveIntelId(card.id)}
+                          className="w-full px-4 py-3 sm:px-5 sm:py-3.5 text-left flex items-center justify-between gap-3 cursor-pointer"
+                        >
+                          <span className="flex items-center gap-3 min-w-0">
+                            <span className="text-xl leading-none shrink-0">
+                              {card.emoji}
                             </span>
-                          ))}
+                            <span className="flex flex-wrap items-center gap-2 min-w-0">
+                              <span className="font-extrabold text-sm sm:text-base tracking-tight">
+                                {card.title}
+                              </span>
+                              <span
+                                className="text-[11px] font-mono font-normal px-2 py-0.5 rounded-full border"
+                                style={{
+                                  borderColor: tokens.cardBorder,
+                                  color: tokens.accentEmerald,
+                                }}
+                              >
+                                {card.subtitle}
+                              </span>
+                            </span>
+                          </span>
+
+                          <ChevronDown
+                            className={`w-4 h-4 shrink-0 transition-transform ${
+                              isSelected
+                                ? "rotate-180 text-emerald-400"
+                                : "opacity-60"
+                            }`}
+                          />
+                        </button>
+                      </h3>
+
+                      {/* Expanded Details (Shown ONLY when expanded) */}
+                      {isSelected && (
+                        <div
+                          id={panelId}
+                          className="px-4 sm:px-5 pb-3.5 pt-2.5 border-t space-y-2 text-xs sm:text-sm leading-relaxed"
+                          style={{
+                            borderColor: tokens.cardBorder,
+                            color: tokens.textSecondary,
+                          }}
+                        >
+                          <p>{card.details}</p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {card.badges.map((b) => (
+                              <span
+                                key={b}
+                                className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-sky-500/15 text-sky-400 border border-sky-500/30 font-semibold"
+                              >
+                                {b}
+                              </span>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </section>

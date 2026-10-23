@@ -7,6 +7,10 @@ export type ShowcaseTheme = "dark" | "light";
 export type ShowcaseSlug =
   | "today-morning-tasks"
   | "today-protocols"
+  | "protocol-huberman"
+  | "protocol-attia"
+  | "protocol-patrick"
+  | "protocol-combined"
   | "today-feed"
   | "schedule-grid"
   | "master-schedule"
@@ -45,11 +49,11 @@ export type BiologyProfileId =
   | "sleep-debt"
   | "busy-travel";
 
-export const SHOWCASE_CACHE_BUST = "20261023final";
+export const SHOWCASE_CACHE_BUST = "20261023v4";
 
 /**
  * Returns the local @3x Retina PNG screenshot path with cache-busting query string
- * (`?v=20261023final`) for any screen slug and active theme ('dark' | 'light').
+ * (`?v=20261023v4`) for any screen slug and active theme ('dark' | 'light').
  */
 export function getShowcaseImage(
   slug: string,
@@ -77,6 +81,7 @@ export interface RealPhoneFrameProps {
  * - Zero image bleed between tabs: no previous image stays stacked underneath, and the frame uses a
  *   solid opaque background (#060913 in dark mode / #f8f9f7 in light mode).
  * - Zero duplicate fake headers or bottom navigation bars.
+ * - Right-sized for single-screen desktop fit (~612px bezel height).
  */
 export function RealPhoneFrame({
   src,
@@ -97,7 +102,7 @@ export function RealPhoneFrame({
     <div className={`relative select-none group ${className}`}>
       {/* iPhone 15 Pro Bezel — Solid Opaque Background, Zero Image Bleed, Zero Fake Chrome */}
       <div
-        className="mx-auto aspect-[393/852] w-[300px] sm:w-[335px] rounded-[46px] border-[8px] border-slate-800/90 shadow-[0_25px_80px_-15px_rgba(16,185,129,0.28)] overflow-hidden relative"
+        className="mx-auto aspect-[393/852] w-[265px] sm:w-[282px] rounded-[42px] border-[7px] border-slate-800/90 shadow-[0_25px_70px_-15px_rgba(16,185,129,0.28)] overflow-hidden relative"
         style={{ backgroundColor: solidBg }}
       >
         <img
@@ -118,8 +123,8 @@ export function RealPhoneFrame({
 
       {/* Optional Caption Pill */}
       {caption && (
-        <div className="mt-3.5 text-center">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium border backdrop-blur-md bg-slate-900/80 border-white/10 text-slate-300">
+        <div className="mt-2.5 text-center">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono font-medium border backdrop-blur-md bg-slate-900/80 border-white/10 text-slate-300">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
             {caption}
           </span>
