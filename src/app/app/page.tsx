@@ -535,14 +535,22 @@ const CORE_INTELLIGENCE_CARDS: CoreIntelligenceCardSpec[] = [
   },
 ];
 
+const ROTATING_PERSONALIZATION_WORDS = [
+  "Goals.",
+  "Schedule.",
+  "Budget.",
+  "Biology.",
+  "Real Life.",
+] as const;
+
 const FAQ_ITEMS = [
   {
     q: "How do I install LEVL: OutPace Aging as a native app on iOS or Android?",
     a: "LEVL: OutPace Aging is engineered as a zero-bloat, 120Hz Progressive Web App (PWA). Once you unlock access with your VIP code (or early access invite), open the app in Safari on iOS or Chrome on Android, tap Share → 'Add to Home Screen', and launch it directly from your dock with fullscreen native gestures and offline-ready circadian caching.",
   },
   {
-    q: "How does LEVL: OutPace Aging personalize famous protocols to my biology?",
-    a: "Famous protocols like Bryan Johnson’s Blueprint or Huberman’s routine were designed around a single person’s schedule and physiology. LEVL: OutPace Aging cross-checks every modality against your sex/hormone profile, lifting days, sleep readiness (Oura/Whoop/Apple Watch), and blood biomarkers (ApoB, hs-CRP, Fasting Insulin)—automatically blocking pathway clashes like post-lift cold plunges or extreme fasts that hurt thyroid and hormone health.",
+    q: "How does LEVL: OutPace Aging personalize leading protocols to my biology?",
+    a: "Leading protocols like Bryan Johnson’s Blueprint or Huberman’s routine were designed around a single person’s schedule and physiology. LEVL: OutPace Aging cross-checks every modality against your goals, schedule, budget, sex/hormone profile, lifting days, sleep readiness (Oura/Whoop/Apple Watch), and blood biomarkers (ApoB, hs-CRP, Fasting Insulin)—automatically blocking pathway clashes like post-lift cold plunges or extreme fasts that hurt thyroid and hormone health.",
   },
   {
     q: "How does LEVL: OutPace Aging identify what actually works for my body?",
@@ -562,12 +570,13 @@ export default function LevlAppShowcasePage() {
   const [previewTheme, setPreviewTheme] = useState<ShowcaseTheme>("dark");
   const [heroFocusScreen, setHeroFocusScreen] =
     useState<ShowcaseScreenKey>("today-circadian");
+  const [rotatingWordIdx, setRotatingWordIdx] = useState<number>(0);
 
   // Modal state
   const [modalOpen, setModalOpen] = useState(false);
   const [modalInitialTab, setModalInitialTab] = useState<ModalTab>("waitlist");
 
-  // Section 2: "Famous Protocols × Your Biology" X-Ray state + Click-to-Expand cards
+  // Section 2: "Leading Protocols × Personalized to You" X-Ray state + Click-to-Expand cards
   const [selectedProtocolId, setSelectedProtocolId] =
     useState<FamousProtocolId>("blueprint");
   const [selectedProfileId, setSelectedProfileId] =
@@ -599,6 +608,16 @@ export default function LevlAppShowcasePage() {
   const [openFaqIdx, setOpenFaqIdx] = useState<number | null>(0);
 
   const isDark = previewTheme === "dark";
+
+  // Rotate "Personalized to Your [Goals. / Schedule. / Budget. / Biology. / Real Life.]"
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setRotatingWordIdx(
+        (prev) => (prev + 1) % ROTATING_PERSONALIZATION_WORDS.length
+      );
+    }, 2200);
+    return () => window.clearInterval(timer);
+  }, []);
 
   // Hydrate stored theme override on mount
   useEffect(() => {
@@ -749,119 +768,117 @@ export default function LevlAppShowcasePage() {
       </div>
 
       {/* ====================================================================
-          SHARED SITE <Navbar /> AT TOP OF /app
+          SHARED SITE <Navbar /> + ATTACHED SECONDARY SUB-BAR AT TOP OF /app
          ==================================================================== */}
-      <div className="relative z-50">
-        <Navbar showCart={false} />
-      </div>
-
-      {/* ====================================================================
-          SECONDARY FLOATING / STICKY SUB-BAR JUST BELOW <Navbar />
-         ==================================================================== */}
-      <div
-        className="sticky top-14 md:top-16 z-40 border-y backdrop-blur-xl transition-colors duration-300 mt-14 md:mt-16"
-        style={{
-          backgroundColor: isDark
-            ? "rgba(6, 9, 19, 0.86)"
-            : "rgba(248, 249, 247, 0.92)",
-          borderColor: tokens.cardBorder,
-        }}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-3">
-          {/* Left: LEVL: OutPace Aging Badge + Quick Section Jump Links */}
-          <div className="flex items-center gap-4 lg:gap-5">
-            <span
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold border shrink-0"
-              style={{
-                backgroundColor: isDark
-                  ? "rgba(14, 165, 233, 0.12)"
-                  : "rgba(2, 132, 199, 0.10)",
-                borderColor: isDark
-                  ? "rgba(14, 165, 233, 0.35)"
-                  : "rgba(2, 132, 199, 0.30)",
-                color: tokens.accentCyan,
-              }}
-            >
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              LEVL: OutPace Aging
-            </span>
-
-            <nav className="hidden xl:flex items-center gap-5 text-xs font-semibold tracking-wide">
-              {[
-                { label: "Overview", href: "#overview" },
-                {
-                  label: "Famous Protocols × Biology",
-                  href: "#famous-protocols",
-                },
-                { label: "Modality Applets", href: "#modality-applets" },
-                { label: "What Actually Works", href: "#core-intelligence" },
-                { label: "80/20 Adaptive Mode", href: "#adaptive-8020" },
-                { label: "FAQ", href: "#faq" },
-              ].map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className="transition-opacity hover:opacity-100 opacity-75 whitespace-nowrap"
+      <Navbar
+        showCart={false}
+        forceSolidDark={true}
+        subBar={
+          <div
+            className="border-t backdrop-blur-xl transition-colors duration-300 mt-1"
+            style={{
+              backgroundColor: isDark
+                ? "rgba(6, 9, 19, 0.92)"
+                : "rgba(248, 249, 247, 0.96)",
+              borderColor: tokens.cardBorder,
+              color: tokens.textPrimary,
+            }}
+          >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 sm:h-13 flex items-center justify-between gap-3">
+              {/* Left: LEVL: OutPace Aging Badge + Non-Overlapping Section Jump Links */}
+              <div className="flex items-center gap-3 lg:gap-4 min-w-0 flex-1 overflow-x-auto hide-scrollbar">
+                <span
+                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold border shrink-0 whitespace-nowrap"
+                  style={{
+                    backgroundColor: isDark
+                      ? "rgba(14, 165, 233, 0.12)"
+                      : "rgba(2, 132, 199, 0.10)",
+                    borderColor: isDark
+                      ? "rgba(14, 165, 233, 0.35)"
+                      : "rgba(2, 132, 199, 0.30)",
+                    color: tokens.accentCyan,
+                  }}
                 >
-                  {item.label}
-                </a>
-              ))}
-            </nav>
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                  LEVL: OutPace Aging
+                </span>
+
+                <nav className="hidden lg:flex items-center gap-4 xl:gap-5 text-xs font-semibold tracking-wide shrink-0">
+                  {[
+                    { label: "Overview", href: "#overview" },
+                    {
+                      label: "Leading Protocols",
+                      href: "#famous-protocols",
+                    },
+                    { label: "Modality Applets", href: "#modality-applets" },
+                    {
+                      label: "What Actually Works",
+                      href: "#core-intelligence",
+                    },
+                    { label: "80/20 Mode", href: "#adaptive-8020" },
+                    { label: "FAQ", href: "#faq" },
+                  ].map((item) => (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      className="transition-opacity hover:opacity-100 opacity-75 whitespace-nowrap shrink-0"
+                    >
+                      {item.label}
+                    </a>
+                  ))}
+                </nav>
+              </div>
+
+              {/* Right: Simple Sun/Moon Icon Toggle + Unlock with VIP Code + Join Early Access */}
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  title={`Switch to ${isDark ? "Light Mode" : "Dark Mode"}`}
+                  aria-label={`Switch to ${
+                    isDark ? "Light Mode" : "Dark Mode"
+                  }`}
+                  className="w-8 h-8 rounded-full flex items-center justify-center border transition-all cursor-pointer hover:scale-105 shrink-0"
+                  style={{
+                    backgroundColor: tokens.cardBg,
+                    borderColor: tokens.cardBorder,
+                  }}
+                >
+                  {isDark ? (
+                    <Moon className="w-4 h-4 text-sky-400" />
+                  ) : (
+                    <Sun className="w-4 h-4 text-amber-500" />
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => openModal("vip")}
+                  className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold border transition-all cursor-pointer hover:opacity-90 whitespace-nowrap shrink-0"
+                  style={{
+                    borderColor: tokens.cardBorder,
+                    backgroundColor: isDark
+                      ? "rgba(255,255,255,0.04)"
+                      : "rgba(15,23,42,0.04)",
+                  }}
+                >
+                  <KeyRound className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+                  <span>Unlock with VIP Code</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => openModal("waitlist")}
+                  className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-extrabold bg-gradient-to-r from-emerald-500 to-sky-400 text-slate-950 shadow-lg shadow-emerald-500/20 hover:opacity-95 transition-all cursor-pointer whitespace-nowrap shrink-0"
+                >
+                  <span>Join Early Access</span>
+                  <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+                </button>
+              </div>
+            </div>
           </div>
-
-          {/* Right: Interactive App Theme Toggle + Unlock with VIP Code + Join Early Access */}
-          <div className="flex items-center gap-2 sm:gap-2.5">
-            <button
-              type="button"
-              onClick={toggleTheme}
-              aria-label={`Switch to ${
-                isDark ? "Light Mode" : "Dark Mode"
-              }`}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border transition-all cursor-pointer hover:scale-[1.02]"
-              style={{
-                backgroundColor: tokens.cardBg,
-                borderColor: tokens.cardBorder,
-              }}
-            >
-              {isDark ? (
-                <>
-                  <Moon className="w-3.5 h-3.5 text-sky-400" />
-                  <span className="hidden sm:inline">🌙 Dark Mode</span>
-                </>
-              ) : (
-                <>
-                  <Sun className="w-3.5 h-3.5 text-amber-500" />
-                  <span className="hidden sm:inline">☀️ Light Mode</span>
-                </>
-              )}
-            </button>
-
-            <button
-              type="button"
-              onClick={() => openModal("vip")}
-              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold border transition-all cursor-pointer hover:opacity-90"
-              style={{
-                borderColor: tokens.cardBorder,
-                backgroundColor: isDark
-                  ? "rgba(255,255,255,0.04)"
-                  : "rgba(15,23,42,0.04)",
-              }}
-            >
-              <KeyRound className="w-3.5 h-3.5 text-sky-400" />
-              <span>Unlock with VIP Code</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => openModal("waitlist")}
-              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-extrabold bg-gradient-to-r from-emerald-500 to-sky-400 text-slate-950 shadow-lg shadow-emerald-500/20 hover:opacity-95 transition-all cursor-pointer"
-            >
-              <span>Join Early Access</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        </div>
-      </div>
+        }
+      />
 
       <main className="relative z-10 flex-grow">
         {/* ====================================================================
@@ -869,7 +886,7 @@ export default function LevlAppShowcasePage() {
            ==================================================================== */}
         <section
           id="overview"
-          className="pt-12 sm:pt-16 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center scroll-mt-32"
+          className="pt-8 sm:pt-12 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center scroll-mt-36"
         >
           {/* Top Eyebrow Pill */}
           <div
@@ -902,11 +919,11 @@ export default function LevlAppShowcasePage() {
             </span>
           </h1>
 
-          {/* Standout Sub-Headline Banner (Directly below <h1>) */}
-          <p className="text-xl sm:text-3xl lg:text-4xl font-bold tracking-tight max-w-4xl mx-auto mb-5 leading-snug">
+          {/* Standout Sub-Headline Banner (Directly below <h1>, all on one line) */}
+          <p className="text-lg sm:text-2xl md:text-[28px] lg:text-[34px] font-bold tracking-tight max-w-6xl mx-auto mb-5 leading-snug sm:whitespace-nowrap">
             Identify what <em className="italic font-serif">actually</em> works to{" "}
             <span
-              className="bg-clip-text text-transparent font-extrabold"
+              className="bg-clip-text text-transparent font-extrabold whitespace-nowrap"
               style={{
                 backgroundImage:
                   "linear-gradient(135deg, #34D399 0%, #38BDF8 50%, #F472B6 100%)",
@@ -1130,19 +1147,39 @@ export default function LevlAppShowcasePage() {
               className="text-xs sm:text-sm font-mono uppercase tracking-widest font-bold block mb-3"
               style={{ color: tokens.accentCyan }}
             >
-              FAMOUS PROTOCOLS × YOUR PERSONAL BIOLOGY
+              LEADING PROTOCOLS × PERSONALIZED TO YOU
             </span>
             <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
-              Follow Leading Longevity Protocols.{" "}
-              <span
-                className="bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: isDark
-                    ? "linear-gradient(135deg, #0ea5e9 0%, #10B981 60%, #e879f9 100%)"
-                    : "linear-gradient(135deg, #0284C7 0%, #0D9488 60%, #4F46E5 100%)",
-                }}
-              >
-                Personalized to <em className="italic">Your</em> Biology.
+              <span className="block">Follow Leading Longevity Protocols.</span>
+              <span className="block mt-1">
+                <span
+                  className="bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: isDark
+                      ? "linear-gradient(135deg, #0ea5e9 0%, #10B981 100%)"
+                      : "linear-gradient(135deg, #0284C7 0%, #0D9488 100%)",
+                  }}
+                >
+                  Personalized to <em className="italic">Your</em>{" "}
+                </span>
+                <span
+                  key={ROTATING_PERSONALIZATION_WORDS[rotatingWordIdx]}
+                  onClick={() =>
+                    setRotatingWordIdx(
+                      (prev) =>
+                        (prev + 1) % ROTATING_PERSONALIZATION_WORDS.length
+                    )
+                  }
+                  title="Click to cycle"
+                  className="inline-block bg-clip-text text-transparent cursor-pointer transition-all duration-500 animate-fade-in"
+                  style={{
+                    backgroundImage: isDark
+                      ? "linear-gradient(135deg, #10B981 0%, #38BDF8 45%, #e879f9 100%)"
+                      : "linear-gradient(135deg, #0D9488 0%, #0284C7 45%, #4F46E5 100%)",
+                  }}
+                >
+                  {ROTATING_PERSONALIZATION_WORDS[rotatingWordIdx]}
+                </span>
               </span>
             </h2>
             <p

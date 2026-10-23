@@ -18,7 +18,15 @@ const navLinks = [
     { name: "Research", href: "/research" },
 ];
 
-export function Navbar({ showCart = true }: { showCart?: boolean } = {}) {
+export function Navbar({
+    showCart = true,
+    forceSolidDark = false,
+    subBar,
+}: {
+    showCart?: boolean;
+    forceSolidDark?: boolean;
+    subBar?: React.ReactNode;
+} = {}) {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const pathname = usePathname();
@@ -48,7 +56,9 @@ export function Navbar({ showCart = true }: { showCart?: boolean } = {}) {
         <>
             <nav
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-                    isScrolled
+                    forceSolidDark
+                        ? "bg-[#07090E]/95 backdrop-blur-xl border-b border-white/10 pt-1.5 shadow-lg shadow-black/25"
+                        : isScrolled
                         ? "bg-[#07090E]/60 backdrop-blur-xl border-b border-white/10 py-1 shadow-lg shadow-black/20"
                         : "bg-transparent py-2 md:py-3"
                 }`}
@@ -152,6 +162,9 @@ export function Navbar({ showCart = true }: { showCart?: boolean } = {}) {
                 </div>
             </Container>
 
+            {/* Optional Attached Sub-Bar (e.g. /app sticky sub-navigation) */}
+            {subBar}
+
             {/* Mobile Menu Dropdown */}
             {isMobileMenuOpen && (
                 <motion.div
@@ -189,6 +202,13 @@ export function Navbar({ showCart = true }: { showCart?: boolean } = {}) {
             <div 
                 aria-hidden="true" 
                 className="w-full h-[68px] sm:h-[60px] md:h-[46px] pointer-events-none shrink-0" 
+            />
+        )}
+        {/* Spacer for main navbar + attached subBar */}
+        {subBar && (
+            <div
+                aria-hidden="true"
+                className="w-full h-[108px] md:h-[116px] pointer-events-none shrink-0"
             />
         )}
     </>
