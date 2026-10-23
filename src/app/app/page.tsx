@@ -224,8 +224,8 @@ const FAMOUS_PROTOCOLS: FamousProtocolOption[] = [
   },
   {
     id: "combined",
-    name: "✨ Combine Multiple Influencers",
-    shortName: "Multi-Influencer Hybrid",
+    name: "✨ Combine Multiple Protocols",
+    shortName: "Multi-Protocol Hybrid",
     badge: "Huberman Morning + Attia Workouts + Blueprint Sleep",
     highlight: true,
   },
@@ -830,7 +830,7 @@ export default function LevlAppShowcasePage() {
         >
           {/* Top Eyebrow Pill */}
           <div
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold tracking-widest uppercase border mb-6"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold tracking-widest uppercase border mb-4"
             style={{
               backgroundColor: isDark
                 ? "rgba(14, 165, 233, 0.10)"
@@ -841,12 +841,27 @@ export default function LevlAppShowcasePage() {
               color: tokens.accentCyan,
             }}
           >
-            <span>✦ LEVL: OUTPACE AGING • PERSONALIZED LONGEVITY PROTOCOLS APP</span>
+            <span>✦ PERSONALIZED LONGEVITY PROTOCOLS APP</span>
+          </div>
+
+          {/* Prominent Brand Kicker: LEVL: OutPace Aging */}
+          <div className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight uppercase mb-3">
+            <span>LEVL: </span>
+            <span
+              className="bg-clip-text text-transparent"
+              style={{
+                backgroundImage: isDark
+                  ? "linear-gradient(135deg, #10B981 0%, #0ea5e9 100%)"
+                  : "linear-gradient(135deg, #0D9488 0%, #0284C7 100%)",
+              }}
+            >
+              OutPace Aging
+            </span>
           </div>
 
           {/* H1 Headline */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.06] max-w-5xl mx-auto mb-6">
-            Your Biology Runs on a Clock.{" "}
+            Longevity Science,{" "}
             <span
               className="bg-clip-text text-transparent"
               style={{
@@ -855,7 +870,7 @@ export default function LevlAppShowcasePage() {
                   : "linear-gradient(135deg, #0D9488 0%, #0284C7 55%, #4F46E5 100%)",
               }}
             >
-              Now Your Longevity Protocol Does Too.
+              Calibrated to Your Biology.
             </span>
           </h1>
 
@@ -864,13 +879,12 @@ export default function LevlAppShowcasePage() {
             className="text-base sm:text-xl max-w-3xl mx-auto leading-relaxed mb-8"
             style={{ color: tokens.textSecondary }}
           >
-            Explore 100+ clinically graded longevity modalities, adapt
-            world-class famous protocols to your personal biology, and track your
-            real-time impact across all 8 biological vectors of aging in{" "}
-            <strong style={{ color: tokens.textPrimary }}>
-              LEVL: OutPace Aging
-            </strong>
-            .
+            Built to help you{" "}
+            <strong style={{ color: tokens.textPrimary }}>outpace aging</strong>{" "}
+            every single day—explore 100+ clinically graded longevity
+            modalities, adapt leading longevity protocols to your personal
+            biology, and track your real-time impact across all 8 biological
+            vectors of aging.
           </p>
 
           {/* Hero CTA Cluster */}
@@ -1079,7 +1093,7 @@ export default function LevlAppShowcasePage() {
               FAMOUS PROTOCOLS × YOUR PERSONAL BIOLOGY
             </span>
             <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-5 leading-tight">
-              Follow World-Class Longevity Protocols.{" "}
+              Follow Leading Longevity Protocols.{" "}
               <span
                 className="bg-clip-text text-transparent"
                 style={{
@@ -2052,8 +2066,18 @@ export default function LevlAppShowcasePage() {
                 LEVL: OutPace Aging
               </span>
 
-              <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
-                Turn Longevity Science Into Your Daily Operating System.
+              <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+                OutPace Aging With Your{" "}
+                <span
+                  className="bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: isDark
+                      ? "linear-gradient(135deg, #10B981 0%, #0ea5e9 100%)"
+                      : "linear-gradient(135deg, #0D9488 0%, #0284C7 100%)",
+                  }}
+                >
+                  Daily Longevity Operating System.
+                </span>
               </h2>
 
               <p
