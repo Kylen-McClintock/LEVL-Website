@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "LEVL OS | Circadian-Aligned Longevity Protocols App",
+  title: "LEVL: OutPace Aging | Personalized Longevity Protocols App",
   description:
-    "Your Biology Runs on a Clock. Now Your Longevity Protocol Does Too. Explore 100+ clinically graded modalities, adopt Mastermind stacks in one tap, and track all 8 biological vectors of aging.",
+    "Your Biology Runs on a Clock. Now Your Longevity Protocol Does Too. Follow world-class longevity protocols personalized to your biology with 8-Vector scoring and circadian alignment.",
   openGraph: {
-    title: "LEVL OS | Circadian-Aligned Longevity Protocols App",
+    title: "LEVL: OutPace Aging | Personalized Longevity Protocols App",
     description:
-      "Combining Mastermind Protocols, 8-Vector Biological Scoring, Grade-A PubMed Clinical Evidence, and an Adaptive 80/20 Routine Governor into one precision daily companion.",
+      "Combining Famous Longevity Protocols personalized to your biology, 8-Vector Biological Scoring, Grade-A PubMed Clinical Evidence, and an Adaptive 80/20 Routine Governor.",
     url: "https://www.levlhealth.com/app",
     siteName: "LEVL Health",
     images: [
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
         url: "https://www.levlhealth.com/images/protocol_app_visual_v2.png",
         width: 1200,
         height: 630,
-        alt: "LEVL Longevity Protocols App Showcase",
+        alt: "LEVL: OutPace Aging — Personalized Longevity Protocols App",
       },
     ],
     locale: "en_US",
@@ -23,9 +23,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "LEVL OS | Circadian-Aligned Longevity Protocols App",
+    title: "LEVL: OutPace Aging | Personalized Longevity Protocols App",
     description:
-      "Your Biology Runs on a Clock. Now Your Longevity Protocol Does Too. Explore 100+ RCT-anchored longevity modalities.",
+      "Your Biology Runs on a Clock. Now Your Longevity Protocol Does Too. Explore 100+ RCT-anchored longevity modalities in LEVL: OutPace Aging.",
     images: ["https://www.levlhealth.com/images/protocol_app_visual_v2.png"],
   },
 };

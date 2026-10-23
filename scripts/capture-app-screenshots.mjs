@@ -29,14 +29,13 @@ async function captureAll() {
       colorScheme: theme,
     });
 
-    const page = await context.newPage();
-
-    // Seed localStorage so banners are dismissed and theme is locked
-    await page.addInitScript((activeTheme) => {
+    // Inject localStorage on context so onboarding is bypassed and user ID is seeded
+    await context.addInitScript((activeTheme) => {
       try {
         localStorage.setItem('levl_theme', activeTheme);
-        localStorage.setItem('levl_pwa_banner_dismissed', String(Date.now()));
         localStorage.setItem('levl_onboarding_completed', 'true');
+        localStorage.setItem('levl_local_user_id', 'levl_showcase_demo_user_2026');
+        localStorage.setItem('levl_pwa_banner_dismissed', String(Date.now()));
         localStorage.setItem('levl_guest_banner_dismissed', 'true');
         if (activeTheme === 'light') {
           document.documentElement.classList.remove('dark');
@@ -47,6 +46,8 @@ async function captureAll() {
         }
       } catch (e) {}
     }, theme);
+
+    const page = await context.newPage();
 
     for (const screen of SCREENS) {
       const url = `${APP_BASE_URL}${screen.route}`;

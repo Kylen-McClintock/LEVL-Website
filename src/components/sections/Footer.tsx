@@ -1,4 +1,3 @@
-import { BentoCard } from "@/components/ui/BentoGrid";
 import { Container } from "@/components/ui/Container";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,13 +7,17 @@ const navLinks = [
     { name: "Platform", href: "/platform" },
     { name: "Get Early Access", href: "/#early-access" },
     { name: "Science", href: "/#science" },
-    { name: "App", href: "/#app" },
+    { name: "App", href: "/app" },
     { name: "LEV Trajectory", href: "/LEVTrajectory/" },
     { name: "About", href: "/about" },
     { name: "Learn", href: "/learn/" },
 ];
 
-export function Footer() {
+export function Footer({
+    onEarlyAccessClick,
+}: {
+    onEarlyAccessClick?: () => void;
+} = {}) {
     return (
         <footer className="mt-24 border-t border-white/10 bg-black/40 pt-16 pb-8">
             <Container>
@@ -29,8 +32,11 @@ export function Footer() {
                                 className="h-8 w-auto object-contain"
                             />
                         </Link>
-                        <p className="text-white/60 mb-6 max-w-sm">
+                        <p className="text-white/60 mb-3 max-w-sm">
                             Advanced Longevity Supplements to Extend Healthy Lifespan
+                        </p>
+                        <p className="text-white/75 text-sm font-medium mb-6 max-w-md">
+                            LEVL: OutPace Aging — The Daily Biological Operating System &amp; Personalized Protocol App.
                         </p>
                         <p className="text-white/40 text-sm mb-6">© 2026 LEVL, Inc. • Manufactured in the USA</p>
                         <div className="flex items-center gap-5">
@@ -53,7 +59,17 @@ export function Footer() {
                         <ul className="space-y-2">
                             {navLinks.map(link => (
                                 <li key={link.name}>
-                                    <a href={link.href} className="text-white/60 hover:text-white transition-colors">{link.name}</a>
+                                    {link.name === "Get Early Access" && onEarlyAccessClick ? (
+                                        <button
+                                            type="button"
+                                            onClick={onEarlyAccessClick}
+                                            className="text-white/60 hover:text-white transition-colors cursor-pointer text-left"
+                                        >
+                                            {link.name}
+                                        </button>
+                                    ) : (
+                                        <a href={link.href} className="text-white/60 hover:text-white transition-colors">{link.name}</a>
+                                    )}
                                 </li>
                             ))}
                         </ul>
@@ -61,6 +77,9 @@ export function Footer() {
 
                     <div>
                         <h3 className="font-bold text-white mb-4">Legal</h3>
+                        <p className="text-xs text-white/30 leading-relaxed mb-3">
+                            LEVL: OutPace Aging provides educational longevity protocol modeling, literature synthesis, and biomarker tracking. It is not a medical device and does not provide medical advice, diagnosis, or treatment.
+                        </p>
                         <p className="text-xs text-white/30 leading-relaxed mb-3">
                             These statements have not been evaluated by the Food and Drug Administration.
                             This product is not intended to diagnose, treat, cure, or prevent any disease.

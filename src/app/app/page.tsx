@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import {
   Sun,
   Moon,
@@ -10,44 +8,32 @@ import {
   KeyRound,
   ArrowRight,
   ShieldCheck,
-  Activity,
-  Flame,
-  Snowflake,
-  HeartPulse,
-  Brain,
-  Zap,
-  AlertTriangle,
   CheckCircle2,
-  FlaskConical,
-  Layers,
-  Calendar,
-  Clock,
-  Sliders,
   ChevronDown,
-  ExternalLink,
-  Award,
-  TrendingUp,
-  Dna,
-  BatteryCharging,
-  Compass,
+  OctagonAlert,
+  Zap,
 } from "lucide-react";
 import {
   IPhoneShowcaseFrame,
   type ShowcaseScreenKey,
   type ShowcaseTheme,
   type CircadianPhaseId,
+  type FamousProtocolId,
+  type BiologyProfileId,
+  type XRayPhoneSyncConfig,
 } from "@/components/app-showcase/IPhoneShowcaseFrame";
 import {
   EarlyAccessModal,
   type ModalTab,
 } from "@/components/app-showcase/EarlyAccessModal";
+import { Navbar } from "@/components/sections/Navbar";
 import { Footer } from "@/components/sections/Footer";
 
 export const LEVL_WEB_APP_URL =
   "https://2026-levl-protocols-app.vercel.app/today";
 
 /* ============================================================================
- * DATA DEFINITIONS: CIRCADIAN PHASES, 8 VECTORS, MASTERMIND STACKS, ARCHETYPES
+ * DATA DEFINITIONS: CIRCADIAN PHASES, 8 VECTORS, FAMOUS PROTOCOLS X-RAY, FAQ
  * ============================================================================ */
 
 interface CircadianPhaseSpec {
@@ -82,8 +68,8 @@ const CIRCADIAN_PHASES: CircadianPhaseSpec[] = [
     screenKey: "today-circadian",
     modalities: [
       {
-        name: "Morning Sunlight First (#1 Anchor)",
-        badge: "10–15m • 10,000+ Lux",
+        name: "Morning Sunlight Exposure (☀️ Circadian Anchor #1)",
+        badge: "10–15m • 10,000+ Lux Outdoor",
         detail: "Direct outdoor sky exposure prior to artificial blue screens.",
         mechanism: "ipRGC Melanopsin → SCN Cortisol Pulse",
       },
@@ -110,7 +96,7 @@ const CIRCADIAN_PHASES: CircadianPhaseSpec[] = [
     lightAccent: "#0284C7",
     headline: "Peak Cognitive Output & Lipid-Paired Polyphenol Bioavailability.",
     rationale:
-      "Core body temperature and prefrontal catecholamines reach their first zenith. LEVL groups fat-soluble senolytics and polyphenols with high-polyphenol EVOO to multiply absorption.",
+      "Core body temperature and prefrontal catecholamines reach their first zenith. LEVL: OutPace Aging groups fat-soluble senolytics and polyphenols with high-polyphenol EVOO to multiply absorption.",
     screenKey: "today-circadian",
     modalities: [
       {
@@ -199,6 +185,178 @@ const CIRCADIAN_PHASES: CircadianPhaseSpec[] = [
   },
 ];
 
+/* ============================================================================
+ * SECTION 4 DATA: FAMOUS PROTOCOLS × YOUR BIOLOGY X-RAY
+ * ============================================================================ */
+
+interface FamousProtocolOption {
+  id: FamousProtocolId;
+  name: string;
+  shortName: string;
+  badge: string;
+  highlight?: boolean;
+}
+
+const FAMOUS_PROTOCOLS: FamousProtocolOption[] = [
+  {
+    id: "blueprint",
+    name: "Bryan Johnson — Blueprint 2026",
+    shortName: "Blueprint 2026",
+    badge: "24 Modalities • 0.69 Pace Target",
+  },
+  {
+    id: "huberman",
+    name: "Andrew Huberman — Neuro-Circadian",
+    shortName: "Huberman Neuro-Circadian",
+    badge: "14 Modalities • Dopamine & Sleep Architecture",
+  },
+  {
+    id: "attia",
+    name: "Peter Attia — Outlive Medicine 3.0",
+    shortName: "Attia Outlive 3.0",
+    badge: "12 Modalities • Zone 2, VO2 Max & ApoB Shield",
+  },
+  {
+    id: "patrick",
+    name: "Rhonda Patrick — FoundMyFitness",
+    shortName: "Patrick FoundMyFitness",
+    badge: "16 Modalities • 174°F+ Sauna, Sulforaphane & Omega-3",
+  },
+  {
+    id: "combined",
+    name: "✨ Combine Multiple Influencers",
+    shortName: "Multi-Influencer Hybrid",
+    badge: "Huberman Morning + Attia Workouts + Blueprint Sleep",
+    highlight: true,
+  },
+];
+
+interface BiologyProfileSpec {
+  id: BiologyProfileId;
+  emoji: string;
+  label: string;
+  sublabel: string;
+  blockedStrikethrough: string;
+  blockedAction: string;
+  blockedClinicalWhy: string;
+  upgradeTitle: string;
+  upgradeBody: string;
+  upgradeBullets?: string[];
+  phoneAdaptationBanner: string;
+  phoneBlockedSummary: string;
+  phoneUpgradedTaskTitle: string;
+  phoneUpgradedTaskSub: string;
+  phoneUpgradedTaskBadge: string;
+  vectorScore: number;
+  paceOfAging: string;
+}
+
+const BIOLOGY_PROFILES: BiologyProfileSpec[] = [
+  {
+    id: "lifting-apob",
+    emoji: "🏋️",
+    label: "Lifting Heavy Today + High ApoB",
+    sublabel: "Cardiometabolic & Hypertrophy Focus",
+    blockedStrikethrough:
+      "Cold Plunge (50°F–55°F) or Metformin immediately after lifting",
+    blockedAction: "Auto-Moved to Rest Day / Dawn Slot",
+    blockedClinicalWhy:
+      "Cold immersion or AMPK agonists within 4 hours after heavy resistance training blunts mTORC1, IGF-1, and ribosomal muscle protein synthesis by up to 24%.",
+    upgradeTitle: "Promotes Tier-1 Lipid & Endothelial Anchors",
+    upgradeBody:
+      "Elevates High-Polyphenol EVOO (15mL), Soluble Fiber / Berberine, and Post-Lift Finnish Dry Sauna (174°F+ for 20m) to target ApoB <65 mg/dL, +eNOS, and +GH/HSP70.",
+    phoneAdaptationBanner:
+      "Hypertrophy + ApoB Shield Active: Post-lift Cold Plunge blocked; Sauna 174°F+ & EVOO elevated.",
+    phoneBlockedSummary: "Cold Plunge & Metformin moved away from lifting window",
+    phoneUpgradedTaskTitle: "Post-Lift Finnish Sauna (174°F+ • 20m) + 15mL EVOO",
+    phoneUpgradedTaskSub:
+      "Targets ApoB <65 mg/dL, endothelial eNOS & +GH/HSP70 without blunting mTORC1",
+    phoneUpgradedTaskBadge: "ApoB + mTORC1 Safe",
+    vectorScore: 93,
+    paceOfAging: "0.72 DunedinPACE",
+  },
+  {
+    id: "female-biology",
+    emoji: "🧬",
+    label: "Female Biology (Hormone & Thyroid Protected)",
+    sublabel: "Cycle/Perimenopause & Bone Density Focus",
+    blockedStrikethrough:
+      "Extreme 18-Hour Fast (Final meal at 11:00 AM) + Fasted HIIT",
+    blockedAction:
+      "Converted to 12.5h Circadian Window + 30g Protein Within 45m of Waking",
+    blockedClinicalWhy:
+      "Aggressive caloric/fasting windows in female physiology downregulate kisspeptin and T3 thyroid conversion while spiking morning cortisol (HPA-axis).",
+    upgradeTitle: "Boosts Bone Density & Micronutrient Anchors",
+    upgradeBody:
+      "Prioritizes Heavy Axial Resistance + Plyometrics (Piezo1 osteoblast activation for Bone Density), Iron/Ferritin tracking, and warms Cold Plunge to 55°F–58°F to prevent luteal vasoconstriction.",
+    phoneAdaptationBanner:
+      "Female Endocrine & Bone Shield: 12.5h eTRE + 30g Morning Protein + Piezo1 Axial Loading.",
+    phoneBlockedSummary: "18h extreme fast & fasted HIIT replaced to protect T3/Kisspeptin",
+    phoneUpgradedTaskTitle: "30g Protein Post-Wake + Heavy Axial Loading (Piezo1)",
+    phoneUpgradedTaskSub:
+      "Protects HPG/Thyroid axis, Ferritin & Lumbar/Hip BMD; Cold Plunge calibrated to 56°F",
+    phoneUpgradedTaskBadge: "Hormone + BMD Shield",
+    vectorScore: 92,
+    paceOfAging: "0.73 DunedinPACE",
+  },
+  {
+    id: "sleep-debt",
+    emoji: "😴",
+    label: "Slept 5.5 Hours Last Night (Low HRV)",
+    sublabel: "Wearable Recovery Auto-Triage",
+    blockedStrikethrough:
+      "Norwegian 4x4 VO2 Max Intervals & 50°F Cold Plunge",
+    blockedAction: "Auto-Benched for Today by Adaptive Sleep Triage",
+    blockedClinicalWhy:
+      "High sympathetic CNS strain on <6h sleep compounds autonomic stress and suppresses overnight HRV recovery.",
+    upgradeTitle: "Injects CNS & Prefrontal ATP Recovery",
+    upgradeBody:
+      "Swaps in 20m Afternoon NSDR (Non-Sleep Deep Rest) (14:00–16:00) and increases Creatine Monohydrate from 5g → 10g to buffer prefrontal cortex ATP depletion after sleep debt.",
+    phoneAdaptationBanner:
+      "Wearable Sleep Triage (<6h): High-CNS 4x4 benched; 10g Creatine + 20m NSDR injected.",
+    phoneBlockedSummary: "Norwegian 4x4 & 50°F Cold Plunge auto-benched today",
+    phoneUpgradedTaskTitle: "10g Acute Creatine Buffer + 20m Afternoon NSDR",
+    phoneUpgradedTaskSub:
+      "Restores prefrontal ATP & parasympathetic HRV rebound without sympathetic overtraining",
+    phoneUpgradedTaskBadge: "CNS Recovery Mode",
+    vectorScore: 88,
+    paceOfAging: "0.75 DunedinPACE",
+  },
+  {
+    id: "busy-travel",
+    emoji: "⏱️",
+    label: "Busy Work / Travel Day (Only Have 20 Mins)",
+    sublabel: "1-Tap 80/20 Pareto Survival Mode",
+    blockedStrikethrough: "20 Secondary & Marginal Protocol Steps",
+    blockedAction: "Auto-Deferred Without Breaking Your Streak",
+    blockedClinicalWhy:
+      'Prevents "all-or-nothing" protocol burnout on travel and high-stress days.',
+    upgradeTitle:
+      "Locks In Your Top 4 Tier-1 Pareto Anchors (82% Biological ROI Retained)",
+    upgradeBody:
+      "Filters your entire stack down to the 4 highest-impact anchors you can complete anywhere in under 20 minutes:",
+    upgradeBullets: [
+      "☀️ Morning Outdoor Sunlight (10m • 10,000+ Lux)",
+      "💊 Creatine 5g + Essential Lipid Matrix",
+      "🚶 15m Post-Meal Glucose Walk (GLUT4)",
+      "🌙 Evening Sleep Stack (Mg L-Threonate + 3g Glycine)",
+    ],
+    phoneAdaptationBanner:
+      "🛡️ 80/20 Pareto Survival Mode Active: 20 secondary steps deferred; Top 4 Anchors locked.",
+    phoneBlockedSummary: "20 secondary & marginal tasks auto-deferred (Streak Protected)",
+    phoneUpgradedTaskTitle: "Top 4 Pareto Tier-1 Anchors (82% Biological ROI)",
+    phoneUpgradedTaskSub:
+      "10m Morning Sunlight • 5g Creatine • 15m Glucose Walk • Evening Mg + Glycine",
+    phoneUpgradedTaskBadge: "82% ROI in 20m",
+    vectorScore: 86,
+    paceOfAging: "0.76 DunedinPACE",
+  },
+];
+
+/* ============================================================================
+ * SECTION E DATA: 8 CANONICAL LONGEVITY VECTORS
+ * ============================================================================ */
+
 interface LongevityVectorSpec {
   id: string;
   name: string;
@@ -256,7 +414,7 @@ const LONGEVITY_VECTORS: LongevityVectorSpec[] = [
     effectDetail:
       "Early circadian time-restricted feeding, post-meal Zone 1 walks, and skeletal muscle hypertrophy maximize insulin sensitivity and mitochondrial beta-oxidation.",
     anchorModalities: [
-      "Early Circadian eTRE (10h Window Ending 3h Pre-Bed)",
+      "Early Circadian eTRE (10–12h Window Ending 3h Pre-Bed)",
       "Post-Prandial 15m Metabolic Walks",
       "Heavy Compound Resistance Training (3x/wk)",
     ],
@@ -286,16 +444,16 @@ const LONGEVITY_VECTORS: LongevityVectorSpec[] = [
     name: "Testosterone & Hormones",
     score: 86,
     tierBadge: "Tier-1 Anchor • Score 86/100",
-    effectSize: "+15–22% Free Testosterone & HPG Axis Resilience",
+    effectSize: "+15–22% Endocrine & HPG Axis Resilience",
     effectDetail:
       "Protecting REM/deep sleep cycles, micronutrient repletion (Boron, D3+K2, Zinc, Mg), and avoiding chronic caloric/cortisol overtraining preserve endocrine vitality.",
     anchorModalities: [
-      "8h Sleep Window (REM Testosterone Pulse Protection)",
+      "8h Sleep Window (REM Endocrine Pulse Protection)",
       "Heavy Lower-Body Compound Loading",
       "Micronutrient Endocrine Stack (D3 4,000 IU + K2 + Boron 6mg)",
     ],
-    biomarkers: ["Free & Total Testosterone", "SHBG", "Morning Cortisol Slope", "IGF-1"],
-    pathways: ["HPG Axis", "StAR Protein", "LH Pulsatility", "AR Sensitivity"],
+    biomarkers: ["Free & Total Testosterone / Estradiol", "SHBG", "Morning Cortisol", "Free T3"],
+    pathways: ["HPG Axis", "Kisspeptin", "LH Pulsatility", "AR Sensitivity"],
     citation: "PMID: 21632481 • Leproult & Van Cauter JAMA",
   },
   {
@@ -343,7 +501,7 @@ const LONGEVITY_VECTORS: LongevityVectorSpec[] = [
     anchorModalities: [
       "NAD+ Precursor + Polyphenol Co-Activation",
       "Mitophagy Activation (Zone 2 + Urolithin A / Spermidine)",
-      "Circadian Autophagy Fasting Window (14–16h)",
+      "Circadian Autophagy Fasting Window (12.5–16h)",
     ],
     biomarkers: ["DunedinPACE (<0.80)", "Intracellular NAD+", "Telomere PBMC", "GDF-15"],
     pathways: ["SIRT1 / SIRT3", "AMPK", "mTORC1 Pulsed Modulation", "PINK1/Parkin"],
@@ -351,120 +509,30 @@ const LONGEVITY_VECTORS: LongevityVectorSpec[] = [
   },
 ];
 
-const MASTERMIND_STACKS = [
-  {
-    id: "blueprint",
-    name: "Bryan Johnson Blueprint 2026",
-    subtitle: "Full-Spectrum Algorithmic Organ Rejuvenation",
-    paceBadge: "0.69 DunedinPACE Target",
-    modalitiesCount: "24 Modalities",
-    vectorsCovered: "8/8 Vectors (98% Score)",
-    highlights: [
-      "Morning 10,000 Lux + Red/NIR Photobiomodulation",
-      "Early eTRE (Final meal 11:00–12:00 PM) + High-Polyphenol EVOO",
-      "Daily Zone 2 + 3x/wk Heavy Resistance + Norwegian 4x4",
-      "Strict 8.5h Sleep Architecture (Zero Late Blue Light / Alcohol)",
-    ],
-  },
-  {
-    id: "huberman",
-    name: "Andrew Huberman Foundational",
-    subtitle: "Circadian Neurobiology, Dopamine & Sleep Architecture",
-    paceBadge: "Autonomic & Neural Peak",
-    modalitiesCount: "14 Modalities",
-    vectorsCovered: "8/8 Vectors (91% Score)",
-    highlights: [
-      "Outdoor Morning Sunlight within 30m of wake (#1 Anchor)",
-      "Delayed Caffeine (90–120m post-wake) + Afternoon NSDR (20m)",
-      "Søberg Cold Plunge (11m/wk total) + Finnish Sauna (57m/wk)",
-      "Magnesium L-Threonate + Apigenin + Theanine Wind-Down",
-    ],
-  },
-  {
-    id: "attia",
-    name: "Peter Attia Outlive Stack",
-    subtitle: "Medicine 3.0 Centenarian Decathlon & ApoB/Metabolic Shield",
-    paceBadge: "VO2 Max Top 2% Target",
-    modalitiesCount: "12 Modalities",
-    vectorsCovered: "8/8 Vectors (93% Score)",
-    highlights: [
-      "4x/wk Zone 2 Lactate Threshold (<2.0 mmol/L) Sessions",
-      "1–2x/wk Norwegian 4x4 VO2 Max Peak Intervals",
-      "3x/wk Grip Strength, Eccentric Control & Axial Stability",
-      "Aggressive ApoB (<60 mg/dL) & Fasting Insulin (<5 uIU/mL) Tracking",
-    ],
-  },
-  {
-    id: "patrick",
-    name: "Rhonda Patrick FoundMyFitness",
-    subtitle: "Hormetic Heat Shock, Sulforaphane & Micronutrient Triage",
-    paceBadge: "Nrf2 & HSP70 Focus",
-    modalitiesCount: "16 Modalities",
-    vectorsCovered: "8/8 Vectors (90% Score)",
-    highlights: [
-      "Finnish Sauna 174°F+ (20m, 4–7x/wk) for HSP70 & eNOS",
-      "Myrosinase-Active Broccoli Sprout Sulforaphane (Nrf2)",
-      "Omega-3 Index >8% Target (2g+ EPA/DHA Phospolipids)",
-      "Magnesium + Vitamin D3/K2 Triage Theory Repletion",
-    ],
-  },
-];
-
-const ARCHETYPES = [
-  {
-    persona: "1. The Protocol Optimizer",
-    sub: "Huberman / Blueprint / Attia followers",
-    frustration:
-      "Tracking 15+ supplements, sauna, cold plunge, and workouts across messy Notion docs, spreadsheets, and generic habit trackers that don't understand biology.",
-    hook: "“Every Mastermind Protocol—pre-built, conflict-checked, and mapped to your biological clock.”",
-    screenLabel: "Today Circadian Feed",
-    targetAnchor: "#circadian-engine",
-  },
-  {
-    persona: "2. The Data-Driven Biohacker",
-    sub: "Whoop / Oura / Function Health / InsideTracker users",
-    frustration:
-      "Has wearables and blood panels, but no system connecting daily actions to measurable changes in Biological Age and specific physiological vectors.",
-    hook: "“See how every daily action moves your 8 Longevity Vectors & Biological Age.”",
-    screenLabel: "8-Vector Longevity Score & Radar",
-    targetAnchor: "#vector-score",
-  },
-  {
-    persona: "3. The Busy High-Performer",
-    sub: "Founders, executives, parents",
-    frustration:
-      "Gets overwhelmed by 25-step routines on travel days or poor sleep nights and quits completely (“all-or-nothing burnout”).",
-    hook: "“Adaptive 80/20 Survival Mode & Sleep Triage—automatically scales your routine when life happens.”",
-    screenLabel: "Adaptive Routine Governor & 7-Day Schedule",
-    targetAnchor: "#adaptive-8020",
-  },
-];
-
 const FAQ_ITEMS = [
   {
-    q: "How do I install LEVL OS as a native app on iOS or Android?",
-    a: "LEVL OS is engineered as a zero-bloat, 120Hz Progressive Web App (PWA). Once you unlock access with your VIP code (or waitlist invite), open the app in Safari on iOS or Chrome on Android, tap Share → 'Add to Home Screen', and launch it directly from your dock with fullscreen native gestures and offline-ready circadian caching.",
+    q: "How do I install LEVL: OutPace Aging as a native app on iOS or Android?",
+    a: "LEVL: OutPace Aging is engineered as a zero-bloat, 120Hz Progressive Web App (PWA). Once you unlock access with your VIP code (or early access invite), open the app in Safari on iOS or Chrome on Android, tap Share → 'Add to Home Screen', and launch it directly from your dock with fullscreen native gestures and offline-ready circadian caching.",
   },
   {
-    q: "How does LEVL connect my wearables and blood biomarkers to my daily protocol?",
-    a: "In the /tracking tab, you can log or sync Apple Watch, Oura, Whoop, and Garmin readiness alongside key longevity blood panels (ApoB, hs-CRP, Fasting Insulin, DEXA BMD, and DunedinPACE epigenetic speed). LEVL maps every active modality in your stack to the specific biomarkers and 8 biological vectors it moves.",
+    q: "How does LEVL: OutPace Aging personalize famous protocols to my biology?",
+    a: "Famous protocols like Bryan Johnson’s Blueprint or Huberman’s routine were designed around a single person’s schedule and physiology. LEVL: OutPace Aging cross-checks every modality against your sex/hormone profile, lifting days, sleep readiness (Oura/Whoop/Apple Watch), and blood biomarkers (ApoB, hs-CRP, Fasting Insulin)—automatically blocking pathway clashes like post-lift cold plunges or extreme fasts that hurt thyroid and hormone health.",
   },
   {
-    q: "Can I customize Mastermind Stacks or bench modalities I'm cycling off?",
-    a: "Yes. You can adopt Bryan Johnson Blueprint 2026, Andrew Huberman, Peter Attia, or Rhonda Patrick stacks in one tap, override any dose or timing window, or move items to your Protocol Bench (/bench) when cycling compounds—without losing your historical adherence or biomarker correlations.",
+    q: "How does LEVL: OutPace Aging connect my wearables and blood biomarkers to my daily routine?",
+    a: "In the Insights & Biomarkers view, you can track Apple Watch, Oura, Whoop, and Garmin readiness alongside key longevity blood panels (ApoB, hs-CRP, Fasting Insulin, DEXA BMD, and DunedinPACE epigenetic speed). LEVL: OutPace Aging maps every active modality in your stack to the specific biomarkers and 8 biological vectors it moves.",
   },
   {
-    q: "How does LEVL's 3-Tier Clinical Evidence Rubric score each modality?",
+    q: "How does the 3-Tier Clinical Evidence Rubric score each modality?",
     a: "Every modality in our 100+ intervention library is graded by human clinical trial rigor (Grade A Human RCTs down to emerging mechanistic studies) and assigned a 0–100 Vector Impact Score across three tiers: Tier-1 Anchors (65–100, e.g., Norwegian 4x4 VO2 Max, Morning Sunlight, Finnish Sauna), Tier-2 Synergists (35–64), and Tier-3 Marginals (<35).",
   },
   {
-    q: "What is Biochemical Synergy & Antagonistic Clash Detection?",
-    a: "Many biohackers accidentally cancel out their hard work—for example, plunging into 50°F water or taking Metformin immediately after heavy hypertrophy training blunts mTORC1 and IGF-1 muscle protein synthesis. LEVL audits your daily schedule in real time, warns you of antagonistic pathway clashes, and offers a 1-tap smart reschedule.",
+    q: "What happens when I travel or get poor sleep?",
+    a: "Instead of letting a rigid 25-step checklist cause 'all-or-nothing burnout,' you can toggle 1-Tap 80/20 Survival Mode to filter your day down to your top 4 Tier-1 Pareto anchors (retaining 82% of your biological ROI in under 20 minutes), or let Adaptive Sleep Triage automatically swap high-CNS strain intervals for NSDR and 10g Creatine recovery when you sleep under 6 hours.",
   },
 ];
 
 export default function LevlAppShowcasePage() {
-  // Default to Obsidian Dark ("dark"), respecting dark-mode-toggle storage rules
   const [previewTheme, setPreviewTheme] = useState<ShowcaseTheme>("dark");
   const [heroFocusScreen, setHeroFocusScreen] =
     useState<ShowcaseScreenKey>("today-circadian");
@@ -477,16 +545,16 @@ export default function LevlAppShowcasePage() {
   const [selectedPhaseId, setSelectedPhaseId] =
     useState<CircadianPhaseId>("dawn");
 
+  // Section 4 (Upgraded): 2-Click "Famous Protocols × Your Biology" X-Ray state
+  const [selectedProtocolId, setSelectedProtocolId] =
+    useState<FamousProtocolId>("blueprint");
+  const [selectedProfileId, setSelectedProfileId] =
+    useState<BiologyProfileId>("lifting-apob");
+
   // Section E: 8-Vector Radar state
   const [selectedVectorId, setSelectedVectorId] = useState<string>("heart");
   const [vectorPhoneView, setVectorPhoneView] =
     useState<ShowcaseScreenKey>("longevity-score");
-
-  // Section F: Mastermind Stacks + Clash Auditor state
-  const [selectedStackId, setSelectedStackId] = useState<string>("blueprint");
-  const [stackPhoneView, setStackPhoneView] =
-    useState<ShowcaseScreenKey>("mastermind-protocols");
-  const [clashResolved, setClashResolved] = useState<boolean>(false);
 
   // Section G: Adaptive 80/20 Survival Mode & Sleep Triage state
   const [governorMode, setGovernorMode] = useState<
@@ -498,7 +566,7 @@ export default function LevlAppShowcasePage() {
 
   const isDark = previewTheme === "dark";
 
-  // Hydrate stored theme override on mount (if user previously toggled)
+  // Hydrate stored theme override on mount
   useEffect(() => {
     try {
       const stored = localStorage.getItem("levl_app_showcase_theme");
@@ -510,7 +578,6 @@ export default function LevlAppShowcasePage() {
 
   /**
    * Follows modern-web-guidance `dark-mode-toggle`:
-   * - Target scheme = opposite of currently rendered scheme (or explicit selection).
    * - Check divergence against current system preference ONLY at storage time.
    * - If target matches system preference, remove stored value rather than pinning it.
    */
@@ -555,23 +622,41 @@ export default function LevlAppShowcasePage() {
     CIRCADIAN_PHASES.find((p) => p.id === selectedPhaseId) ||
     CIRCADIAN_PHASES[0];
 
+  const activeProtocolSpec =
+    FAMOUS_PROTOCOLS.find((p) => p.id === selectedProtocolId) ||
+    FAMOUS_PROTOCOLS[0];
+
+  const activeProfileSpec =
+    BIOLOGY_PROFILES.find((p) => p.id === selectedProfileId) ||
+    BIOLOGY_PROFILES[0];
+
   const activeVectorSpec =
     LONGEVITY_VECTORS.find((v) => v.id === selectedVectorId) ||
     LONGEVITY_VECTORS[0];
 
-  const activeStackSpec =
-    MASTERMIND_STACKS.find((s) => s.id === selectedStackId) ||
-    MASTERMIND_STACKS[0];
+  const xraySyncPayload: XRayPhoneSyncConfig = {
+    protocolName: activeProtocolSpec.shortName,
+    profileLabel: activeProfileSpec.label,
+    profileId: activeProfileSpec.id,
+    adaptationBanner: activeProfileSpec.phoneAdaptationBanner,
+    blockedSummary: activeProfileSpec.phoneBlockedSummary,
+    upgradedTaskTitle: activeProfileSpec.phoneUpgradedTaskTitle,
+    upgradedTaskSub: activeProfileSpec.phoneUpgradedTaskSub,
+    upgradedTaskBadge: activeProfileSpec.phoneUpgradedTaskBadge,
+    vectorScore: activeProfileSpec.vectorScore,
+    paceOfAging: activeProfileSpec.paceOfAging,
+  };
 
-  // Exact Dual-Theme Token Palette
+  // Align tokens with levlhealth.com (--color-levl-bg #060913, --color-levl-cyan #0ea5e9, --color-levl-magenta #e879f9) + Daylight Quartz Light Mode
   const tokens = {
-    canvasBg: isDark ? "#030712" : "#F8F9F7",
-    cardBg: isDark ? "rgba(17, 24, 39, 0.75)" : "rgba(255, 255, 255, 0.88)",
+    canvasBg: isDark ? "var(--color-levl-bg, #060913)" : "#F8F9F7",
+    cardBg: isDark ? "rgba(11, 14, 23, 0.82)" : "rgba(255, 255, 255, 0.90)",
     cardBorder: isDark ? "rgba(255, 255, 255, 0.08)" : "rgba(15, 23, 42, 0.08)",
     textPrimary: isDark ? "#F9FAFB" : "#0F172A",
-    textSecondary: isDark ? "#9CA3AF" : "#475569",
+    textSecondary: isDark ? "#B4B5B8" : "#475569",
     accentEmerald: isDark ? "#10B981" : "#0D9488",
-    accentSky: isDark ? "#38BDF8" : "#0284C7",
+    accentCyan: isDark ? "#0ea5e9" : "#0284C7",
+    accentMagenta: isDark ? "#e879f9" : "#a21caf",
     dawnAmber: isDark ? "#F59E0B" : "#D97706",
     zenithSky: isDark ? "#0EA5E9" : "#0284C7",
     duskIndigo: isDark ? "#6366F1" : "#4F46E5",
@@ -580,107 +665,115 @@ export default function LevlAppShowcasePage() {
 
   return (
     <div
-      className="min-h-screen font-sans relative transition-colors duration-500 overflow-x-hidden"
+      className="min-h-screen font-sans relative transition-colors duration-500 overflow-x-hidden flex flex-col"
       style={{
         backgroundColor: tokens.canvasBg,
         color: tokens.textPrimary,
         colorScheme: previewTheme,
       }}
     >
-      {/* Ambient Circadian / Botanical Radial Washes */}
+      {/* Global Twilight / Botanical Background Orbs aligned with levlhealth.com */}
       <div
         aria-hidden="true"
         className="fixed inset-0 pointer-events-none z-0 overflow-hidden transition-opacity duration-700"
       >
         <div
-          className="absolute -top-32 left-1/2 -translate-x-1/2 w-[95vw] max-w-[1100px] h-[540px] rounded-full blur-[130px] transition-all duration-700"
+          className="absolute top-[-10%] right-[-5%] w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] rounded-full blur-[120px]"
           style={{
             background: isDark
-              ? "radial-gradient(circle, rgba(16, 185, 129, 0.16) 0%, rgba(56, 189, 248, 0.10) 45%, transparent 75%)"
-              : "radial-gradient(circle, #E6F3EB 0%, #F0EDFB 55%, transparent 80%)",
+              ? "radial-gradient(circle, #1E2C5A 0%, transparent 70%)"
+              : "radial-gradient(circle, #E6F3EB 0%, transparent 70%)",
+            opacity: isDark ? 0.45 : 0.85,
           }}
         />
         <div
-          className="absolute top-[42%] -right-32 w-[600px] h-[600px] rounded-full blur-[140px] transition-all duration-700"
+          className="absolute top-[38%] left-[-10%] w-[90vw] h-[90vw] max-w-[1000px] max-h-[1000px] rounded-full blur-[150px]"
           style={{
             background: isDark
-              ? "radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%)"
-              : "radial-gradient(circle, rgba(224, 242, 254, 0.7) 0%, transparent 70%)",
+              ? "radial-gradient(circle, #151C3B 0%, transparent 70%)"
+              : "radial-gradient(circle, #F0EDFB 0%, transparent 70%)",
+            opacity: isDark ? 0.5 : 0.85,
+          }}
+        />
+        <div
+          className="absolute bottom-[-10%] right-[10%] w-[85vw] h-[85vw] max-w-[900px] max-h-[900px] rounded-full blur-[130px]"
+          style={{
+            background: isDark
+              ? "radial-gradient(circle, #1B1237 0%, transparent 70%)"
+              : "radial-gradient(circle, rgba(224, 242, 254, 0.75) 0%, transparent 70%)",
+            opacity: isDark ? 0.5 : 0.8,
           }}
         />
       </div>
 
       {/* ====================================================================
-          SECTION A — STICKY GLASS SUB-HEADER
+          SHARED SITE <Navbar /> AT TOP OF /app
          ==================================================================== */}
-      <header
-        className="sticky top-0 z-40 border-b backdrop-blur-xl transition-colors duration-300"
+      <div className="relative z-50">
+        <Navbar showCart={false} />
+      </div>
+
+      {/* ====================================================================
+          SECONDARY FLOATING / STICKY SUB-BAR JUST BELOW <Navbar />
+         ==================================================================== */}
+      <div
+        className="sticky top-14 md:top-16 z-40 border-y backdrop-blur-xl transition-colors duration-300 mt-14 md:mt-16"
         style={{
           backgroundColor: isDark
-            ? "rgba(3, 7, 18, 0.82)"
-            : "rgba(248, 249, 247, 0.88)",
+            ? "rgba(6, 9, 19, 0.86)"
+            : "rgba(248, 249, 247, 0.92)",
           borderColor: tokens.cardBorder,
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
-          {/* Left: LEVL Logo + OS v2.6 Pill Badge */}
-          <div className="flex items-center gap-3">
-            <Link href="/" className="flex items-center gap-2 group">
-              <Image
-                src="/images/levl-logo.png"
-                alt="LEVL"
-                width={96}
-                height={32}
-                className={`h-6 w-auto object-contain transition-all ${
-                  !isDark ? "invert brightness-15" : ""
-                }`}
-              />
-            </Link>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-3">
+          {/* Left: LEVL: OutPace Aging Badge + Quick Section Jump Links */}
+          <div className="flex items-center gap-4 lg:gap-6">
             <span
-              className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold border"
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold border shrink-0"
               style={{
                 backgroundColor: isDark
-                  ? "rgba(16, 185, 129, 0.12)"
-                  : "rgba(13, 148, 136, 0.12)",
+                  ? "rgba(14, 165, 233, 0.12)"
+                  : "rgba(2, 132, 199, 0.10)",
                 borderColor: isDark
-                  ? "rgba(16, 185, 129, 0.35)"
-                  : "rgba(13, 148, 136, 0.35)",
-                color: tokens.accentEmerald,
+                  ? "rgba(14, 165, 233, 0.35)"
+                  : "rgba(2, 132, 199, 0.30)",
+                color: tokens.accentCyan,
               }}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              OS v2.6
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              LEVL: OutPace Aging
             </span>
+
+            <nav className="hidden xl:flex items-center gap-5 text-xs font-semibold tracking-wide">
+              {[
+                { label: "Overview", href: "#overview" },
+                {
+                  label: "Famous Protocols × Your Biology",
+                  href: "#famous-protocols",
+                },
+                { label: "8-Vector Score", href: "#vector-score" },
+                { label: "80/20 Adaptive Mode", href: "#adaptive-8020" },
+                { label: "FAQ", href: "#faq" },
+              ].map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="transition-opacity hover:opacity-100 opacity-75 whitespace-nowrap"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
           </div>
 
-          {/* Center (Desktop): Smooth-Scroll Anchor Links */}
-          <nav className="hidden lg:flex items-center gap-6 text-xs font-semibold tracking-wide">
-            {[
-              { label: "Circadian Engine", href: "#circadian-engine" },
-              { label: "8-Vector Score", href: "#vector-score" },
-              { label: "Mastermind Stacks", href: "#mastermind-stacks" },
-              { label: "Clinical Evidence", href: "#clinical-evidence" },
-              { label: "Adaptive 80/20", href: "#adaptive-8020" },
-            ].map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="transition-opacity hover:opacity-100 opacity-75"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-
-          {/* Right: Interactive Theme Toggle + Enter VIP Code + Get Early Access */}
+          {/* Right: Interactive App Theme Toggle + Unlock with VIP Code + Join Early Access */}
           <div className="flex items-center gap-2 sm:gap-2.5">
-            {/* Two-State Theme Toggle in Site Chrome */}
             <button
               type="button"
               onClick={toggleTheme}
               aria-label={`Switch to ${
-                isDark ? "Daylight Quartz Light" : "Obsidian Dark"
-              } mode`}
+                isDark ? "Light Mode" : "Dark Mode"
+              }`}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border transition-all cursor-pointer hover:scale-[1.02]"
               style={{
                 backgroundColor: tokens.cardBg,
@@ -690,17 +783,16 @@ export default function LevlAppShowcasePage() {
               {isDark ? (
                 <>
                   <Moon className="w-3.5 h-3.5 text-sky-400" />
-                  <span className="hidden sm:inline">🌙 Dark</span>
+                  <span className="hidden sm:inline">🌙 Dark Mode</span>
                 </>
               ) : (
                 <>
                   <Sun className="w-3.5 h-3.5 text-amber-500" />
-                  <span className="hidden sm:inline">☀️ Light</span>
+                  <span className="hidden sm:inline">☀️ Light Mode</span>
                 </>
               )}
             </button>
 
-            {/* Enter VIP Code Ghost Button */}
             <button
               type="button"
               onClick={() => openModal("vip")}
@@ -708,46 +800,48 @@ export default function LevlAppShowcasePage() {
               style={{
                 borderColor: tokens.cardBorder,
                 backgroundColor: isDark
-                  ? "rgba(255,255,255,0.03)"
+                  ? "rgba(255,255,255,0.04)"
                   : "rgba(15,23,42,0.04)",
               }}
             >
               <KeyRound className="w-3.5 h-3.5 text-sky-400" />
-              <span>Enter VIP Code</span>
+              <span>Unlock with VIP Code</span>
             </button>
 
-            {/* Get Early Access Emerald Gradient Button */}
             <button
               type="button"
               onClick={() => openModal("waitlist")}
-              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-extrabold bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 shadow-lg shadow-emerald-500/20 hover:opacity-95 transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-extrabold bg-gradient-to-r from-emerald-500 to-sky-400 text-slate-950 shadow-lg shadow-emerald-500/20 hover:opacity-95 transition-all cursor-pointer"
             >
-              <span>Get Early Access</span>
+              <span>Join Early Access</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
-      </header>
+      </div>
 
-      <main className="relative z-10">
+      <main className="relative z-10 flex-grow">
         {/* ====================================================================
-            SECTION B — HERO SECTION (ABOVE THE FOLD)
+            HERO SECTION (#overview)
            ==================================================================== */}
-        <section className="pt-12 sm:pt-16 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
+        <section
+          id="overview"
+          className="pt-12 sm:pt-16 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center scroll-mt-32"
+        >
           {/* Top Eyebrow Pill */}
           <div
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold tracking-widest uppercase border mb-6"
             style={{
               backgroundColor: isDark
-                ? "rgba(16, 185, 129, 0.10)"
-                : "rgba(13, 148, 136, 0.10)",
+                ? "rgba(14, 165, 233, 0.10)"
+                : "rgba(2, 132, 199, 0.10)",
               borderColor: isDark
-                ? "rgba(16, 185, 129, 0.30)"
-                : "rgba(13, 148, 136, 0.30)",
-              color: tokens.accentEmerald,
+                ? "rgba(14, 165, 233, 0.30)"
+                : "rgba(2, 132, 199, 0.30)",
+              color: tokens.accentCyan,
             }}
           >
-            <span>✦ BIOLOGICAL PROTOCOL ENGINE • VIP EARLY ACCESS</span>
+            <span>✦ LEVL: OUTPACE AGING • PERSONALIZED LONGEVITY PROTOCOLS APP</span>
           </div>
 
           {/* H1 Headline */}
@@ -757,7 +851,7 @@ export default function LevlAppShowcasePage() {
               className="bg-clip-text text-transparent"
               style={{
                 backgroundImage: isDark
-                  ? "linear-gradient(135deg, #10B981 0%, #38BDF8 55%, #A855F7 100%)"
+                  ? "linear-gradient(135deg, #10B981 0%, #0ea5e9 55%, #e879f9 100%)"
                   : "linear-gradient(135deg, #0D9488 0%, #0284C7 55%, #4F46E5 100%)",
               }}
             >
@@ -770,9 +864,13 @@ export default function LevlAppShowcasePage() {
             className="text-base sm:text-xl max-w-3xl mx-auto leading-relaxed mb-8"
             style={{ color: tokens.textSecondary }}
           >
-            Explore 100+ clinically graded longevity modalities, adopt
-            world-class Mastermind stacks in one tap, and track your real-time
-            impact across all 8 biological vectors of aging.
+            Explore 100+ clinically graded longevity modalities, adapt
+            world-class famous protocols to your personal biology, and track your
+            real-time impact across all 8 biological vectors of aging in{" "}
+            <strong style={{ color: tokens.textPrimary }}>
+              LEVL: OutPace Aging
+            </strong>
+            .
           </p>
 
           {/* Hero CTA Cluster */}
@@ -782,7 +880,7 @@ export default function LevlAppShowcasePage() {
               onClick={() => openModal("waitlist")}
               className="w-full sm:w-auto px-8 py-4 rounded-full font-extrabold text-sm sm:text-base bg-gradient-to-r from-emerald-500 via-emerald-400 to-sky-400 text-slate-950 shadow-xl shadow-emerald-500/25 hover:scale-[1.02] transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
-              <span>Get Early Access</span>
+              <span>Join Early Access</span>
               <ArrowRight className="w-4 h-4" />
             </button>
 
@@ -796,7 +894,7 @@ export default function LevlAppShowcasePage() {
               }}
             >
               <KeyRound className="w-4 h-4 text-sky-400" />
-              <span>Have VIP Code? Launch App →</span>
+              <span>Unlock with VIP Code →</span>
             </button>
           </div>
 
@@ -824,7 +922,7 @@ export default function LevlAppShowcasePage() {
                     : "opacity-70 hover:opacity-100"
                 }`}
               >
-                <span>🌙 Obsidian Dark</span>
+                <span>🌙 Dark Mode</span>
               </button>
               <button
                 type="button"
@@ -835,19 +933,19 @@ export default function LevlAppShowcasePage() {
                     : "opacity-70 hover:opacity-100"
                 }`}
               >
-                <span>☀️ Daylight Quartz</span>
+                <span>☀️ Light Mode</span>
               </button>
             </div>
           </div>
 
           {/* Hero Visual: 3-Phone Perspective Stage */}
           <div className="relative max-w-6xl mx-auto pt-2 pb-6">
-            {/* Mobile Screen Selector Pills (visible on small screens so mobile visitors can inspect all 3 hero phones) */}
+            {/* Mobile Screen Selector Pills */}
             <div className="flex lg:hidden items-center justify-center gap-2 mb-6">
               {[
-                { key: "longevity-score" as const, label: "8-Vector Radar" },
+                { key: "longevity-score" as const, label: "8-Vector Score" },
                 { key: "today-circadian" as const, label: "Today Feed (#1)" },
-                { key: "schedule-grid" as const, label: "7-Day Schedule" },
+                { key: "schedule-grid" as const, label: "7-Day Week" },
               ].map((tab) => (
                 <button
                   key={tab.key}
@@ -855,7 +953,7 @@ export default function LevlAppShowcasePage() {
                   onClick={() => setHeroFocusScreen(tab.key)}
                   className={`px-3 py-1.5 rounded-full text-xs font-bold border transition-all cursor-pointer ${
                     heroFocusScreen === tab.key
-                      ? "bg-emerald-500 text-slate-950 border-emerald-500"
+                      ? "bg-sky-500 text-slate-950 border-sky-500"
                       : "opacity-70"
                   }`}
                   style={
@@ -880,16 +978,16 @@ export default function LevlAppShowcasePage() {
                 priority="high"
                 caption={
                   heroFocusScreen === "today-circadian"
-                    ? "Today Circadian Feed — Morning Sunlight Anchored #1"
+                    ? "LEVL: OutPace Aging — Today Feed (Morning Sunlight Anchored #1)"
                     : heroFocusScreen === "longevity-score"
-                    ? "8-Vector Biological Radar & Coverage Score"
-                    : "7-Day Pulsed Cadence & Split-Dose Schedule"
+                    ? "LEVL: OutPace Aging — 8-Vector Biological Radar"
+                    : "LEVL: OutPace Aging — 7-Day Circadian Schedule"
                 }
               />
             </div>
 
             {/* Desktop 3-Phone Perspective Stage */}
-            <div className="hidden lg:flex items-center justify-center relative min-h-[680px]">
+            <div className="hidden lg:flex items-center justify-center relative min-h-[690px]">
               {/* Left Tilted Phone (-8deg, scale-90): longevity-score-{theme}.png */}
               <div className="transform -rotate-[8deg] scale-90 -mr-10 z-10 hover:z-30 hover:rotate-0 hover:scale-95 transition-all duration-500">
                 <IPhoneShowcaseFrame
@@ -906,7 +1004,7 @@ export default function LevlAppShowcasePage() {
                   screenKey="today-circadian"
                   theme={previewTheme}
                   priority="high"
-                  caption="Today Circadian Feed • Morning Sunlight #1 Anchor"
+                  caption="Today Circadian Feed • ☀️ Morning Sunlight Task #1"
                 />
               </div>
 
@@ -924,7 +1022,7 @@ export default function LevlAppShowcasePage() {
         </section>
 
         {/* ====================================================================
-            SECTION C — SOCIAL PROOF & CLINICAL RIGOR TICKER + PERSONA MATRIX
+            SOCIAL PROOF & CLINICAL RIGOR TICKER
            ==================================================================== */}
         <section
           className="border-y py-6 backdrop-blur-xl"
@@ -948,7 +1046,7 @@ export default function LevlAppShowcasePage() {
                   style={{
                     borderColor: tokens.cardBorder,
                     backgroundColor: isDark
-                      ? "rgba(3, 7, 18, 0.55)"
+                      ? "rgba(6, 9, 19, 0.65)"
                       : "rgba(248, 249, 247, 0.85)",
                   }}
                 >
@@ -963,118 +1061,357 @@ export default function LevlAppShowcasePage() {
           </div>
         </section>
 
-        {/* Target Audience & Conversion Psychology Matrix (3 Longevity Archetypes) */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="text-center max-w-3xl mx-auto mb-12">
+        {/* ====================================================================
+            UPGRADED SECTION 4 — 2-CLICK "FAMOUS PROTOCOLS × YOUR BIOLOGY" X-RAY
+           ==================================================================== */}
+        <section
+          id="famous-protocols"
+          className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28"
+        >
+          <div id="mastermind-stacks" className="scroll-mt-28" />
+
+          {/* Section Header */}
+          <div className="text-center max-w-4xl mx-auto mb-14">
             <span
-              className="text-xs font-mono uppercase tracking-widest font-bold block mb-2"
-              style={{ color: tokens.accentSky }}
+              className="text-xs sm:text-sm font-mono uppercase tracking-widest font-bold block mb-3"
+              style={{ color: tokens.accentCyan }}
             >
-              BUILT FOR HIGH-INTENT LONGEVITY OPERATORS
+              FAMOUS PROTOCOLS × YOUR PERSONAL BIOLOGY
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">
-              One Circadian Operating System. Three Breakthrough Workflows.
+            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-5 leading-tight">
+              Follow World-Class Longevity Protocols.{" "}
+              <span
+                className="bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: isDark
+                    ? "linear-gradient(135deg, #0ea5e9 0%, #10B981 60%, #e879f9 100%)"
+                    : "linear-gradient(135deg, #0284C7 0%, #0D9488 60%, #4F46E5 100%)",
+                }}
+              >
+                Personalized to <em className="italic">Your</em> Biology.
+              </span>
             </h2>
-            <p className="text-sm sm:text-base" style={{ color: tokens.textSecondary }}>
-              Whether you’re stacking 20+ interventions, tracking epigenetic labs,
-              or traveling across time zones, LEVL replaces fragmented spreadsheets
-              with biological precision.
+            <p
+              className="text-base sm:text-lg leading-relaxed"
+              style={{ color: tokens.textSecondary }}
+            >
+              Bryan Johnson’s Blueprint was built for a 47-year-old male eating
+              his last meal at 11:00 AM with a full-time medical team—not you.
+              Copy-pasting a famous checklist blindly onto your body can actually
+              backfire. Pick a protocol below, then click a real-life biology
+              profile to see how{" "}
+              <strong style={{ color: tokens.textPrimary }}>
+                LEVL: OutPace Aging
+              </strong>{" "}
+              adapts it for you.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {ARCHETYPES.map((item) => (
+          {/* STEP 1 — Pick the Famous Protocol You Want to Follow (5 Selectable Cards) */}
+          <div className="mb-10">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="px-2.5 py-1 rounded-full text-xs font-mono font-extrabold uppercase bg-sky-500/20 text-sky-400 border border-sky-500/30">
+                Step 1
+              </span>
+              <h3 className="text-base sm:text-lg font-extrabold tracking-tight">
+                Pick the Famous Protocol You Want to Follow
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+              {FAMOUS_PROTOCOLS.map((proto) => {
+                const isSelected = proto.id === selectedProtocolId;
+                return (
+                  <button
+                    key={proto.id}
+                    type="button"
+                    onClick={() => setSelectedProtocolId(proto.id)}
+                    className="p-4 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between"
+                    style={{
+                      backgroundColor: isSelected
+                        ? isDark
+                          ? "rgba(14, 165, 233, 0.16)"
+                          : "rgba(2, 132, 199, 0.12)"
+                        : tokens.cardBg,
+                      borderColor: isSelected
+                        ? tokens.accentCyan
+                        : proto.highlight
+                        ? "rgba(232, 121, 249, 0.35)"
+                        : tokens.cardBorder,
+                      boxShadow: isSelected
+                        ? "0 0 25px -5px rgba(14, 165, 233, 0.35)"
+                        : "none",
+                    }}
+                  >
+                    <div className="font-extrabold text-sm sm:text-[15px] leading-snug mb-2">
+                      {proto.name}
+                    </div>
+                    <div
+                      className="text-xs font-mono font-semibold"
+                      style={{
+                        color: isSelected
+                          ? tokens.accentCyan
+                          : proto.highlight
+                          ? tokens.accentMagenta
+                          : tokens.textSecondary,
+                      }}
+                    >
+                      {proto.badge}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* STEP 2 — Pick 1 Relatable "Who Are You Today?" Biology Profile (4 Exclusive 1-Click Pills) */}
+          <div className="mb-12">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="px-2.5 py-1 rounded-full text-xs font-mono font-extrabold uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                Step 2
+              </span>
+              <h3 className="text-base sm:text-lg font-extrabold tracking-tight">
+                Pick 1 Relatable “Who Are You Today?” Biology Profile
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+              {BIOLOGY_PROFILES.map((profile) => {
+                const isSelected = profile.id === selectedProfileId;
+                return (
+                  <button
+                    key={profile.id}
+                    type="button"
+                    onClick={() => setSelectedProfileId(profile.id)}
+                    className="p-4 rounded-2xl border text-left transition-all cursor-pointer flex items-start gap-3"
+                    style={{
+                      backgroundColor: isSelected
+                        ? isDark
+                          ? "rgba(16, 185, 129, 0.16)"
+                          : "rgba(13, 148, 136, 0.12)"
+                        : tokens.cardBg,
+                      borderColor: isSelected
+                        ? tokens.accentEmerald
+                        : tokens.cardBorder,
+                      boxShadow: isSelected
+                        ? "0 0 25px -5px rgba(16, 185, 129, 0.35)"
+                        : "none",
+                    }}
+                  >
+                    <span className="text-2xl leading-none shrink-0 mt-0.5">
+                      {profile.emoji}
+                    </span>
+                    <div>
+                      <div className="font-extrabold text-sm sm:text-[15px] leading-snug">
+                        {profile.label}
+                      </div>
+                      <div
+                        className="text-xs font-mono mt-1"
+                        style={{ color: tokens.textSecondary }}
+                      >
+                        {profile.sublabel}
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* THE INSTANT VISUAL PAYOFF: 3 Large Full-Readability X-Ray Cards + Synced Phone Preview */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+            {/* Left 7 Cols: 3 Large High-Contrast X-Ray Cards (15px–16px body text) */}
+            <div className="lg:col-span-7 space-y-5">
+              {/* CARD 1: 🛑 WHAT LEVL BLOCKS OR RESCHEDULES */}
               <div
-                key={item.persona}
-                className="rounded-3xl border p-6 sm:p-7 backdrop-blur-xl flex flex-col justify-between transition-all hover:scale-[1.01]"
+                className="p-6 sm:p-7 rounded-3xl border backdrop-blur-xl space-y-3 transition-all"
                 style={{
-                  backgroundColor: tokens.cardBg,
-                  borderColor: tokens.cardBorder,
+                  backgroundColor: isDark
+                    ? "rgba(239, 68, 68, 0.08)"
+                    : "rgba(254, 226, 226, 0.65)",
+                  borderColor: isDark
+                    ? "rgba(239, 68, 68, 0.35)"
+                    : "rgba(239, 68, 68, 0.4)",
                 }}
               >
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-lg font-extrabold tracking-tight">
-                      {item.persona}
-                    </h3>
-                    <p
-                      className="text-xs font-mono mt-0.5"
-                      style={{ color: tokens.accentSky }}
-                    >
-                      {item.sub}
-                    </p>
-                  </div>
-
-                  <div
-                    className="p-3.5 rounded-2xl border text-xs leading-relaxed"
-                    style={{
-                      backgroundColor: isDark
-                        ? "rgba(239, 68, 68, 0.06)"
-                        : "rgba(254, 226, 226, 0.45)",
-                      borderColor: isDark
-                        ? "rgba(239, 68, 68, 0.2)"
-                        : "rgba(239, 68, 68, 0.25)",
-                      color: tokens.textSecondary,
-                    }}
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="text-xs sm:text-sm font-mono font-extrabold uppercase tracking-wider text-red-400 flex items-center gap-2">
+                    <OctagonAlert className="w-4 h-4 shrink-0" />
+                    🛑 WHAT LEVL BLOCKS OR RESCHEDULES
+                  </span>
+                  <span
+                    className="text-xs font-mono px-2.5 py-0.5 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 font-semibold"
                   >
-                    <strong className="text-red-400 block mb-1 font-mono uppercase text-[10px]">
-                      Core Frustration Today:
-                    </strong>
-                    {item.frustration}
-                  </div>
-
-                  <div
-                    className="p-3.5 rounded-2xl border text-xs leading-relaxed"
-                    style={{
-                      backgroundColor: isDark
-                        ? "rgba(16, 185, 129, 0.08)"
-                        : "rgba(209, 250, 229, 0.5)",
-                      borderColor: isDark
-                        ? "rgba(16, 185, 129, 0.25)"
-                        : "rgba(13, 148, 136, 0.25)",
-                    }}
-                  >
-                    <strong
-                      className="block mb-1 font-mono uppercase text-[10px]"
-                      style={{ color: tokens.accentEmerald }}
-                    >
-                      The LEVL Hook:
-                    </strong>
-                    <span className="font-semibold">{item.hook}</span>
-                  </div>
+                    Why copying raw {activeProtocolSpec.shortName} hurts you
+                  </span>
                 </div>
 
-                <div className="pt-5 mt-5 border-t flex items-center justify-between text-xs font-bold" style={{ borderColor: tokens.cardBorder }}>
-                  <span style={{ color: tokens.textSecondary }}>
-                    Showcase: {item.screenLabel}
+                <div className="text-[15px] sm:text-base leading-relaxed">
+                  <span className="line-through opacity-75 font-semibold mr-2">
+                    {activeProfileSpec.blockedStrikethrough}
                   </span>
-                  <a
-                    href={item.targetAnchor}
-                    className="inline-flex items-center gap-1"
+                  <span className="font-extrabold text-amber-400">
+                    → {activeProfileSpec.blockedAction}
+                  </span>
+                </div>
+
+                <p
+                  className="text-[15px] sm:text-base leading-relaxed"
+                  style={{ color: tokens.textSecondary }}
+                >
+                  <strong style={{ color: tokens.textPrimary }}>
+                    Clinical Why:
+                  </strong>{" "}
+                  {activeProfileSpec.blockedClinicalWhy}
+                </p>
+              </div>
+
+              {/* CARD 2: ⚡ WHAT LEVL UPGRADES FOR YOUR BIOLOGY */}
+              <div
+                className="p-6 sm:p-7 rounded-3xl border backdrop-blur-xl space-y-3 transition-all"
+                style={{
+                  backgroundColor: isDark
+                    ? "rgba(16, 185, 129, 0.09)"
+                    : "rgba(209, 250, 229, 0.65)",
+                  borderColor: isDark
+                    ? "rgba(16, 185, 129, 0.38)"
+                    : "rgba(13, 148, 136, 0.4)",
+                }}
+              >
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span
+                    className="text-xs sm:text-sm font-mono font-extrabold uppercase tracking-wider flex items-center gap-2"
                     style={{ color: tokens.accentEmerald }}
                   >
-                    <span>Inspect</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </a>
+                    <Zap className="w-4 h-4 shrink-0" />
+                    ⚡ WHAT LEVL UPGRADES FOR YOUR BIOLOGY
+                  </span>
+                  <span
+                    className="text-xs font-mono px-2.5 py-0.5 rounded-full border font-semibold"
+                    style={{
+                      borderColor: tokens.accentEmerald,
+                      color: tokens.accentEmerald,
+                    }}
+                  >
+                    Personalized to your labs &amp; wearable data
+                  </span>
                 </div>
+
+                <h4 className="text-lg sm:text-xl font-extrabold tracking-tight">
+                  {activeProfileSpec.upgradeTitle}
+                </h4>
+
+                <p
+                  className="text-[15px] sm:text-base leading-relaxed"
+                  style={{ color: tokens.textSecondary }}
+                >
+                  {activeProfileSpec.upgradeBody}
+                </p>
+
+                {activeProfileSpec.upgradeBullets && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                    {activeProfileSpec.upgradeBullets.map((item, idx) => (
+                      <div
+                        key={item}
+                        className="p-3 rounded-xl border text-[15px] font-bold flex items-center gap-2"
+                        style={{
+                          backgroundColor: isDark
+                            ? "rgba(6, 9, 19, 0.65)"
+                            : "#FFFFFF",
+                          borderColor: tokens.cardBorder,
+                        }}
+                      >
+                        <span className="text-xs font-mono text-emerald-400">
+                          {idx + 1}.
+                        </span>
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
-            ))}
+
+              {/* CARD 3: ✅ YOUR PERSONALIZED LEVL: OUTPACE AGING FEED */}
+              <div
+                className="p-6 sm:p-7 rounded-3xl border backdrop-blur-xl space-y-4 transition-all"
+                style={{
+                  backgroundColor: tokens.cardBg,
+                  borderColor: tokens.accentCyan,
+                }}
+              >
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span
+                    className="text-xs sm:text-sm font-mono font-extrabold uppercase tracking-wider"
+                    style={{ color: tokens.accentCyan }}
+                  >
+                    ✅ YOUR PERSONALIZED LEVL: OUTPACE AGING FEED
+                  </span>
+                  <div className="flex items-center gap-2 font-mono text-xs font-bold">
+                    <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                      8-Vector: {activeProfileSpec.vectorScore}/100
+                    </span>
+                    <span className="px-2.5 py-0.5 rounded-full bg-sky-500/15 text-sky-400 border border-sky-500/30">
+                      {activeProfileSpec.paceOfAging}
+                    </span>
+                  </div>
+                </div>
+
+                <p
+                  className="text-[15px] sm:text-base leading-relaxed"
+                  style={{ color: tokens.textSecondary }}
+                >
+                  Synced live inside the iPhone preview: your{" "}
+                  <strong style={{ color: tokens.textPrimary }}>
+                    {activeProtocolSpec.name}
+                  </strong>{" "}
+                  stack is now calibrated for{" "}
+                  <strong style={{ color: tokens.textPrimary }}>
+                    {activeProfileSpec.emoji} {activeProfileSpec.label}
+                  </strong>{" "}
+                  with{" "}
+                  <strong style={{ color: tokens.dawnAmber }}>
+                    ☀️ Morning Sunlight
+                  </strong>{" "}
+                  pinned at Task #1 and zero pathway conflicts.
+                </p>
+
+                <button
+                  type="button"
+                  onClick={() => openModal("waitlist")}
+                  className="w-full py-4 px-6 rounded-2xl font-extrabold text-sm sm:text-base bg-gradient-to-r from-emerald-500 via-teal-400 to-sky-400 text-slate-950 shadow-xl shadow-emerald-500/20 hover:opacity-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <span>
+                    Personalize This Protocol in LEVL: OutPace Aging →
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            {/* Right 5 Cols: Synced LEVL: OutPace Aging Phone Preview */}
+            <div className="lg:col-span-5 flex justify-center">
+              <IPhoneShowcaseFrame
+                screenKey="today-circadian"
+                theme={previewTheme}
+                xrayConfig={xraySyncPayload}
+                caption={`Live Synced Feed: ${activeProtocolSpec.shortName} × ${activeProfileSpec.label}`}
+              />
+            </div>
           </div>
         </section>
 
         {/* ====================================================================
-            SECTION D — INTERACTIVE CIRCADIAN TIME-BLOCK EXPLORER
+            INTERACTIVE CIRCADIAN TIME-BLOCK EXPLORER (#circadian-engine)
            ==================================================================== */}
         <section
           id="circadian-engine"
-          className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+          className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28"
         >
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span
               className="text-xs font-mono uppercase tracking-widest font-bold block mb-2"
               style={{ color: tokens.dawnAmber }}
             >
-              SIGNATURE DIFFERENTIATOR • CHRONOBIOLOGY ENGINE
+              CHRONOBIOLOGY ENGINE • 4 DAILY BIOLOGICAL WINDOWS
             </span>
             <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
               Right Modality. Right Dose.{" "}
@@ -1083,9 +1420,12 @@ export default function LevlAppShowcasePage() {
               </span>
             </h2>
             <p className="text-base sm:text-lg" style={{ color: tokens.textSecondary }}>
-              Taking the right supplement or doing a cold plunge at the wrong
-              circadian phase can blunt your adaptation. Click each phase below to
-              inspect how LEVL sequences your day.
+              Click each circadian time block below to see how{" "}
+              <strong style={{ color: tokens.textPrimary }}>
+                LEVL: OutPace Aging
+              </strong>{" "}
+              sequences your day from Morning Sunlight Anchor #1 to Evening
+              Glymphatic Wind-Down.
             </p>
           </div>
 
@@ -1103,7 +1443,7 @@ export default function LevlAppShowcasePage() {
                   style={{
                     backgroundColor: isSelected
                       ? isDark
-                        ? "rgba(17, 24, 39, 0.95)"
+                        ? "rgba(11, 14, 23, 0.95)"
                         : "#FFFFFF"
                       : tokens.cardBg,
                     borderColor: isSelected ? accent : tokens.cardBorder,
@@ -1130,7 +1470,6 @@ export default function LevlAppShowcasePage() {
             })}
           </div>
 
-          {/* Active Phase Details + Phone Showcase */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-7 space-y-6">
               <div
@@ -1158,14 +1497,13 @@ export default function LevlAppShowcasePage() {
                     {activePhaseSpec.headline}
                   </h3>
                   <p
-                    className="text-sm sm:text-base leading-relaxed"
+                    className="text-[15px] sm:text-base leading-relaxed"
                     style={{ color: tokens.textSecondary }}
                   >
                     {activePhaseSpec.rationale}
                   </p>
                 </div>
 
-                {/* Phase Modalities List */}
                 <div className="space-y-3.5">
                   {activePhaseSpec.modalities.map((mod) => (
                     <div
@@ -1173,7 +1511,7 @@ export default function LevlAppShowcasePage() {
                       className="p-4 rounded-2xl border transition-all"
                       style={{
                         backgroundColor: isDark
-                          ? "rgba(3, 7, 18, 0.55)"
+                          ? "rgba(6, 9, 19, 0.6)"
                           : "rgba(248, 249, 247, 0.9)",
                         borderColor: tokens.cardBorder,
                       }}
@@ -1199,12 +1537,12 @@ export default function LevlAppShowcasePage() {
                         </span>
                       </div>
                       <p
-                        className="text-xs sm:text-sm mb-2"
+                        className="text-sm mb-2"
                         style={{ color: tokens.textSecondary }}
                       >
                         {mod.detail}
                       </p>
-                      <div className="text-[11px] font-mono opacity-80">
+                      <div className="text-xs font-mono opacity-80">
                         <strong>Mechanism:</strong> {mod.mechanism}
                       </div>
                     </div>
@@ -1218,7 +1556,7 @@ export default function LevlAppShowcasePage() {
                 screenKey={activePhaseSpec.screenKey}
                 theme={previewTheme}
                 activePhase={activePhaseSpec.id}
-                caption={`Live Preview: ${activePhaseSpec.label} (${activePhaseSpec.window})`}
+                caption={`LEVL: OutPace Aging — ${activePhaseSpec.label} (${activePhaseSpec.window})`}
               />
             </div>
           </div>
@@ -1229,7 +1567,7 @@ export default function LevlAppShowcasePage() {
            ==================================================================== */}
         <section
           id="vector-score"
-          className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+          className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28"
         >
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span
@@ -1294,10 +1632,9 @@ export default function LevlAppShowcasePage() {
             })}
           </div>
 
-          {/* Selected Vector Deep-Dive + Dual Phone Switcher */}
           <div
             id="clinical-evidence"
-            className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center scroll-mt-24"
+            className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center scroll-mt-28"
           >
             <div className="lg:col-span-7">
               <div
@@ -1332,7 +1669,7 @@ export default function LevlAppShowcasePage() {
                     </span>
                     <span
                       className="text-sm sm:text-base font-mono font-extrabold"
-                      style={{ color: tokens.accentSky }}
+                      style={{ color: tokens.accentCyan }}
                     >
                       {activeVectorSpec.effectSize}
                     </span>
@@ -1340,13 +1677,12 @@ export default function LevlAppShowcasePage() {
                 </div>
 
                 <p
-                  className="text-sm sm:text-base leading-relaxed"
+                  className="text-[15px] sm:text-base leading-relaxed"
                   style={{ color: tokens.textSecondary }}
                 >
                   {activeVectorSpec.effectDetail}
                 </p>
 
-                {/* Tier-1 Anchor Modalities */}
                 <div>
                   <h4 className="text-xs font-mono font-bold uppercase tracking-wider mb-2.5 opacity-80">
                     Tier-1 Anchor Modalities (Scored 65–100)
@@ -1355,10 +1691,10 @@ export default function LevlAppShowcasePage() {
                     {activeVectorSpec.anchorModalities.map((m) => (
                       <div
                         key={m}
-                        className="p-3 rounded-xl border flex items-center gap-2.5 text-xs sm:text-sm font-semibold"
+                        className="p-3 rounded-xl border flex items-center gap-2.5 text-sm font-semibold"
                         style={{
                           backgroundColor: isDark
-                            ? "rgba(3, 7, 18, 0.55)"
+                            ? "rgba(6, 9, 19, 0.6)"
                             : "rgba(248, 249, 247, 0.9)",
                           borderColor: tokens.cardBorder,
                         }}
@@ -1373,19 +1709,18 @@ export default function LevlAppShowcasePage() {
                   </div>
                 </div>
 
-                {/* Biomarkers & Molecular Pathways */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div
                     className="p-4 rounded-2xl border"
                     style={{
                       backgroundColor: isDark
-                        ? "rgba(3, 7, 18, 0.45)"
+                        ? "rgba(6, 9, 19, 0.5)"
                         : "rgba(248, 249, 247, 0.8)",
                       borderColor: tokens.cardBorder,
                     }}
                   >
                     <span className="text-xs font-mono font-bold uppercase tracking-wider block mb-2 opacity-75">
-                      Biomarker Anchors (/tracking)
+                      Biomarker Anchors (Insights)
                     </span>
                     <div className="flex flex-wrap gap-1.5">
                       {activeVectorSpec.biomarkers.map((b) => (
@@ -1403,7 +1738,7 @@ export default function LevlAppShowcasePage() {
                     className="p-4 rounded-2xl border"
                     style={{
                       backgroundColor: isDark
-                        ? "rgba(3, 7, 18, 0.45)"
+                        ? "rgba(6, 9, 19, 0.5)"
                         : "rgba(248, 249, 247, 0.8)",
                       borderColor: tokens.cardBorder,
                     }}
@@ -1424,7 +1759,6 @@ export default function LevlAppShowcasePage() {
                   </div>
                 </div>
 
-                {/* Verified PubMed Citation Bar */}
                 <div
                   className="p-3.5 rounded-xl border flex items-center justify-between text-xs font-mono"
                   style={{ borderColor: tokens.cardBorder }}
@@ -1435,7 +1769,6 @@ export default function LevlAppShowcasePage() {
               </div>
             </div>
 
-            {/* Right: Interactive Screen Switcher (8-Vector Radar / Grade-A Evidence / Biomarkers) */}
             <div className="lg:col-span-5 flex flex-col items-center">
               <div
                 className="inline-flex items-center gap-1 p-1 rounded-full border mb-5"
@@ -1445,9 +1778,9 @@ export default function LevlAppShowcasePage() {
                 }}
               >
                 {[
-                  { key: "longevity-score" as const, label: "8-Vector Radar" },
-                  { key: "modality-evidence" as const, label: "Grade-A RCT Modal" },
-                  { key: "biomarkers-tracking" as const, label: "Lab Biomarkers" },
+                  { key: "longevity-score" as const, label: "8-Vector Score" },
+                  { key: "modality-evidence" as const, label: "Grade-A RCT" },
+                  { key: "biomarkers-tracking" as const, label: "Biomarkers" },
                 ].map((view) => (
                   <button
                     key={view.key}
@@ -1455,7 +1788,7 @@ export default function LevlAppShowcasePage() {
                     onClick={() => setVectorPhoneView(view.key)}
                     className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                       vectorPhoneView === view.key
-                        ? "bg-emerald-500 text-slate-950 shadow"
+                        ? "bg-sky-500 text-slate-950 shadow"
                         : "opacity-70 hover:opacity-100"
                     }`}
                   >
@@ -1468,260 +1801,7 @@ export default function LevlAppShowcasePage() {
                 screenKey={vectorPhoneView}
                 theme={previewTheme}
                 activeVector={activeVectorSpec.name}
-                caption={`Inspecting ${activeVectorSpec.name} on ${vectorPhoneView.replace(
-                  "-",
-                  " "
-                )}`}
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* ====================================================================
-            SECTION F — MASTERMIND PROTOCOL STACKS + BIOCHEMICAL CLASH DETECTION
-           ==================================================================== */}
-        <section
-          id="mastermind-stacks"
-          className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
-        >
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <span
-              className="text-xs font-mono uppercase tracking-widest font-bold block mb-2"
-              style={{ color: tokens.accentSky }}
-            >
-              1-TAP PROTOCOL ENROLLMENT • BIOCHEMICAL CONFLICT AUDITOR
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
-              Adopt World-Class Mastermind Stacks.{" "}
-              <span style={{ color: tokens.accentSky }}>
-                Zero Pathway Clashes.
-              </span>
-            </h2>
-            <p className="text-base sm:text-lg" style={{ color: tokens.textSecondary }}>
-              Compare and enroll in flagship longevity stacks in one tap—while
-              LEVL’s Biochemical Clash Engine prevents antagonistic timing
-              mistakes automatically.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-            {/* Left: 4 Mastermind Stack Selector + Live Biochemical Clash Simulator */}
-            <div className="lg:col-span-7 space-y-6">
-              {/* 4 Flagship Stack Tabs */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {MASTERMIND_STACKS.map((stack) => {
-                  const isSelected = stack.id === selectedStackId;
-                  return (
-                    <button
-                      key={stack.id}
-                      type="button"
-                      onClick={() => {
-                        setSelectedStackId(stack.id);
-                        setStackPhoneView("mastermind-protocols");
-                      }}
-                      className="p-4 rounded-2xl border text-left transition-all cursor-pointer"
-                      style={{
-                        backgroundColor: isSelected
-                          ? isDark
-                            ? "rgba(56, 189, 248, 0.12)"
-                            : "rgba(2, 132, 199, 0.10)"
-                          : tokens.cardBg,
-                        borderColor: isSelected
-                          ? tokens.accentSky
-                          : tokens.cardBorder,
-                      }}
-                    >
-                      <div className="flex items-center justify-between gap-2 mb-1">
-                        <span className="font-extrabold text-sm">
-                          {stack.name}
-                        </span>
-                      </div>
-                      <p
-                        className="text-xs line-clamp-1 mb-2"
-                        style={{ color: tokens.textSecondary }}
-                      >
-                        {stack.subtitle}
-                      </p>
-                      <div className="flex items-center gap-2 text-[11px] font-mono">
-                        <span
-                          className="px-2 py-0.5 rounded bg-emerald-500/15 font-bold"
-                          style={{ color: tokens.accentEmerald }}
-                        >
-                          {stack.modalitiesCount}
-                        </span>
-                        <span className="opacity-75">{stack.vectorsCovered}</span>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Selected Mastermind Stack Breakdown Card */}
-              <div
-                className="p-6 rounded-3xl border backdrop-blur-xl space-y-4"
-                style={{
-                  backgroundColor: tokens.cardBg,
-                  borderColor: tokens.cardBorder,
-                }}
-              >
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div>
-                    <span
-                      className="text-xs font-mono font-bold uppercase"
-                      style={{ color: tokens.accentEmerald }}
-                    >
-                      {activeStackSpec.paceBadge} • {activeStackSpec.vectorsCovered}
-                    </span>
-                    <h3 className="text-xl sm:text-2xl font-extrabold">
-                      {activeStackSpec.name}
-                    </h3>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => openModal("vip")}
-                    className="px-4 py-2 rounded-full text-xs font-extrabold bg-emerald-500 text-slate-950 hover:opacity-90 transition-all cursor-pointer"
-                  >
-                    1-Tap Enroll in App →
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  {activeStackSpec.highlights.map((h) => (
-                    <div
-                      key={h}
-                      className="p-3 rounded-xl border text-xs font-medium flex items-start gap-2"
-                      style={{
-                        backgroundColor: isDark
-                          ? "rgba(3, 7, 18, 0.5)"
-                          : "rgba(248, 249, 247, 0.9)",
-                        borderColor: tokens.cardBorder,
-                      }}
-                    >
-                      <CheckCircle2
-                        className="w-4 h-4 shrink-0 mt-0.5"
-                        style={{ color: tokens.accentEmerald }}
-                      />
-                      <span>{h}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Interactive Biochemical Clash Auditing Demo */}
-              <div
-                className="p-6 rounded-3xl border backdrop-blur-xl space-y-4 transition-all"
-                style={{
-                  backgroundColor: clashResolved
-                    ? isDark
-                      ? "rgba(16, 185, 129, 0.08)"
-                      : "rgba(209, 250, 229, 0.55)"
-                    : isDark
-                    ? "rgba(245, 158, 11, 0.08)"
-                    : "rgba(254, 243, 199, 0.65)",
-                  borderColor: clashResolved
-                    ? tokens.accentEmerald
-                    : tokens.dawnAmber,
-                }}
-              >
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div className="flex items-center gap-2">
-                    <AlertTriangle
-                      className="w-5 h-5"
-                      style={{
-                        color: clashResolved
-                          ? tokens.accentEmerald
-                          : tokens.dawnAmber,
-                      }}
-                    />
-                    <span className="text-xs font-mono font-extrabold uppercase tracking-wider">
-                      Live Biochemical Conflict Auditor (/bench)
-                    </span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setClashResolved(!clashResolved);
-                      setStackPhoneView("bench-drawer");
-                    }}
-                    className="px-3.5 py-1.5 rounded-full text-xs font-mono font-bold border transition-all cursor-pointer"
-                    style={{
-                      backgroundColor: clashResolved
-                        ? tokens.accentEmerald
-                        : tokens.dawnAmber,
-                      color: "#030712",
-                      borderColor: "transparent",
-                    }}
-                  >
-                    {clashResolved
-                      ? "✓ Rescheduled (Click to Reset)"
-                      : "⚡ Run 1-Tap Smart Reschedule"}
-                  </button>
-                </div>
-
-                {!clashResolved ? (
-                  <p className="text-xs sm:text-sm leading-relaxed">
-                    <strong>⚠️ Antagonistic Clash Detected:</strong> Scheduling{" "}
-                    <strong>Cold Plunge (50°F)</strong> or{" "}
-                    <strong>Metformin (500mg)</strong> immediately after{" "}
-                    <strong>Heavy Hypertrophy Resistance Training</strong> blunts{" "}
-                    <code className="font-mono font-bold">mTORC1</code>,{" "}
-                    <code className="font-mono font-bold">IGF-1</code>, and ribosomal
-                    satellite cell signaling by up to 24%.
-                  </p>
-                ) : (
-                  <p className="text-xs sm:text-sm leading-relaxed">
-                    <strong>✓ Pathway Conflict Resolved:</strong> LEVL moved{" "}
-                    <strong>Cold Plunge (50°F–55°F)</strong> to{" "}
-                    <strong>Morning Rise (07:30 AM) / Non-Lifting Days</strong> and
-                    benched Metformin on peak VO2 Max days—preserving 100% of your{" "}
-                    <code className="font-mono font-bold">mTORC1</code> hypertrophy
-                    window.
-                  </p>
-                )}
-              </div>
-            </div>
-
-            {/* Right: Mastermind Protocols & Bench Drawer Phone Switcher */}
-            <div className="lg:col-span-5 flex flex-col items-center">
-              <div
-                className="inline-flex items-center gap-1 p-1 rounded-full border mb-5"
-                style={{
-                  backgroundColor: tokens.cardBg,
-                  borderColor: tokens.cardBorder,
-                }}
-              >
-                <button
-                  type="button"
-                  onClick={() => setStackPhoneView("mastermind-protocols")}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                    stackPhoneView === "mastermind-protocols"
-                      ? "bg-emerald-500 text-slate-950 shadow"
-                      : "opacity-70 hover:opacity-100"
-                  }`}
-                >
-                  Mastermind Stacks (/protocols)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setStackPhoneView("bench-drawer")}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                    stackPhoneView === "bench-drawer"
-                      ? "bg-emerald-500 text-slate-950 shadow"
-                      : "opacity-70 hover:opacity-100"
-                  }`}
-                >
-                  Bench & Clash Guard (/bench)
-                </button>
-              </div>
-
-              <IPhoneShowcaseFrame
-                screenKey={stackPhoneView}
-                theme={previewTheme}
-                caption={
-                  stackPhoneView === "mastermind-protocols"
-                    ? "1-Tap Mastermind Stack Comparison & Enrollment"
-                    : "Active vs. Benched Modalities & Clash Detection"
-                }
+                caption={`Inspecting ${activeVectorSpec.name} in LEVL: OutPace Aging`}
               />
             </div>
           </div>
@@ -1732,7 +1812,7 @@ export default function LevlAppShowcasePage() {
            ==================================================================== */}
         <section
           id="adaptive-8020"
-          className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+          className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28"
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-7 space-y-6">
@@ -1741,12 +1821,12 @@ export default function LevlAppShowcasePage() {
                   className="text-xs font-mono uppercase tracking-widest font-bold block mb-2"
                   style={{ color: tokens.duskIndigo }}
                 >
-                  ANTI-BURNOUT ENGINE • ADAPTIVE ROUTINE GOVERNOR
+                  ANTI-BURNOUT ENGINE • 7-DAY SCHEDULE &amp; 80/20 GOVERNOR
                 </span>
                 <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
                   Built for Real Life:{" "}
                   <span style={{ color: tokens.accentEmerald }}>
-                    Adaptive 80/20 Survival Mode & Sleep Triage.
+                    Adaptive 80/20 Survival Mode &amp; Sleep Triage.
                   </span>
                 </h2>
                 <p
@@ -1754,12 +1834,15 @@ export default function LevlAppShowcasePage() {
                   style={{ color: tokens.textSecondary }}
                 >
                   Rigid 25-step checklists cause “all-or-nothing burnout” on
-                  red-eye travel days or poor sleep nights. LEVL dynamically scales
-                  your daily protocol so your streak and biology never break.
+                  travel days or poor sleep nights.{" "}
+                  <strong style={{ color: tokens.textPrimary }}>
+                    LEVL: OutPace Aging
+                  </strong>{" "}
+                  dynamically scales your daily routine so your streak and
+                  biology never break.
                 </p>
               </div>
 
-              {/* Interactive Governor Mode Selector */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {[
                   {
@@ -1771,14 +1854,14 @@ export default function LevlAppShowcasePage() {
                   {
                     id: "sleep-triage" as const,
                     title: "Poor Sleep Triage",
-                    sub: "Logged <6.5h Sleep / Low HRV",
+                    sub: "Logged <6h Sleep / Low HRV",
                     badge: "CNS Strain Auto-Swapped",
                   },
                   {
                     id: "optimal" as const,
                     title: "Full Precision Stack",
                     sub: "85%+ Readiness Score",
-                    badge: "All 16 Daily Modalities",
+                    badge: "All Scheduled Modalities",
                   },
                 ].map((m) => {
                   const active = governorMode === m.id;
@@ -1817,7 +1900,6 @@ export default function LevlAppShowcasePage() {
                 })}
               </div>
 
-              {/* Dynamic Mode Output Card */}
               <div
                 className="p-6 rounded-3xl border backdrop-blur-xl space-y-4"
                 style={{
@@ -1829,32 +1911,32 @@ export default function LevlAppShowcasePage() {
                   <>
                     <div className="flex items-center justify-between">
                       <h3 className="text-lg sm:text-xl font-extrabold">
-                        🛡️ 1-Tap 80/20 Pareto Shield Active (4 Anchors • 22 Mins Total)
+                        🛡️ 1-Tap 80/20 Pareto Shield Active (4 Anchors • 20 Mins Total)
                       </h3>
-                      <span className="text-xs font-mono font-bold text-emerald-500">
+                      <span className="text-xs font-mono font-bold text-emerald-400">
                         82% Biological ROI Retained
                       </span>
                     </div>
                     <p
-                      className="text-xs sm:text-sm"
+                      className="text-[15px] sm:text-base"
                       style={{ color: tokens.textSecondary }}
                     >
-                      16 secondary/marginal steps automatically deferred. Only your
-                      top 20% highest-ROI Tier-1 anchors remain active today:
+                      20 secondary &amp; marginal steps automatically deferred. Only
+                      your top 4 highest-ROI Tier-1 anchors remain active today:
                     </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs font-semibold">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-sm font-semibold">
                       {[
-                        "1. Morning Sunlight (10m Outdoor Lux)",
-                        "2. Creatine 5g + Essential Lipid Matrix",
-                        "3. 15m Post-Meal Zone 1 Metabolic Walk",
-                        "4. Evening Mg L-Threonate + 3g Glycine",
+                        "1. ☀️ Morning Outdoor Sunlight (10m • 10,000+ Lux)",
+                        "2. 💊 Creatine 5g + Essential Lipid Matrix",
+                        "3. 🚶 15m Post-Meal Glucose Walk (GLUT4)",
+                        "4. 🌙 Evening Sleep Stack (Mg L-Threonate + 3g Glycine)",
                       ].map((step) => (
                         <div
                           key={step}
                           className="p-3 rounded-xl border flex items-center gap-2"
                           style={{ borderColor: tokens.cardBorder }}
                         >
-                          <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                           <span>{step}</span>
                         </div>
                       ))}
@@ -1866,25 +1948,25 @@ export default function LevlAppShowcasePage() {
                   <>
                     <div className="flex items-center justify-between">
                       <h3 className="text-lg sm:text-xl font-extrabold">
-                        🌙 Poor Sleep Triage (&lt;6.5h Logged) — CNS Protection Active
+                        🌙 Poor Sleep Triage (&lt;6h Logged) — CNS Protection Active
                       </h3>
-                      <span className="text-xs font-mono font-bold text-amber-500">
+                      <span className="text-xs font-mono font-bold text-amber-400">
                         Autonomic Recovery Mode
                       </span>
                     </div>
                     <p
-                      className="text-xs sm:text-sm"
+                      className="text-[15px] sm:text-base"
                       style={{ color: tokens.textSecondary }}
                     >
                       High-CNS strain workouts on sleep debt spike cortisol and
-                      injury risk. LEVL automatically swaps today’s heavy intervals
-                      for parasympathetic recovery:
+                      suppress HRV. LEVL: OutPace Aging automatically benches
+                      heavy intervals and injects recovery:
                     </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs font-semibold">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-sm font-semibold">
                       {[
-                        "✓ Swapped Norwegian 4x4 → 25m Zone 1 Nasal Walk",
-                        "✓ Added 20m Afternoon NSDR (Non-Sleep Deep Rest)",
-                        "✓ Elevated Creatine to 10g (Acute Sleep-Debt Brain Buffer)",
+                        "✓ Auto-Benched Norwegian 4x4 & 50°F Cold Plunge",
+                        "✓ Added 20m Afternoon NSDR (14:00–16:00)",
+                        "✓ Elevated Creatine from 5g → 10g (Prefrontal ATP Buffer)",
                         "✓ Shifted Evening Wind-Down 45m Earlier",
                       ].map((step) => (
                         <div
@@ -1892,7 +1974,7 @@ export default function LevlAppShowcasePage() {
                           className="p-3 rounded-xl border flex items-center gap-2"
                           style={{ borderColor: tokens.cardBorder }}
                         >
-                          <Sparkles className="w-4 h-4 text-amber-500 shrink-0" />
+                          <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
                           <span>{step}</span>
                         </div>
                       ))}
@@ -1911,12 +1993,13 @@ export default function LevlAppShowcasePage() {
                       </span>
                     </div>
                     <p
-                      className="text-xs sm:text-sm"
+                      className="text-[15px] sm:text-base"
                       style={{ color: tokens.textSecondary }}
                     >
-                      Your HRV and deep sleep are in the top quartile. LEVL unlocks
-                      your scheduled Norwegian 4x4 VO2 Max + 174°F+ Finnish Sauna
-                      pairing in the 14:00–18:00 Afternoon Dip window.
+                      Your HRV and deep sleep are in the top quartile.{" "}
+                      <strong>LEVL: OutPace Aging</strong> unlocks your scheduled
+                      Norwegian 4x4 VO2 Max + 174°F+ Finnish Sauna pairing in the
+                      14:00–18:00 Afternoon Dip window.
                     </p>
                   </>
                 )}
@@ -1927,16 +2010,19 @@ export default function LevlAppShowcasePage() {
               <IPhoneShowcaseFrame
                 screenKey="schedule-grid"
                 theme={previewTheme}
-                caption="7-Day Schedule Grid & 1-Tap Rest Day Reconciliation"
+                caption="LEVL: OutPace Aging — 7-Day Week & Rest Reconciliation"
               />
             </div>
           </div>
         </section>
 
         {/* ====================================================================
-            SECTION H — BOTTOM CONVERSION BANNER & 5-QUESTION FAQ
+            SECTION H — BOTTOM CONVERSION BANNER & 5-QUESTION FAQ (#faq)
            ==================================================================== */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+        <section
+          id="faq"
+          className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto scroll-mt-28"
+        >
           {/* Bottom Dual-CTA Conversion Card */}
           <div
             className="rounded-[36px] border p-8 sm:p-12 text-center backdrop-blur-xl shadow-2xl mb-20 relative overflow-hidden"
@@ -1950,7 +2036,7 @@ export default function LevlAppShowcasePage() {
               className="absolute -top-24 left-1/2 -translate-x-1/2 w-[500px] h-[250px] rounded-full blur-3xl pointer-events-none opacity-40"
               style={{
                 background:
-                  "radial-gradient(circle, #10B981 0%, #38BDF8 60%, transparent 100%)",
+                  "radial-gradient(circle, #10B981 0%, #0ea5e9 60%, transparent 100%)",
               }}
             />
 
@@ -1963,7 +2049,7 @@ export default function LevlAppShowcasePage() {
                 }}
               >
                 <Sparkles className="w-3.5 h-3.5" />
-                Ready to OutPace Aging?
+                LEVL: OutPace Aging
               </span>
 
               <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
@@ -1975,7 +2061,11 @@ export default function LevlAppShowcasePage() {
                 style={{ color: tokens.textSecondary }}
               >
                 Join the Early Access cohort or enter your VIP activation code to
-                launch the LEVL Web & Mobile PWA immediately.
+                launch{" "}
+                <strong style={{ color: tokens.textPrimary }}>
+                  LEVL: OutPace Aging
+                </strong>{" "}
+                immediately.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
@@ -1984,7 +2074,7 @@ export default function LevlAppShowcasePage() {
                   onClick={() => openModal("waitlist")}
                   className="w-full sm:w-auto px-8 py-4 rounded-full font-extrabold text-sm sm:text-base bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 shadow-xl shadow-emerald-500/25 hover:scale-[1.02] transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <span>Join Early Access Waitlist</span>
+                  <span>Join Early Access</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
 
@@ -2016,7 +2106,7 @@ export default function LevlAppShowcasePage() {
                 FREQUENTLY ASKED QUESTIONS
               </span>
               <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-                Everything You Need to Know About LEVL OS
+                Everything You Need to Know About LEVL: OutPace Aging
               </h3>
             </div>
 
@@ -2045,7 +2135,7 @@ export default function LevlAppShowcasePage() {
                   </button>
                   {isOpen && (
                     <div
-                      className="px-6 pb-5 text-xs sm:text-sm leading-relaxed border-t pt-3.5"
+                      className="px-6 pb-5 text-sm sm:text-base leading-relaxed border-t pt-3.5"
                       style={{
                         color: tokens.textSecondary,
                         borderColor: tokens.cardBorder,
@@ -2061,10 +2151,10 @@ export default function LevlAppShowcasePage() {
         </section>
       </main>
 
-      {/* Global Footer */}
-      <Footer />
+      {/* Shared Website Footer with App Early Access Modal Hook */}
+      <Footer onEarlyAccessClick={() => openModal("waitlist")} />
 
-      {/* Early Access Waitlist + VIP Invite Code Modal (LEV2035) */}
+      {/* Early Access + VIP Invite Code Modal */}
       <EarlyAccessModal
         isOpen={modalOpen}
         initialTab={modalInitialTab}

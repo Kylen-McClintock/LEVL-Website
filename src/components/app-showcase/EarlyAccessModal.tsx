@@ -169,7 +169,7 @@ export function EarlyAccessModal({
         className="relative rounded-3xl border p-6 sm:p-8 shadow-2xl transition-colors duration-300"
         style={{
           backgroundColor: isDark
-            ? "rgba(17, 24, 39, 0.94)"
+            ? "rgba(11, 14, 23, 0.96)"
             : "rgba(255, 255, 255, 0.96)",
           borderColor: isDark
             ? "rgba(255, 255, 255, 0.12)"
@@ -183,14 +183,14 @@ export function EarlyAccessModal({
           <div>
             <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono uppercase tracking-widest bg-emerald-500/15 text-emerald-500 border border-emerald-500/30 mb-2">
               <Sparkles className="w-3 h-3" />
-              LEVL OS v2.6 • Early Access Portal
+              LEVL: OutPace Aging • Early Access Portal
             </div>
             <h2
               id={titleId}
               className="text-xl sm:text-2xl font-extrabold tracking-tight"
             >
               {activeTab === "waitlist"
-                ? "Gain Early Access to LEVL OS"
+                ? "Gain Early Access to LEVL: OutPace Aging"
                 : "Enter VIP Invite Code"}
             </h2>
           </div>
@@ -214,7 +214,7 @@ export function EarlyAccessModal({
           className="grid grid-cols-2 p-1 rounded-2xl border mb-6"
           style={{
             backgroundColor: isDark
-              ? "rgba(3, 7, 18, 0.65)"
+              ? "rgba(6, 9, 19, 0.75)"
               : "rgba(241, 245, 249, 0.9)",
             borderColor: isDark
               ? "rgba(255,255,255,0.08)"
@@ -285,9 +285,9 @@ export function EarlyAccessModal({
                   className="text-sm leading-relaxed"
                   style={{ color: isDark ? "#9CA3AF" : "#475569" }}
                 >
-                  Join the first cohort to access the{" "}
+                  Join the first cohort to access{" "}
                   <strong style={{ color: isDark ? "#F9FAFB" : "#0F172A" }}>
-                    LEVL Longevity Protocols App
+                    LEVL: OutPace Aging
                   </strong>
                   . Founding members get priority onboarding, their VIP activation
                   code, and direct input into circadian protocol features.
@@ -306,7 +306,7 @@ export function EarlyAccessModal({
                     className="w-full h-12 pl-12 pr-4 rounded-xl border text-sm font-medium outline-none focus:ring-2 focus:ring-emerald-500 transition-all disabled:opacity-50"
                     style={{
                       backgroundColor: isDark
-                        ? "rgba(3, 7, 18, 0.7)"
+                        ? "rgba(6, 9, 19, 0.75)"
                         : "#FFFFFF",
                       borderColor: isDark
                         ? "rgba(255,255,255,0.14)"
@@ -333,7 +333,7 @@ export function EarlyAccessModal({
                 )}
 
                 <p className="text-xs text-center opacity-50">
-                  No spam. Only high signal longevity app updates & activation access.
+                  No spam. Only high signal longevity app updates &amp; activation access.
                 </p>
 
                 <p className="text-center text-xs opacity-75 pt-1">
@@ -374,7 +374,7 @@ export function EarlyAccessModal({
                     className="w-full px-4 py-3.5 rounded-xl border text-center font-mono text-lg font-extrabold tracking-[0.2em] uppercase outline-none focus:ring-2 focus:ring-sky-500 transition-all placeholder:tracking-normal placeholder:font-sans placeholder:text-sm placeholder:font-medium placeholder:normal-case"
                     style={{
                       backgroundColor: isDark
-                        ? "rgba(3, 7, 18, 0.8)"
+                        ? "rgba(6, 9, 19, 0.8)"
                         : "#FFFFFF",
                       borderColor: vipError
                         ? "#EF4444"
@@ -406,7 +406,7 @@ export function EarlyAccessModal({
                   className="w-full py-3.5 px-6 rounded-xl font-extrabold text-sm bg-gradient-to-r from-sky-400 to-emerald-400 text-slate-950 shadow-lg shadow-sky-500/20 hover:opacity-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <KeyRound className="w-4 h-4" />
-                  <span>Unlock Instant LEVL OS Access</span>
+                  <span>Unlock Instant LEVL: OutPace Aging Access</span>
                 </button>
               </form>
             ) : (
@@ -417,10 +417,10 @@ export function EarlyAccessModal({
                     <LockOpen className="w-5 h-5" />
                   </div>
                   <p className="text-sm font-extrabold text-emerald-400 tracking-wide">
-                    VIP Access Unlocked — Launching LEVL OS...
+                    VIP Access Unlocked — Launching LEVL: OutPace Aging...
                   </p>
                   <p className="text-xs opacity-80">
-                    Your VIP invite code has been verified & persisted to your device.
+                    Your VIP invite code has been verified &amp; persisted to your device.
                   </p>
                   {autoRedirectActive && (
                     <button
@@ -437,7 +437,7 @@ export function EarlyAccessModal({
                   href={webAppUrl}
                   className="w-full py-4 px-6 rounded-xl font-extrabold text-sm bg-gradient-to-r from-emerald-500 to-sky-400 text-slate-950 shadow-xl shadow-emerald-500/25 hover:opacity-95 transition-all flex items-center justify-center gap-2"
                 >
-                  <span>Launch LEVL Web App Now →</span>
+                  <span>Launch LEVL: OutPace Aging Now →</span>
                 </a>
               </div>
             )}
@@ -489,7 +489,7 @@ export function EarlyAccessModal({
                   </p>
                   <ol className="list-decimal list-inside space-y-1.5">
                     <li>
-                      Open <strong>LEVL Web App</strong> in{" "}
+                      Open <strong>LEVL: OutPace Aging</strong> in{" "}
                       <strong>Safari (iOS)</strong> or{" "}
                       <strong>Chrome (Android)</strong>.
                     </li>
@@ -499,7 +499,7 @@ export function EarlyAccessModal({
                     </li>
                     <li>
                       Select <strong>“Add to Home Screen”</strong> — launches
-                      instantly from your dock with persistent local & cloud
+                      instantly from your dock with persistent local &amp; cloud
                       circadian state.
                     </li>
                   </ol>
