@@ -33,7 +33,7 @@ export const LEVL_WEB_APP_URL =
   "https://2026-levl-protocols-app.vercel.app/today";
 
 /* ============================================================================
- * STEP 3.1 — HERO PHONE INTERACTIVE SCREEN SWITCHER OPTIONS
+ * SECTION 1 — HERO & CORE VIEWS SHOWCASE (5 DISTINCT VIEW TABS)
  * ============================================================================ */
 
 interface HeroScreenOption {
@@ -45,33 +45,40 @@ interface HeroScreenOption {
 
 const HERO_SCREEN_OPTIONS: HeroScreenOption[] = [
   {
-    slug: "today-feed",
-    label: "Today Circadian Feed",
-    shortLabel: "Today Feed",
-    caption: "LEVL: OutPace Aging — Today Circadian Feed (/today)",
-  },
-  {
     slug: "today-morning-tasks",
     label: "Morning Protocol Stack",
     shortLabel: "Morning Stack",
-    caption: "LEVL: OutPace Aging — Morning Circadian Protocol Stack",
+    caption: "LEVL: OutPace Aging — Morning Protocol Stack (Focus View)",
   },
   {
-    slug: "longevity-score",
-    label: "Longevity Score (89/100)",
-    shortLabel: "Longevity Score",
-    caption: "LEVL: OutPace Aging — Daily Longevity Score & 28-Day Rolling Pace",
+    slug: "today-protocols",
+    label: "Protocol-by-Protocol View",
+    shortLabel: "By Protocol",
+    caption:
+      "LEVL: OutPace Aging — Protocol-by-Protocol View (Bryan Johnson Blueprint)",
+  },
+  {
+    slug: "today-feed",
+    label: "Full Daily Command Center",
+    shortLabel: "Today Overview",
+    caption: "LEVL: OutPace Aging — Full Daily Command Center (Today Overview)",
   },
   {
     slug: "schedule-grid",
-    label: "7-Day Week Matrix",
-    shortLabel: "7-Day Matrix",
-    caption: "LEVL: OutPace Aging — 7-Day Week Circadian Matrix",
+    label: "7-Day Adherence & Week View",
+    shortLabel: "7-Day Week View",
+    caption: "LEVL: OutPace Aging — 7-Day Adherence & Week View",
+  },
+  {
+    slug: "master-schedule",
+    label: "Master Biological Schedule & Split Matrix",
+    shortLabel: "Master Schedule",
+    caption: "LEVL: OutPace Aging — Master Biological Schedule & Split Matrix",
   },
 ];
 
 /* ============================================================================
- * SECTION 2 DATA: LEADING PROTOCOLS × PERSONALIZED TO YOU
+ * LEADING PROTOCOLS × PERSONALIZED TO YOU (#famous-protocols)
  * ============================================================================ */
 
 interface FamousProtocolOption {
@@ -132,7 +139,7 @@ const BIOLOGY_PROFILES: BiologyProfileSpec[] = [
     id: "lifting-apob",
     pillLabel: "🏋️ Lifting Heavy Today + High ApoB",
     label: "Lifting Heavy Today + High ApoB",
-    screenshotSlug: "today-morning-tasks",
+    screenshotSlug: "today-protocols",
     blockedStrikethrough: "Post-Lift Cold Plunge (50°F)",
     blockedAction: "Auto-Moved to Rest Day",
     blockedClinicalWhy:
@@ -160,7 +167,7 @@ const BIOLOGY_PROFILES: BiologyProfileSpec[] = [
     id: "female-biology",
     pillLabel: "🧬 Female Biology (Hormone & Thyroid Protected)",
     label: "Female Biology (Hormone & Thyroid Protected)",
-    screenshotSlug: "today-feed",
+    screenshotSlug: "today-morning-tasks",
     blockedStrikethrough: "Extreme 18h Fast (11 AM Cutoff) + Fasted HIIT",
     blockedAction: "Converted to 12.5h Window + 30g Morning Protein",
     blockedClinicalWhy:
@@ -243,10 +250,11 @@ const BIOLOGY_PROFILES: BiologyProfileSpec[] = [
 ];
 
 /* ============================================================================
- * STEP 3.2 — SECTION 3 (#adaptive-8020): 3-STATE INTERACTIVE MODE SWITCHER
+ * SECTION 2 (#adaptive-8020): "TOGGLE YOUR BIOLOGY & DAILY REALITY"
+ * 3-State Interactive Mode Switcher
  * ============================================================================ */
 
-type AdaptiveGovernorModeId = "pareto-8020" | "sleep-triage" | "optimal";
+type AdaptiveGovernorModeId = "optimal" | "pareto-8020" | "sleep-triage";
 
 interface AdaptiveGovernorModeSpec {
   id: AdaptiveGovernorModeId;
@@ -265,20 +273,41 @@ interface AdaptiveGovernorModeSpec {
 
 const ADAPTIVE_GOVERNOR_MODES: AdaptiveGovernorModeSpec[] = [
   {
+    id: "optimal",
+    stateLabel: "Mode 1",
+    pillLabel: "☀️ Optimal Bandwidth (Full Stack)",
+    title: "Optimal Bandwidth (Full Stack)",
+    sub: "Full Daily Command Center • All Circadian Windows Active",
+    badge: "Full Precision Stack",
+    slug: "today-feed",
+    caption: "Optimal Bandwidth (Full Stack) • Full Daily Command Center (/today)",
+    headline:
+      "☀️ Optimal Bandwidth (Full Stack) — All Circadian Windows Armed",
+    kpiBadge: "Peak Hormetic Window",
+    summary:
+      "When readiness and schedule are unobstructed, your full circadian stack runs across Morning, Afternoon, and Evening windows—anchored by Morning Circadian Sunlight Viewing within 30–60m of waking.",
+    bullets: [
+      "✓ Morning Circadian Sunlight Viewing (10,000+ Lux • within 30–60m of waking)",
+      "✓ Delayed Morning Caffeine (90–120m post-wake adenosine washout)",
+      "✓ High-Polyphenol Extra Virgin Olive Oil + Targeted Nutraceutical Matrix",
+      "✓ Full Afternoon VO2 Max / Sauna & Evening Sleep Triad unlocked",
+    ],
+  },
+  {
     id: "pareto-8020",
-    stateLabel: "State A",
-    pillLabel: "⚡ 80/20 Survival Shield (Busy / Travel Day)",
-    title: "⚡ 80/20 Survival Shield (Busy / Travel Day)",
+    stateLabel: "Mode 2",
+    pillLabel: "⚡ High-Stress / Travel Day (80/20 Survival Shield)",
+    title: "High-Stress / Travel Day (80/20 Survival Shield)",
     sub: "94% Benefits Retained • 5 Kept (Core 20%) • 4 Auto-Deferred",
-    badge: "Default • 80/20 Survival Shield",
+    badge: "80/20 Survival Shield",
     slug: "adaptive-8020-shield",
     caption:
-      "Adaptive Routine Governor Modal • 80/20 Survival Shield Over /today",
+      "High-Stress / Travel Day • 80/20 Survival Shield Active Over /today",
     headline:
-      "🛡️ 80/20 Survival Shield Active — 94% Benefits Retained (5 Kept • 4 Auto-Deferred)",
+      "🛡️ High-Stress / Travel Day (80/20 Survival Shield) — 94% Benefits Retained",
     kpiBadge: "100% Adherence Shield",
     summary:
-      "Shows the real Adaptive Routine Governor Modal over /today—compressing your routine to minimum effective dose while guaranteeing 100% streak preservation:",
+      "One tap activates the 80/20 Survival Shield, pruning secondary tasks and protecting the vital 20% keystone habits that drive 80% of your biological ROI—keeping your streak alive without burnout.",
     bullets: [
       "✓ Downgrade: Cold Plunge (50°F–55°F Søberg) → 60s Cool Face/Shower Rinse",
       "✓ Active: Creatine Monohydrate (+10g Cognitive Rescue Dose)",
@@ -288,52 +317,30 @@ const ADAPTIVE_GOVERNOR_MODES: AdaptiveGovernorModeSpec[] = [
   },
   {
     id: "sleep-triage",
-    stateLabel: "State B",
-    pillLabel: "😴 Poor Sleep Triage (Slept 5.5 hrs • 4/10)",
-    title: "😴 Poor Sleep Triage (Slept 5.5 hrs • 4/10)",
+    stateLabel: "Mode 3",
+    pillLabel: "😴 Poor Sleep Recovery (<6h / Low HRV Triage)",
+    title: "Poor Sleep Recovery (<6h / Low HRV Triage)",
     sub: "5 Evidence-Based Schedule Adaptations Ready on /today",
-    badge: "⚠️ 5h 30m • 4/10 Sleep Recovery",
+    badge: "<6h / Low HRV Triage",
     slug: "adaptive-sleep-triage",
     caption:
-      "Adaptive Sleep Recovery Protocol • ⚠️ 5h 30m • 4/10 Triage Card on /today",
+      "Poor Sleep Recovery (<6h / Low HRV Triage) • CNS Protection Active",
     headline:
-      "😴 Adaptive Sleep Recovery Protocol (⚠️ 5h 30m • 4/10) — CNS Protection Active",
+      "😴 Poor Sleep Recovery (<6h / Low HRV Triage) — CNS Protection Active",
     kpiBadge: "5 Adaptations Ready",
     summary:
-      "Shows the real amber Adaptive Sleep Recovery Protocol card on /today when wearable or morning check-in logs 5h 30m (4/10) sleep:",
+      "Automatically detects poor sleep recovery and triages your day—pausing high-CNS strain while prioritizing morning sunlight, hydration, and autonomic recovery.",
     bullets: [
       "✓ 10g Creatine Monohydrate cognitive rescue (frontal cortical ATP pool)",
-      "✓ High-CNS Norwegian 4x4 swapped to Zone 2 steady-state recovery",
+      "✓ High-CNS Norwegian 4×4 swapped to Zone 2 steady-state recovery",
       "✓ Injected 20m Afternoon NSDR (Non-Sleep Deep Rest) parasympathetic reset",
       "✓ Auto-benched 50°F Cold Plunge to prevent adrenal norepinephrine exhaustion",
-    ],
-  },
-  {
-    id: "optimal",
-    stateLabel: "State C",
-    pillLabel: "☀️ Baseline Full Stack (94/100)",
-    title: "☀️ Baseline Full Stack (94/100)",
-    sub: "Full Morning Circadian Stack on /today",
-    badge: "Full Precision Cadence",
-    slug: "today-morning-tasks",
-    caption:
-      "Baseline Full Stack • Morning Circadian Protocol Stack on /today",
-    headline:
-      "☀️ Baseline Full Stack (94/100 Ceiling) — All Circadian Windows Armed",
-    kpiBadge: "Peak Hormetic Window",
-    summary:
-      "When readiness and schedule are unobstructed, your full Morning circadian stack runs on /today anchored by Morning Circadian Sunlight Viewing within 30–60m of waking:",
-    bullets: [
-      "✓ Morning Circadian Sunlight Viewing (10,000+ Lux • within 30–60m of waking)",
-      "✓ Delayed Morning Caffeine (90–120m post-wake adenosine washout)",
-      "✓ High-Polyphenol Extra Virgin Olive Oil + Targeted Nutraceutical Matrix",
-      "✓ Full Afternoon VO2 Max / Sauna & Evening Sleep Triad unlocked",
     ],
   },
 ];
 
 /* ============================================================================
- * STEP 3.3 — SECTION 4A (#modality-applets): 6 INTERACTIVE EXECUTION APPLETS
+ * SECTION 3 (#modality-applets): MODALITY-SPECIFIC INTERACTIVE APPLETS (ALL 8)
  * ============================================================================ */
 
 interface ModalityAppletCardSpec {
@@ -352,109 +359,143 @@ const MODALITY_APPLETS: ModalityAppletCardSpec[] = [
   {
     id: "breathwork",
     emoji: "🌬️",
-    title: "Guided Breathwork & Vagal Pacer (Cyclic Sighing)",
-    subtitle: "Cyclic Sighing • Stanford RCT",
-    hook: "Real-time glowing 3D blue visual pacer orb mid-session with phase timers and vagal tone biofeedback.",
+    title: "Guided Breathwork & Vagal Pacer",
+    subtitle: "Physiological Sighs • 4-7-8 • Box Breathing",
+    hook: "Visualizes real-time lung expansion and vagal tone coherence across Physiological Sighs (4s + 2s double-inhale, 8s exhale), 4-7-8 Parasympathetic Down-Regulation, and Box Breathing.",
     details:
-      "Guides Stanford RCT Cyclic Sighing (double nasal inhale + extended slow oral exhale), Box Breathing, and 4-7-8 Parasympathetic Breathwork with live cycle counting (0/35 cycles, 5:00 timer) and acoustic cues.",
+      "Visualizes real-time lung expansion and vagal tone coherence across Physiological Sighs (4s + 2s double-inhale, 8s exhale), 4-7-8 Parasympathetic Down-Regulation, and Box Breathing with live cycle pacing and acoustic cues.",
     badges: [
-      "Stanford RCT Cyclic Sighing",
-      "3D Visual Breath Pacer Orb",
-      "35-Cycle Vagal Reset Timer",
+      "Physiological Sighs (4s+2s / 8s)",
+      "4-7-8 Parasympathetic Pacer",
+      "Box Breathing & Vagal Coherence",
     ],
     slug: "applet-breathwork",
     caption:
-      "Guided Breathwork & Vagal Pacer • Live 3D Cyclic Sighing Orb",
+      "Guided Breathwork & Vagal Pacer • Live Lung Expansion & Vagal Coherence",
   },
   {
     id: "fasting",
     emoji: "⏳",
-    title: "360° Fasting & Autophagy Companion",
-    subtitle: "Ketosis 12h • Autophagy 16h • Deep Repair 24h",
-    hook: "Real 360° Metabolic Phase Ring tracking your live transition from Ketosis (12h) to Autophagy (16h) and Deep Repair (24h).",
+    title: "Metabolic Fasting & Autophagy Tracker",
+    subtitle: "5 Biological Fasting Zones",
+    hook: "Tracks your live transition through 5 biological fasting zones (Anabolic → Glycogen Depletion → Fat Oxidation → Ketosis → AMPK & Deep Autophagy) with timed electrolyte milestones.",
     details:
-      "Displays your real-time fasting elapsed time, target completion window, hydration & electrolyte reminders, and biological stage markers (Glycogen Depletion → Ketosis 12h → AMPK Autophagy 16h → Deep Cellular Repair 24h).",
+      "Tracks your live transition through 5 biological fasting zones (Anabolic → Glycogen Depletion → Fat Oxidation → Ketosis → AMPK & Deep Autophagy) with timed electrolyte milestones and circadian feeding window alignment.",
     badges: [
-      "360° Metabolic Phase Ring",
-      "Ketosis 12h → Autophagy 16h",
-      "Deep Repair 24h Milestone",
+      "5 Biological Fasting Zones",
+      "Ketosis → AMPK & Deep Autophagy",
+      "Timed Electrolyte Milestones",
     ],
     slug: "applet-fasting",
     caption:
-      "360° Fasting & Autophagy Companion • Metabolic Phase Ring",
+      "Metabolic Fasting & Autophagy Tracker • 5 Biological Fasting Zones",
   },
   {
     id: "thermal",
     emoji: "🧊",
-    title: "Cold Plunge & Sauna Thermal Pacer (Søberg Principle)",
-    subtitle: "52°F Cold Plunge & 174°F+ Sauna",
-    hook: "Real 52°F Cold Plunge immersion timer with built-in Søberg Principle natural re-warming guidance.",
+    title: "Thermal Contrast & Søberg Timer",
+    subtitle: "50°F–55°F Cold Plunge & 174°F+ Sauna",
+    hook: "Multi-round Cold Plunge (50°F–55°F) and Sauna (174°F+) contrast timer with live norepinephrine / heat-shock protein (HSP70) zone tracking and Søberg Principle natural re-warming guidance.",
     details:
-      "Calibrates immersion duration to water temperature (50°F–55°F / 52°F target), enforces the Søberg Principle (end with natural shivering re-warm to activate brown adipose UCP1 thermogenesis), and tracks weekly hormetic thresholds.",
+      "Multi-round Cold Plunge (50°F–55°F) and Sauna (174°F+) contrast timer with live norepinephrine / heat-shock protein (HSP70) zone tracking and Søberg Principle natural re-warming guidance.",
     badges: [
-      "52°F Immersion Timer",
-      "Søberg Principle Re-Warm",
-      "+250% Norepinephrine / Dopamine",
+      "Cold (50°F–55°F) & Sauna (174°F+)",
+      "Norepinephrine & HSP70 Zones",
+      "Søberg Principle Re-Warming",
     ],
     slug: "applet-thermal",
     caption:
-      "Cold Plunge & Sauna Thermal Pacer • 52°F Timer & Søberg Principle",
+      "Thermal Contrast & Søberg Timer • Cold Plunge & Sauna Contrast Pacer",
   },
   {
     id: "sunlight",
     emoji: "☀️",
-    title: "Morning Sunlight & Live UV/Lux Tracker",
-    subtitle: "10,000+ Lux • UV Index 5.4",
-    hook: "Live 10,000+ Lux / UV Index 5.4 outdoor session timer that locks in your suprachiasmatic nucleus (SCN) clock.",
+    title: "Morning Circadian Sunlight Lux Meter",
+    subtitle: "10,000–100,000 Lux • SCN Phase Lock",
+    hook: "Calibrates target outdoor viewing duration (5m clear sky to 25m overcast) based on ambient photon lux (10,000–100,000 lux) to trigger your morning cortisol peak and set your 16-hour melatonin timer.",
     details:
-      "Auto-calibrates your outdoor viewing timer based on live sky conditions and UV Index (5.4), triggering melanopsin ipRGC signaling for your morning cortisol pulse and setting your 16-hour melatonin countdown.",
+      "Calibrates target outdoor viewing duration (5m clear sky to 25m overcast) based on ambient photon lux (10,000–100,000 lux) to trigger your morning cortisol peak and set your 16-hour melatonin timer.",
     badges: [
-      "10,000+ Lux Outdoor Timer",
-      "Live UV Index 5.4 Telemetry",
-      "SCN Cortisol & Melatonin Lock",
+      "10,000–100,000 Ambient Lux",
+      "5m Clear Sky → 25m Overcast",
+      "16-Hour Melatonin Timer",
     ],
     slug: "applet-sunlight",
     caption:
-      "Morning Sunlight & Live UV/Lux Tracker • 10,000+ Lux Session Timer",
+      "Morning Circadian Sunlight Lux Meter • 10,000–100,000 Lux Calibration",
   },
   {
     id: "hiit",
     emoji: "🫀",
-    title: "Live HIIT Norwegian 4x4 VO2 Max Companion",
-    subtitle: "28-Minute 4x4 Interval Pacer",
-    hook: "Real 28-minute Norwegian 4x4 interval pacer guiding warmup, 4×4-minute 85–95% HRmax surges, and 3-minute active recoveries.",
+    title: "Norwegian 4×4 VO2 Max HIIT Pacer",
+    subtitle: "4×4m Zone 5 (85–95% Max HR)",
+    hook: "Guides 4 rounds of 4-minute Zone 5 (85–95% Max HR) intervals paired with 3-minute active recovery windows to drive stroke volume and +12–20% VO2 Max expansion.",
     details:
-      "Walks you step-by-step through the gold-standard 28-minute Norwegian 4x4 VO2 Max session to maximize cardiac stroke volume, mitochondrial biogenesis (PGC-1α), and cardiorespiratory fitness.",
+      "Guides 4 rounds of 4-minute Zone 5 (85–95% Max HR) intervals paired with 3-minute active recovery windows to drive stroke volume and +12–20% VO2 Max expansion.",
     badges: [
-      "28-Min Norwegian 4x4 Pacer",
-      "85–95% Max HR Interval Surges",
-      "VO2 Max & Stroke Volume",
+      "4 Rounds × 4-Min Zone 5",
+      "85–95% Max HR Surges",
+      "+12–20% VO2 Max Expansion",
     ],
     slug: "applet-hiit",
     caption:
-      "Live HIIT Norwegian 4x4 VO2 Max Companion • 28-Minute Interval Pacer",
+      "Norwegian 4×4 VO2 Max HIIT Pacer • 4×4m Zone 5 Interval Companion",
+  },
+  {
+    id: "centenarian",
+    emoji: "🏋️",
+    title: "Centenarian Decathlon Strength & Stability",
+    subtitle: "Attia Centenarian Standards",
+    hook: "Multi-station longevity circuit (Dead Hang Grip Endurance, Farmer's Carry @ 75% BW, Goblet Squat Hold, Single-Leg Eyes-Closed Balance) benchmarked against Peter Attia's centenarian standards.",
+    details:
+      "Multi-station longevity circuit (Dead Hang Grip Endurance, Farmer's Carry @ 75% BW, Goblet Squat Hold, Single-Leg Eyes-Closed Balance) benchmarked against Peter Attia's centenarian standards.",
+    badges: [
+      "Dead Hang & Farmer's Carry @ 75% BW",
+      "Goblet Squat & Eyes-Closed Balance",
+      "Attia Centenarian Benchmarks",
+    ],
+    slug: "applet-centenarian",
+    caption:
+      "Centenarian Decathlon Strength & Stability • 4-Station Longevity Circuit",
+  },
+  {
+    id: "zone2",
+    emoji: "🚴",
+    title: "Zone 2 Mitochondrial Base Pacer",
+    subtitle: "65–75% Max HR • <2.0 mmol/L Lactate",
+    hook: "Locks in steady-state aerobic output (65–75% Max HR, <2.0 mmol/L lactate) with nasal-breathing talk-test verification for PGC-1α mitochondrial biogenesis.",
+    details:
+      "Locks in steady-state aerobic output (65–75% Max HR, <2.0 mmol/L lactate) with nasal-breathing talk-test verification for PGC-1α mitochondrial biogenesis and fat oxidation efficiency.",
+    badges: [
+      "65–75% Max HR Steady-State",
+      "<2.0 mmol/L Lactate Threshold",
+      "PGC-1α Mitochondrial Biogenesis",
+    ],
+    slug: "applet-zone2",
+    caption:
+      "Zone 2 Mitochondrial Base Pacer • Steady-State Aerobic & Talk-Test Lock",
   },
   {
     id: "peptide",
     emoji: "💉",
-    title: "Precision Execution & Dosing Log",
-    subtitle: "Zero-Math Dilution & Dosing Companion",
-    hook: "Precision reconstitution calculator, unit tick visualizer, and structured execution logging.",
+    title: "Peptide Reconstitution & SubQ Dosing Calculator",
+    subtitle: "U-100 Syringe Visualizer & 8-Zone Rotation",
+    hook: "Interactive U-100 insulin syringe visualizer that converts vial mass (mg), bacteriostatic water volume (mL), and target dose (mcg) into exact syringe tick units alongside an 8-zone subcutaneous site rotation tracker.",
     details:
-      "Eliminates dilution guesswork and logs exact protocol execution timestamps, concentrations, and site rotation history directly into your daily biological record.",
+      "Interactive U-100 insulin syringe visualizer that converts vial mass (mg), bacteriostatic water volume (mL), and target dose (mcg) into exact syringe tick units alongside an 8-zone subcutaneous site rotation tracker.",
     badges: [
-      "Precision Dosing Log",
-      "Zero-Math Reconstitution",
-      "Protocol Execution Audit",
+      "U-100 Syringe Tick Visualizer",
+      "mg / mL / mcg Reconstitution",
+      "8-Zone SubQ Site Rotation",
     ],
     slug: "applet-peptide",
     caption:
-      "Precision Execution & Dosing Log • Protocol Execution Companion",
+      "Peptide Reconstitution & SubQ Dosing Calculator • U-100 Syringe Visualizer",
   },
 ];
 
 /* ============================================================================
- * STEP 3.4 — SECTION 4B (#core-intelligence): 6 CORE LONGEVITY INTELLIGENCE CARDS
+ * SECTION 4 (#core-intelligence): BIOLOGICAL INTELLIGENCE & OUTCOME ATTRIBUTION
  * ============================================================================ */
 
 interface CoreIntelligenceCardSpec {
@@ -471,106 +512,106 @@ interface CoreIntelligenceCardSpec {
 
 const CORE_INTELLIGENCE_CARDS: CoreIntelligenceCardSpec[] = [
   {
+    id: "longevity-score",
+    emoji: "🏆",
+    title: "Longevity Score",
+    subtitle: "0–100 Composite Biological Score",
+    hook: "A live 0–100 composite biological score combining your 7-day protocol execution consistency, clinical stack potency across all 8 longevity vectors, and verified blood/wearable biomarkers.",
+    details:
+      "A live 0–100 composite biological score combining your 7-day protocol execution consistency, clinical stack potency across all 8 longevity vectors, and verified blood/wearable biomarkers.",
+    badges: [
+      "0–100 Composite Score",
+      "7-Day Execution Consistency",
+      "8 Longevity Vectors & Biomarkers",
+    ],
+    slug: "longevity-score",
+    caption:
+      "Longevity Score • Live 0–100 Composite Biological Score & 28-Day Trajectory",
+  },
+  {
     id: "outcome-roi",
     emoji: "📈",
-    title: "Personal N-of-1 Outcome ROI & Lag-Adjusted Attribution",
-    subtitle: "/tracking • Outcome ROI",
-    hook: "Real +32% Deep Sleep, +27% Cellular Energy, and +24% Executive Focus correlation cards on /tracking.",
+    title: "N-of-1 Outcome & Biomarker Attribution",
+    subtitle: "Lag-Adjusted Protocol Correlation",
+    hook: "Correlates your protocol adherence against subjective wellbeing, wearable HRV/deep sleep, and blood panels to isolate which modalities genuinely move your biology.",
     details:
-      "Evaluates active habit consistency (91% Stack Adherence), biochemical synergy pairs, and lag-adjusted N-of-1 outcome correlations across 32 tracked goals—isolating which protocols actually move your biology.",
+      "Correlates your protocol adherence against subjective wellbeing, wearable HRV/deep sleep, and blood panels to isolate which modalities genuinely move your biology.",
     badges: [
-      "+32% Deep Sleep",
-      "+27% Cellular Energy",
-      "+24% Executive Focus",
+      "+32% Deep Sleep Attribution",
+      "+27% Cellular Energy ROI",
+      "Wearable & Lab Correlation",
     ],
     slug: "intel-outcome-roi",
     caption:
-      "Personal N-of-1 Outcome ROI (/tracking) • +32% Deep Sleep & +27% Energy",
-  },
-  {
-    id: "longevity-score",
-    emoji: "🏆",
-    title: "Daily Longevity Score & 8-Vector Biological Matrix",
-    subtitle: "8 Canonical Pathways",
-    hook: "Shows The 8 Canonical Longevity Pathways with Heart & Cardiovascular Health (96/100) and Brain Longevity (83/100).",
-    details:
-      "Audits your protocol capacity and today’s live stimulus across all 8 canonical pathways—mapping exact contributing habits like Norwegian 4x4, Zone 2, Sauna, Omega-3s, and the Matthew Walker Sleep Triad.",
-    badges: [
-      "Heart & Vascular: 96/100",
-      "Brain Longevity: 83/100",
-      "7/8 Pathways Active",
-    ],
-    slug: "intel-longevity-score",
-    caption:
-      "8-Vector Biological Matrix • Heart 96/100 & Brain Longevity 83/100",
-  },
-  {
-    id: "physiological-age",
-    emoji: "🧬",
-    title: "Physiological & Phenotypic Age Engine",
-    subtitle: "28.4 yrs Composite Bio-Age",
-    hook: "Displays 28.4 yrs Composite Biological Age (-5.6 yrs younger than chronological age 34) and 0.84 Pace of Aging.",
-    details:
-      "Combines blood panel PhenoAge biomarkers with functional physiological performance testing (VO2 Max, grip strength, balance, reaction time) to track your true Composite Biological Age and DunedinPACE trajectory.",
-    badges: [
-      "28.4 yrs Composite Bio-Age",
-      "-5.6 yrs vs Chronological (34)",
-      "0.84 Pace of Aging",
-    ],
-    slug: "intel-physiological-age",
-    caption:
-      "Physiological & Phenotypic Age Engine • 28.4 yrs (-5.6 yrs) & 0.84 Pace",
-  },
-  {
-    id: "emotion-checkin",
-    emoji: "🎭",
-    title: "144-Emotion Circumplex & Circadian Check-in",
-    subtitle: "4-Quadrant Circumplex",
-    hook: "Real 4-Quadrant High/Low Energy × Pleasant/Unpleasant Circumplex Emotion & Circadian Check-in.",
-    details:
-      "Maps your subjective autonomic state across 144 granular emotions and circadian readiness signals—connecting neurotransmitter tone, sleep recovery, and stress load to your daily protocol governor.",
-    badges: [
-      "144-Emotion Circumplex",
-      "4-Quadrant Energy × Valence",
-      "Circadian Readiness Sync",
-    ],
-    slug: "intel-emotion-checkin",
-    caption:
-      "144-Emotion Circumplex & Circadian Check-in • 4-Quadrant Autonomic Map",
+      "N-of-1 Outcome & Biomarker Attribution • Protocol Correlation Engine",
   },
   {
     id: "hallmarks-radar",
     emoji: "🛡️",
-    title: "12 Hallmarks of Aging Bio-Coverage Radar",
-    subtitle: "95% Cellular Defense Index",
-    hook: "Real 12-Spoke Radar Polygon with 95% Cellular Defense Index benchmarked against Bryan Johnson Blueprint (2026).",
+    title: "8 Biological Vectors & Hallmarks of Aging Radar",
+    subtitle: "8 Canonical Vectors & 12 Hallmarks",
+    hook: "Maps your active stack across all 8 canonical longevity vectors (Heart Health, Brain Longevity, Metabolic Health, Cancer Defense, Testosterone, Chronic Inflammation, Bone Density, Cellular Longevity) to expose blind spots.",
     details:
-      "Inspects your coverage across Genomic Instability (90%), Telomeres (90%), Epigenetics (98%), Proteostasis (96%), Autophagy (98%), Nutrient Sensing (98%), Mitochondria (99%), Senescence (96%), Stem Cells (90%), Intercellular (100%), Inflammation (100%), and Microbiome (79%).",
+      "Maps your active stack across all 8 canonical longevity vectors (Heart Health, Brain Longevity, Metabolic Health, Cancer Defense, Testosterone, Chronic Inflammation, Bone Density, Cellular Longevity) to expose blind spots.",
     badges: [
-      "12-Spoke Hallmarks Polygon",
+      "8 Canonical Longevity Vectors",
+      "12 Hallmarks of Aging Radar",
       "95% Cellular Defense Index",
-      "vs. Bryan Johnson Blueprint (2026)",
     ],
     slug: "intel-hallmarks-radar",
     caption:
-      "12 Hallmarks of Aging Radar • 95% Defense vs. Bryan Johnson Blueprint",
+      "8 Biological Vectors & Hallmarks of Aging Radar • Stack Coverage Polygon",
+  },
+  {
+    id: "physiological-age",
+    emoji: "🧬",
+    title: "Physiological & Epigenetic Age Testing",
+    subtitle: "Functional Bio-Age & DunedinPACE",
+    hook: "Tracks your functional physiological age and pace of aging (VO2 Max, grip strength, DEXA BMD, ApoB, hs-CRP, DunedinPACE) relative to your chronological age.",
+    details:
+      "Tracks your functional physiological age and pace of aging (VO2 Max, grip strength, DEXA BMD, ApoB, hs-CRP, DunedinPACE) relative to your chronological age.",
+    badges: [
+      "28.4 yrs Composite Bio-Age",
+      "-5.6 yrs vs Chronological",
+      "0.84 Pace of Aging",
+    ],
+    slug: "intel-physiological-age",
+    caption:
+      "Physiological & Epigenetic Age Testing • Functional Bio-Age & Pace of Aging",
+  },
+  {
+    id: "emotion-checkin",
+    emoji: "🎭",
+    title: "Daily Emotion, Energy & Autonomic Check-in",
+    subtitle: "10-Second Morning & Evening Check-in",
+    hook: "10-second morning and evening check-in capturing nervous system state, mental clarity, and sleep restoration to power N-of-1 protocol correlation.",
+    details:
+      "10-second morning and evening check-in capturing nervous system state, mental clarity, and sleep restoration to power N-of-1 protocol correlation.",
+    badges: [
+      "10-Second Autonomic Check-in",
+      "Nervous System & Clarity",
+      "N-of-1 Correlation Signal",
+    ],
+    slug: "intel-emotion-checkin",
+    caption:
+      "Daily Emotion, Energy & Autonomic Check-in • 4-Quadrant Circumplex",
   },
   {
     id: "ai-coach",
     emoji: "🤖",
-    title: "Context-Aware AI Longevity Coach",
-    subtitle: "ApoB: 61 mg/dL • VO2 Max: 56.4",
-    hook: "Real AI Longevity Coach analyzing ApoB: 61 mg/dL, VO2 Max: 56.4, and today’s active protocol stack.",
+    title: "AI Longevity Coach",
+    subtitle: "Stack, Labs & PubMed Grounded",
+    hook: "Context-aware biological copilot grounded in your active protocol stack, lab biomarkers, and peer-reviewed PubMed clinical trials.",
     details:
-      "Synthesizes your blood biomarkers, wearable recovery, and active modalities to answer complex systems-biology questions with PubMed-backed precision and 1-tap schedule adjustments.",
+      "Context-aware biological copilot grounded in your active protocol stack, lab biomarkers, and peer-reviewed PubMed clinical trials.",
     badges: [
-      "ApoB: 61 mg/dL Context",
-      "VO2 Max: 56.4 mL/kg/min",
-      "Live Stack & Lab Synthesis",
+      "Active Protocol Stack Context",
+      "Lab Biomarker Synthesis",
+      "PubMed Clinical Citations",
     ],
     slug: "intel-ai-coach",
     caption:
-      "Context-Aware AI Longevity Coach • ApoB 61 mg/dL & VO2 Max 56.4",
+      "AI Longevity Coach • Context-Aware Biological Copilot",
   },
 ];
 
@@ -746,29 +787,29 @@ const FAQ_ITEMS = [
   },
   {
     q: "How does LEVL: OutPace Aging identify what actually works for my body?",
-    a: "Through closed-loop N-of-1 Outcome ROI & Lag-Adjusted Attribution (/tracking), the 144-Emotion Circumplex check-in, Physiological & Phenotypic Age testing, and blood biomarker trends, LEVL correlates your daily protocol adherence against measurable improvements in Deep Sleep (+32%), Cellular Energy (+27%), Executive Focus (+24%), and Pace of Aging (0.84).",
+    a: "Through closed-loop N-of-1 Outcome & Biomarker Attribution, the Daily Emotion, Energy & Autonomic Check-in, Physiological & Epigenetic Age Testing, and your live 0–100 Longevity Score, LEVL correlates your daily protocol adherence against measurable improvements in Deep Sleep (+32%), Cellular Energy (+27%), Executive Focus (+24%), and Pace of Aging (0.84).",
   },
   {
-    q: "How do the 80/20 Survival Shield and Poor Sleep Triage work?",
-    a: "When you have a busy travel day, 1-Tap 80/20 Survival Shield compresses your routine to the core 20% of modalities that retain 94% of your biological benefits while guaranteeing 100% streak preservation. When you log poor sleep (e.g., 5h 30m • 4/10), Adaptive Sleep Recovery Protocol automatically swaps high-CNS intervals for Zone 2, injects a 20-minute NSDR session, and elevates Creatine to a 10g cognitive rescue dose.",
+    q: "How do the 80/20 Survival Shield and Poor Sleep Recovery Triage work?",
+    a: "On a high-stress or travel day, one tap activates the 80/20 Survival Shield, pruning secondary tasks and protecting the vital 20% keystone habits that drive 80% of your biological ROI—keeping your streak alive without burnout. When poor sleep recovery (<6h / Low HRV) is detected, LEVL automatically pauses high-CNS strain while prioritizing morning sunlight, hydration, and autonomic recovery.",
   },
   {
-    q: "What are the built-in Modality Execution Applets?",
-    a: "Instead of static checkboxes, LEVL: OutPace Aging includes interactive biometric timers and pacers for each modality—including a 3D Cyclic Sighing breathwork orb, a 360° Fasting & Autophagy phase ring, a 52°F Cold Plunge & Søberg Principle timer, a 10,000+ Lux / UV Index 5.4 Morning Sunlight tracker, a 28-minute Norwegian 4x4 VO2 Max interval pacer, and a Precision Execution & Dosing Log.",
+    q: "What are the 8 built-in Modality-Specific Interactive Applets?",
+    a: "Instead of static checkboxes, LEVL: OutPace Aging includes 8 interactive clinical timers and pacers: Guided Breathwork & Vagal Pacer, Metabolic Fasting & Autophagy Tracker, Thermal Contrast & Søberg Timer, Morning Circadian Sunlight Lux Meter, Norwegian 4×4 VO2 Max HIIT Pacer, Centenarian Decathlon Strength & Stability, Zone 2 Mitochondrial Base Pacer, and the Peptide Reconstitution & SubQ Dosing Calculator.",
   },
 ];
 
 export default function LevlAppShowcasePage() {
   const [previewTheme, setPreviewTheme] = useState<ShowcaseTheme>("dark");
   const [heroActiveSlug, setHeroActiveSlug] =
-    useState<ShowcaseSlug>("today-feed");
+    useState<ShowcaseSlug>("today-morning-tasks");
   const [rotatingWordIdx, setRotatingWordIdx] = useState<number>(0);
 
   // Modal state
   const [modalOpen, setModalOpen] = useState(false);
   const [modalInitialTab, setModalInitialTab] = useState<ModalTab>("waitlist");
 
-  // Section 2: "Leading Protocols × Personalized to You" state
+  // Leading Protocols × Personalized to You state
   const [selectedProtocolId, setSelectedProtocolId] =
     useState<FamousProtocolId>("blueprint");
   const [selectedProfileId, setSelectedProfileId] =
@@ -781,15 +822,16 @@ export default function LevlAppShowcasePage() {
     result: false,
   });
 
-  // Section 3 (#adaptive-8020): 3-State Interactive Mode Switcher (Default: State A 'pareto-8020')
+  // Section 2 (#adaptive-8020): 3-State Interactive Mode Switcher
   const [governorMode, setGovernorMode] =
     useState<AdaptiveGovernorModeId>("pareto-8020");
 
-  // Section 4A (#modality-applets): 6 Interactive Modality Execution Applets
+  // Section 3 (#modality-applets): 8 Interactive Modality Execution Applets
   const [activeAppletId, setActiveAppletId] = useState<string>("breathwork");
 
-  // Section 4B (#core-intelligence): 6 Core Longevity Intelligence Cards
-  const [activeIntelId, setActiveIntelId] = useState<string>("outcome-roi");
+  // Section 4 (#core-intelligence): 6 Core Longevity Intelligence Cards (Default: 'longevity-score')
+  const [activeIntelId, setActiveIntelId] =
+    useState<string>("longevity-score");
 
   // Circadian Phase Explorer state
   const [selectedPhaseId, setSelectedPhaseId] =
@@ -866,9 +908,18 @@ export default function LevlAppShowcasePage() {
     setExpandedXrayCards((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
-  const activeHeroOption =
-    HERO_SCREEN_OPTIONS.find((o) => o.slug === heroActiveSlug) ||
-    HERO_SCREEN_OPTIONS[0];
+  const activeHeroIndex = Math.max(
+    0,
+    HERO_SCREEN_OPTIONS.findIndex((o) => o.slug === heroActiveSlug)
+  );
+  const activeHeroOption = HERO_SCREEN_OPTIONS[activeHeroIndex];
+  const leftHeroOption =
+    HERO_SCREEN_OPTIONS[
+      (activeHeroIndex + HERO_SCREEN_OPTIONS.length - 1) %
+        HERO_SCREEN_OPTIONS.length
+    ];
+  const rightHeroOption =
+    HERO_SCREEN_OPTIONS[(activeHeroIndex + 1) % HERO_SCREEN_OPTIONS.length];
 
   const activeProtocolSpec =
     FAMOUS_PROTOCOLS.find((p) => p.id === selectedProtocolId) ||
@@ -1237,36 +1288,17 @@ export default function LevlAppShowcasePage() {
 
             {/* Desktop 3-Phone Perspective Stage (All Real @3x Retina Screenshots) */}
             <div className="hidden lg:flex items-center justify-center relative min-h-[710px]">
-              {/* Left Tilted Phone (-8deg, scale-90): Longevity Score / Morning Stack */}
+              {/* Left Tilted Phone (-8deg, scale-90): Adjacent Hero View */}
               <div
-                onClick={() =>
-                  setHeroActiveSlug(
-                    heroActiveSlug === "longevity-score"
-                      ? "today-morning-tasks"
-                      : "longevity-score"
-                  )
-                }
-                title="Click to focus in center"
+                onClick={() => setHeroActiveSlug(leftHeroOption.slug)}
+                title={`Click to focus: ${leftHeroOption.label}`}
                 className="transform -rotate-[8deg] scale-90 -mr-10 z-10 hover:z-30 hover:rotate-0 hover:scale-95 transition-all duration-500 cursor-pointer"
               >
                 <RealPhoneFrame
-                  src={getShowcaseImage(
-                    heroActiveSlug === "longevity-score"
-                      ? "today-morning-tasks"
-                      : "longevity-score",
-                    previewTheme
-                  )}
-                  alt={
-                    heroActiveSlug === "longevity-score"
-                      ? "LEVL: OutPace Aging — Morning Protocol Stack"
-                      : "LEVL: OutPace Aging — Longevity Score (89/100)"
-                  }
+                  src={getShowcaseImage(leftHeroOption.slug, previewTheme)}
+                  alt={leftHeroOption.caption}
                   priority="default"
-                  caption={
-                    heroActiveSlug === "longevity-score"
-                      ? "Morning Protocol Stack (/today)"
-                      : "Longevity Score (89/100) & 28-Day Rolling Pace"
-                  }
+                  caption={leftHeroOption.label}
                 />
               </div>
 
@@ -1280,36 +1312,17 @@ export default function LevlAppShowcasePage() {
                 />
               </div>
 
-              {/* Right Tilted Phone (+8deg, scale-90): 7-Day Week Matrix / Morning Stack */}
+              {/* Right Tilted Phone (+8deg, scale-90): Next Hero View */}
               <div
-                onClick={() =>
-                  setHeroActiveSlug(
-                    heroActiveSlug === "schedule-grid"
-                      ? "today-morning-tasks"
-                      : "schedule-grid"
-                  )
-                }
-                title="Click to focus in center"
+                onClick={() => setHeroActiveSlug(rightHeroOption.slug)}
+                title={`Click to focus: ${rightHeroOption.label}`}
                 className="transform rotate-[8deg] scale-90 -ml-10 z-10 hover:z-30 hover:rotate-0 hover:scale-95 transition-all duration-500 cursor-pointer"
               >
                 <RealPhoneFrame
-                  src={getShowcaseImage(
-                    heroActiveSlug === "schedule-grid"
-                      ? "today-morning-tasks"
-                      : "schedule-grid",
-                    previewTheme
-                  )}
-                  alt={
-                    heroActiveSlug === "schedule-grid"
-                      ? "LEVL: OutPace Aging — Morning Protocol Stack"
-                      : "LEVL: OutPace Aging — 7-Day Week Matrix"
-                  }
+                  src={getShowcaseImage(rightHeroOption.slug, previewTheme)}
+                  alt={rightHeroOption.caption}
                   priority="default"
-                  caption={
-                    heroActiveSlug === "schedule-grid"
-                      ? "Morning Protocol Stack (/today)"
-                      : "7-Day Week Circadian Matrix"
-                  }
+                  caption={rightHeroOption.label}
                 />
               </div>
             </div>
@@ -1745,8 +1758,8 @@ export default function LevlAppShowcasePage() {
         </section>
 
         {/* ====================================================================
-            STEP 3.2 — SECTION 3 (#adaptive-8020):
-            "Built for Real Life: The 80/20 Survival Shield & Poor Sleep Triage"
+            SECTION 2 (#adaptive-8020):
+            "Toggle Your Biology & Daily Reality"
             3-State Interactive Mode Switcher + <RealPhoneFrame />
            ==================================================================== */}
         <section
@@ -1760,12 +1773,12 @@ export default function LevlAppShowcasePage() {
                   className="text-xs font-mono uppercase tracking-widest font-bold block mb-2"
                   style={{ color: tokens.duskIndigo }}
                 >
-                  ANTI-BURNOUT ENGINE • ADAPTIVE ROUTINE GOVERNOR
+                  TOGGLE YOUR BIOLOGY &amp; DAILY REALITY • ADAPTIVE ROUTINE GOVERNOR
                 </span>
                 <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
-                  Built for Real Life:{" "}
+                  Toggle Your Biology &amp; Daily Reality:{" "}
                   <span style={{ color: tokens.accentEmerald }}>
-                    The 80/20 Survival Shield &amp; Poor Sleep Triage.
+                    80/20 Survival Shield &amp; Poor Sleep Triage.
                   </span>
                 </h2>
                 <p
@@ -1777,8 +1790,9 @@ export default function LevlAppShowcasePage() {
                   <strong style={{ color: tokens.textPrimary }}>
                     LEVL: OutPace Aging
                   </strong>{" "}
-                  dynamically scales your daily routine so your streak and
-                  biology never break.
+                  dynamically scales your daily routine across Optimal Bandwidth,
+                  High-Stress / Travel Day (80/20 Survival Shield), and Poor
+                  Sleep Recovery so your streak and biology never break.
                 </p>
               </div>
 
@@ -1903,8 +1917,8 @@ export default function LevlAppShowcasePage() {
         </section>
 
         {/* ====================================================================
-            STEP 3.3 — SECTION 4A (#modality-applets):
-            "Interactive Modality Execution Applets" (2-Column Interactive Accordion + <RealPhoneFrame />)
+            SECTION 3 (#modality-applets):
+            "Modality-Specific Interactive Applets" (All 8 Applets + <RealPhoneFrame />)
            ==================================================================== */}
         <section
           id="modality-applets"
@@ -1915,7 +1929,7 @@ export default function LevlAppShowcasePage() {
               className="text-xs sm:text-sm font-mono uppercase tracking-widest font-bold block mb-3"
               style={{ color: tokens.accentEmerald }}
             >
-              INTERACTIVE MODALITY EXECUTION APPLETS
+              MODALITY-SPECIFIC INTERACTIVE APPLETS
             </span>
             <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
               Don’t Just Check a Box.{" "}
@@ -1934,8 +1948,9 @@ export default function LevlAppShowcasePage() {
               className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto"
               style={{ color: tokens.textSecondary }}
             >
-              Click any of the 6 execution applets below to expand its clinical
-              guidance and preview the real `@3x` screen inside{" "}
+              Click any of the 8 modality-specific interactive applets below to
+              expand its clinical guidance and preview the real `@3x` screen
+              inside{" "}
               <strong style={{ color: tokens.textPrimary }}>
                 LEVL: OutPace Aging
               </strong>
@@ -1944,7 +1959,7 @@ export default function LevlAppShowcasePage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-            {/* Left Column: 6 Click-to-Expand Applet Cards */}
+            {/* Left Column: 8 Click-to-Expand Applet Cards */}
             <div className="lg:col-span-7 space-y-3">
               {MODALITY_APPLETS.map((applet) => {
                 const isSelected = applet.id === activeAppletId;
@@ -2043,8 +2058,9 @@ export default function LevlAppShowcasePage() {
         </section>
 
         {/* ====================================================================
-            STEP 3.4 — SECTION 4B (#core-intelligence):
-            "Identify What Actually Works to Slow Your Pace of Aging" (Core Longevity Intelligence)
+            SECTION 4 (#core-intelligence):
+            "Identify what actually works to slow your pace of aging"
+            (Biological Intelligence & Outcome Attribution Engine)
            ==================================================================== */}
         <section
           id="core-intelligence"
@@ -2058,10 +2074,10 @@ export default function LevlAppShowcasePage() {
               className="text-xs sm:text-sm font-mono uppercase tracking-widest font-bold block mb-3"
               style={{ color: tokens.accentCyan }}
             >
-              CORE LONGEVITY INTELLIGENCE • N-OF-1 DISCOVERY ENGINE
+              BIOLOGICAL INTELLIGENCE &amp; OUTCOME ATTRIBUTION ENGINE
             </span>
             <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
-              Identify What <em className="italic font-serif">actually</em> Works
+              Identify what <em className="italic font-serif">actually</em> works
               to{" "}
               <span
                 className="bg-clip-text text-transparent"
@@ -2070,7 +2086,7 @@ export default function LevlAppShowcasePage() {
                     "linear-gradient(135deg, #34D399 0%, #38BDF8 50%, #F472B6 100%)",
                 }}
               >
-                Slow Your Pace of Aging.
+                slow your pace of aging
               </span>
             </h2>
             <p
@@ -2082,9 +2098,10 @@ export default function LevlAppShowcasePage() {
                 LEVL: OutPace Aging
               </strong>{" "}
               closes the loop—connecting your daily protocol adherence to your
-              N-of-1 outcome ROI, 8 canonical longevity pathways, composite
-              biological age, 144-emotion circumplex, 12 Hallmarks of Aging
-              radar, and AI Longevity Coach.
+              live 0–100 Longevity Score, N-of-1 Outcome &amp; Biomarker
+              Attribution, 8 Biological Vectors &amp; Hallmarks of Aging Radar,
+              Physiological &amp; Epigenetic Age Testing, Daily Emotion Check-in,
+              and AI Longevity Coach.
             </p>
           </div>
 
