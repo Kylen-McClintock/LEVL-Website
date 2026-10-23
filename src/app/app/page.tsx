@@ -348,7 +348,6 @@ interface ModalityAppletCardSpec {
   emoji: string;
   title: string;
   subtitle: string;
-  hook: string;
   details: string;
   badges: string[];
   slug: ShowcaseSlug;
@@ -361,7 +360,6 @@ const MODALITY_APPLETS: ModalityAppletCardSpec[] = [
     emoji: "🌬️",
     title: "Guided Breathwork & Vagal Pacer",
     subtitle: "Physiological Sighs • 4-7-8 • Box Breathing",
-    hook: "Visualizes real-time lung expansion and vagal tone coherence across Physiological Sighs (4s + 2s double-inhale, 8s exhale), 4-7-8 Parasympathetic Down-Regulation, and Box Breathing.",
     details:
       "Visualizes real-time lung expansion and vagal tone coherence across Physiological Sighs (4s + 2s double-inhale, 8s exhale), 4-7-8 Parasympathetic Down-Regulation, and Box Breathing with live cycle pacing and acoustic cues.",
     badges: [
@@ -378,7 +376,6 @@ const MODALITY_APPLETS: ModalityAppletCardSpec[] = [
     emoji: "⏳",
     title: "Metabolic Fasting & Autophagy Tracker",
     subtitle: "5 Biological Fasting Zones",
-    hook: "Tracks your live transition through 5 biological fasting zones (Anabolic → Glycogen Depletion → Fat Oxidation → Ketosis → AMPK & Deep Autophagy) with timed electrolyte milestones.",
     details:
       "Tracks your live transition through 5 biological fasting zones (Anabolic → Glycogen Depletion → Fat Oxidation → Ketosis → AMPK & Deep Autophagy) with timed electrolyte milestones and circadian feeding window alignment.",
     badges: [
@@ -395,7 +392,6 @@ const MODALITY_APPLETS: ModalityAppletCardSpec[] = [
     emoji: "🧊",
     title: "Thermal Contrast & Søberg Timer",
     subtitle: "50°F–55°F Cold Plunge & 174°F+ Sauna",
-    hook: "Multi-round Cold Plunge (50°F–55°F) and Sauna (174°F+) contrast timer with live norepinephrine / heat-shock protein (HSP70) zone tracking and Søberg Principle natural re-warming guidance.",
     details:
       "Multi-round Cold Plunge (50°F–55°F) and Sauna (174°F+) contrast timer with live norepinephrine / heat-shock protein (HSP70) zone tracking and Søberg Principle natural re-warming guidance.",
     badges: [
@@ -412,7 +408,6 @@ const MODALITY_APPLETS: ModalityAppletCardSpec[] = [
     emoji: "☀️",
     title: "Morning Circadian Sunlight Lux Meter",
     subtitle: "10,000–100,000 Lux • SCN Phase Lock",
-    hook: "Calibrates target outdoor viewing duration (5m clear sky to 25m overcast) based on ambient photon lux (10,000–100,000 lux) to trigger your morning cortisol peak and set your 16-hour melatonin timer.",
     details:
       "Calibrates target outdoor viewing duration (5m clear sky to 25m overcast) based on ambient photon lux (10,000–100,000 lux) to trigger your morning cortisol peak and set your 16-hour melatonin timer.",
     badges: [
@@ -429,7 +424,6 @@ const MODALITY_APPLETS: ModalityAppletCardSpec[] = [
     emoji: "🫀",
     title: "Norwegian 4×4 VO2 Max HIIT Pacer",
     subtitle: "4×4m Zone 5 (85–95% Max HR)",
-    hook: "Guides 4 rounds of 4-minute Zone 5 (85–95% Max HR) intervals paired with 3-minute active recovery windows to drive stroke volume and +12–20% VO2 Max expansion.",
     details:
       "Guides 4 rounds of 4-minute Zone 5 (85–95% Max HR) intervals paired with 3-minute active recovery windows to drive stroke volume and +12–20% VO2 Max expansion.",
     badges: [
@@ -446,7 +440,6 @@ const MODALITY_APPLETS: ModalityAppletCardSpec[] = [
     emoji: "🏋️",
     title: "Centenarian Decathlon Strength & Stability",
     subtitle: "Attia Centenarian Standards",
-    hook: "Multi-station longevity circuit (Dead Hang Grip Endurance, Farmer's Carry @ 75% BW, Goblet Squat Hold, Single-Leg Eyes-Closed Balance) benchmarked against Peter Attia's centenarian standards.",
     details:
       "Multi-station longevity circuit (Dead Hang Grip Endurance, Farmer's Carry @ 75% BW, Goblet Squat Hold, Single-Leg Eyes-Closed Balance) benchmarked against Peter Attia's centenarian standards.",
     badges: [
@@ -463,7 +456,6 @@ const MODALITY_APPLETS: ModalityAppletCardSpec[] = [
     emoji: "🚴",
     title: "Zone 2 Mitochondrial Base Pacer",
     subtitle: "65–75% Max HR • <2.0 mmol/L Lactate",
-    hook: "Locks in steady-state aerobic output (65–75% Max HR, <2.0 mmol/L lactate) with nasal-breathing talk-test verification for PGC-1α mitochondrial biogenesis.",
     details:
       "Locks in steady-state aerobic output (65–75% Max HR, <2.0 mmol/L lactate) with nasal-breathing talk-test verification for PGC-1α mitochondrial biogenesis and fat oxidation efficiency.",
     badges: [
@@ -480,7 +472,6 @@ const MODALITY_APPLETS: ModalityAppletCardSpec[] = [
     emoji: "💉",
     title: "Peptide Reconstitution & SubQ Dosing Calculator",
     subtitle: "U-100 Syringe Visualizer & 8-Zone Rotation",
-    hook: "Interactive U-100 insulin syringe visualizer that converts vial mass (mg), bacteriostatic water volume (mL), and target dose (mcg) into exact syringe tick units alongside an 8-zone subcutaneous site rotation tracker.",
     details:
       "Interactive U-100 insulin syringe visualizer that converts vial mass (mg), bacteriostatic water volume (mL), and target dose (mcg) into exact syringe tick units alongside an 8-zone subcutaneous site rotation tracker.",
     badges: [
@@ -503,7 +494,6 @@ interface CoreIntelligenceCardSpec {
   emoji: string;
   title: string;
   subtitle: string;
-  hook: string;
   details: string;
   badges: string[];
   slug: ShowcaseSlug;
@@ -516,7 +506,6 @@ const CORE_INTELLIGENCE_CARDS: CoreIntelligenceCardSpec[] = [
     emoji: "🏆",
     title: "Longevity Score",
     subtitle: "0–100 Composite Biological Score",
-    hook: "A live 0–100 composite biological score combining your 7-day protocol execution consistency, clinical stack potency across all 8 longevity vectors, and verified blood/wearable biomarkers.",
     details:
       "A live 0–100 composite biological score combining your 7-day protocol execution consistency, clinical stack potency across all 8 longevity vectors, and verified blood/wearable biomarkers.",
     badges: [
@@ -533,7 +522,6 @@ const CORE_INTELLIGENCE_CARDS: CoreIntelligenceCardSpec[] = [
     emoji: "📈",
     title: "N-of-1 Outcome & Biomarker Attribution",
     subtitle: "Lag-Adjusted Protocol Correlation",
-    hook: "Correlates your protocol adherence against subjective wellbeing, wearable HRV/deep sleep, and blood panels to isolate which modalities genuinely move your biology.",
     details:
       "Correlates your protocol adherence against subjective wellbeing, wearable HRV/deep sleep, and blood panels to isolate which modalities genuinely move your biology.",
     badges: [
@@ -550,7 +538,6 @@ const CORE_INTELLIGENCE_CARDS: CoreIntelligenceCardSpec[] = [
     emoji: "🛡️",
     title: "8 Biological Vectors & Hallmarks of Aging Radar",
     subtitle: "8 Canonical Vectors & 12 Hallmarks",
-    hook: "Maps your active stack across all 8 canonical longevity vectors (Heart Health, Brain Longevity, Metabolic Health, Cancer Defense, Testosterone, Chronic Inflammation, Bone Density, Cellular Longevity) to expose blind spots.",
     details:
       "Maps your active stack across all 8 canonical longevity vectors (Heart Health, Brain Longevity, Metabolic Health, Cancer Defense, Testosterone, Chronic Inflammation, Bone Density, Cellular Longevity) to expose blind spots.",
     badges: [
@@ -567,7 +554,6 @@ const CORE_INTELLIGENCE_CARDS: CoreIntelligenceCardSpec[] = [
     emoji: "🧬",
     title: "Physiological & Epigenetic Age Testing",
     subtitle: "Functional Bio-Age & DunedinPACE",
-    hook: "Tracks your functional physiological age and pace of aging (VO2 Max, grip strength, DEXA BMD, ApoB, hs-CRP, DunedinPACE) relative to your chronological age.",
     details:
       "Tracks your functional physiological age and pace of aging (VO2 Max, grip strength, DEXA BMD, ApoB, hs-CRP, DunedinPACE) relative to your chronological age.",
     badges: [
@@ -584,7 +570,6 @@ const CORE_INTELLIGENCE_CARDS: CoreIntelligenceCardSpec[] = [
     emoji: "🎭",
     title: "Daily Emotion, Energy & Autonomic Check-in",
     subtitle: "10-Second Morning & Evening Check-in",
-    hook: "10-second morning and evening check-in capturing nervous system state, mental clarity, and sleep restoration to power N-of-1 protocol correlation.",
     details:
       "10-second morning and evening check-in capturing nervous system state, mental clarity, and sleep restoration to power N-of-1 protocol correlation.",
     badges: [
@@ -601,7 +586,6 @@ const CORE_INTELLIGENCE_CARDS: CoreIntelligenceCardSpec[] = [
     emoji: "🤖",
     title: "AI Longevity Coach",
     subtitle: "Stack, Labs & PubMed Grounded",
-    hook: "Context-aware biological copilot grounded in your active protocol stack, lab biomarkers, and peer-reviewed PubMed clinical trials.",
     details:
       "Context-aware biological copilot grounded in your active protocol stack, lab biomarkers, and peer-reviewed PubMed clinical trials.",
     badges: [
@@ -783,19 +767,47 @@ const FAQ_ITEMS = [
   },
   {
     q: "How does LEVL: OutPace Aging personalize leading protocols to my biology?",
-    a: "Leading protocols like Bryan Johnson’s Blueprint or Huberman’s routine were designed around a single person’s schedule and physiology. LEVL: OutPace Aging cross-checks every modality against your goals, schedule, budget, sex/hormone profile, lifting days, sleep readiness (Oura/Whoop/Apple Watch), and blood biomarkers (ApoB, hs-CRP, Fasting Insulin)—automatically blocking pathway clashes like post-lift cold plunges or extreme fasts that hurt thyroid and hormone health.",
+    a: "Leading protocols like Bryan Johnson’s Blueprint, Andrew Huberman’s neuro-circadian routine, Peter Attia’s Outlive framework, or Rhonda Patrick’s micronutrient stack were often designed around a single individual’s schedule and physiology. LEVL: OutPace Aging cross-checks every modality against your goals, schedule, budget, sex/hormone profile, lifting days, sleep readiness (Oura, Whoop, Apple Watch), and blood biomarkers (ApoB, hs-CRP, Fasting Insulin)—automatically blocking pathway clashes like post-lift cold plunges or extreme fasts that impair thyroid and hormone signaling.",
+  },
+  {
+    q: "Can I combine multiple protocols without overlapping supplements or conflicting workouts?",
+    a: "Yes. When you select multiple protocols in LEVL: OutPace Aging, the Multi-Protocol Stack Merger automatically deduplicates overlapping compounds, resolves biochemical timing clashes (such as separating AMPK agonists and cold immersion from mTORC1 heavy resistance training by at least 4 hours), and sequences your combined stack into four clean circadian time blocks.",
   },
   {
     q: "How does LEVL: OutPace Aging identify what actually works for my body?",
-    a: "Through closed-loop N-of-1 Outcome & Biomarker Attribution, the Daily Emotion, Energy & Autonomic Check-in, Physiological & Epigenetic Age Testing, and your live 0–100 Longevity Score, LEVL correlates your daily protocol adherence against measurable improvements in Deep Sleep (+32%), Cellular Energy (+27%), Executive Focus (+24%), and Pace of Aging (0.84).",
+    a: "Most apps only track whether you checked a box. LEVL: OutPace Aging runs a closed-loop N-of-1 Outcome & Biomarker Attribution engine—correlating your 7-day and 28-day protocol adherence against your Daily Emotion, Energy & Autonomic Check-ins, wearable HRV and deep sleep trends, functional physiological tests, and blood panels to isolate which specific habits genuinely move your biology.",
   },
   {
-    q: "How do the 80/20 Survival Shield and Poor Sleep Recovery Triage work?",
-    a: "On a high-stress or travel day, one tap activates the 80/20 Survival Shield, pruning secondary tasks and protecting the vital 20% keystone habits that drive 80% of your biological ROI—keeping your streak alive without burnout. When poor sleep recovery (<6h / Low HRV) is detected, LEVL automatically pauses high-CNS strain while prioritizing morning sunlight, hydration, and autonomic recovery.",
+    q: "How is my live 0–100 Longevity Score calculated?",
+    a: "Your Longevity Score is a live 0–100 composite biological metric combining three pillars: (1) your rolling 7-day protocol execution consistency, (2) the clinical evidence potency of your active stack across all 8 canonical longevity vectors, and (3) your verified functional, wearable, and blood biomarker trajectories.",
+  },
+  {
+    q: "What happens on busy travel days or nights when I get poor sleep?",
+    a: "Rigid 25-step checklists cause all-or-nothing burnout. On high-stress or travel days, one tap activates the 80/20 Survival Shield—pruning secondary tasks and protecting the vital 20% keystone habits that drive 80%+ of your biological ROI while keeping your adherence streak alive. On mornings after <6 hours of sleep or low HRV, Poor Sleep Recovery Triage automatically pauses high-CNS strain (like Norwegian 4×4 HIIT) while prioritizing morning sunlight, hydration, a 10g Creatine cognitive rescue dose, and a 20-minute afternoon NSDR reset.",
   },
   {
     q: "What are the 8 built-in Modality-Specific Interactive Applets?",
-    a: "Instead of static checkboxes, LEVL: OutPace Aging includes 8 interactive clinical timers and pacers: Guided Breathwork & Vagal Pacer, Metabolic Fasting & Autophagy Tracker, Thermal Contrast & Søberg Timer, Morning Circadian Sunlight Lux Meter, Norwegian 4×4 VO2 Max HIIT Pacer, Centenarian Decathlon Strength & Stability, Zone 2 Mitochondrial Base Pacer, and the Peptide Reconstitution & SubQ Dosing Calculator.",
+    a: "Instead of static checkboxes, every major modality launches a dedicated biometric timer or calculator: (1) Guided Breathwork & Vagal Pacer, (2) Metabolic Fasting & Autophagy Tracker, (3) Thermal Contrast & Søberg Timer, (4) Morning Circadian Sunlight Lux Meter, (5) Norwegian 4×4 VO2 Max HIIT Pacer, (6) Centenarian Decathlon Strength & Stability Circuit, (7) Zone 2 Mitochondrial Base Pacer, and (8) the Peptide Reconstitution & SubQ Dosing Calculator.",
+  },
+  {
+    q: "What are the 8 Biological Vectors and 12 Hallmarks of Aging tracked in the app?",
+    a: "LEVL maps your active routine across 8 canonical biological vectors—Heart Health, Brain Longevity, Metabolic Health, Cancer Defense, Hormone Optimization, Chronic Inflammation, Bone Density & Muscle, and Cellular Longevity—as well as the 12 canonical Hallmarks of Aging (including Autophagy, Mitochondrial Function, Epigenetic Alterations, Cellular Senescence, and Telomere Attrition) so you can immediately spot and fill coverage blind spots.",
+  },
+  {
+    q: "Does LEVL: OutPace Aging adapt protocols for female physiology and hormone health?",
+    a: "Yes. Female physiology has distinct hypothalamic-pituitary-gonadal (HPG) and thyroid sensitivity to caloric and thermal stressors. LEVL protects Kisspeptin and Free T3 signaling by converting aggressive 18-hour fasts into hormone-safe 12.5-hour circadian windows with a 30g morning protein anchor, prioritizing heavy axial bone loading (Piezo1 osteoblast activation), tracking ferritin/iron status, and calibrating cold exposure to 55°F–58°F.",
+  },
+  {
+    q: "Do I need expensive lab panels, DEXA scans, or wearables to get started?",
+    a: "No. You can start immediately using built-in functional physiological age benchmarks (dead hang grip endurance, single-leg eyes-closed balance, goblet squat hold, VO2 max pacing), 10-second daily autonomic check-ins, and circadian protocol tracking. Whenever you connect wearables or log blood panels (like ApoB, hs-CRP, HbA1c, or DunedinPACE), the attribution engine incorporates them automatically.",
+  },
+  {
+    q: "How does the AI Longevity Coach differ from a generic chatbot?",
+    a: "The AI Longevity Coach is a context-aware biological copilot grounded directly in your active protocol stack, circadian schedule, logged biomarkers, and peer-reviewed PubMed clinical trials. It can explain the mechanism behind any modality in your feed, flag supplement timing interactions, or adjust today’s routine based on how you feel.",
+  },
+  {
+    q: "How do I get Early Access or unlock the app immediately with a VIP Invite Code?",
+    a: "Click 'Join Early Access' to reserve your spot in the next onboarding cohort, or click 'Unlock with VIP Code' if you have received an activation code from the LEVL team, a clinical partner, or an early member to launch your daily command center immediately.",
   },
 ];
 
@@ -836,9 +848,6 @@ export default function LevlAppShowcasePage() {
   // Circadian Phase Explorer state
   const [selectedPhaseId, setSelectedPhaseId] =
     useState<CircadianPhaseId>("dawn");
-
-  // FAQ state
-  const [openFaqIdx, setOpenFaqIdx] = useState<number | null>(0);
 
   const isDark = previewTheme === "dark";
 
@@ -1963,11 +1972,11 @@ export default function LevlAppShowcasePage() {
             <div className="lg:col-span-7 space-y-3">
               {MODALITY_APPLETS.map((applet) => {
                 const isSelected = applet.id === activeAppletId;
+                const panelId = `applet-panel-${applet.id}`;
                 return (
                   <div
                     key={applet.id}
-                    onClick={() => setActiveAppletId(applet.id)}
-                    className="p-4 sm:p-5 rounded-2xl border backdrop-blur-xl transition-all cursor-pointer"
+                    className="rounded-2xl border backdrop-blur-xl transition-all"
                     style={{
                       backgroundColor: isSelected
                         ? isDark
@@ -1982,18 +1991,24 @@ export default function LevlAppShowcasePage() {
                         : "none",
                     }}
                   >
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-start gap-3">
-                        <span className="text-2xl leading-none mt-0.5 shrink-0">
-                          {applet.emoji}
-                        </span>
-                        <div>
-                          <div className="flex flex-wrap items-center gap-2">
-                            <h3 className="font-extrabold text-base sm:text-lg tracking-tight">
+                    <h3 className="m-0">
+                      <button
+                        type="button"
+                        aria-expanded={isSelected}
+                        aria-controls={panelId}
+                        onClick={() => setActiveAppletId(applet.id)}
+                        className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-3 cursor-pointer"
+                      >
+                        <span className="flex items-center gap-3 min-w-0">
+                          <span className="text-2xl leading-none shrink-0">
+                            {applet.emoji}
+                          </span>
+                          <span className="flex flex-wrap items-center gap-2 min-w-0">
+                            <span className="font-extrabold text-base sm:text-lg tracking-tight">
                               {applet.title}
-                            </h3>
+                            </span>
                             <span
-                              className="text-xs font-mono px-2 py-0.5 rounded-full border"
+                              className="text-xs font-mono font-normal px-2 py-0.5 rounded-full border"
                               style={{
                                 borderColor: tokens.cardBorder,
                                 color: tokens.accentCyan,
@@ -2001,28 +2016,24 @@ export default function LevlAppShowcasePage() {
                             >
                               {applet.subtitle}
                             </span>
-                          </div>
-                          {/* 1-Line Hook Always Visible */}
-                          <p
-                            className="text-sm sm:text-[15px] mt-1"
-                            style={{ color: tokens.textSecondary }}
-                          >
-                            {applet.hook}
-                          </p>
-                        </div>
-                      </div>
+                          </span>
+                        </span>
 
-                      <ChevronDown
-                        className={`w-4 h-4 shrink-0 mt-1 transition-transform ${
-                          isSelected ? "rotate-180 text-sky-400" : "opacity-60"
-                        }`}
-                      />
-                    </div>
+                        <ChevronDown
+                          className={`w-4 h-4 shrink-0 transition-transform ${
+                            isSelected
+                              ? "rotate-180 text-sky-400"
+                              : "opacity-60"
+                          }`}
+                        />
+                      </button>
+                    </h3>
 
-                    {/* Expanded Clinical Execution Specs */}
+                    {/* Expanded Clinical Execution Specs (Shown ONLY when expanded) */}
                     {isSelected && (
                       <div
-                        className="mt-3.5 pt-3.5 border-t space-y-3 text-sm sm:text-[15px] leading-relaxed"
+                        id={panelId}
+                        className="px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 border-t space-y-3 text-sm sm:text-[15px] leading-relaxed"
                         style={{
                           borderColor: tokens.cardBorder,
                           color: tokens.textSecondary,
@@ -2119,11 +2130,11 @@ export default function LevlAppShowcasePage() {
             <div className="lg:col-span-7 space-y-3 order-1 lg:order-2">
               {CORE_INTELLIGENCE_CARDS.map((card) => {
                 const isSelected = card.id === activeIntelId;
+                const panelId = `intel-panel-${card.id}`;
                 return (
                   <div
                     key={card.id}
-                    onClick={() => setActiveIntelId(card.id)}
-                    className="p-4 sm:p-5 rounded-2xl border backdrop-blur-xl transition-all cursor-pointer"
+                    className="rounded-2xl border backdrop-blur-xl transition-all"
                     style={{
                       backgroundColor: isSelected
                         ? isDark
@@ -2138,18 +2149,24 @@ export default function LevlAppShowcasePage() {
                         : "none",
                     }}
                   >
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-start gap-3">
-                        <span className="text-2xl leading-none mt-0.5 shrink-0">
-                          {card.emoji}
-                        </span>
-                        <div>
-                          <div className="flex flex-wrap items-center gap-2">
-                            <h3 className="font-extrabold text-base sm:text-lg tracking-tight">
+                    <h3 className="m-0">
+                      <button
+                        type="button"
+                        aria-expanded={isSelected}
+                        aria-controls={panelId}
+                        onClick={() => setActiveIntelId(card.id)}
+                        className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-3 cursor-pointer"
+                      >
+                        <span className="flex items-center gap-3 min-w-0">
+                          <span className="text-2xl leading-none shrink-0">
+                            {card.emoji}
+                          </span>
+                          <span className="flex flex-wrap items-center gap-2 min-w-0">
+                            <span className="font-extrabold text-base sm:text-lg tracking-tight">
                               {card.title}
-                            </h3>
+                            </span>
                             <span
-                              className="text-xs font-mono px-2 py-0.5 rounded-full border"
+                              className="text-xs font-mono font-normal px-2 py-0.5 rounded-full border"
                               style={{
                                 borderColor: tokens.cardBorder,
                                 color: tokens.accentEmerald,
@@ -2157,30 +2174,24 @@ export default function LevlAppShowcasePage() {
                             >
                               {card.subtitle}
                             </span>
-                          </div>
-                          {/* 1-Line Hook Always Visible */}
-                          <p
-                            className="text-sm sm:text-[15px] mt-1"
-                            style={{ color: tokens.textSecondary }}
-                          >
-                            {card.hook}
-                          </p>
-                        </div>
-                      </div>
+                          </span>
+                        </span>
 
-                      <ChevronDown
-                        className={`w-4 h-4 shrink-0 mt-1 transition-transform ${
-                          isSelected
-                            ? "rotate-180 text-emerald-400"
-                            : "opacity-60"
-                        }`}
-                      />
-                    </div>
+                        <ChevronDown
+                          className={`w-4 h-4 shrink-0 transition-transform ${
+                            isSelected
+                              ? "rotate-180 text-emerald-400"
+                              : "opacity-60"
+                          }`}
+                        />
+                      </button>
+                    </h3>
 
-                    {/* Expanded Details */}
+                    {/* Expanded Details (Shown ONLY when expanded) */}
                     {isSelected && (
                       <div
-                        className="mt-3.5 pt-3.5 border-t space-y-3 text-sm sm:text-[15px] leading-relaxed"
+                        id={panelId}
+                        className="px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 border-t space-y-3 text-sm sm:text-[15px] leading-relaxed"
                         style={{
                           borderColor: tokens.cardBorder,
                           color: tokens.textSecondary,
@@ -2461,7 +2472,7 @@ export default function LevlAppShowcasePage() {
             </div>
           </div>
 
-          {/* 5-Question FAQ */}
+          {/* 12-Question Comprehensive FAQ */}
           <div className="space-y-4">
             <div className="text-center mb-8">
               <span
@@ -2475,43 +2486,32 @@ export default function LevlAppShowcasePage() {
               </h3>
             </div>
 
-            {FAQ_ITEMS.map((item, idx) => {
-              const isOpen = openFaqIdx === idx;
-              return (
+            {FAQ_ITEMS.map((item, idx) => (
+              <details
+                key={item.q}
+                name="levl-app-faq"
+                open={idx === 0}
+                className="group rounded-2xl border backdrop-blur-xl overflow-hidden transition-all"
+                style={{
+                  backgroundColor: tokens.cardBg,
+                  borderColor: tokens.cardBorder,
+                }}
+              >
+                <summary className="w-full px-6 py-4 text-left flex items-center justify-between gap-4 font-bold text-sm sm:text-base cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                  <span>{item.q}</span>
+                  <ChevronDown className="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" />
+                </summary>
                 <div
-                  key={item.q}
-                  className="rounded-2xl border backdrop-blur-xl overflow-hidden transition-all"
+                  className="px-6 pb-5 text-sm sm:text-base leading-relaxed border-t pt-3.5"
                   style={{
-                    backgroundColor: tokens.cardBg,
+                    color: tokens.textSecondary,
                     borderColor: tokens.cardBorder,
                   }}
                 >
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaqIdx(isOpen ? null : idx)}
-                    className="w-full px-6 py-4 text-left flex items-center justify-between gap-4 font-bold text-sm sm:text-base cursor-pointer"
-                  >
-                    <span>{item.q}</span>
-                    <ChevronDown
-                      className={`w-4 h-4 shrink-0 transition-transform ${
-                        isOpen ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-                  {isOpen && (
-                    <div
-                      className="px-6 pb-5 text-sm sm:text-base leading-relaxed border-t pt-3.5"
-                      style={{
-                        color: tokens.textSecondary,
-                        borderColor: tokens.cardBorder,
-                      }}
-                    >
-                      {item.a}
-                    </div>
-                  )}
+                  {item.a}
                 </div>
-              );
-            })}
+              </details>
+            ))}
           </div>
         </section>
       </main>
