@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "LEVL: OutPace Aging | Personalized Longevity Protocols App",
   description:
-    "Longevity Science, Calibrated to Your Biology. Outpace aging by adapting leading longevity protocols to your personal biology with 8-Vector scoring and circadian alignment.",
+    "Longevity Science, Calibrated to Your Biology. Identify what actually works to slow your pace of aging with personalized leading protocols, live biometric applets, and 8-Vector scoring.",
   openGraph: {
     title: "LEVL: OutPace Aging | Personalized Longevity Protocols App",
     description:
-      "Longevity Science, Calibrated to Your Biology. Follow leading longevity protocols personalized to your biology, 8-Vector Biological Scoring, Grade-A PubMed Clinical Evidence, and an Adaptive 80/20 Routine Governor.",
+      "Longevity Science, Calibrated to Your Biology. Identify what actually works to slow your pace of aging across all 8 biological vectors and 12 Hallmarks of Aging.",
     url: "https://www.levlhealth.com/app",
     siteName: "LEVL Health",
     images: [
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "LEVL: OutPace Aging | Personalized Longevity Protocols App",
     description:
-      "Longevity Science, Calibrated to Your Biology. Explore 100+ RCT-anchored longevity modalities in LEVL: OutPace Aging.",
+      "Longevity Science, Calibrated to Your Biology. Identify what actually works to slow your pace of aging in LEVL: OutPace Aging.",
     images: ["https://www.levlhealth.com/images/protocol_app_visual_v2.png"],
   },
 };
