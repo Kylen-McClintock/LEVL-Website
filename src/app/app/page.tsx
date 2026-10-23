@@ -69,12 +69,6 @@ const HERO_SCREEN_OPTIONS: HeroScreenOption[] = [
     shortLabel: "7-Day Week View",
     caption: "LEVL: OutPace Aging — 7-Day Adherence & Week View",
   },
-  {
-    slug: "master-schedule",
-    label: "Master Biological Schedule & Split Matrix",
-    shortLabel: "Master Schedule",
-    caption: "LEVL: OutPace Aging — Master Biological Schedule & Split Matrix",
-  },
 ];
 
 /* ============================================================================
