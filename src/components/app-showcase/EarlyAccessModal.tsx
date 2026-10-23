@@ -9,10 +9,6 @@ import {
   CheckCircle2,
   ArrowRight,
   Smartphone,
-  Share2,
-  Copy,
-  Check,
-  ShieldCheck,
   ChevronDown,
   LockOpen,
   AlertCircle,
@@ -30,21 +26,6 @@ interface EarlyAccessModalProps {
   onClose: () => void;
 }
 
-const LONGEVITY_GOALS = [
-  "Slow Biological Aging",
-  "VO2 Max & Heart",
-  "Brain & Deep Sleep",
-  "Metabolic & Body Comp",
-] as const;
-
-const WEARABLES_AND_LABS = [
-  "Whoop",
-  "Oura",
-  "Apple Watch",
-  "Garmin",
-  "Function Health / Blood Panels",
-] as const;
-
 export function EarlyAccessModal({
   isOpen,
   initialTab,
@@ -57,17 +38,11 @@ export function EarlyAccessModal({
   const titleId = useId();
 
   const [activeTab, setActiveTab] = useState<ModalTab>(initialTab);
+
+  // Early Access Email Signup state (ported from existing EmailCapture / subscribeUser flow)
   const [email, setEmail] = useState("");
-  const [selectedGoals, setSelectedGoals] = useState<string[]>([
-    "Slow Biological Aging",
-  ]);
-  const [selectedWearables, setSelectedWearables] = useState<string[]>([
-    "Oura",
-    "Function Health / Blood Panels",
-  ]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [waitlistConfirmed, setWaitlistConfirmed] = useState(false);
-  const [copiedReferral, setCopiedReferral] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [message, setMessage] = useState("");
 
   // VIP Code state
   const [vipCode, setVipCode] = useState("");
@@ -133,7 +108,7 @@ export function EarlyAccessModal({
     };
   }, [onClose]);
 
-  // Auto-redirect 1.2s timer when VIP code LEV2035 is unlocked
+  // Auto-redirect 1.2s timer when VIP code is unlocked
   useEffect(() => {
     if (!vipUnlocked || !autoRedirectActive) return;
     const timer = setTimeout(() => {
@@ -142,32 +117,27 @@ export function EarlyAccessModal({
     return () => clearTimeout(timer);
   }, [vipUnlocked, autoRedirectActive, webAppUrl]);
 
-  const toggleGoal = (goal: string) => {
-    setSelectedGoals((prev) =>
-      prev.includes(goal) ? prev.filter((g) => g !== goal) : [...prev, goal]
-    );
-  };
-
-  const toggleWearable = (item: string) => {
-    setSelectedWearables((prev) =>
-      prev.includes(item) ? prev.filter((w) => w !== item) : [...prev, item]
-    );
-  };
-
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim()) return;
-    setIsSubmitting(true);
 
+    setStatus("loading");
     try {
       const formData = new FormData();
       formData.append("email", email.trim());
-      formData.append("goals", selectedGoals.join(", "));
-      formData.append("wearables", selectedWearables.join(", "));
-      await subscribeUser(formData).catch(() => null);
-    } finally {
-      setIsSubmitting(false);
-      setWaitlistConfirmed(true);
+      const result = await subscribeUser(formData);
+
+      if (result.success) {
+        setStatus("success");
+        setEmail("");
+        setMessage("You're on the list! Watch your inbox for your VIP activation code.");
+      } else {
+        setStatus("error");
+        setMessage(result.message || "Something went wrong. Please try again.");
+      }
+    } catch {
+      setStatus("error");
+      setMessage("Failed to subscribe. Please try again.");
     }
   };
 
@@ -186,13 +156,6 @@ export function EarlyAccessModal({
         "Invalid invite code. Join the Early Access Waitlist to receive your VIP activation code."
       );
     }
-  };
-
-  const copyReferralLink = () => {
-    const link = "https://levlhealth.com/app?ref=VIP-COHORT";
-    navigator.clipboard?.writeText(link).catch(() => {});
-    setCopiedReferral(true);
-    setTimeout(() => setCopiedReferral(false), 2200);
   };
 
   return (
@@ -227,7 +190,7 @@ export function EarlyAccessModal({
               className="text-xl sm:text-2xl font-extrabold tracking-tight"
             >
               {activeTab === "waitlist"
-                ? "Reserve Your Biological Operating System"
+                ? "Gain Early Access to LEVL OS"
                 : "Enter VIP Invite Code"}
             </h2>
           </div>
@@ -268,7 +231,7 @@ export function EarlyAccessModal({
             }`}
           >
             <Mail className="w-3.5 h-3.5" />
-            <span>Early Access Waitlist</span>
+            <span>Early Access List</span>
           </button>
           <button
             type="button"
@@ -288,24 +251,59 @@ export function EarlyAccessModal({
         </div>
 
         {/* ============================================================
-            TAB 1: EARLY ACCESS WAITLIST
+            TAB 1: EARLY ACCESS EMAIL SIGN UP (APP ACCESS)
            ============================================================ */}
         {activeTab === "waitlist" && (
           <div>
-            {!waitlistConfirmed ? (
-              <form onSubmit={handleWaitlistSubmit} className="space-y-5">
-                {/* Email Input */}
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider mb-2 opacity-80">
-                    1. Your Email Address
-                  </label>
+            {status === "success" ? (
+              <div className="bg-emerald-500/10 border border-emerald-500/25 rounded-2xl p-6 text-center space-y-3">
+                <CheckCircle2 className="w-10 h-10 text-emerald-400 mx-auto" />
+                <p className="text-emerald-400 font-bold text-lg">
+                  Welcome Early Adopter
+                </p>
+                <p className="text-sm opacity-80">{message}</p>
+                <div className="pt-2 flex flex-col items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setStatus("idle")}
+                    className="text-xs opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
+                  >
+                    Add another email
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab("vip")}
+                    className="text-xs font-bold text-sky-400 hover:underline cursor-pointer"
+                  >
+                    Already have a VIP code? Enter it here →
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={handleWaitlistSubmit} className="space-y-4">
+                <p
+                  className="text-sm leading-relaxed"
+                  style={{ color: isDark ? "#9CA3AF" : "#475569" }}
+                >
+                  Join the first cohort to access the{" "}
+                  <strong style={{ color: isDark ? "#F9FAFB" : "#0F172A" }}>
+                    LEVL Longevity Protocols App
+                  </strong>
+                  . Founding members get priority onboarding, their VIP activation
+                  code, and direct input into circadian protocol features.
+                </p>
+
+                <div className="relative">
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 opacity-40" />
                   <input
+                    name="email"
                     type="email"
                     required
+                    disabled={status === "loading"}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="founder@company.com"
-                    className="w-full px-4 py-3 rounded-xl border text-sm font-medium outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
+                    placeholder="Enter your email"
+                    className="w-full h-12 pl-12 pr-4 rounded-xl border text-sm font-medium outline-none focus:ring-2 focus:ring-emerald-500 transition-all disabled:opacity-50"
                     style={{
                       backgroundColor: isDark
                         ? "rgba(3, 7, 18, 0.7)"
@@ -317,93 +315,29 @@ export function EarlyAccessModal({
                   />
                 </div>
 
-                {/* Primary Longevity Goal Pills */}
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider mb-2 opacity-80">
-                    2. Primary Longevity Goal
-                  </label>
-                  <div className="flex flex-wrap gap-2">
-                    {LONGEVITY_GOALS.map((goal) => {
-                      const active = selectedGoals.includes(goal);
-                      return (
-                        <button
-                          key={goal}
-                          type="button"
-                          onClick={() => toggleGoal(goal)}
-                          className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-all cursor-pointer ${
-                            active
-                              ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/50"
-                              : "opacity-70 hover:opacity-100"
-                          }`}
-                          style={
-                            !active
-                              ? {
-                                  borderColor: isDark
-                                    ? "rgba(255,255,255,0.12)"
-                                    : "rgba(15,23,42,0.15)",
-                                }
-                              : undefined
-                          }
-                        >
-                          {active ? "✓ " : ""}
-                          {goal}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Current Wearable / Labs Pills */}
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider mb-2 opacity-80">
-                    3. Current Wearable / Labs Stack
-                  </label>
-                  <div className="flex flex-wrap gap-2">
-                    {WEARABLES_AND_LABS.map((item) => {
-                      const active = selectedWearables.includes(item);
-                      return (
-                        <button
-                          key={item}
-                          type="button"
-                          onClick={() => toggleWearable(item)}
-                          className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-all cursor-pointer ${
-                            active
-                              ? "bg-sky-500/20 text-sky-400 border-sky-500/50"
-                              : "opacity-70 hover:opacity-100"
-                          }`}
-                          style={
-                            !active
-                              ? {
-                                  borderColor: isDark
-                                    ? "rgba(255,255,255,0.12)"
-                                    : "rgba(15,23,42,0.15)",
-                                }
-                              : undefined
-                          }
-                        >
-                          {active ? "✓ " : ""}
-                          {item}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
                 <button
                   type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-3.5 px-6 rounded-xl font-extrabold text-sm bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 shadow-lg shadow-emerald-500/25 hover:opacity-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  disabled={status === "loading" || !email.trim()}
+                  className="w-full h-12 px-6 rounded-xl font-extrabold text-sm bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 shadow-lg shadow-emerald-500/25 hover:opacity-95 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <span>
-                    {isSubmitting
-                      ? "Securing Priority Spot..."
-                      : "Join Early Access Waitlist"}
+                    {status === "loading"
+                      ? "Joining..."
+                      : "Join the Early Access List"}
                   </span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
 
-                <p className="text-center text-xs opacity-70">
-                  Already have a founder or VIP code?{" "}
+                {status === "error" && (
+                  <p className="text-xs text-center text-red-400">{message}</p>
+                )}
+
+                <p className="text-xs text-center opacity-50">
+                  No spam. Only high signal longevity app updates & activation access.
+                </p>
+
+                <p className="text-center text-xs opacity-75 pt-1">
+                  Already have a VIP code?{" "}
                   <button
                     type="button"
                     onClick={() => setActiveTab("vip")}
@@ -413,93 +347,12 @@ export function EarlyAccessModal({
                   </button>
                 </p>
               </form>
-            ) : (
-              /* Waitlist Confirmation State */
-              <div className="space-y-4 py-2 text-center">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center mx-auto text-emerald-400">
-                  <CheckCircle2 className="w-6 h-6" />
-                </div>
-                <div>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 mb-2">
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                    QUEUE PRIORITY #142 • BIOHACKER COHORT
-                  </span>
-                  <h3 className="text-lg font-extrabold">
-                    You’re on the Priority Onboarding List
-                  </h3>
-                  <p className="text-xs opacity-75 mt-1 max-w-md mx-auto">
-                    We’ve calibrated your profile for{" "}
-                    <strong>{selectedGoals.join(" + ")}</strong> with{" "}
-                    <strong>{selectedWearables.join(", ")}</strong>.
-                  </p>
-                </div>
-
-                {/* Referral Share Box */}
-                <div
-                  className="p-4 rounded-2xl border text-left space-y-2"
-                  style={{
-                    backgroundColor: isDark
-                      ? "rgba(3, 7, 18, 0.65)"
-                      : "rgba(241, 245, 249, 0.85)",
-                    borderColor: isDark
-                      ? "rgba(255,255,255,0.1)"
-                      : "rgba(15,23,42,0.1)",
-                  }}
-                >
-                  <div className="flex items-center justify-between text-xs font-bold">
-                    <span className="flex items-center gap-1.5 text-sky-400">
-                      <Share2 className="w-3.5 h-3.5" />
-                      Bump Queue Priority — Share Your Referral Link
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="text"
-                      readOnly
-                      value="https://levlhealth.com/app?ref=VIP-COHORT"
-                      className="flex-1 px-3 py-2 rounded-lg text-xs font-mono border bg-transparent"
-                      style={{
-                        borderColor: isDark
-                          ? "rgba(255,255,255,0.12)"
-                          : "rgba(15,23,42,0.15)",
-                      }}
-                    />
-                    <button
-                      type="button"
-                      onClick={copyReferralLink}
-                      className="px-3 py-2 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950 flex items-center gap-1 cursor-pointer shrink-0"
-                    >
-                      {copiedReferral ? (
-                        <>
-                          <Check className="w-3.5 h-3.5" />
-                          Copied
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-3.5 h-3.5" />
-                          Copy
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </div>
-
-                <div className="pt-1">
-                  <button
-                    type="button"
-                    onClick={() => setActiveTab("vip")}
-                    className="text-xs font-bold text-sky-400 hover:underline cursor-pointer"
-                  >
-                    Have a VIP Invite Code right now? Unlock Instant Access →
-                  </button>
-                </div>
-              </div>
             )}
           </div>
         )}
 
         {/* ============================================================
-            TAB 2: VIP INVITE CODE (LEV2035)
+            TAB 2: VIP INVITE CODE
            ============================================================ */}
         {activeTab === "vip" && (
           <div className="space-y-5">
@@ -517,8 +370,8 @@ export function EarlyAccessModal({
                       setVipCode(e.target.value);
                       if (vipError) setVipError(null);
                     }}
-                    placeholder="e.g. LEV2035"
-                    className="w-full px-4 py-3.5 rounded-xl border text-center font-mono text-lg font-extrabold tracking-[0.25em] uppercase outline-none focus:ring-2 focus:ring-sky-500 transition-all"
+                    placeholder="Enter invite code"
+                    className="w-full px-4 py-3.5 rounded-xl border text-center font-mono text-lg font-extrabold tracking-[0.2em] uppercase outline-none focus:ring-2 focus:ring-sky-500 transition-all placeholder:tracking-normal placeholder:font-sans placeholder:text-sm placeholder:font-medium placeholder:normal-case"
                     style={{
                       backgroundColor: isDark
                         ? "rgba(3, 7, 18, 0.8)"
@@ -542,7 +395,7 @@ export function EarlyAccessModal({
                         onClick={() => setActiveTab("waitlist")}
                         className="text-emerald-400 font-bold underline cursor-pointer"
                       >
-                        Switch to Early Access Waitlist →
+                        Switch to Early Access List →
                       </button>
                     </div>
                   </div>
@@ -567,8 +420,7 @@ export function EarlyAccessModal({
                     VIP Access Unlocked — Launching LEVL OS...
                   </p>
                   <p className="text-xs opacity-80">
-                    Code <span className="font-mono font-bold">LEV2035</span>{" "}
-                    verified & persisted to your device.
+                    Your VIP invite code has been verified & persisted to your device.
                   </p>
                   {autoRedirectActive && (
                     <button
@@ -624,7 +476,14 @@ export function EarlyAccessModal({
               </button>
 
               {showPwaDrawer && (
-                <div className="p-4 text-xs space-y-2.5 border-t opacity-85" style={{ borderColor: isDark ? "rgba(255,255,255,0.08)" : "rgba(15,23,42,0.08)" }}>
+                <div
+                  className="p-4 text-xs space-y-2.5 border-t opacity-85"
+                  style={{
+                    borderColor: isDark
+                      ? "rgba(255,255,255,0.08)"
+                      : "rgba(15,23,42,0.08)",
+                  }}
+                >
                   <p className="font-semibold text-emerald-400">
                     Zero App Store Friction • Fullscreen 120Hz Native Experience:
                   </p>

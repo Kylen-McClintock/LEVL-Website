@@ -40,7 +40,7 @@ export function WaitlistForm() {
         return (
             <div className="flex flex-col items-center justify-center p-6 bg-[var(--color-levl-cyan)]/10 border border-[var(--color-levl-cyan)]/30 rounded-xl animate-in fade-in zoom-in duration-300">
                 <CheckCircle2 className="w-10 h-10 text-[var(--color-levl-cyan)] mb-3" />
-                <p className="text-white font-medium text-lg text-center mb-1">Discount Secured!</p>
+                <p className="text-white font-medium text-lg text-center mb-1">Welcome Early Adopter</p>
                 <p className="text-sm text-white/70 text-center">{message}</p>
             </div>
         );
@@ -71,7 +71,7 @@ export function WaitlistForm() {
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 ) : (
                     <>
-                        Claim 15% Off & Get Alerted
+                        Join the Early Access List
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </>
                 )}

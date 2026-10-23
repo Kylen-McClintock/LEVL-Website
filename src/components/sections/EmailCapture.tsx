@@ -12,9 +12,9 @@ export function EmailCapture() {
             <div className="absolute top-0 right-0 w-64 h-64 bg-brand-copper/10 blur-[80px] rounded-full pointer-events-none" />
 
             <div className="relative z-10">
-                <h3 className="text-2xl font-bold text-white mb-3">Gain Early Access</h3>
+                <h3 className="text-2xl font-bold text-white mb-3">Gain App Early Access</h3>
                 <p className="text-white/70 mb-6">
-                    Join the first cohort to test DeepCell. Founding customers get launch pricing and direct input into future formulations designed to extend healthy lifespan.
+                    Join the first cohort to access the LEVL Longevity Protocols App. Founding members receive a VIP activation code to unlock circadian protocol scheduling, 8-Vector biological scoring, and 1-tap Mastermind stacks.
                 </p>
 
                 <EmailForm />

@@ -6,18 +6,18 @@ import { Navbar } from '@/components/sections/Navbar';
 import { Footer } from '@/components/sections/Footer';
 
 export const metadata: Metadata = {
-  title: 'Checkout | LEVL DeepCell',
-  description: 'Join the waitlist for LEVL DeepCell early access.',
+  title: 'Early Access | LEVL Longevity Protocols App',
+  description: 'Join the waitlist for LEVL Longevity Protocols App early access.',
   openGraph: {
-    title: 'Checkout | LEVL DeepCell',
-    description: 'Join the waitlist for LEVL DeepCell early access.',
-    images: ['https://www.levlhealth.com/images/deepcell_pathways_bg.png'],
+    title: 'Early Access | LEVL Longevity Protocols App',
+    description: 'Join the waitlist for LEVL Longevity Protocols App early access.',
+    images: ['https://www.levlhealth.com/images/protocol_app_visual_v2.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Checkout | LEVL DeepCell',
-    description: 'Join the waitlist for LEVL DeepCell early access.',
-    images: ['https://www.levlhealth.com/images/deepcell_pathways_bg.png'],
+    title: 'Early Access | LEVL Longevity Protocols App',
+    description: 'Join the waitlist for LEVL Longevity Protocols App early access.',
+    images: ['https://www.levlhealth.com/images/protocol_app_visual_v2.png'],
   }
 };
 
@@ -35,11 +35,11 @@ export default function CheckoutMockPage() {
       <main className="flex-1 flex items-center justify-center p-4 sm:p-6 mt-16 md:mt-20">
         <div className="relative z-10 w-full max-w-xl">
           <Link 
-          href="/products/longevity" 
+          href="/" 
           className="inline-flex items-center gap-2 text-[var(--color-levl-text-secondary)] hover:text-white mb-8 transition-colors group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          Back to Storefront
+          Back to Home
         </Link>
 
         <div className="bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl p-8 sm:p-10 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] backdrop-blur-xl relative overflow-hidden">
@@ -54,11 +54,11 @@ export default function CheckoutMockPage() {
           </div>
 
           <h1 className="text-3xl sm:text-4xl font-bold text-white text-center mb-4 tracking-tight">
-            Almost Ready.
+            Gain App Early Access.
           </h1>
           
           <p className="text-[var(--color-levl-text-secondary)] text-center text-lg mb-8 leading-relaxed">
-            The LEVL team is currently finalizing our initial production run of LIFESPAN+ DeepCell. We will be officially launching and fulfilling orders in a few weeks.
+            Join the early access cohort for the LEVL Longevity Protocols App—our circadian-aligned operating system for Mastermind stacks, 8-Vector biological scoring, and real-time biomarker tracking.
           </p>
 
           <div className="bg-black/40 rounded-2xl p-6 border border-white/5 mb-6 shadow-inner relative overflow-hidden">
@@ -66,10 +66,10 @@ export default function CheckoutMockPage() {
             
             <h3 className="font-semibold text-white flex items-center gap-2 mb-3 relative z-10">
               <Zap className="w-4 h-4 text-[var(--color-levl-cyan)]" />
-              Secure Your Spot
+              Secure Your VIP Invite Code
             </h3>
             <p className="text-sm text-white/80 mb-5 leading-relaxed relative z-10">
-              Enter your email to be the first to know when checkout opens. As a thank you for being an early supporter, you'll receive an exclusive <span className="text-[var(--color-levl-cyan)] font-semibold">15% discount</span> on your first protocol order.
+              Enter your email to join the early access list and receive your <span className="text-[var(--color-levl-cyan)] font-semibold">VIP activation code</span> as onboarding waves open.
             </p>
             
             <div className="relative z-10">
@@ -78,7 +78,7 @@ export default function CheckoutMockPage() {
           </div>
           
           <p className="text-xs text-center text-[var(--color-levl-text-muted)] mt-6">
-            No spam. We will only email you when your protocol is ready to ship.
+            No spam. Only high-signal longevity app updates and activation access.
           </p>
         </div>
       </div>
