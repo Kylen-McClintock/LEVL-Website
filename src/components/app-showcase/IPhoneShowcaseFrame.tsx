@@ -69,6 +69,8 @@ export interface RealPhoneFrameProps {
   theme?: ShowcaseTheme;
   /** Image fetch priority following modern-web-guidance optimize-image-priority */
   priority?: "high" | "low" | "default";
+  /** 'hero' keeps the 3-phone hero stage compact; 'feature' (default) renders a larger phone relative to text blocks */
+  size?: "hero" | "feature";
   /** Optional caption pill displayed below the iPhone bezel */
   caption?: string;
   /** Optional outer container className */
@@ -81,13 +83,13 @@ export interface RealPhoneFrameProps {
  * - Zero image bleed between tabs: no previous image stays stacked underneath, and the frame uses a
  *   solid opaque background (#060913 in dark mode / #f8f9f7 in light mode).
  * - Zero duplicate fake headers or bottom navigation bars.
- * - Right-sized for single-screen desktop fit (~612px bezel height).
  */
 export function RealPhoneFrame({
   src,
   alt,
   theme,
   priority = "default",
+  size = "feature",
   caption,
   className = "",
 }: RealPhoneFrameProps) {
@@ -98,11 +100,16 @@ export function RealPhoneFrame({
     ? src
     : `${src}${src.includes("?") ? "&" : "?"}v=${SHOWCASE_CACHE_BUST}`;
 
+  const bezelSizeClasses =
+    size === "hero"
+      ? "w-[265px] sm:w-[285px] rounded-[42px] border-[7px]"
+      : "w-[305px] sm:w-[345px] lg:w-[365px] rounded-[48px] border-[8px]";
+
   return (
     <div className={`relative select-none group ${className}`}>
       {/* iPhone 15 Pro Bezel — Solid Opaque Background, Zero Image Bleed, Zero Fake Chrome */}
       <div
-        className="mx-auto aspect-[393/852] w-[265px] sm:w-[282px] rounded-[42px] border-[7px] border-slate-800/90 shadow-[0_25px_70px_-15px_rgba(16,185,129,0.28)] overflow-hidden relative"
+        className={`mx-auto aspect-[393/852] ${bezelSizeClasses} border-slate-800/90 shadow-[0_25px_80px_-15px_rgba(16,185,129,0.30)] overflow-hidden relative`}
         style={{ backgroundColor: solidBg }}
       >
         <img

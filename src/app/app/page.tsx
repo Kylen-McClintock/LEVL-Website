@@ -28,7 +28,7 @@ import {
 import { Navbar } from "@/components/sections/Navbar";
 import { Footer } from "@/components/sections/Footer";
 
-export const LEVL_WEB_APP_URL =
+const LEVL_WEB_APP_URL =
   "https://2026-levl-protocols-app.vercel.app/today";
 
 /* ============================================================================
@@ -1222,6 +1222,7 @@ export default function LevlAppShowcasePage() {
                   src={getShowcaseImage(leftHeroOption.slug, previewTheme)}
                   alt={leftHeroOption.caption}
                   priority="default"
+                  size="hero"
                   caption={leftHeroOption.label}
                 />
               </div>
@@ -1232,6 +1233,7 @@ export default function LevlAppShowcasePage() {
                   src={getShowcaseImage(activeHeroOption.slug, previewTheme)}
                   alt={activeHeroOption.caption}
                   priority="high"
+                  size="hero"
                   caption={activeHeroOption.caption}
                 />
               </div>
@@ -1246,6 +1248,7 @@ export default function LevlAppShowcasePage() {
                   src={getShowcaseImage(rightHeroOption.slug, previewTheme)}
                   alt={rightHeroOption.caption}
                   priority="default"
+                  size="hero"
                   caption={rightHeroOption.label}
                 />
               </div>
@@ -1304,8 +1307,8 @@ export default function LevlAppShowcasePage() {
           <div id="mastermind-stacks" className="scroll-mt-28" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-            {/* Left 7 Cols: Compact Header + 5 Click-to-Expand Leading Protocol Cards */}
-            <div className="lg:col-span-7 space-y-4">
+            {/* Left 6 Cols: Compact Header + 5 Click-to-Expand Leading Protocol Cards */}
+            <div className="lg:col-span-6 space-y-4">
               <div>
                 <span
                   className="text-xs font-mono uppercase tracking-widest font-bold block mb-2"
@@ -1525,8 +1528,8 @@ export default function LevlAppShowcasePage() {
               </div>
             </div>
 
-            {/* Right 5 Cols: Quick Protocol Switcher Pills + Synced Real @3x Screenshot */}
-            <div className="lg:col-span-5 flex flex-col items-center">
+            {/* Right 6 Cols: Quick Protocol Switcher Pills + Prominent Synced Real @3x Screenshot */}
+            <div className="lg:col-span-6 flex flex-col items-center">
               <div className="flex flex-wrap items-center justify-center gap-1.5 mb-3">
                 {LEADING_PROTOCOLS.map((proto) => {
                   const active = proto.id === selectedProtocolId;
@@ -1580,7 +1583,7 @@ export default function LevlAppShowcasePage() {
           className="py-14 lg:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28"
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-            <div className="lg:col-span-7 space-y-5">
+            <div className="lg:col-span-6 space-y-5">
               <div>
                 <span
                   className="text-xs font-mono uppercase tracking-widest font-bold block mb-2"
@@ -1690,8 +1693,8 @@ export default function LevlAppShowcasePage() {
               </div>
             </div>
 
-            {/* Right 5 Cols: Real @3x Screenshot Inside <RealPhoneFrame /> + Quick Pill Switcher Above Phone */}
-            <div className="lg:col-span-5 flex flex-col items-center">
+            {/* Right 6 Cols: Real @3x Screenshot Inside <RealPhoneFrame /> + Quick Pill Switcher Above Phone */}
+            <div className="lg:col-span-6 flex flex-col items-center">
               <div className="flex flex-wrap items-center justify-center gap-1.5 mb-3">
                 {ADAPTIVE_GOVERNOR_MODES.map((m) => {
                   const active = governorMode === m.id;
@@ -1739,8 +1742,8 @@ export default function LevlAppShowcasePage() {
           className="py-14 lg:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28"
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-            {/* Left Column: Section Header + 2x4 Compact Selector Grid + Active Applet Clinical Spec Card */}
-            <div className="lg:col-span-7 space-y-4">
+            {/* Left 6 Cols: Section Header + 2x4 Compact Selector Grid + Active Applet Clinical Spec Card */}
+            <div className="lg:col-span-6 space-y-4">
               <div>
                 <span
                   className="text-xs font-mono uppercase tracking-widest font-bold block mb-2"
@@ -1748,7 +1751,7 @@ export default function LevlAppShowcasePage() {
                 >
                   MODALITY-SPECIFIC INTERACTIVE APPLETS
                 </span>
-                <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight mb-2.5 leading-tight">
+                <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
                   Don’t Just Check a Box.{" "}
                   <span
                     className="bg-clip-text text-transparent"
@@ -1761,17 +1764,6 @@ export default function LevlAppShowcasePage() {
                     Execute Every Modality with Built-In Clinical Applets.
                   </span>
                 </h2>
-                <p
-                  className="text-sm sm:text-base leading-relaxed"
-                  style={{ color: tokens.textSecondary }}
-                >
-                  Select any of the 8 built-in clinical applets below to inspect
-                  its biological execution guidance and live screen inside{" "}
-                  <strong style={{ color: tokens.textPrimary }}>
-                    LEVL: OutPace Aging
-                  </strong>
-                  .
-                </p>
               </div>
 
               {/* 2x4 Compact Applet Selector Grid */}
@@ -1868,8 +1860,8 @@ export default function LevlAppShowcasePage() {
               </div>
             </div>
 
-            {/* Right Column: Synced <RealPhoneFrame /> */}
-            <div className="lg:col-span-5 flex justify-center">
+            {/* Right 6 Cols: Prominent Synced <RealPhoneFrame /> */}
+            <div className="lg:col-span-6 flex justify-center">
               <RealPhoneFrame
                 src={getShowcaseImage(activeAppletSpec.slug, previewTheme)}
                 alt={activeAppletSpec.caption}
@@ -1892,8 +1884,8 @@ export default function LevlAppShowcasePage() {
           <div id="clinical-evidence" className="scroll-mt-28" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-            {/* Left Column: Synced <RealPhoneFrame /> */}
-            <div className="lg:col-span-5 flex justify-center order-2 lg:order-1">
+            {/* Left 6 Cols: Prominent Synced <RealPhoneFrame /> */}
+            <div className="lg:col-span-6 flex justify-center order-2 lg:order-1">
               <RealPhoneFrame
                 src={getShowcaseImage(activeIntelSpec.slug, previewTheme)}
                 alt={activeIntelSpec.caption}
@@ -1901,8 +1893,8 @@ export default function LevlAppShowcasePage() {
               />
             </div>
 
-            {/* Right Column: Compact Section Header + 6 Click-to-Expand Intelligence Cards */}
-            <div className="lg:col-span-7 space-y-4 order-1 lg:order-2">
+            {/* Right 6 Cols: Compact Section Header + 6 Click-to-Expand Intelligence Cards */}
+            <div className="lg:col-span-6 space-y-4 order-1 lg:order-2">
               <div>
                 <span
                   className="text-xs font-mono uppercase tracking-widest font-bold block mb-2"
