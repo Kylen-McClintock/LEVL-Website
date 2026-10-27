@@ -111,6 +111,7 @@ export function BentoImages() {
               src="/images/bento-sauna.jpg"
               alt="The nightly ritual built for deeper sleep and longer horizons."
               fill
+              quality={95}
               className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, 66vw"
             />
