@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import {
   Sun,
   Moon,
@@ -987,6 +988,17 @@ export default function LevlAppShowcasePage() {
                       {item.label}
                     </a>
                   ))}
+                  <Link
+                    href="/find-your-protocol"
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold border transition-all hover:opacity-100 whitespace-nowrap shrink-0"
+                    style={{
+                      borderColor: tokens.accentCyan,
+                      color: tokens.accentCyan,
+                    }}
+                  >
+                    <Sparkles className="w-3 h-3" />
+                    <span>Find My Protocol</span>
+                  </Link>
                 </nav>
               </div>
 
@@ -1105,11 +1117,24 @@ export default function LevlAppShowcasePage() {
           </p>
 
           {/* Hero CTA Cluster */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 mb-8">
+          <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3.5 sm:gap-4 mb-8">
+            <Link
+              href="/find-your-protocol"
+              className="w-full sm:w-auto px-8 py-4 rounded-full font-extrabold text-sm sm:text-base bg-gradient-to-r from-emerald-500 via-emerald-400 to-sky-400 text-slate-950 shadow-xl shadow-emerald-500/25 hover:scale-[1.02] transition-all flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <Sparkles className="w-4 h-4" />
+              <span>Find My Protocol (60s Quiz)</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+
             <button
               type="button"
               onClick={() => openModal("waitlist")}
-              className="w-full sm:w-auto px-8 py-4 rounded-full font-extrabold text-sm sm:text-base bg-gradient-to-r from-emerald-500 via-emerald-400 to-sky-400 text-slate-950 shadow-xl shadow-emerald-500/25 hover:scale-[1.02] transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto px-7 py-4 rounded-full font-bold text-sm sm:text-base border backdrop-blur-xl hover:scale-[1.02] transition-all flex items-center justify-center gap-2 cursor-pointer"
+              style={{
+                backgroundColor: tokens.cardBg,
+                borderColor: tokens.cardBorder,
+              }}
             >
               <span>Join Early Access</span>
               <ArrowRight className="w-4 h-4" />
