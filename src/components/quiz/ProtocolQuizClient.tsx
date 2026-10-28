@@ -17,7 +17,6 @@ import {
   Mail,
   Moon,
   RotateCcw,
-  ShieldCheck,
   Sparkles,
   Sun,
   Zap,
@@ -192,7 +191,7 @@ export function ProtocolQuizClient({
     sleepScore: null,
     sleepImprovements: [],
     energyScore: null,
-    energyTiming: null,
+    energyTimings: [],
     longevityHighInterestFromGoal: false,
     longevityPriorityScore: null,
     motivations: [],
@@ -309,7 +308,7 @@ export function ProtocolQuizClient({
     });
   };
 
-  // Toggle Sleep Improvement (up to 2; "maintain_good_sleep" is exclusive)
+  // Toggle Sleep Improvement (multi-select all that apply; "maintain_good_sleep" is exclusive)
   const toggleSleepImprovement = (id: SleepImprovementId) => {
     setAnswers((prev) => {
       if (id === "maintain_good_sleep") {
@@ -331,12 +330,6 @@ export function ProtocolQuizClient({
           sleepImprovements: withoutMaintain.filter((item) => item !== id),
         };
       }
-      if (withoutMaintain.length >= 2) {
-        return {
-          ...prev,
-          sleepImprovements: [withoutMaintain[1], id],
-        };
-      }
       return {
         ...prev,
         sleepImprovements: [...withoutMaintain, id],
@@ -344,19 +337,42 @@ export function ProtocolQuizClient({
     });
   };
 
-  // Toggle Motivation (up to 2)
+  // Toggle Energy Timing (multi-select all that apply; "maintain_current_energy" is exclusive)
+  const toggleEnergyTiming = (id: EnergyTimingId) => {
+    setAnswers((prev) => {
+      if (id === "maintain_current_energy") {
+        const alreadySelected = prev.energyTimings.includes(
+          "maintain_current_energy"
+        );
+        return {
+          ...prev,
+          energyTimings: alreadySelected ? [] : ["maintain_current_energy"],
+        };
+      }
+
+      const withoutMaintain = prev.energyTimings.filter(
+        (item) => item !== "maintain_current_energy"
+      );
+      if (withoutMaintain.includes(id)) {
+        return {
+          ...prev,
+          energyTimings: withoutMaintain.filter((item) => item !== id),
+        };
+      }
+      return {
+        ...prev,
+        energyTimings: [...withoutMaintain, id],
+      };
+    });
+  };
+
+  // Toggle Motivation (multi-select all that apply)
   const toggleMotivation = (id: MotivationId) => {
     setAnswers((prev) => {
       if (prev.motivations.includes(id)) {
         return {
           ...prev,
           motivations: prev.motivations.filter((m) => m !== id),
-        };
-      }
-      if (prev.motivations.length >= 2) {
-        return {
-          ...prev,
-          motivations: [prev.motivations[1], id],
         };
       }
       return {
@@ -381,7 +397,7 @@ export function ProtocolQuizClient({
       );
     }
     if (currentExperienceCard === "energy") {
-      return answers.energyScore !== null && answers.energyTiming !== null;
+      return answers.energyScore !== null && answers.energyTimings.length > 0;
     }
     if (currentExperienceCard === "longevity") {
       return answers.longevityPriorityScore !== null;
@@ -392,7 +408,7 @@ export function ProtocolQuizClient({
     answers.sleepScore,
     answers.sleepImprovements.length,
     answers.energyScore,
-    answers.energyTiming,
+    answers.energyTimings.length,
     answers.longevityPriorityScore,
   ]);
 
@@ -559,7 +575,7 @@ export function ProtocolQuizClient({
           <div className="space-y-4 text-center max-w-2xl mx-auto">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--color-levl-cyan)]/10 border border-[var(--color-levl-cyan)]/30 text-[var(--color-levl-cyan)] text-xs font-bold uppercase tracking-wider">
               <Sparkles className="w-3.5 h-3.5" />
-              Personalized Longevity &amp; Sleep Plan
+              LEVL: OutPace Aging • Personalized Plan
             </div>
 
             <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-[1.12]">
@@ -568,7 +584,7 @@ export function ProtocolQuizClient({
 
             <p className="text-base sm:text-xl text-white/75 leading-relaxed">
               Discover a practical routine for better nights, more energized
-              days, and long-term health.
+              days, and slowing your pace of aging to increase healthy lifespan.
             </p>
           </div>
 
@@ -598,20 +614,20 @@ export function ProtocolQuizClient({
                 {
                   id: "sleep" as QuizGoalId,
                   icon: Moon,
-                  title: "Better sleep",
+                  title: GOAL_LABELS.sleep,
                   desc: "Fall asleep faster, stay asleep, and wake restored",
                 },
                 {
                   id: "energy" as QuizGoalId,
                   icon: Zap,
-                  title: "More consistent energy",
+                  title: GOAL_LABELS.energy,
                   desc: "Steady morning, afternoon, and workout vitality",
                 },
                 {
                   id: "longevity" as QuizGoalId,
                   icon: HeartPulse,
-                  title: "Long-term health and longevity",
-                  desc: "Cellular resilience, VO2 max, and healthspan",
+                  title: GOAL_LABELS.longevity,
+                  desc: "Cellular renewal, biological age deceleration, and healthspan",
                 },
               ].map((item) => {
                 const Icon = item.icon;
@@ -630,9 +646,9 @@ export function ProtocolQuizClient({
                       <Icon className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="font-bold text-white text-sm sm:text-base mb-1 flex items-center justify-between">
+                      <div className="font-bold text-white text-sm sm:text-base mb-1 flex items-center justify-between gap-1">
                         <span>{item.title}</span>
-                        <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 text-[var(--color-levl-cyan)] transition-opacity" />
+                        <ArrowRight className="w-3.5 h-3.5 shrink-0 opacity-0 group-hover:opacity-100 text-[var(--color-levl-cyan)] transition-opacity" />
                       </div>
                       <p className="text-xs text-white/60 leading-relaxed">
                         {item.desc}
@@ -674,13 +690,13 @@ export function ProtocolQuizClient({
                   id: "energy" as QuizGoalId,
                   icon: Zap,
                   label: GOAL_LABELS.energy,
-                  sub: "Morning drive, eliminating afternoon crashes, and stamina",
+                  sub: "Morning drive, eliminating afternoon crashes, and workout stamina",
                 },
                 {
                   id: "longevity" as QuizGoalId,
                   icon: HeartPulse,
                   label: GOAL_LABELS.longevity,
-                  sub: "Cellular renewal, metabolic health, and physical independence",
+                  sub: "Decelerate biological aging, support cellular renewal, and extend healthspan",
                 },
               ] as const
             ).map((option) => {
@@ -819,7 +835,7 @@ export function ProtocolQuizClient({
                   ? "Sleep Experience"
                   : currentExperienceCard === "energy"
                   ? "Daytime Energy"
-                  : "Healthspan Priority"}
+                  : "Pace of Aging & Healthspan"}
               </span>
             </div>
           )}
@@ -852,8 +868,8 @@ export function ProtocolQuizClient({
                     What would you most like to improve?
                   </h3>
                   <p className="text-xs sm:text-sm text-white/60">
-                    Select up to two (“Maintain good sleep” is exclusive of the
-                    other options).
+                    Select all that apply (“Maintain good sleep” is exclusive of
+                    the other options).
                   </p>
                 </div>
 
@@ -933,7 +949,8 @@ export function ProtocolQuizClient({
                     When would you most like more energy?
                   </h3>
                   <p className="text-xs sm:text-sm text-white/60">
-                    Choose one.
+                    Select all that apply (“Maintain current energy” is
+                    exclusive of the other options).
                   </p>
                 </div>
 
@@ -947,19 +964,16 @@ export function ProtocolQuizClient({
                       "maintain_current_energy",
                     ] as EnergyTimingId[]
                   ).map((id) => {
-                    const selected = answers.energyTiming === id;
+                    const selected = answers.energyTimings.includes(id);
+                    const isExclusive = id === "maintain_current_energy";
                     return (
                       <button
                         key={id}
                         type="button"
-                        onClick={() =>
-                          setAnswers((prev) => ({ ...prev, energyTiming: id }))
-                        }
+                        onClick={() => toggleEnergyTiming(id)}
                         aria-pressed={selected}
                         className={`p-4 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between gap-3 ${
-                          id === "maintain_current_energy"
-                            ? "sm:col-span-2"
-                            : ""
+                          isExclusive ? "sm:col-span-2" : ""
                         } ${
                           selected
                             ? "bg-[var(--color-levl-cyan)]/15 border-[var(--color-levl-cyan)] text-white font-bold shadow-md"
@@ -970,14 +984,14 @@ export function ProtocolQuizClient({
                           {ENERGY_TIMING_LABELS[id]}
                         </span>
                         <div
-                          className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${
+                          className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 ${
                             selected
                               ? "bg-[var(--color-levl-cyan)] border-[var(--color-levl-cyan)] text-slate-950"
                               : "border-white/25"
                           }`}
                         >
                           {selected && (
-                            <Check className="w-3 h-3 stroke-[3]" />
+                            <Check className="w-3.5 h-3.5 stroke-[3]" />
                           )}
                         </div>
                       </button>
@@ -994,10 +1008,10 @@ export function ProtocolQuizClient({
               <div className="space-y-1.5">
                 <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-purple-400">
                   <HeartPulse className="w-3.5 h-3.5" />
-                  Long-Term Healthspan
+                  Pace of Aging &amp; Healthspan
                 </div>
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                  Long-term health and healthspan
+                  Slowing your pace of aging &amp; extending healthspan
                 </h2>
               </div>
 
@@ -1009,7 +1023,7 @@ export function ProtocolQuizClient({
               </div>
 
               <Intentional0To10Slider
-                label="How much of a priority is improving your long-term health and healthspan?"
+                label="How much of a priority is slowing your pace of aging and increasing your healthy lifespan?"
                 scaleLegend="0 = Not a priority right now · 5 = Important, alongside other priorities · 10 = One of my highest priorities"
                 value={answers.longevityPriorityScore}
                 onChange={(val) =>
@@ -1056,14 +1070,15 @@ export function ProtocolQuizClient({
               What would improving these areas make more room for in your life?
             </h2>
             <p className="text-sm sm:text-base text-white/65">
-              Choose up to two. We’ll use this to keep your plan grounded in
-              what matters most to you.
+              Select all that apply. We’ll use this to keep your plan grounded
+              in what matters most to you.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             {(
               [
+                "slow_pace_of_aging",
                 "present_with_loved_ones",
                 "meaningful_work",
                 "exercise_and_adventure",
@@ -1073,6 +1088,7 @@ export function ProtocolQuizClient({
               ] as MotivationId[]
             ).map((id) => {
               const selected = answers.motivations.includes(id);
+              const isFullRow = id === "slow_pace_of_aging";
               return (
                 <button
                   key={id}
@@ -1080,6 +1096,8 @@ export function ProtocolQuizClient({
                   onClick={() => toggleMotivation(id)}
                   aria-pressed={selected}
                   className={`p-4 rounded-2xl border text-left transition-all cursor-pointer flex items-center justify-between gap-3 ${
+                    isFullRow ? "sm:col-span-2" : ""
+                  } ${
                     selected
                       ? "bg-[var(--color-levl-cyan)]/15 border-[var(--color-levl-cyan)] text-white font-bold shadow-md"
                       : "bg-white/[0.02] border-white/10 text-white/80 hover:border-white/25"

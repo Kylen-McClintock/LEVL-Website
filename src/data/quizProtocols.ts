@@ -15,6 +15,7 @@ export type EnergyTimingId =
   | 'maintain_current_energy';
 
 export type MotivationId =
+  | 'slow_pace_of_aging'
   | 'present_with_loved_ones'
   | 'meaningful_work'
   | 'exercise_and_adventure'
@@ -61,7 +62,12 @@ export interface FlagshipProtocolSpec {
   categoryBadge: string;
   typicalTime: string;
   minimumViableTime: string;
-  approachType: 'Habits-First ($0)' | 'Habits + Optional Supplements' | 'Micronutrients & Hormesis' | 'Exercise + Targeted Stack' | 'Comprehensive System';
+  approachType:
+    | 'Habits-First ($0)'
+    | 'Habits + Optional Supplements'
+    | 'Micronutrients & Hormesis'
+    | 'Exercise + Targeted Stack'
+    | 'Comprehensive System';
   summary: string;
   clinicalMechanism: string;
   actions: ProtocolActionItem[];
@@ -87,21 +93,24 @@ export const FLAGSHIP_PROTOCOLS: Record<FlagshipProtocolSlug, FlagshipProtocolSp
         title: 'Morning Cellular Hydration + Electrolytes',
         timing: 'Upon waking',
         duration: '1 min',
-        detail: 'Drink 16 oz (500 mL) water with a pinch of sea salt or electrolytes to restore nocturnal plasma volume.',
+        detail:
+          'Drink 16 oz (500 mL) water with a pinch of sea salt or electrolytes to restore nocturnal plasma volume.',
         isCoreForShortTime: true,
       },
       {
         title: 'Direct Outdoor Sunlight Viewing (10,000+ Lux)',
         timing: 'Within 30–60m of waking',
         duration: '5–15 mins',
-        detail: 'Step outside without sunglasses (5–10m on clear mornings, 15m on overcast days) before looking at bright indoor screens.',
+        detail:
+          'Step outside without sunglasses (5–10m on clear mornings, 15m on overcast days) before looking at bright indoor screens.',
         isCoreForShortTime: true,
       },
       {
         title: '90–120 Minute Post-Wake Caffeine Delay',
         timing: 'First 90 mins awake',
         duration: '0 mins extra time',
-        detail: 'Let endogenous cortisol and dopamine clear morning adenosine naturally before your first cup of coffee or tea.',
+        detail:
+          'Let endogenous cortisol and dopamine clear morning adenosine naturally before your first cup of coffee or tea.',
         isCoreForShortTime: true,
       },
     ],
@@ -127,28 +136,32 @@ export const FLAGSHIP_PROTOCOLS: Record<FlagshipProtocolSlug, FlagshipProtocolSp
         title: 'Sunset Light Inoculation',
         timing: 'Late afternoon / sunset',
         duration: '5 mins',
-        detail: 'View low-angle evening sky light to partially protect retinal melanopsin sensitivity against indoor evening screens.',
+        detail:
+          'View low-angle evening sky light to partially protect retinal melanopsin sensitivity against indoor evening screens.',
         isCoreForShortTime: false,
       },
       {
         title: 'Overhead Blue-Light Dimming (<10 Lux)',
         timing: '60–90m before sleep',
         duration: '2 mins setup',
-        detail: 'Switch off bright overhead LEDs in favor of low, warm lamps to prevent pineal melatonin suppression.',
+        detail:
+          'Switch off bright overhead LEDs in favor of low, warm lamps to prevent pineal melatonin suppression.',
         isCoreForShortTime: true,
       },
       {
         title: '65°F (18.3°C) Core Thermal Drop Sanctuary',
         timing: 'At bedtime',
         duration: '2 mins setup',
-        detail: 'Cool the bedroom (or take a warm shower 60m before bed to accelerate core heat dumping) to initiate deep sleep phases.',
+        detail:
+          'Cool the bedroom (or take a warm shower 60m before bed to accelerate core heat dumping) to initiate deep sleep phases.',
         isCoreForShortTime: true,
       },
       {
         title: '2 AM Eye-Movement & NSDR Sleep Rescue',
         timing: 'If waking mid-night',
         duration: '3–5 mins as needed',
-        detail: 'Keep eyes closed and perform slow lateral eye movements with long exhales to quiet amygdala arousal and return to sleep.',
+        detail:
+          'Keep eyes closed and perform slow lateral eye movements with long exhales to quiet amygdala arousal and return to sleep.',
         isCoreForShortTime: true,
       },
     ],
@@ -174,14 +187,16 @@ export const FLAGSHIP_PROTOCOLS: Record<FlagshipProtocolSlug, FlagshipProtocolSp
         title: '5-Minute Cyclic Physiological Sighing',
         timing: 'Pre-bedtime or high-stress window',
         duration: '3–5 mins',
-        detail: 'Take a deep nasal inhale, add a second sharp top-off nasal inhale, then exhale slowly through the mouth for twice as long.',
+        detail:
+          'Take a deep nasal inhale, add a second sharp top-off nasal inhale, then exhale slowly through the mouth for twice as long.',
         isCoreForShortTime: true,
       },
       {
         title: '60-Second On-Demand Sympathetic Brake',
         timing: 'Before sleep or afternoon transition',
         duration: '1 min',
-        detail: 'Perform 3–5 consecutive physiological sighs to immediately reduce racing thoughts or physical tension.',
+        detail:
+          'Perform 3–5 consecutive physiological sighs to immediately reduce racing thoughts or physical tension.',
         isCoreForShortTime: true,
       },
     ],
@@ -207,14 +222,16 @@ export const FLAGSHIP_PROTOCOLS: Record<FlagshipProtocolSlug, FlagshipProtocolSp
         title: 'Fiber & Protein First Meal Sequencing',
         timing: 'At your main meal',
         duration: '0 mins extra time',
-        detail: 'Start meals with greens, fiber, and protein before starches to slow gastric emptying and flatten the glucose curve.',
+        detail:
+          'Start meals with greens, fiber, and protein before starches to slow gastric emptying and flatten the glucose curve.',
         isCoreForShortTime: true,
       },
       {
         title: '10-Minute Brisk Post-Prandial Walk (or Calf Raises)',
         timing: 'Within 30m of your largest meal',
         duration: '5–10 mins',
-        detail: 'Take a brisk 10-minute walk outdoors (or perform 5 minutes of seated soleus pushups at your desk) to clear glucose and protect afternoon energy.',
+        detail:
+          'Take a brisk 10-minute walk outdoors (or perform 5 minutes of seated soleus pushups at your desk) to clear glucose and protect afternoon energy.',
         isCoreForShortTime: true,
       },
     ],
@@ -232,7 +249,7 @@ export const FLAGSHIP_PROTOCOLS: Record<FlagshipProtocolSlug, FlagshipProtocolSp
     minimumViableTime: '5 mins/day (Core micronutrient & Nrf2 matrix)',
     approachType: 'Micronutrients & Hormesis',
     summary:
-      'An evidence-grounded cellular defense protocol targeting DNA repair, Omega-3 Index optimization (>8%), Nrf2 antioxidant pathway activation, and optional thermal/cardiorespiratory hormesis.',
+      'An evidence-grounded cellular defense protocol targeting DNA repair, Omega-3 Index optimization (>8%), Nrf2 antioxidant pathway activation, and optional thermal/cardiorespiratory hormesis to slow biological aging.',
     clinicalMechanism:
       'Addresses widespread subclinical micronutrient inadequacies (Vitamin D3, K2, Magnesium, EPA/DHA) that accelerate biological aging while activating endogenous glutathione and heat-shock protein (HSP70) repair.',
     actions: [
@@ -240,21 +257,24 @@ export const FLAGSHIP_PROTOCOLS: Record<FlagshipProtocolSlug, FlagshipProtocolSp
         title: 'Foundational Lipid-Paired Micronutrient Matrix (D3 + K2 + Omega-3)',
         timing: 'With a fat-containing meal',
         duration: '2 mins',
-        detail: 'Pair Vitamin D3 (2,000–4,000 IU), Vitamin K2 (MK-7), and high-purity EPA/DHA Omega-3s to target an Omega-3 Index >8%.',
+        detail:
+          'Pair Vitamin D3 (2,000–4,000 IU), Vitamin K2 (MK-7), and high-purity EPA/DHA Omega-3s to target an Omega-3 Index >8%.',
         isCoreForShortTime: true,
       },
       {
         title: 'Sulforaphane / Cruciferous Nrf2 Activation',
         timing: 'With lunch or dinner',
         duration: '2 mins',
-        detail: 'Incorporate broccoli sprouts or standardized sulforaphane to upregulate Phase II cellular detoxification and glutathione.',
+        detail:
+          'Incorporate broccoli sprouts or standardized sulforaphane to upregulate Phase II cellular detoxification and glutathione.',
         isCoreForShortTime: true,
       },
       {
         title: 'Vigorous Cardiorespiratory or Thermal Hormesis Session',
         timing: 'Afternoon (3–4x/week)',
         duration: '20 mins',
-        detail: 'Perform 20 minutes of vigorous aerobic conditioning or sauna bathing (174°F+) to elevate Heat Shock Proteins (HSP70) and BDNF.',
+        detail:
+          'Perform 20 minutes of vigorous aerobic conditioning or sauna bathing (174°F+) to elevate Heat Shock Proteins (HSP70) and BDNF.',
         isCoreForShortTime: false,
       },
     ],
@@ -280,28 +300,32 @@ export const FLAGSHIP_PROTOCOLS: Record<FlagshipProtocolSlug, FlagshipProtocolSp
         title: 'Zone 2 Mitochondrial Base Conditioning',
         timing: '3–4 sessions/week',
         duration: '35–45 mins',
-        detail: 'Steady-state aerobic pace (65–75% max heart rate, conversational nasal breathing) to build mitochondrial density and fat oxidation.',
+        detail:
+          'Steady-state aerobic pace (65–75% max heart rate, conversational nasal breathing) to build mitochondrial density and fat oxidation.',
         isCoreForShortTime: true,
       },
       {
         title: 'Centenarian Strength, Grip & Axial Stability',
         timing: '2–3 sessions/week (alternate days)',
         duration: '35–45 mins',
-        detail: 'Focus on dead hang grip endurance, loaded carries, compound lower-body strength, and eyes-closed balance.',
+        detail:
+          'Focus on dead hang grip endurance, loaded carries, compound lower-body strength, and eyes-closed balance.',
         isCoreForShortTime: true,
       },
       {
         title: 'Norwegian 4x4 VO2 Max Peak Intervals',
         timing: '1 session/week',
         duration: '28 mins',
-        detail: '4 rounds of 4 minutes at high aerobic output followed by 3 minutes active recovery to expand cardiac stroke volume.',
+        detail:
+          '4 rounds of 4 minutes at high aerobic output followed by 3 minutes active recovery to expand cardiac stroke volume.',
         isCoreForShortTime: false,
       },
       {
         title: 'Daily Creatine Monohydrate (5g) & Protein Pacing',
         timing: 'Morning or post-training',
         duration: '2 mins',
-        detail: 'Replenish muscular and cerebral phosphocreatine ATP reserves and support myofibrillar protein synthesis.',
+        detail:
+          'Replenish muscular and cerebral phosphocreatine ATP reserves and support myofibrillar protein synthesis.',
         isCoreForShortTime: true,
       },
     ],
@@ -314,12 +338,12 @@ export const FLAGSHIP_PROTOCOLS: Record<FlagshipProtocolSlug, FlagshipProtocolSp
     title: "Bryan Johnson's Project Blueprint Flagship Protocol",
     shortTitle: 'Blueprint Flagship Protocol',
     authorOrSource: 'Bryan Johnson • Adapted by LEVL Clinical Consensus',
-    categoryBadge: 'Whole-Body Multi-System Stack',
+    categoryBadge: 'Whole-Body Pace-of-Aging Stack',
     typicalTime: '60–90 mins/day',
     minimumViableTime: '60 mins/day',
     approachType: 'Comprehensive System',
     summary:
-      'Extracts the highest-ROI clinical anchors from Project Blueprint—combining morning circadian light, a 45–60 minute daily multimodal workout circuit, high-polyphenol nutrition, and a strict 65°F evening sleep sanctuary.',
+      'Extracts the highest-ROI clinical anchors from Project Blueprint to decelerate your biological pace of aging—combining morning circadian light, a 45–60 minute daily multimodal workout circuit, high-polyphenol nutrition, and a strict 65°F evening sleep sanctuary.',
     clinicalMechanism:
       'Synchronizes circadian feeding, daily aerobic + resistance training, endothelial polyphenol support (EVOO), and structured evening parasympathetic wind-down while removing extreme fasting cutoffs that disrupt hormones.',
     actions: [
@@ -327,28 +351,32 @@ export const FLAGSHIP_PROTOCOLS: Record<FlagshipProtocolSlug, FlagshipProtocolSp
         title: 'Morning Circadian Light + Hydration Launch',
         timing: 'Within 30m of waking',
         duration: '10–15 mins',
-        detail: '10,000+ lux outdoor light exposure paired with cellular electrolyte hydration and 5g micronized creatine.',
+        detail:
+          '10,000+ lux outdoor light exposure paired with cellular electrolyte hydration and 5g micronized creatine.',
         isCoreForShortTime: true,
       },
       {
         title: 'Blueprint Daily Multimodal Conditioning Circuit',
         timing: 'Morning or afternoon',
         duration: '45–60 mins',
-        detail: 'Structured combination of posture/mobility, compound resistance training, Zone 2 endurance, and high-intensity intervals.',
+        detail:
+          'Structured combination of posture/mobility, compound resistance training, Zone 2 endurance, and high-intensity intervals.',
         isCoreForShortTime: true,
       },
       {
         title: 'High-Polyphenol EVOO (15 mL) & Whole-Food Matrix',
         timing: 'With primary daytime meals',
         duration: '5 mins',
-        detail: 'Include 1 tbsp extra virgin olive oil rich in oleocanthal alongside vegetables, legumes, and lean proteins.',
+        detail:
+          'Include 1 tbsp extra virgin olive oil rich in oleocanthal alongside vegetables, legumes, and lean proteins.',
         isCoreForShortTime: true,
       },
       {
         title: '60-Minute Screen-Free Wind-Down & 65°F Sleep System',
         timing: 'Final hour before bed',
         duration: '15 mins active prep',
-        detail: 'Consistent bedtime target (+/- 30m), dim evening lighting, and a cool, dark sleep environment for slow-wave recovery.',
+        detail:
+          'Consistent bedtime target (+/- 30m), dim evening lighting, and a cool, dark sleep environment for slow-wave recovery.',
         isCoreForShortTime: true,
       },
     ],
@@ -360,17 +388,17 @@ export const FLAGSHIP_PROTOCOLS: Record<FlagshipProtocolSlug, FlagshipProtocolSp
 export interface QuizAnswers {
   goals: QuizGoalId[];
   primaryGoal: QuizGoalId | null;
-  // Step 2: Sleep
-  sleepScore: number | null; // 0-10, null if untouched or sleep not selected
-  sleepImprovements: SleepImprovementId[]; // up to 2, 'maintain_good_sleep' exclusive
-  // Step 2: Energy
-  energyScore: number | null; // 0-10, null if untouched or energy not selected
-  energyTiming: EnergyTimingId | null;
+  // Step 2: Sleep (multi-select all that apply; 'maintain_good_sleep' exclusive)
+  sleepScore: number | null;
+  sleepImprovements: SleepImprovementId[];
+  // Step 2: Energy (multi-select all that apply; 'maintain_current_energy' exclusive)
+  energyScore: number | null;
+  energyTimings: EnergyTimingId[];
   // Step 2: Longevity
   longevityHighInterestFromGoal: boolean;
   longevityPriorityScore: number | null; // 0-10 only asked when longevity was NOT selected in Step 1
-  // Step 3: Personal Motivation
-  motivations: MotivationId[]; // up to 2
+  // Step 3: Personal Motivation (multi-select all that apply)
+  motivations: MotivationId[];
   motivationOtherText: string;
   // Step 4: Practical Fit
   timeAllowance: TimeAllowanceId | null;
@@ -418,7 +446,7 @@ export interface PersonalizedPlanResult {
 export const GOAL_LABELS: Record<QuizGoalId, string> = {
   sleep: 'Better sleep',
   energy: 'More consistent energy',
-  longevity: 'Long-term health and longevity',
+  longevity: 'Slow my pace of aging & increase healthy lifespan',
 };
 
 export const SLEEP_IMPROVEMENT_LABELS: Record<SleepImprovementId, string> = {
@@ -438,6 +466,7 @@ export const ENERGY_TIMING_LABELS: Record<EnergyTimingId, string> = {
 };
 
 export const MOTIVATION_LABELS: Record<MotivationId, string> = {
+  slow_pace_of_aging: 'Slowing my pace of aging to increase healthy lifespan',
   present_with_loved_ones: 'Being present with people I love',
   meaningful_work: 'Doing meaningful work',
   exercise_and_adventure: 'Enjoying exercise and adventure',
@@ -471,6 +500,13 @@ export const APPROACH_PREFERENCE_LABELS: Record<ApproachPreferenceId, string> = 
   exploring: 'Show me the options',
 };
 
+function formatListNatural(items: string[]): string {
+  if (items.length === 0) return '';
+  if (items.length === 1) return items[0];
+  if (items.length === 2) return `${items[0]} and ${items[1]}`;
+  return `${items.slice(0, -1).join(', ')}, and ${items[items.length - 1]}`;
+}
+
 /**
  * Selects the primary ("Start here") and complementary ("Add next") protocols
  * using the 7-Protocol Core Routing Table while de-conflicting multi-goal stacks.
@@ -485,7 +521,13 @@ function selectProtocols(answers: QuizAnswers): {
   const hasSleep = answers.goals.includes('sleep');
   const hasEnergy = answers.goals.includes('energy');
   const hasLongevity =
-    answers.goals.includes('longevity') || (answers.longevityPriorityScore ?? 0) >= 7;
+    answers.goals.includes('longevity') ||
+    answers.motivations.includes('slow_pace_of_aging') ||
+    (answers.longevityPriorityScore ?? 0) >= 7;
+
+  const wantsExerciseEnergy = answers.energyTimings.includes('during_exercise');
+  const wantsAfternoonEnergyOnly =
+    answers.energyTimings.length === 1 && answers.energyTimings[0] === 'afternoon';
 
   let startSlug: FlagshipProtocolSlug = 'huberman-morning-circadian';
 
@@ -496,18 +538,25 @@ function selectProtocols(answers: QuizAnswers): {
     const wantsWakeOrConsistencyOnly =
       answers.sleepImprovements.length > 0 &&
       answers.sleepImprovements.every(
-        (id) => id === 'waking_rested' || id === 'sleep_consistency' || id === 'maintain_good_sleep'
+        (id) =>
+          id === 'waking_rested' ||
+          id === 'sleep_consistency' ||
+          id === 'maintain_good_sleep'
       );
 
     if (time === 'up_to_5m') {
       startSlug = 'huberman-stress-reset';
-    } else if (approach === 'habits_first' && time === '15_to_30m' && wantsWakeOrConsistencyOnly) {
+    } else if (
+      approach === 'habits_first' &&
+      time === '15_to_30m' &&
+      wantsWakeOrConsistencyOnly
+    ) {
       startSlug = 'huberman-morning-circadian';
     } else {
       startSlug = 'huberman-sleep-rescue';
     }
   } else if (primary === 'energy') {
-    if (time === '30_to_60m' && (answers.energyTiming === 'during_exercise' || hasLongevity)) {
+    if (time === '30_to_60m' && (wantsExerciseEnergy || hasLongevity)) {
       startSlug = 'peter-attia-centenarian-decathlon';
     } else if (time === 'up_to_5m') {
       startSlug =
@@ -515,7 +564,7 @@ function selectProtocols(answers: QuizAnswers): {
           ? 'dr-rhonda-patrick-micronutrient-senolytic'
           : 'huberman-metabolic-walk';
     } else if (time === '5_to_15m') {
-      if (answers.energyTiming === 'afternoon' && approach === 'habits_first') {
+      if (wantsAfternoonEnergyOnly && approach === 'habits_first') {
         startSlug = 'huberman-metabolic-walk';
       } else if (approach === 'supplements') {
         startSlug = 'dr-rhonda-patrick-micronutrient-senolytic';
@@ -526,7 +575,7 @@ function selectProtocols(answers: QuizAnswers): {
       // 15-30m or 30-60m
       if (approach === 'supplements') {
         startSlug = 'dr-rhonda-patrick-micronutrient-senolytic';
-      } else if (answers.energyTiming === 'during_exercise' && time === '30_to_60m') {
+      } else if (wantsExerciseEnergy && time === '30_to_60m') {
         startSlug = 'peter-attia-centenarian-decathlon';
       } else {
         startSlug = 'huberman-morning-circadian';
@@ -562,7 +611,10 @@ function selectProtocols(answers: QuizAnswers): {
       }
       break;
     case 'huberman-sleep-rescue':
-      if (hasLongevity && (approach === 'supplements' || approach === 'combination')) {
+      if (
+        hasLongevity &&
+        (approach === 'supplements' || approach === 'combination')
+      ) {
         nextSlug = 'dr-rhonda-patrick-micronutrient-senolytic';
       } else {
         nextSlug = 'huberman-morning-circadian';
@@ -610,11 +662,15 @@ function selectProtocols(answers: QuizAnswers): {
 /**
  * Builds the DeepCell eligibility, framing path (1, 2, or 3), and dynamically matched ingredients.
  */
-function buildDeepCellRecommendation(answers: QuizAnswers): DeepCellRecommendation {
+function buildDeepCellRecommendation(
+  answers: QuizAnswers
+): DeepCellRecommendation {
   const sleepSelected = answers.goals.includes('sleep');
   const longevitySelected = answers.goals.includes('longevity');
   const longevitySliderQualifies = (answers.longevityPriorityScore ?? 0) >= 7;
-  const qualifiesLongevity = longevitySelected || longevitySliderQualifies;
+  const paceOfAgingMotivation = answers.motivations.includes('slow_pace_of_aging');
+  const qualifiesLongevity =
+    longevitySelected || longevitySliderQualifies || paceOfAgingMotivation;
 
   const eligible = sleepSelected || qualifiesLongevity;
   if (!eligible) {
@@ -645,13 +701,13 @@ function buildDeepCellRecommendation(answers: QuizAnswers): DeepCellRecommendati
   }
 
   if (framingPath === 1) {
-    const selectedSleepLabels = answers.sleepImprovements.map(
-      (id) => SLEEP_IMPROVEMENT_LABELS[id].toLowerCase()
+    const selectedSleepLabels = answers.sleepImprovements.map((id) =>
+      SLEEP_IMPROVEMENT_LABELS[id].toLowerCase()
     );
     const focusPhrase =
-      selectedSleepLabels.length === 2
-        ? `${selectedSleepLabels[0]} and ${selectedSleepLabels[1]}`
-        : selectedSleepLabels[0] || 'more restorative sleep';
+      selectedSleepLabels.length > 0
+        ? formatListNatural(selectedSleepLabels)
+        : 'more restorative sleep';
 
     const matchedIngredients: MatchedDeepCellIngredient[] = [];
 
@@ -746,16 +802,18 @@ function buildDeepCellRecommendation(answers: QuizAnswers): DeepCellRecommendati
   }
 
   if (framingPath === 2) {
-    const reportedGoodSleep = sleepSelected && sleepScore !== null && sleepScore >= 8;
+    const reportedGoodSleep =
+      sleepSelected && sleepScore !== null && sleepScore >= 8;
     const sleepAck = reportedGoodSleep
       ? `You already reported strong sleep (${sleepScore}/10), so you don’t need a sleep-problem fix. Instead, DeepCell is relevant here for what happens at the cellular level during the night: `
-      : `Because long-term healthspan is a high priority for you, it helps to utilize the night as the body’s primary window for cellular maintenance: `;
+      : `Because slowing your pace of aging and extending healthy lifespan is a priority for you, it helps to utilize the night as the body’s primary window for cellular maintenance: `;
 
     return {
       eligible: true,
       framingPath: 2,
       isOptionalHabitsBadge,
-      headline: 'LIFESPAN+ DeepCell — Nocturnal Cellular Longevity & Autophagy Formulation',
+      headline:
+        'LIFESPAN+ DeepCell — Nocturnal Cellular Longevity & Autophagy Formulation',
       rationale: `${sleepAck}DeepCell combines researched longevity compounds—including Spermidine, Apigenin, Luteolin, and micro-dosed Lithium Orotate—studied for their roles in nocturnal autophagy, NAD+ preservation, and genomic stability.`,
       matchedIngredients: [
         {
@@ -794,8 +852,9 @@ function buildDeepCellRecommendation(answers: QuizAnswers): DeepCellRecommendati
   return {
     eligible: true,
     framingPath: 3,
-    isOptionalHabitsBadge: true, // Always framed as optional to explore in Path 3
-    headline: 'LIFESPAN+ DeepCell — Optional Nighttime Maintenance & Sleep Optimization',
+    isOptionalHabitsBadge: true,
+    headline:
+      'LIFESPAN+ DeepCell — Optional Nighttime Maintenance & Sleep Optimization',
     rationale: `You reported strong sleep over the past two weeks (${sleepScore}/10). While behavioral consistency is your primary foundation, DeepCell is an optional melatonin-free nighttime formula you can explore to help maintain deep sleep efficiency and overnight recovery during high-stress or travel weeks.`,
     matchedIngredients: [
       {
@@ -827,7 +886,9 @@ function buildDeepCellRecommendation(answers: QuizAnswers): DeepCellRecommendati
  * Generates the complete PersonalizedPlanResult from user answers.
  * Every question affects the recommendation, explanation, or presentation.
  */
-export function generatePersonalizedPlan(answers: QuizAnswers): PersonalizedPlanResult {
+export function generatePersonalizedPlan(
+  answers: QuizAnswers
+): PersonalizedPlanResult {
   const { startSlug, nextSlug } = selectProtocols(answers);
   const startHereProtocol = FLAGSHIP_PROTOCOLS[startSlug];
   const addNextProtocol = FLAGSHIP_PROTOCOLS[nextSlug];
@@ -837,12 +898,7 @@ export function generatePersonalizedPlan(answers: QuizAnswers): PersonalizedPlan
   // 1. Build personalized summary reflecting selected goals, reported experience, and motivation
   // Rule: Do NOT infer poor sleep when sleep was not assessed.
   const goalNames = answers.goals.map((g) => GOAL_LABELS[g].toLowerCase());
-  const goalsPhrase =
-    goalNames.length === 1
-      ? goalNames[0]
-      : goalNames.length === 2
-      ? `${goalNames[0]} and ${goalNames[1]}`
-      : `${goalNames[0]}, ${goalNames[1]}, and ${goalNames[2]}`;
+  const goalsPhrase = formatListNatural(goalNames);
 
   const primaryGoalLabel = answers.primaryGoal
     ? GOAL_LABELS[answers.primaryGoal].toLowerCase()
@@ -852,20 +908,33 @@ export function generatePersonalizedPlan(answers: QuizAnswers): PersonalizedPlan
   if (answers.goals.includes('sleep') && answers.sleepScore !== null) {
     const sleepFocus =
       answers.sleepImprovements.length > 0
-        ? ` (focusing on ${answers.sleepImprovements
-            .map((s) => SLEEP_IMPROVEMENT_LABELS[s].toLowerCase())
-            .join(' and ')})`
+        ? ` (focusing on ${formatListNatural(
+            answers.sleepImprovements.map((s) =>
+              SLEEP_IMPROVEMENT_LABELS[s].toLowerCase()
+            )
+          )})`
         : '';
-    experienceParts.push(`your recent sleep rating of ${answers.sleepScore}/10${sleepFocus}`);
+    experienceParts.push(
+      `your recent sleep rating of ${answers.sleepScore}/10${sleepFocus}`
+    );
   }
   if (answers.goals.includes('energy') && answers.energyScore !== null) {
-    const energyWhen = answers.energyTiming
-      ? ` with a priority on ${ENERGY_TIMING_LABELS[answers.energyTiming].toLowerCase()} energy`
-      : '';
-    experienceParts.push(`your daytime energy rating of ${answers.energyScore}/10${energyWhen}`);
+    const energyWhen =
+      answers.energyTimings.length > 0
+        ? ` with a priority on ${formatListNatural(
+            answers.energyTimings.map((t) =>
+              ENERGY_TIMING_LABELS[t].toLowerCase()
+            )
+          )} energy`
+        : '';
+    experienceParts.push(
+      `your daytime energy rating of ${answers.energyScore}/10${energyWhen}`
+    );
   }
   if (answers.goals.includes('longevity')) {
-    experienceParts.push('your high priority on long-term healthspan');
+    experienceParts.push(
+      'your goal to slow your pace of aging and increase healthy lifespan'
+    );
   } else if (answers.longevityPriorityScore !== null) {
     experienceParts.push(
       `your healthspan priority rating of ${answers.longevityPriorityScore}/10`
@@ -881,11 +950,11 @@ export function generatePersonalizedPlan(answers: QuizAnswers): PersonalizedPlan
 
   const summaryParagraph =
     answers.goals.length > 1
-      ? `You’re working on ${goalsPhrase}, with ${primaryGoalLabel} as your top priority right now. Based on ${experienceParts.join(
-          ', '
+      ? `You’re working on ${goalsPhrase}, with ${primaryGoalLabel} as your top priority right now. Based on ${formatListNatural(
+          experienceParts
         )}, and your preference for ${approachLabel} within ${timeLabel.toLowerCase()} most days, we’ve structured a focused starting plan that avoids overlapping tasks.`
-      : `You’re focusing on ${goalsPhrase}. Based on ${experienceParts.join(
-          ', '
+      : `You’re focusing on ${goalsPhrase}. Based on ${formatListNatural(
+          experienceParts
         )}, and your preference for ${approachLabel} within ${timeLabel.toLowerCase()} most days, here is your practical starting plan.`;
 
   // 2. Build motivation sentence (omit if only "Other" was chosen and left blank)
@@ -903,8 +972,8 @@ export function generatePersonalizedPlan(answers: QuizAnswers): PersonalizedPlan
 
   const motivationSentence =
     motivationParts.length > 0
-      ? `Why this plan matters: Building steady momentum here is designed to make more room for ${motivationParts.join(
-          ' and '
+      ? `Why this plan matters: Building steady momentum here is designed to make more room for ${formatListNatural(
+          motivationParts
         )}.`
       : null;
 
@@ -919,47 +988,68 @@ export function generatePersonalizedPlan(answers: QuizAnswers): PersonalizedPlan
       ? `Sized for your up-to-5-minute daily window: Start with just the keystone actions below (${startHereProtocol.minimumViableTime}).`
       : answers.timeAllowance === '5_to_15m'
       ? `Fits comfortably inside your 5–15 minute daily investment (${startHereProtocol.typicalTime}).`
-      : answers.timeAllowance === '1_to_2h' || answers.timeAllowance === '2h_plus'
+      : answers.timeAllowance === '1_to_2h' ||
+        answers.timeAllowance === '2h_plus'
       ? `Your ${timeLabel.toLowerCase()} allowance unlocks this comprehensive protocol (${startHereProtocol.typicalTime}) without needing to fill every spare minute.`
       : `Fits within your ${timeLabel.toLowerCase()} daily window (${startHereProtocol.typicalTime}), leaving breathing room in your schedule.`;
 
   // 4. Explain why the "Start here" protocol matches their specific answers
   const startHereWhyItFits: string[] = [];
 
-  if (answers.primaryGoal === 'sleep' || (answers.goals.includes('sleep') && startSlug.includes('sleep'))) {
+  if (
+    answers.primaryGoal === 'sleep' ||
+    (answers.goals.includes('sleep') && startSlug.includes('sleep'))
+  ) {
     const sleepFocusText =
       answers.sleepImprovements.length > 0
-        ? answers.sleepImprovements.map((id) => SLEEP_IMPROVEMENT_LABELS[id].toLowerCase()).join(' & ')
+        ? formatListNatural(
+            answers.sleepImprovements.map((id) =>
+              SLEEP_IMPROVEMENT_LABELS[id].toLowerCase()
+            )
+          )
         : 'overall sleep quality';
     startHereWhyItFits.push(
-      `Directly targets your goal of ${sleepFocusText} using peer-reviewed circadian and thermal cues.`
+      `Directly targets your sleep priority (${sleepFocusText}) using peer-reviewed circadian and thermal cues.`
     );
   }
   if (answers.goals.includes('energy')) {
-    const timingText = answers.energyTiming
-      ? ENERGY_TIMING_LABELS[answers.energyTiming].toLowerCase()
-      : 'daytime';
+    const timingText =
+      answers.energyTimings.length > 0
+        ? formatListNatural(
+            answers.energyTimings.map((t) =>
+              ENERGY_TIMING_LABELS[t].toLowerCase()
+            )
+          )
+        : 'daytime';
     startHereWhyItFits.push(
-      `Addresses your ${timingText} energy priority by stabilizing autonomic cortisol, adenosine clearance, or post-meal glycemic response.`
+      `Addresses your energy needs (${timingText}) by stabilizing autonomic cortisol, adenosine clearance, or post-meal glycemic response.`
     );
   }
-  if (answers.goals.includes('longevity') || (answers.longevityPriorityScore ?? 0) >= 7) {
+  if (
+    answers.goals.includes('longevity') ||
+    answers.motivations.includes('slow_pace_of_aging') ||
+    (answers.longevityPriorityScore ?? 0) >= 7
+  ) {
     startHereWhyItFits.push(
-      `Supports long-term healthspan across core biological aging pathways validated in human clinical trials.`
+      `Targets biological pace-of-aging pathways and long-term healthspan validated in human clinical trials.`
     );
   }
   startHereWhyItFits.push(
     `Aligned with your "${
-      answers.approachPreference ? APPROACH_PREFERENCE_LABELS[answers.approachPreference] : 'practical'
+      answers.approachPreference
+        ? APPROACH_PREFERENCE_LABELS[answers.approachPreference]
+        : 'practical'
     }" preference and ${timeLabel.toLowerCase()} daily time allowance.`
   );
 
   // 5. Explain why "Add next" complements "Start here"
   const addNextWhyItFits =
     answers.goals.length > 1
-      ? `Once your starting routine feels automatic, layer in ${addNextProtocol.shortTitle} to round out your ${goalNames.join(
-          ' + '
-        )} goals. ${addNextProtocol.deconflictionNote}`
+      ? `Once your starting routine feels automatic, layer in ${
+          addNextProtocol.shortTitle
+        } to round out your ${goalNames.join(' + ')} goals. ${
+          addNextProtocol.deconflictionNote
+        }`
       : `When you want to expand beyond your initial routine, ${addNextProtocol.shortTitle} is the highest-synergy next step (${addNextProtocol.typicalTime}). ${addNextProtocol.deconflictionNote}`;
 
   // 6. Determine Recommendation Order strictly per spec:
