@@ -38,13 +38,13 @@ export type ApproachPreferenceId =
   | 'exploring';
 
 export type FlagshipProtocolSlug =
-  | 'huberman-morning-circadian'
-  | 'huberman-sleep-rescue'
-  | 'huberman-stress-reset'
-  | 'huberman-metabolic-walk'
-  | 'dr-rhonda-patrick-micronutrient-senolytic'
-  | 'peter-attia-centenarian-decathlon'
-  | 'bryan-johnson-blueprint-flagship';
+  | 'huberman_morning_circadian'
+  | 'huberman_sleep_rescue'
+  | 'huberman_stress_reset'
+  | 'huberman_metabolic_walk'
+  | 'dr_rhonda_patrick_longevity_stack'
+  | 'peter_attia_centenarian_decathlon_protocol'
+  | 'bryan_johnson_blueprint_protocol';
 
 export interface ProtocolActionItem {
   title: string;
@@ -58,6 +58,8 @@ export interface FlagshipProtocolSpec {
   slug: FlagshipProtocolSlug;
   title: string;
   shortTitle: string;
+  levlAppNameParam: string;
+  evidenceScore: string;
   authorOrSource: string;
   categoryBadge: string;
   typicalTime: string;
@@ -75,10 +77,12 @@ export interface FlagshipProtocolSpec {
 }
 
 export const FLAGSHIP_PROTOCOLS: Record<FlagshipProtocolSlug, FlagshipProtocolSpec> = {
-  'huberman-morning-circadian': {
-    slug: 'huberman-morning-circadian',
+  'huberman_morning_circadian': {
+    slug: 'huberman_morning_circadian',
     title: 'Huberman Morning Circadian Stack',
     shortTitle: 'Morning Circadian Stack',
+    levlAppNameParam: 'Huberman Morning Circadian Stack',
+    evidenceScore: '95.0/100',
     authorOrSource: 'Dr. Andrew Huberman • Neuro-Circadian Operating System',
     categoryBadge: 'Circadian Phase-Lock & Energy',
     typicalTime: '10–15 mins/day',
@@ -118,10 +122,12 @@ export const FLAGSHIP_PROTOCOLS: Record<FlagshipProtocolSlug, FlagshipProtocolSp
       'Pairs cleanly with evening sleep routines and micronutrient stacks without overlapping tasks or stimulants.',
   },
 
-  'huberman-sleep-rescue': {
-    slug: 'huberman-sleep-rescue',
+  'huberman_sleep_rescue': {
+    slug: 'huberman_sleep_rescue',
     title: 'Huberman Sleep Environment & Midnight Rescue',
     shortTitle: 'Sleep Environment & Midnight Rescue',
+    levlAppNameParam: 'Huberman Sleep Rescue',
+    evidenceScore: '94.6/100',
     authorOrSource: 'Dr. Andrew Huberman & Dr. Matthew Walker Synthesis',
     categoryBadge: 'Sleep Architecture & Recovery',
     typicalTime: '10–15 mins/day',
@@ -169,10 +175,12 @@ export const FLAGSHIP_PROTOCOLS: Record<FlagshipProtocolSlug, FlagshipProtocolSp
       'Evening-only wind-down routine; zero overlap with morning circadian or daytime metabolic protocols.',
   },
 
-  'huberman-stress-reset': {
-    slug: 'huberman-stress-reset',
+  'huberman_stress_reset': {
+    slug: 'huberman_stress_reset',
     title: 'Huberman Real-Time Stress Reset (Physiological Sigh)',
     shortTitle: 'Real-Time Autonomic Stress Reset',
+    levlAppNameParam: 'Huberman Real-Time Stress Reset',
+    evidenceScore: '93.8/100',
     authorOrSource: 'Dr. Andrew Huberman • Stanford Respiration Trial',
     categoryBadge: '2–5 Min Autonomic Calm',
     typicalTime: '2–5 mins/day',
@@ -204,10 +212,12 @@ export const FLAGSHIP_PROTOCOLS: Record<FlagshipProtocolSlug, FlagshipProtocolSp
       'Ultra-compact 2–5 minute respiratory practice that complements any sleep or longevity stack.',
   },
 
-  'huberman-metabolic-walk': {
-    slug: 'huberman-metabolic-walk',
+  'huberman_metabolic_walk': {
+    slug: 'huberman_metabolic_walk',
     title: 'Huberman Post-Meal Glycemic Control',
     shortTitle: 'Post-Meal Glycemic Walk',
+    levlAppNameParam: 'Huberman Post-Meal Glycemic Control',
+    evidenceScore: '92.5/100',
     authorOrSource: 'Dr. Andrew Huberman & Dr. Casey Means Synthesis',
     categoryBadge: 'Metabolic Energy & Glucose Control',
     typicalTime: '10 mins/day',
@@ -239,10 +249,12 @@ export const FLAGSHIP_PROTOCOLS: Record<FlagshipProtocolSlug, FlagshipProtocolSp
       'Scheduled around meals; never conflicts with morning light or evening sleep wind-down.',
   },
 
-  'dr-rhonda-patrick-micronutrient-senolytic': {
-    slug: 'dr-rhonda-patrick-micronutrient-senolytic',
-    title: "Dr. Rhonda Patrick's Micronutrient, Thermal & Senolytic Protocol",
-    shortTitle: 'Micronutrient & Cellular Defense Matrix',
+  'dr_rhonda_patrick_longevity_stack': {
+    slug: 'dr_rhonda_patrick_longevity_stack',
+    title: 'Dr. Rhonda Patrick Longevity Stack',
+    shortTitle: 'Micronutrient & Cellular Longevity Stack',
+    levlAppNameParam: 'Dr. Rhonda Patrick Longevity & Micronutrient Stack',
+    evidenceScore: '96.2/100',
     authorOrSource: 'Dr. Rhonda Patrick • FoundMyFitness Clinical Stack',
     categoryBadge: 'Cellular Longevity & Nrf2 Defense',
     typicalTime: '15–30 mins/day',
@@ -282,10 +294,12 @@ export const FLAGSHIP_PROTOCOLS: Record<FlagshipProtocolSlug, FlagshipProtocolSp
       'Daytime micronutrient and afternoon hormesis timing; leaves evening sleep GABA/autophagy pathways conflict-free.',
   },
 
-  'peter-attia-centenarian-decathlon': {
-    slug: 'peter-attia-centenarian-decathlon',
-    title: "Dr. Peter Attia's Centenarian Decathlon Protocol",
+  'peter_attia_centenarian_decathlon_protocol': {
+    slug: 'peter_attia_centenarian_decathlon_protocol',
+    title: 'Peter Attia Centenarian Decathlon Protocol',
     shortTitle: 'Centenarian Decathlon Protocol',
+    levlAppNameParam: 'Peter Attia Centenarian Decathlon Protocol',
+    evidenceScore: '97.5/100',
     authorOrSource: 'Dr. Peter Attia • Outlive Physical Longevity Framework',
     categoryBadge: 'VO2 Max, Strength & Healthspan',
     typicalTime: '45–60 mins/day',
@@ -333,10 +347,12 @@ export const FLAGSHIP_PROTOCOLS: Record<FlagshipProtocolSlug, FlagshipProtocolSp
       'Focuses on daytime physical training and ATP support; complements micronutrient or evening recovery protocols.',
   },
 
-  'bryan-johnson-blueprint-flagship': {
-    slug: 'bryan-johnson-blueprint-flagship',
-    title: "Bryan Johnson's Project Blueprint Flagship Protocol",
+  'bryan_johnson_blueprint_protocol': {
+    slug: 'bryan_johnson_blueprint_protocol',
+    title: 'Bryan Johnson Blueprint Protocol',
     shortTitle: 'Blueprint Flagship Protocol',
+    levlAppNameParam: 'Bryan Johnson Blueprint Protocol',
+    evidenceScore: '93.8/100',
     authorOrSource: 'Bryan Johnson • Adapted by LEVL Clinical Consensus',
     categoryBadge: 'Whole-Body Pace-of-Aging Stack',
     typicalTime: '60–90 mins/day',
@@ -529,11 +545,11 @@ function selectProtocols(answers: QuizAnswers): {
   const wantsAfternoonEnergyOnly =
     answers.energyTimings.length === 1 && answers.energyTimings[0] === 'afternoon';
 
-  let startSlug: FlagshipProtocolSlug = 'huberman-morning-circadian';
+  let startSlug: FlagshipProtocolSlug = 'huberman_morning_circadian';
 
   // High time commitment (1–2h or 2h+) unlocks the comprehensive Blueprint system
   if (time === '1_to_2h' || time === '2h_plus') {
-    startSlug = 'bryan-johnson-blueprint-flagship';
+    startSlug = 'bryan_johnson_blueprint_protocol';
   } else if (primary === 'sleep') {
     const wantsWakeOrConsistencyOnly =
       answers.sleepImprovements.length > 0 &&
@@ -545,55 +561,55 @@ function selectProtocols(answers: QuizAnswers): {
       );
 
     if (time === 'up_to_5m') {
-      startSlug = 'huberman-stress-reset';
+      startSlug = 'huberman_stress_reset';
     } else if (
       approach === 'habits_first' &&
       time === '15_to_30m' &&
       wantsWakeOrConsistencyOnly
     ) {
-      startSlug = 'huberman-morning-circadian';
+      startSlug = 'huberman_morning_circadian';
     } else {
-      startSlug = 'huberman-sleep-rescue';
+      startSlug = 'huberman_sleep_rescue';
     }
   } else if (primary === 'energy') {
     if (time === '30_to_60m' && (wantsExerciseEnergy || hasLongevity)) {
-      startSlug = 'peter-attia-centenarian-decathlon';
+      startSlug = 'peter_attia_centenarian_decathlon_protocol';
     } else if (time === 'up_to_5m') {
       startSlug =
         approach === 'supplements' || approach === 'combination'
-          ? 'dr-rhonda-patrick-micronutrient-senolytic'
-          : 'huberman-metabolic-walk';
+          ? 'dr_rhonda_patrick_longevity_stack'
+          : 'huberman_metabolic_walk';
     } else if (time === '5_to_15m') {
       if (wantsAfternoonEnergyOnly && approach === 'habits_first') {
-        startSlug = 'huberman-metabolic-walk';
+        startSlug = 'huberman_metabolic_walk';
       } else if (approach === 'supplements') {
-        startSlug = 'dr-rhonda-patrick-micronutrient-senolytic';
+        startSlug = 'dr_rhonda_patrick_longevity_stack';
       } else {
-        startSlug = 'huberman-morning-circadian';
+        startSlug = 'huberman_morning_circadian';
       }
     } else {
       // 15-30m or 30-60m
       if (approach === 'supplements') {
-        startSlug = 'dr-rhonda-patrick-micronutrient-senolytic';
+        startSlug = 'dr_rhonda_patrick_longevity_stack';
       } else if (wantsExerciseEnergy && time === '30_to_60m') {
-        startSlug = 'peter-attia-centenarian-decathlon';
+        startSlug = 'peter_attia_centenarian_decathlon_protocol';
       } else {
-        startSlug = 'huberman-morning-circadian';
+        startSlug = 'huberman_morning_circadian';
       }
     }
   } else {
     // Primary === 'longevity'
     if (time === '30_to_60m') {
-      startSlug = 'peter-attia-centenarian-decathlon';
+      startSlug = 'peter_attia_centenarian_decathlon_protocol';
     } else if (
       (time === 'up_to_5m' || time === '5_to_15m') &&
       approach === 'habits_first'
     ) {
-      startSlug = 'huberman-metabolic-walk';
+      startSlug = 'huberman_metabolic_walk';
     } else if (time === '15_to_30m' && approach === 'habits_first') {
-      startSlug = 'huberman-morning-circadian';
+      startSlug = 'huberman_morning_circadian';
     } else {
-      startSlug = 'dr-rhonda-patrick-micronutrient-senolytic';
+      startSlug = 'dr_rhonda_patrick_longevity_stack';
     }
   }
 
@@ -601,57 +617,57 @@ function selectProtocols(answers: QuizAnswers): {
   let nextSlug: FlagshipProtocolSlug;
 
   switch (startSlug) {
-    case 'huberman-morning-circadian':
+    case 'huberman_morning_circadian':
       if (hasSleep) {
-        nextSlug = 'huberman-sleep-rescue';
+        nextSlug = 'huberman_sleep_rescue';
       } else if (hasLongevity && approach !== 'habits_first') {
-        nextSlug = 'dr-rhonda-patrick-micronutrient-senolytic';
+        nextSlug = 'dr_rhonda_patrick_longevity_stack';
       } else {
-        nextSlug = 'huberman-metabolic-walk';
+        nextSlug = 'huberman_metabolic_walk';
       }
       break;
-    case 'huberman-sleep-rescue':
+    case 'huberman_sleep_rescue':
       if (
         hasLongevity &&
         (approach === 'supplements' || approach === 'combination')
       ) {
-        nextSlug = 'dr-rhonda-patrick-micronutrient-senolytic';
+        nextSlug = 'dr_rhonda_patrick_longevity_stack';
       } else {
-        nextSlug = 'huberman-morning-circadian';
+        nextSlug = 'huberman_morning_circadian';
       }
       break;
-    case 'huberman-stress-reset':
-      nextSlug = 'huberman-sleep-rescue';
+    case 'huberman_stress_reset':
+      nextSlug = 'huberman_sleep_rescue';
       break;
-    case 'huberman-metabolic-walk':
+    case 'huberman_metabolic_walk':
       if (hasSleep && !hasEnergy) {
-        nextSlug = 'huberman-sleep-rescue';
+        nextSlug = 'huberman_sleep_rescue';
       } else {
-        nextSlug = 'huberman-morning-circadian';
+        nextSlug = 'huberman_morning_circadian';
       }
       break;
-    case 'dr-rhonda-patrick-micronutrient-senolytic':
+    case 'dr_rhonda_patrick_longevity_stack':
       if (hasSleep && primary !== 'sleep') {
-        nextSlug = 'huberman-sleep-rescue';
+        nextSlug = 'huberman_sleep_rescue';
       } else if (hasEnergy && time !== '30_to_60m') {
-        nextSlug = 'huberman-morning-circadian';
+        nextSlug = 'huberman_morning_circadian';
       } else {
-        nextSlug = 'peter-attia-centenarian-decathlon';
+        nextSlug = 'peter_attia_centenarian_decathlon_protocol';
       }
       break;
-    case 'peter-attia-centenarian-decathlon':
+    case 'peter_attia_centenarian_decathlon_protocol':
       if (hasSleep) {
-        nextSlug = 'huberman-sleep-rescue';
+        nextSlug = 'huberman_sleep_rescue';
       } else {
-        nextSlug = 'dr-rhonda-patrick-micronutrient-senolytic';
+        nextSlug = 'dr_rhonda_patrick_longevity_stack';
       }
       break;
-    case 'bryan-johnson-blueprint-flagship':
+    case 'bryan_johnson_blueprint_protocol':
     default:
       if (hasSleep && answers.sleepScore !== null && answers.sleepScore <= 6) {
-        nextSlug = 'huberman-sleep-rescue';
+        nextSlug = 'huberman_sleep_rescue';
       } else {
-        nextSlug = 'dr-rhonda-patrick-micronutrient-senolytic';
+        nextSlug = 'dr_rhonda_patrick_longevity_stack';
       }
       break;
   }
@@ -1078,14 +1094,19 @@ export function generatePersonalizedPlan(
     orderedBlocks.push('activate');
   }
 
-  // 7. Build privacy-safe URLs (ONLY canonical protocol slugs and time tier — zero health scores or motivations)
+  // 7. Build privacy-safe URLs (ONLY canonical protocol slugs, title metadata, and time tier — zero health scores or motivations)
   const timeToken = encodeURIComponent(
     TIME_ALLOWANCE_URL_TOKENS[answers.timeAllowance || '15_to_30m']
   );
-  const levlAppStartUrl = `https://2026-levl-protocols-app.vercel.app/protocols/${startSlug}?ref=levl_quiz&addNext=${nextSlug}&timeBudget=${timeToken}`;
-  const longevityReviewsStartUrl = `https://www.longevityreviews.org/protocols/${startSlug}?ref=levl_quiz`;
-  const levlAppAddNextUrl = `https://2026-levl-protocols-app.vercel.app/protocols/${nextSlug}?ref=levl_quiz&timeBudget=${timeToken}`;
-  const longevityReviewsAddNextUrl = `https://www.longevityreviews.org/protocols/${nextSlug}?ref=levl_quiz`;
+  const startNameParam = encodeURIComponent(
+    startHereProtocol.levlAppNameParam
+  );
+  const nextNameParam = encodeURIComponent(addNextProtocol.levlAppNameParam);
+
+  const levlAppStartUrl = `https://2026-levl-protocols-app.vercel.app/protocols/${startSlug}?source=longevityreviews&name=${startNameParam}&ref=levl_quiz&addNext=${nextSlug}&timeBudget=${timeToken}`;
+  const longevityReviewsStartUrl = `https://www.longevityreviews.org/protocols/${startSlug}`;
+  const levlAppAddNextUrl = `https://2026-levl-protocols-app.vercel.app/protocols/${nextSlug}?source=longevityreviews&name=${nextNameParam}&ref=levl_quiz&timeBudget=${timeToken}`;
+  const longevityReviewsAddNextUrl = `https://www.longevityreviews.org/protocols/${nextSlug}`;
 
   return {
     summaryParagraph,

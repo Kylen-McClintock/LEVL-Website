@@ -477,6 +477,43 @@ export function ProtocolQuizClient({
 
   // Compute Personalized Plan Result
   const plan = useMemo(() => generatePersonalizedPlan(answers), [answers]);
+  const warmedUrlsRef = useRef<Set<string>>(new Set());
+
+  // Proactively pre-warm LEVL App & LongevityReviews serverless routes during the quiz
+  // so cold starts and ISR caches are already hot before the user clicks a protocol CTA.
+  useEffect(() => {
+    const warmUrl = (url: string) => {
+      if (!url || warmedUrlsRef.current.has(url)) return;
+      warmedUrlsRef.current.add(url);
+      try {
+        void fetch(url, { mode: "no-cors", credentials: "omit" }).catch(
+          () => {}
+        );
+      } catch {}
+    };
+
+    if (step === "goals" || step === "experience") {
+      warmUrl("https://2026-levl-protocols-app.vercel.app/");
+      warmUrl("https://www.longevityreviews.org/protocols");
+    }
+
+    if (
+      step === "motivation" ||
+      step === "practical_fit" ||
+      step === "results"
+    ) {
+      warmUrl(plan.levlAppStartUrl);
+      warmUrl(plan.longevityReviewsStartUrl);
+      warmUrl(plan.levlAppAddNextUrl);
+      warmUrl(plan.longevityReviewsAddNextUrl);
+    }
+  }, [
+    step,
+    plan.levlAppStartUrl,
+    plan.longevityReviewsStartUrl,
+    plan.levlAppAddNextUrl,
+    plan.longevityReviewsAddNextUrl,
+  ]);
 
   // Sync aria-invalid with CSS :user-invalid state per modern-web-guidance `validate-input-after-interaction`
   const syncEmailAriaInvalid = (inputEl: HTMLInputElement) => {
@@ -1397,6 +1434,9 @@ export function ProtocolQuizClient({
                         <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/5 text-white/80 border border-white/10">
                           {plan.startHereProtocol.categoryBadge}
                         </span>
+                        <span className="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                          Evidence Score: {plan.startHereProtocol.evidenceScore}
+                        </span>
                       </div>
                       <span className="inline-flex items-center gap-1.5 text-xs font-mono text-[var(--color-levl-cyan)] bg-[var(--color-levl-cyan)]/10 px-3 py-1 rounded-full border border-[var(--color-levl-cyan)]/30">
                         <Clock className="w-3.5 h-3.5" />
@@ -1522,12 +1562,15 @@ export function ProtocolQuizClient({
                   {/* ADD NEXT PROTOCOL CARD */}
                   <div className="rounded-3xl bg-[#0B0E17]/80 border border-white/10 p-6 sm:p-8 space-y-4">
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
                         <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-purple-500/20 text-purple-300 border border-purple-500/30">
                           Add next
                         </span>
                         <span className="text-xs text-white/60 font-medium">
                           Complementary &amp; De-Conflicted
+                        </span>
+                        <span className="px-2 py-0.5 rounded-full text-[11px] font-mono font-bold bg-emerald-500/10 text-emerald-300 border border-emerald-500/25">
+                          Score: {plan.addNextProtocol.evidenceScore}
                         </span>
                       </div>
                       <span className="text-xs font-mono text-white/60">
