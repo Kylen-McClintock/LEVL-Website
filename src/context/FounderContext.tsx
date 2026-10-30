@@ -15,6 +15,7 @@ export const FOUNDER_FRIENDS_FAMILY_CODES = [
   'KEGAN30',
   'LAROCCA30',
   'AARON30',
+  'BECCA30',
 ] as const;
 
 export const FOUNDER_DIRECT_CODES = [

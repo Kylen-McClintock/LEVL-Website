@@ -30,21 +30,30 @@ const nextConfig: NextConfig = {
   async redirects() {
     const founderCodes = [
       'TOM30', 'CAT30', 'MARK30', 'TAYLOR30', 'LAM30',
-      'KYLEN30', 'DAN30', 'EMMETT30', 'KEGAN30', 'LAROCCA30', 'AARON30',
+      'KYLEN30', 'DAN30', 'EMMETT30', 'KEGAN30', 'LAROCCA30', 'AARON30', 'BECCA30',
       'FOUNDER30'
     ];
-    const founderRedirects = founderCodes.flatMap(code => [
-      {
-        source: `/${code}`,
-        destination: `/?ref=${code}`,
-        permanent: false,
-      },
-      {
-        source: `/${code.toLowerCase()}`,
-        destination: `/?ref=${code}`,
-        permanent: false,
-      },
-    ]);
+    const founderRedirects = founderCodes.flatMap(code => {
+      const lower = code.toLowerCase();
+      const title = code.charAt(0).toUpperCase() + lower.slice(1);
+      return [
+        {
+          source: `/${code}`,
+          destination: `/?ref=${code}`,
+          permanent: false,
+        },
+        {
+          source: `/${lower}`,
+          destination: `/?ref=${code}`,
+          permanent: false,
+        },
+        {
+          source: `/${title}`,
+          destination: `/?ref=${code}`,
+          permanent: false,
+        },
+      ];
+    });
 
     return [
       ...founderRedirects,
