@@ -1,138 +1,285 @@
 "use client";
 
-import React, { useState } from "react";
-import { Check, Activity, Sparkles } from "lucide-react";
+import React, { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Check, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { activateContent } from "@/content/productActivate";
+import { cn } from "@/components/cart/CheckoutButton";
+import Image from "next/image";
+
+const imageMap: Record<string, string> = {
+  "20s": "/images/benefits/lifestyle_20s.png",
+  "30s": "/images/benefits/lifestyle_30s.png",
+  "40s": "/images/benefits/lifestyle_40s.png",
+  "50s": "/images/benefits/lifestyle_50s.png",
+  "60s": "/images/benefits/lifestyle_60s.png",
+};
 
 export function ActivateBenefitsAtEveryAge() {
-  const { benefitsByAge } = activateContent;
-  const [activeTabId, setActiveTabId] = useState(benefitsByAge[1].id); // Default to 30s
+  const data = activateContent.benefitsByAge;
+  // Default to index 2 (In your 40s) just like BenefitsAtEveryAge.tsx
+  const defaultIndex = data
+    ? Math.max(
+        0,
+        data.findIndex((d) => d.id === "40s")
+      )
+    : 0;
+  const [[activeTab, direction], setActiveTabAndDirection] = useState<
+    [number, number]
+  >([defaultIndex >= 0 ? defaultIndex : 2, 0]);
 
-  const activeContent =
-    benefitsByAge.find((b) => b.id === activeTabId) || benefitsByAge[0];
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  if (!data || data.length === 0) return null;
+
+  const activeContent = data[activeTab];
+
+  const setTab = (newIndex: number) => {
+    if (newIndex === activeTab) return;
+    setActiveTabAndDirection([newIndex, newIndex > activeTab ? 1 : -1]);
+  };
+
+  const paginate = (newDirection: number) => {
+    const nextIndex = activeTab + newDirection;
+    if (nextIndex >= 0 && nextIndex < data.length) {
+      setActiveTabAndDirection([nextIndex, newDirection]);
+    }
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+    touchEndX.current = null;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    const distance = touchStartX.current - touchEndX.current;
+    const isLeftSwipe = distance > 45;
+    const isRightSwipe = distance < -45;
+
+    if (isLeftSwipe && activeTab < data.length - 1) {
+      paginate(1);
+    } else if (isRightSwipe && activeTab > 0) {
+      paginate(-1);
+    }
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
+
+  const slideVariants = {
+    enter: (dir: number) => ({
+      x: dir > 0 ? 40 : -40,
+      opacity: 0,
+      filter: "blur(6px)",
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      filter: "blur(0px)",
+    },
+    exit: (dir: number) => ({
+      x: dir > 0 ? -40 : 40,
+      opacity: 0,
+      filter: "blur(6px)",
+    }),
+  };
 
   return (
-    <section
-      id="benefits-by-age"
-      className="py-24 bg-[#0A0E17] border-t border-white/10 relative overflow-hidden"
-    >
-      {/* Ambient glow */}
-      <div className="absolute bottom-0 right-1/4 w-[600px] h-[400px] bg-teal-500/5 blur-[140px] rounded-full pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-500/10 border border-teal-500/25 text-teal-400 text-xs font-bold uppercase tracking-widest mb-4">
-            Decade-Specific Cellular Support
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
-            Benefits at <span className="text-amber-400">Every Age</span>
+    <section className="pt-12 pb-24 border-y border-[var(--color-levl-panel-border)] overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Benefits at Every Age
           </h2>
-          <p className="text-lg text-gray-400 leading-relaxed">
-            Whether you are optimizing peak athletic and cognitive output in your 20s and 30s or restoring NAD+, AKG, Taurine, and cellular proteostasis in your 40s, 50s, and 60+, Activate adapts to your decade&apos;s biological bottlenecks.
+          <p className="text-base sm:text-lg text-[var(--color-levl-text-secondary)] max-w-2xl mx-auto">
+            Your body&apos;s cellular energy and repair pathways change as you
+            age. Activate is formulated to meet you where you are, optimizing
+            autophagy, NAD+, and vitality through every decade.
           </p>
         </div>
 
-        {/* Decade Selector Tabs */}
-        <div
-          role="tablist"
-          aria-label="Benefits by age decade"
-          className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-12"
-        >
-          {benefitsByAge.map((tab) => {
-            const isActive = activeTabId === tab.id;
-            return (
+        {/* Desktop Tabs (Identical to BenefitsAtEveryAge.tsx) */}
+        <div className="hidden md:flex justify-center mb-12">
+          <div className="flex bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-full p-1 shadow-lg">
+            {data.map((item, index) => (
               <button
-                key={tab.id}
+                key={item.id}
                 type="button"
-                role="tab"
-                aria-selected={isActive}
-                onClick={() => setActiveTabId(tab.id)}
-                className={`px-6 py-3 rounded-full text-sm sm:text-base font-bold transition-all ${
-                  isActive
-                    ? "bg-amber-400 text-black shadow-[0_0_25px_rgba(245,158,11,0.3)]"
-                    : "bg-white/[0.04] text-gray-300 border border-white/10 hover:bg-white/[0.08] hover:text-white"
-                }`}
+                onClick={() => setTab(index)}
+                className={cn(
+                  "relative px-8 py-3 text-sm font-semibold rounded-full transition-colors cursor-pointer",
+                  activeTab === index
+                    ? "text-black"
+                    : "text-[var(--color-levl-text-secondary)] hover:text-white"
+                )}
               >
-                {tab.label}
+                {activeTab === index && (
+                  <motion.div
+                    layoutId="activate-tab-bg"
+                    className="absolute inset-0 bg-white rounded-full"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{item.label}</span>
               </button>
-            );
-          })}
+            ))}
+          </div>
         </div>
 
-        {/* Active Decade Content Panel */}
-        <div className="rounded-3xl bg-[#0D131F] border border-white/10 p-6 sm:p-10 lg:p-12 shadow-2xl">
-          <div className="max-w-3xl mb-10">
-            <span className="inline-block text-xs font-black uppercase tracking-widest text-amber-400 mb-2">
-              {activeContent.label} • Biological Priorities
-            </span>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-4">
-              {activeContent.title}
-            </h3>
-            <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
-              {activeContent.description}
-            </p>
+        {/* Mobile Tabs & Swipe Controls */}
+        <div className="flex flex-col md:hidden w-full mb-6">
+          <div className="flex items-center justify-between gap-1.5 w-full">
+            <button
+              type="button"
+              disabled={activeTab === 0}
+              onClick={() => paginate(-1)}
+              className="p-2 rounded-full bg-white/5 border border-white/10 text-white disabled:opacity-30 disabled:pointer-events-none cursor-pointer shrink-0"
+              aria-label="Previous decade"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+
+            <div className="flex flex-1 gap-1.5 justify-between">
+              {data.map((item, index) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => setTab(index)}
+                  className={cn(
+                    "flex-1 py-2 px-1 text-xs font-bold rounded-full border transition-all text-center cursor-pointer",
+                    activeTab === index
+                      ? "bg-white text-black border-white shadow-md scale-105"
+                      : "bg-[var(--color-levl-panel)] text-[var(--color-levl-text-secondary)] border-[var(--color-levl-panel-border)] hover:text-white"
+                  )}
+                >
+                  {item.label.replace(/in your /i, "").trim()}
+                </button>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              disabled={activeTab === data.length - 1}
+              onClick={() => paginate(1)}
+              className="p-2 rounded-full bg-white/5 border border-white/10 text-white disabled:opacity-30 disabled:pointer-events-none cursor-pointer shrink-0"
+              aria-label="Next decade"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-            {/* Left Card: What's Happening in Your Body */}
-            <div className="rounded-2xl bg-white/[0.02] border border-white/10 p-6 sm:p-8">
-              <div className="flex items-center gap-2.5 mb-5">
-                <div className="w-9 h-9 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400">
-                  <Activity className="w-5 h-5" />
+          <p className="text-[11px] text-[var(--color-levl-text-muted)] text-center mt-2.5">
+            Swipe left or right to explore each decade
+          </p>
+        </div>
+
+        {/* Content Area with Touch Gestures */}
+        <div
+          className="relative min-h-[500px] touch-pan-y"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          <AnimatePresence custom={direction} mode="wait">
+            <motion.div
+              key={activeTab}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+              className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full w-full"
+            >
+              {/* Card 1 - Hero Image & Content */}
+              <div className="lg:col-span-7 bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] rounded-3xl overflow-hidden relative shadow-2xl min-h-[450px] flex flex-col group select-none">
+                <Image
+                  src={imageMap[activeContent.id] || "/images/longevity-art.jpg"}
+                  alt={`${activeContent.label} biology`}
+                  fill
+                  className="object-cover transition-transform duration-[10s] group-hover:scale-105"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-80" />
+
+                {/* Decade Tag - Top Left */}
+                <div className="absolute top-6 left-6 md:top-8 md:left-8 z-20">
+                  <div className="inline-flex items-center px-3.5 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 bg-black/50 backdrop-blur-md text-[var(--color-levl-cyan)] text-xs font-bold uppercase tracking-widest shadow-lg">
+                    {activeContent.label}
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-sm font-black uppercase tracking-widest text-gray-200">
+
+                <div className="relative z-10 px-6 md:px-8 pt-6 flex flex-col items-start mt-auto w-full pb-5 md:pb-6">
+                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 leading-tight drop-shadow-xl max-w-2xl">
+                    {activeContent.title}
+                  </h3>
+
+                  <div className="bg-white/10 backdrop-blur-md border border-white/15 p-5 md:p-6 rounded-2xl shadow-2xl w-full max-w-2xl">
+                    <p className="text-white/95 leading-relaxed text-sm sm:text-base md:text-lg">
+                      {activeContent.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 2 & 3 - Problems and Solutions Stack */}
+              <div className="lg:col-span-5 flex flex-col gap-6">
+                {/* Top Card - Problems */}
+                <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-6 sm:p-8 flex-1 flex flex-col shadow-xl">
+                  <h4 className="text-xs sm:text-sm font-bold text-white/50 uppercase tracking-wider mb-5">
                     What&apos;s Happening in Your Body
                   </h4>
-                  <p className="text-xs text-gray-400">
-                    Key cellular &amp; metabolic shifts {activeContent.label.toLowerCase()}
-                  </p>
+                  <ul className="flex flex-col gap-4 sm:gap-5 mt-auto">
+                    {activeContent.bodyChanges?.map(
+                      (change: string, idx: number) => (
+                        <li key={idx} className="flex items-start gap-3.5">
+                          <div className="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center shrink-0 mt-0.5 border border-white/10">
+                            <X
+                              className="w-3 h-3 text-white/40"
+                              strokeWidth={3}
+                            />
+                          </div>
+                          <span className="text-white/70 font-medium text-sm sm:text-base leading-snug">
+                            {change}
+                          </span>
+                        </li>
+                      )
+                    )}
+                  </ul>
                 </div>
-              </div>
-              <ul className="space-y-4">
-                {activeContent.bodyChanges.map((change, idx) => (
-                  <li
-                    key={idx}
-                    className="flex items-start gap-3 text-sm sm:text-base text-gray-300 leading-relaxed"
-                  >
-                    <span className="w-2 h-2 rounded-full bg-rose-400/80 mt-2 shrink-0" />
-                    <span>{change}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
 
-            {/* Right Card: How LIFESPAN+ Activate Intervenes */}
-            <div className="rounded-2xl bg-gradient-to-br from-amber-500/[0.08] to-teal-500/[0.05] border border-amber-500/30 p-6 sm:p-8">
-              <div className="flex items-center gap-2.5 mb-5">
-                <div className="w-9 h-9 rounded-xl bg-amber-400/20 border border-amber-400/40 flex items-center justify-center text-amber-300">
-                  <Sparkles className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-black uppercase tracking-widest text-amber-300">
-                    How LIFESPAN+ Activate Intervenes
+                {/* Bottom Card - Solutions */}
+                <div className="bg-gradient-to-br from-[var(--color-levl-cyan)]/10 to-[var(--color-levl-magenta)]/5 border border-[var(--color-levl-cyan)]/20 rounded-3xl p-6 sm:p-8 flex-1 flex flex-col relative overflow-hidden shadow-xl">
+                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[var(--color-levl-cyan)]/20 via-transparent to-transparent opacity-50" />
+                  <h4 className="text-xs sm:text-sm font-bold text-[var(--color-levl-cyan)] uppercase tracking-wider mb-5 relative z-10">
+                    Activate Longevity Benefits
                   </h4>
-                  <p className="text-xs text-amber-200/70">
-                    Targeted morning pathways &amp; functional support
-                  </p>
+                  <ul className="flex flex-col gap-4 sm:gap-5 mt-auto relative z-10">
+                    {activeContent.levlBenefits?.map(
+                      (benefit: string, idx: number) => (
+                        <li key={idx} className="flex items-start gap-3.5">
+                          <div className="w-5 h-5 rounded-full bg-[var(--color-levl-cyan)]/20 flex items-center justify-center shrink-0 mt-0.5 border border-[var(--color-levl-cyan)]/40 shadow-[0_0_10px_rgba(14,165,233,0.3)]">
+                            <Check
+                              className="w-3 h-3 text-[var(--color-levl-cyan)]"
+                              strokeWidth={3}
+                            />
+                          </div>
+                          <span className="text-white font-medium text-sm sm:text-base leading-snug">
+                            {benefit}
+                          </span>
+                        </li>
+                      )
+                    )}
+                  </ul>
                 </div>
               </div>
-              <ul className="space-y-4">
-                {activeContent.levlBenefits.map((benefit, idx) => (
-                  <li
-                    key={idx}
-                    className="flex items-start gap-3 text-sm sm:text-base text-white font-medium leading-relaxed"
-                  >
-                    <div className="w-5 h-5 rounded-full bg-amber-400 text-black flex items-center justify-center shrink-0 mt-0.5">
-                      <Check className="w-3.5 h-3.5 stroke-[3]" />
-                    </div>
-                    <span>{benefit}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </section>

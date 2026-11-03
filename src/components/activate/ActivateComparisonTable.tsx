@@ -1,180 +1,185 @@
 "use client";
 
 import React, { useState } from "react";
-import { Check, X, Minus, Info } from "lucide-react";
+import { Check, Minus, Info } from "lucide-react";
 import { activateContent } from "@/content/productActivate";
+import { cn } from "@/components/cart/CheckoutButton";
 
 export function ActivateComparisonTable() {
-  const { caption, headers, rows } = activateContent.comparisonTable;
-  const [openTooltipIndex, setOpenTooltipIndex] = useState<number | null>(null);
-  const captionId = "activate-comparison-table-caption";
+  const { comparisonTable } = activateContent;
+  const [openTooltipIdx, setOpenTooltipIdx] = useState<number | null>(null);
+  const captionId = "activate-comparison-caption";
 
-  const toggleTooltip = (idx: number) => {
-    setOpenTooltipIndex((prev) => (prev === idx ? null : idx));
+  const renderValue = (val: string | boolean) => {
+    if (val === true) {
+      return (
+        <div className="w-5 h-5 sm:w-6 sm:h-6 mx-auto rounded-full bg-[var(--color-levl-cyan)]/20 border border-[var(--color-levl-cyan)] flex items-center justify-center">
+          <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[var(--color-levl-cyan)] stroke-[2.5]" />
+        </div>
+      );
+    }
+    if (val === false) {
+      return <Minus className="w-4 h-4 mx-auto text-white/20" />;
+    }
+    return (
+      <span className="text-[10px] sm:text-xs font-medium text-[var(--color-levl-text-secondary)]">
+        {val}
+      </span>
+    );
   };
 
   return (
-    <section
-      id="comparison"
-      className="py-24 bg-[#070A0F] border-t border-white/10 relative overflow-hidden"
-    >
-      {/* Ambient accent */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-amber-500/5 blur-[150px] rounded-full pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-400 text-xs font-bold uppercase tracking-widest mb-4">
-            Category Comparison
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
-            How <span className="text-amber-400">LIFESPAN+ Activate</span> Compares
+    <section className="py-16 md:py-24 border-y border-[var(--color-levl-panel-border)] overflow-hidden">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="text-center mb-10 md:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            The Standard for Daytime Longevity
           </h2>
-          <p className="text-lg text-gray-400 leading-relaxed">
-            Most morning powders force a trade-off between stimulant energy drinks that crash your adrenals, basic longevity blends that ignore methylation and fasting pathways, or $600+ clinic NAD+ IV drips.
+          <p className="text-xs sm:text-sm md:text-base text-[var(--color-levl-text-secondary)] max-w-2xl mx-auto">
+            See how LEVL LIFESPAN+ Activate compares to basic longevity powders,
+            stimulant energy drinks, and clinic NAD+ IV drips.
           </p>
         </div>
 
-        {/* Accessible, keyboard-scrollable responsive table container */}
+        {/* Comparison Table (Matches ComparisonTable.tsx) */}
         <div
           tabIndex={0}
           role="region"
           aria-labelledby={captionId}
-          className="overflow-x-auto rounded-3xl border border-white/10 bg-[#0B1018]/90 shadow-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+          className="w-full bg-[var(--color-levl-panel)]/50 border border-[var(--color-levl-panel-border)] rounded-2xl p-2 sm:p-5 md:p-6 shadow-2xl overflow-x-auto"
         >
-          <table className="w-full border-collapse text-left min-w-[820px]">
+          <table className="w-full table-fixed border-collapse">
             <caption id={captionId} className="sr-only">
-              {caption}
+              Comparison of LIFESPAN+ Activate against other longevity powders,
+              energy drinks, and NAD+ IV clinics
             </caption>
             <thead>
-              <tr className="border-b border-white/10">
-                {headers.map((header, idx) => {
-                  const isFeatureCol = idx === 0;
-                  const isActivateCol = idx === 1;
-                  return (
-                    <th
-                      key={header}
-                      scope="col"
-                      className={`p-5 sm:p-6 align-bottom ${
-                        isFeatureCol
-                          ? "sticky start-0 z-20 bg-[#0B1018] w-[26%] text-xs font-bold uppercase tracking-widest text-gray-400 border-r border-white/10"
-                          : isActivateCol
-                          ? "w-[24%] bg-amber-500/[0.12] border-x border-amber-500/30 text-amber-300"
-                          : "w-[16.6%] text-gray-300 font-semibold text-sm"
-                      }`}
-                    >
-                      {isActivateCol ? (
-                        <div>
-                          <span className="inline-block px-2.5 py-0.5 rounded-full bg-amber-400 text-black text-[10px] font-black uppercase tracking-widest mb-2">
-                            Morning System
-                          </span>
-                          <div className="text-lg font-extrabold text-white tracking-tight">
-                            {header}
-                          </div>
-                          <div className="text-[11px] font-medium text-amber-300/80 mt-0.5">
-                            14-Active Fasting-Mimetic Complex
-                          </div>
-                        </div>
-                      ) : (
-                        <span>{header}</span>
-                      )}
-                    </th>
-                  );
-                })}
+              <tr className="border-b border-[var(--color-levl-panel-border)]">
+                {/* Column 1: Feature */}
+                <th
+                  scope="col"
+                  className="sticky start-0 z-10 bg-[#121521] w-[28%] sm:w-[32%] text-left py-3 px-1.5 sm:px-4 text-[11px] sm:text-xs md:text-sm font-semibold text-white"
+                >
+                  Feature
+                </th>
+
+                {/* Column 2: LEVL Activate Highlight */}
+                <th
+                  scope="col"
+                  className="w-[18%] sm:w-[17%] text-center py-3 px-1 bg-[var(--color-levl-cyan)]/15 border-t-2 border-x border-[var(--color-levl-cyan)]/40 rounded-t-xl"
+                >
+                  <span className="text-[var(--color-levl-cyan)] font-black text-xs md:text-sm block">
+                    <span className="md:hidden">Activate</span>
+                    <span className="hidden md:inline">
+                      {comparisonTable.headers[1]}
+                    </span>
+                  </span>
+                </th>
+
+                {/* Column 3: Longevity Powders */}
+                <th
+                  scope="col"
+                  className="w-[18%] sm:w-[17%] text-center py-3 px-1 text-[11px] sm:text-xs md:text-sm font-medium text-[var(--color-levl-text-secondary)]"
+                >
+                  <span className="md:hidden">Powders</span>
+                  <span className="hidden md:inline">
+                    {comparisonTable.headers[2]}
+                  </span>
+                </th>
+
+                {/* Column 4: Energy Drinks */}
+                <th
+                  scope="col"
+                  className="w-[18%] sm:w-[17%] text-center py-3 px-1 text-[11px] sm:text-xs md:text-sm font-medium text-[var(--color-levl-text-secondary)]"
+                >
+                  <span className="md:hidden leading-tight block">
+                    Energy Drinks
+                  </span>
+                  <span className="hidden md:inline">
+                    {comparisonTable.headers[3]}
+                  </span>
+                </th>
+
+                {/* Column 5: NAD+ IV Clinics */}
+                <th
+                  scope="col"
+                  className="w-[18%] sm:w-[17%] text-center py-3 px-1 text-[11px] sm:text-xs md:text-sm font-medium text-[var(--color-levl-text-secondary)]"
+                >
+                  <span className="md:hidden">NAD+ IVs</span>
+                  <span className="hidden md:inline">
+                    {comparisonTable.headers[4]}
+                  </span>
+                </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/10 text-sm">
-              {rows.map((row, idx) => {
-                const isTooltipOpen = openTooltipIndex === idx;
-                return (
-                  <tr
-                    key={row.feature}
-                    className="hover:bg-white/[0.02] transition-colors group"
+
+            <tbody className="divide-y divide-white/5">
+              {comparisonTable.rows.map((row, i) => (
+                <tr key={i} className="hover:bg-white/[0.02] transition-colors">
+                  {/* Feature Name & Tooltip */}
+                  <th
+                    scope="row"
+                    className="sticky start-0 z-10 bg-[#121521]/95 py-3 sm:py-4 px-2 sm:px-4 text-left align-middle font-normal"
                   >
-                    {/* Sticky Row Header */}
-                    <th
-                      scope="row"
-                      className="sticky start-0 z-10 bg-[#0B1018] group-hover:bg-[#101722] p-5 sm:p-6 font-bold text-white border-r border-white/10 align-top transition-colors"
-                    >
-                      <div className="flex items-start justify-between gap-2">
-                        <span className="leading-snug">{row.feature}</span>
-                        {row.tooltip && (
-                          <button
-                            type="button"
-                            onClick={() => toggleTooltip(idx)}
-                            aria-expanded={isTooltipOpen}
-                            aria-label={`More details about ${row.feature}`}
-                            className="p-1 rounded-md text-gray-500 hover:text-amber-400 hover:bg-white/5 transition-colors shrink-0"
+                    <div className="flex items-center gap-1 sm:gap-1.5 flex-wrap">
+                      <span className="text-white font-medium text-[11px] sm:text-xs md:text-sm leading-snug break-words">
+                        {row.feature}
+                      </span>
+                      {row.tooltip && (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setOpenTooltipIdx(openTooltipIdx === i ? null : i)
+                          }
+                          aria-expanded={openTooltipIdx === i}
+                          aria-label={`Details about ${row.feature}`}
+                          className="relative group shrink-0 inline-block cursor-pointer"
+                        >
+                          <Info className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[var(--color-levl-text-muted)] group-hover:text-[var(--color-levl-cyan)] transition-colors" />
+                          <span
+                            className={`absolute left-0 bottom-full mb-2 w-48 sm:w-60 bg-[#1A1D27] border border-[var(--color-levl-panel-border)] p-2.5 rounded-lg text-[10px] sm:text-xs text-white text-left transition-opacity z-30 shadow-2xl ${
+                              openTooltipIdx === i
+                                ? "opacity-100"
+                                : "opacity-0 group-hover:opacity-100 pointer-events-none"
+                            }`}
                           >
-                            <Info className="w-4 h-4" />
-                          </button>
-                        )}
-                      </div>
-                      {isTooltipOpen && row.tooltip && (
-                        <p className="mt-2.5 p-3 rounded-xl bg-white/[0.04] border border-white/10 text-xs font-normal text-gray-300 leading-relaxed">
-                          {row.tooltip}
-                        </p>
+                            {row.tooltip}
+                          </span>
+                        </button>
                       )}
-                    </th>
+                    </div>
+                  </th>
 
-                    {/* LIFESPAN+ Activate Column */}
-                    <td className="p-5 sm:p-6 bg-amber-500/[0.07] border-x border-amber-500/30 align-top">
-                      <div className="flex items-start gap-2.5">
-                        <div className="w-5 h-5 rounded-full bg-amber-400 text-black flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
-                          <Check className="w-3.5 h-3.5 stroke-[3]" />
-                        </div>
-                        <span className="font-bold text-white leading-snug">
-                          {row.activate}
-                        </span>
-                      </div>
-                    </td>
+                  {/* LEVL Activate Value */}
+                  <td
+                    className={cn(
+                      "py-3 sm:py-4 px-1 text-center align-middle bg-[var(--color-levl-cyan)]/10 border-x border-[var(--color-levl-cyan)]/25",
+                      i === comparisonTable.rows.length - 1 &&
+                        "rounded-b-xl border-b border-[var(--color-levl-cyan)]/40"
+                    )}
+                  >
+                    {renderValue(row.levl)}
+                  </td>
 
-                    {/* Other Longevity Powders */}
-                    <td className="p-5 sm:p-6 text-gray-300 align-top">
-                      <div className="flex items-start gap-2.5">
-                        <div className="w-5 h-5 rounded-full bg-white/10 text-gray-400 flex items-center justify-center shrink-0 mt-0.5">
-                          <Minus className="w-3.5 h-3.5" />
-                        </div>
-                        <span className="text-gray-300 leading-snug">
-                          {row.otherLongevity}
-                        </span>
-                      </div>
-                    </td>
+                  {/* Longevity Powders */}
+                  <td className="py-3 sm:py-4 px-1 text-center align-middle">
+                    {renderValue(row.generic)}
+                  </td>
 
-                    {/* Stimulant Energy Drinks */}
-                    <td className="p-5 sm:p-6 text-gray-400 align-top">
-                      <div className="flex items-start gap-2.5">
-                        <div className="w-5 h-5 rounded-full bg-rose-500/10 text-rose-400 flex items-center justify-center shrink-0 mt-0.5">
-                          <X className="w-3.5 h-3.5" />
-                        </div>
-                        <span className="text-gray-400 leading-snug">
-                          {row.energyDrinks}
-                        </span>
-                      </div>
-                    </td>
+                  {/* Energy Drinks */}
+                  <td className="py-3 sm:py-4 px-1 text-center align-middle">
+                    {renderValue(row.single)}
+                  </td>
 
-                    {/* $600+ NAD+ IV Clinics */}
-                    <td className="p-5 sm:p-6 text-gray-400 align-top">
-                      <div className="flex items-start gap-2.5">
-                        <div className="w-5 h-5 rounded-full bg-white/10 text-gray-400 flex items-center justify-center shrink-0 mt-0.5">
-                          <Minus className="w-3.5 h-3.5" />
-                        </div>
-                        <span className="text-gray-400 leading-snug">
-                          {row.nadIv}
-                        </span>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
+                  {/* NAD+ IV Clinics */}
+                  <td className="py-3 sm:py-4 px-1 text-center align-middle">
+                    {renderValue(row.diy)}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
-
-        {/* Bottom Caption Note */}
-        <p className="text-center text-xs text-gray-500 mt-4">
-          Tip: Click the <Info className="w-3.5 h-3.5 inline mx-0.5 -mt-0.5 text-gray-400" /> icon on any row for mechanistic details. Swipe or scroll horizontally on mobile devices.
-        </p>
       </div>
     </section>
   );
