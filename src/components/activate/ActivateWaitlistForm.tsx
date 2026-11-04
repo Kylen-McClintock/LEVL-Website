@@ -114,7 +114,7 @@ export function ActivateWaitlistForm({
             htmlFor={emailFieldId}
             className="block text-xs sm:text-sm font-bold text-white"
           >
-            Join the Early Access &amp; Beta Cohort Waitlist
+            Join the Activate Waitlist.
           </label>
           {/* Format hint placed ABOVE input per modern-web-guidance `validate-input-after-interaction` */}
           <span id={emailHintId} className="block text-[11px] text-white/55">

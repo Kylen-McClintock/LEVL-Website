@@ -56,7 +56,7 @@ export function ActivateScienceSection() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 opacity-20 pointer-events-none bg-[radial-gradient(circle,_var(--color-levl-cyan)_0%,_transparent_60%)] blur-[120px] z-0" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <div className="inline-flex items-center px-3 py-1 rounded-full border border-[var(--color-levl-cyan)]/30 bg-[var(--color-levl-cyan)]/10 text-[var(--color-levl-cyan)] text-sm font-medium mb-6">
             Core Biology
           </div>
@@ -66,6 +66,47 @@ export function ActivateScienceSection() {
           <p className="text-xl text-[var(--color-levl-text-secondary)] font-medium max-w-2xl mx-auto">
             The Science of Fasting Meets the Biology of Aging
           </p>
+        </div>
+
+        {/* Compact Patent Research Panel */}
+        <div
+          id="patent-panel"
+          className="max-w-4xl mx-auto mb-12 rounded-2xl p-[1px] bg-[linear-gradient(to_right,rgba(51,130,199,0.55)_0%,rgba(99,149,208,0.45)_32%,rgba(246,149,32,0.55)_68%,rgba(221,77,14,0.55)_100%)] shadow-[0_0_24px_rgba(246,149,32,0.12)] scroll-mt-28"
+        >
+          <div className="rounded-2xl bg-[#0B0E17]/88 backdrop-blur-md p-5 sm:p-6 md:px-8 md:py-6 flex flex-col gap-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                Built on patented autophagy research
+              </h3>
+              <a
+                href="https://patentcenter.uspto.gov/applications/16875440"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-[#F69520] hover:text-[#EBB589] transition-colors shrink-0"
+              >
+                <span>View U.S. patent ↗</span>
+              </a>
+            </div>
+
+            <div className="space-y-2 text-xs sm:text-sm text-[var(--color-levl-text-secondary)] leading-relaxed">
+              <p>
+                Activate’s development builds on AEON research combining
+                trehalose, EGCG, and vitamin D3 to investigate synergistic
+                activation of autophagy—the cellular recycling process central
+                to healthy aging.
+              </p>
+              <p className="text-white/90 font-medium">
+                U.S. Patent No. 12,396,994 covers specified methods of using
+                this combination to increase autophagy.
+              </p>
+            </div>
+
+            <p className="text-[11px] sm:text-xs text-white/60 leading-relaxed pt-2 border-t border-white/10">
+              LEVL holds a limited exclusive evaluation license and an option
+              for an exclusive commercial license from the University of
+              Colorado Boulder.
+            </p>
+          </div>
         </div>
 
         <BentoGrid className="mb-12">
@@ -154,10 +195,10 @@ export function ActivateScienceSection() {
                     </p>
                     <ul className="space-y-2">
                       <li>
-                        <strong className="text-[var(--color-levl-green)]">Nicotinamide Riboside (NR)</strong> has been clinically shown in human trials to increase blood NAD+ by up to <strong className="text-white">142%</strong> [3].
+                        <strong className="text-[var(--color-levl-green)]">Nicotinamide Riboside (NR)</strong> has been clinically shown in human trials to significantly increase whole-blood NAD+ levels [3].
                       </li>
                       <li>
-                        <strong className="text-[var(--color-levl-green)]">NR + Pterostilbene</strong> sustained a <strong className="text-white">90% increase in cellular NAD+</strong> in a randomized, double-blind trial published in <em>Nature npj Aging</em> [4].
+                        <strong className="text-[var(--color-levl-green)]">NR + Pterostilbene</strong> produced a <strong className="text-white">sustained increase in cellular NAD+</strong> in a randomized, double-blind trial published in <em>Nature npj Aging</em> [4].
                       </li>
                     </ul>
                   </div>
@@ -325,7 +366,7 @@ export function ActivateScienceSection() {
                   <Sun className="w-6 h-6" />
                 </div>
                 <h3 className="text-xl md:text-2xl font-bold text-white m-0">
-                  Morning Minerals &amp; Krebs Malate
+                  Minerals for Mitochondrial Energy.
                 </h3>
               </div>
               <ChevronDown
@@ -411,10 +452,10 @@ export function ActivateScienceSection() {
                     [2] Rahman et al. (2024): EGCG (98%) activates AMPK/ULK1 signaling and suppresses senescent SASP markers.
                   </p>
                   <p>
-                    [3] Conze et al. <em className="italic">Scientific Reports</em> (2019) &amp; Martens et al. <em className="italic">Nature Communications</em> (2018): Nicotinamide Riboside (NR) increases human whole-blood NAD+ by up to 142% and supports healthy systolic blood pressure.
+                    [3] Conze et al. <em className="italic">Scientific Reports</em> (2019) &amp; Martens et al. <em className="italic">Nature Communications</em> (2018): Nicotinamide Riboside (NR) significantly increases human whole-blood NAD+ and supports healthy systolic blood pressure.
                   </p>
                   <p>
-                    [4] Dellinger et al. <em className="italic">Nature npj Aging and Mechanisms of Disease</em> (2017): Randomized, double-blind trial demonstrating a sustained 90% increase in human cellular NAD+ with NR + Pterostilbene.
+                    [4] Dellinger et al. <em className="italic">Nature npj Aging and Mechanisms of Disease</em> (2017): Randomized, double-blind trial demonstrating a sustained increase in human cellular NAD+ with NR + Pterostilbene.
                   </p>
                   <p>
                     [5] Asadi Shahmirzadi et al. <em className="italic">Cell Metabolism</em> (2020) &amp; Demidenko et al. <em className="italic">Aging</em> (2021): Calcium Alpha-Ketoglutarate (Ca-AKG) compresses morbidity and reduces epigenetic biological age markers.

@@ -23,7 +23,7 @@ export interface ActivateComparisonRow {
 export const activateContent = {
   title: "LIFESPAN+ Activate",
   shortDescription:
-    "A patented-pathway, fasting-inspired morning longevity complex designed to keep cellular autophagy engaged—even with breakfast—while fueling steady NAD+ energy, cognition, and all 12 Hallmarks of Aging.",
+    "A fasting-inspired morning longevity complex designed to support autophagy, NAD+ metabolism, and cellular energy—with 14 active ingredients targeting all 12 Hallmarks of Aging.",
 
   heroBullets: [
     "Engages fasting-induced autophagy pathways—even with a meal",
@@ -112,7 +112,7 @@ export const activateContent = {
     {
       name: "Nicotinamide Riboside (NR)",
       dose: "NAD+ Precursor",
-      function: "Clinically shown to boost cellular NAD+ by up to 142% for DNA repair and ATP.",
+      function: "Clinically shown to boost cellular NAD+ for DNA repair and ATP.",
       daytimeBenefits: ["Cellular Energy & NAD+", "Muscle & Brain Performance"],
       halls: [
         "Mitochondrial Health",
@@ -122,7 +122,7 @@ export const activateContent = {
       ],
       evidenceTag: "Strong (Multiple Human RCTs)",
       whyItMatters:
-        "Intracellular NAD+ drops by up to 50% by middle age. NR enters cells directly via nucleoside transporters to replenish NAD+ (+90% to +142% in human trials), fueling SIRT1–SIRT7 longevity sirtuins and PARP1 DNA repair.",
+        "Intracellular NAD+ drops by up to 50% by middle age. NR enters cells directly via nucleoside transporters to significantly replenish cellular NAD+ in human trials, fueling SIRT1–SIRT7 longevity sirtuins and PARP1 DNA repair.",
       daytimeBenefitDetail:
         "Delivers steady mitochondrial ATP production and cognitive stamina—providing the cellular benefits of $600+ NAD+ IV drips in a 30-second morning scoop.",
       daytimeMechanism:
@@ -217,7 +217,7 @@ export const activateContent = {
       ],
       evidenceTag: "Strong (Nature npj Aging Human RCT)",
       whyItMatters:
-        "With two methoxy groups giving it ~4x greater oral bioavailability than resveratrol, Pterostilbene pairs synergistically with NR—clinically shown in Nature npj Aging to sustain a 90% increase in human cellular NAD+.",
+        "With two methoxy groups giving it ~4x greater oral bioavailability than resveratrol, Pterostilbene pairs synergistically with NR—clinically shown in Nature npj Aging to produce a sustained increase in human cellular NAD+.",
       daytimeBenefitDetail:
         "Crosses the blood-brain barrier to support cognitive sharpness, neuroprotection, and vascular elasticity.",
       daytimeMechanism:
@@ -545,7 +545,7 @@ export const activateContent = {
     {
       question: "How does Activate compare to $600+ NAD+ IV drips?",
       answer:
-        "Clinic NAD+ IV infusions cost $600–$1,000+ per session, require sitting with an IV catheter for 2–4 hours, and infuse extracellular NAD+ that must be broken down before entering cells. Activate uses Nicotinamide Riboside (NR) paired with Pterostilbene (clinically shown to raise human NAD+ by 90–142%) and Trimethylglycine (TMG) to directly elevate intracellular NAD+ every morning in 30 seconds.",
+        "Clinic NAD+ IV infusions cost $600–$1,000+ per session, require sitting with an IV catheter for 2–4 hours, and infuse extracellular NAD+ that must be broken down before entering cells. Activate uses Nicotinamide Riboside (NR) paired with Pterostilbene (clinically shown to produce sustained increases in human cellular NAD+) and Trimethylglycine (TMG) to directly elevate intracellular NAD+ every morning in 30 seconds.",
     },
     {
       question: "Why did you include Trimethylglycine (TMG) alongside Nicotinamide Riboside (NR)?",

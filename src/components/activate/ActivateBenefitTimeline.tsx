@@ -14,7 +14,7 @@ const timelineItems = [
   {
     icon: Calendar,
     time: "2 Weeks",
-    stats: ["+90–142% Cellular NAD+ Benchmark"],
+    stats: ["Sustained Cellular NAD+ Support"],
     points: [
       "Replenished intracellular NAD+ & phosphocreatine stamina",
       "Protected methylation balance with built-in TMG & Glycine",

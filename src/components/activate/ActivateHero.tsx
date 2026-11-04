@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Activity,
+  ArrowDown,
   Award,
   Calendar,
   Factory,
@@ -17,7 +18,6 @@ import {
 } from "lucide-react";
 import { activateContent } from "@/content/productActivate";
 import { ActivateWaitlistForm } from "./ActivateWaitlistForm";
-import { StatsBar } from "@/components/product/StatsBar";
 
 const VALUE_INGREDIENTS = [
   { name: "Nicotinamide Riboside (NR)", dose: "300 mg", price: 54 },
@@ -321,7 +321,22 @@ export function ActivateHero() {
           style={{ top: "max(6rem, calc(100vh - 100% - 2rem))" }}
         >
           <div className="mb-8">
-            <div className="mb-5">
+            <div className="mb-5 flex flex-wrap items-center gap-2.5">
+              <a
+                href="#patent-panel"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document
+                    .getElementById("patent-panel")
+                    ?.scrollIntoView({ behavior: "smooth", block: "center" });
+                }}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[linear-gradient(to_right,rgba(221,77,14,0.22)_0%,rgba(246,149,32,0.2)_32%,rgba(99,149,208,0.2)_68%,rgba(51,130,199,0.25)_100%)] border border-[#F69520]/45 hover:border-[#F69520]/80 text-xs font-semibold text-white shadow-sm transition-all cursor-pointer group"
+              >
+                <Flame className="w-3.5 h-3.5 text-[#F69520]" />
+                <span>Built on patented autophagy research</span>
+                <ArrowDown className="w-3 h-3 text-[#6395D0] group-hover:translate-y-0.5 transition-transform" />
+              </a>
+
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] text-xs font-semibold text-white/90 shadow-sm">
                 <Sun className="w-3.5 h-3.5 text-amber-400" />
                 <span>
@@ -400,8 +415,6 @@ export function ActivateHero() {
               {activateContent.purchaseOptions.disclaimer}
             </p>
           </div>
-
-          <StatsBar />
         </div>
       </div>
     </section>

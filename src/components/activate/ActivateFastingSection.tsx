@@ -72,7 +72,7 @@ export function ActivateFastingSection() {
                 </div>
                 <div className="space-y-1 md:space-y-2">
                   <h3 className="text-white font-bold text-sm sm:text-base md:text-lg lg:text-xl leading-snug">
-                    Steady NAD+ &amp; Cellular ATP
+                    NAD+ Support. Cellular Energy.
                   </h3>
                   <p className="text-[var(--color-levl-text-secondary)] text-xs sm:text-sm leading-relaxed">
                     Boosts intracellular NAD+ and mitochondrial ATP for clear
