@@ -10,8 +10,8 @@ import Image from "next/image";
 const imageMap: Record<string, string> = {
   "20s": "/images/benefits/activate_20s.png",
   "30s": "/images/benefits/activate_30s.png",
-  "40s": "/images/benefits/activate_40s.png",
-  "50s": "/images/benefits/activate_50s.png",
+  "40s": "/images/benefits/activate_40s_v2.jpg",
+  "50s": "/images/benefits/activate_50s_v2.jpg",
   "60s": "/images/benefits/activate_60s.png",
 };
 

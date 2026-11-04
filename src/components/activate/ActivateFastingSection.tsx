@@ -9,12 +9,12 @@ export function ActivateFastingSection() {
   return (
     <section className="py-12 md:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        {/* Top Hero Bento (Full Width - Matches BentoImages.tsx) */}
+        {/* Top Hero Bento (Full Width - Shorter desktop height & stacked mobile benefits) */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative w-full h-[600px] md:h-[800px] rounded-3xl overflow-hidden group"
+          className="relative w-full min-h-[540px] md:h-[540px] lg:h-[580px] rounded-3xl overflow-hidden group flex flex-col justify-between p-5 sm:p-6 md:p-0 md:block"
         >
           <Image
             src="/images/running-lifestyle.jpg"
@@ -27,11 +27,11 @@ export function ActivateFastingSection() {
           />
 
           {/* Top & Bottom Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/20 to-black/85" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/25 to-black/90" />
 
           {/* Large Hero Text */}
-          <div className="absolute top-12 left-0 right-0 px-8 text-center">
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight drop-shadow-xl">
+          <div className="relative z-10 pt-4 pb-6 md:py-0 md:absolute md:top-10 left-0 right-0 md:px-8 text-center">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight drop-shadow-xl">
               Better Days.
               <br />
               <span className="text-[var(--color-levl-text-muted)]">
@@ -40,49 +40,63 @@ export function ActivateFastingSection() {
             </h2>
           </div>
 
-          {/* Bottom Frosted Glass Panel (Matches BentoImages.tsx Seed formatting) */}
-          <div className="absolute bottom-6 left-0 right-0 md:left-12 md:right-12 md:bottom-8 overflow-x-auto hide-scrollbar snap-x snap-mandatory px-6 md:px-0">
-            <div className="flex md:grid md:grid-cols-3 gap-6 md:gap-8 bg-white/5 backdrop-blur-md border border-white/10 p-6 md:px-8 md:py-6 rounded-2xl w-max md:w-full">
-              <div className="w-[280px] md:w-auto snap-center flex-shrink-0 space-y-3">
-                <Flame
-                  className="w-8 h-8 text-[var(--color-levl-cyan)]"
-                  strokeWidth={1.5}
-                />
-                <h3 className="text-white font-bold text-lg md:text-xl">
-                  End Your Fast, Not Your Autophagy
-                </h3>
-                <p className="text-[var(--color-levl-text-secondary)] text-sm leading-relaxed">
-                  Engages fasting-induced cellular cleanup pathways—even with
-                  breakfast—without hunger or muscle loss.
-                </p>
+          {/* Bottom Frosted Glass Panel:
+              - Mobile: Compact vertical 3-row stack so all 3 benefits (Autophagy, NAD+, 12 Hallmarks) are immediately visible with zero horizontal scrolling
+              - Desktop (md+): 3-column horizontal grid */}
+          <div className="relative z-10 md:absolute md:bottom-8 md:left-10 md:right-10 lg:left-12 lg:right-12">
+            <div className="flex flex-col divide-y divide-white/10 md:divide-y-0 md:grid md:grid-cols-3 md:gap-8 bg-black/45 md:bg-white/5 backdrop-blur-md border border-white/15 p-4 sm:p-5 md:px-8 md:py-6 rounded-2xl w-full">
+              <div className="flex items-start gap-3.5 py-3 first:pt-0 last:pb-0 md:block md:py-0 md:space-y-2.5">
+                <div className="w-9 h-9 rounded-xl bg-[var(--color-levl-cyan)]/15 border border-[var(--color-levl-cyan)]/30 flex items-center justify-center shrink-0 mt-0.5 md:mt-0 md:w-auto md:h-auto md:bg-transparent md:border-0 md:justify-start">
+                  <Flame
+                    className="w-5 h-5 md:w-7 md:h-7 text-[var(--color-levl-cyan)]"
+                    strokeWidth={1.75}
+                  />
+                </div>
+                <div className="space-y-1 md:space-y-2">
+                  <h3 className="text-white font-bold text-sm sm:text-base md:text-lg lg:text-xl leading-snug">
+                    End Your Fast, Not Your Autophagy
+                  </h3>
+                  <p className="text-[var(--color-levl-text-secondary)] text-xs sm:text-sm leading-relaxed">
+                    Engages fasting-induced cellular cleanup pathways—even with
+                    breakfast—without hunger or muscle loss.
+                  </p>
+                </div>
               </div>
 
-              <div className="w-[280px] md:w-auto snap-center flex-shrink-0 space-y-3">
-                <Zap
-                  className="w-8 h-8 text-[var(--color-levl-cyan)]"
-                  strokeWidth={1.5}
-                />
-                <h3 className="text-white font-bold text-lg md:text-xl">
-                  Steady NAD+ &amp; Cellular ATP
-                </h3>
-                <p className="text-[var(--color-levl-text-secondary)] text-sm leading-relaxed">
-                  Boosts intracellular NAD+ and mitochondrial ATP for clear
-                  daytime focus with 0 mg caffeine.
-                </p>
+              <div className="flex items-start gap-3.5 py-3 first:pt-0 last:pb-0 md:block md:py-0 md:space-y-2.5">
+                <div className="w-9 h-9 rounded-xl bg-[var(--color-levl-cyan)]/15 border border-[var(--color-levl-cyan)]/30 flex items-center justify-center shrink-0 mt-0.5 md:mt-0 md:w-auto md:h-auto md:bg-transparent md:border-0 md:justify-start">
+                  <Zap
+                    className="w-5 h-5 md:w-7 md:h-7 text-[var(--color-levl-cyan)]"
+                    strokeWidth={1.75}
+                  />
+                </div>
+                <div className="space-y-1 md:space-y-2">
+                  <h3 className="text-white font-bold text-sm sm:text-base md:text-lg lg:text-xl leading-snug">
+                    Steady NAD+ &amp; Cellular ATP
+                  </h3>
+                  <p className="text-[var(--color-levl-text-secondary)] text-xs sm:text-sm leading-relaxed">
+                    Boosts intracellular NAD+ and mitochondrial ATP for clear
+                    daytime focus with 0 mg caffeine.
+                  </p>
+                </div>
               </div>
 
-              <div className="w-[280px] md:w-auto snap-center flex-shrink-0 space-y-3">
-                <Activity
-                  className="w-8 h-8 text-[var(--color-levl-cyan)]"
-                  strokeWidth={1.5}
-                />
-                <h3 className="text-white font-bold text-lg md:text-xl">
-                  All 12 Hallmarks of Aging
-                </h3>
-                <p className="text-[var(--color-levl-text-secondary)] text-sm leading-relaxed">
-                  Synergistic support for skin, joints, muscle, brain, morning
-                  minerals, and a slower pace of aging.
-                </p>
+              <div className="flex items-start gap-3.5 py-3 first:pt-0 last:pb-0 md:block md:py-0 md:space-y-2.5">
+                <div className="w-9 h-9 rounded-xl bg-[var(--color-levl-cyan)]/15 border border-[var(--color-levl-cyan)]/30 flex items-center justify-center shrink-0 mt-0.5 md:mt-0 md:w-auto md:h-auto md:bg-transparent md:border-0 md:justify-start">
+                  <Activity
+                    className="w-5 h-5 md:w-7 md:h-7 text-[var(--color-levl-cyan)]"
+                    strokeWidth={1.75}
+                  />
+                </div>
+                <div className="space-y-1 md:space-y-2">
+                  <h3 className="text-white font-bold text-sm sm:text-base md:text-lg lg:text-xl leading-snug">
+                    All 12 Hallmarks of Aging
+                  </h3>
+                  <p className="text-[var(--color-levl-text-secondary)] text-xs sm:text-sm leading-relaxed">
+                    Synergistic support for skin, joints, muscle, brain, morning
+                    minerals, and a slower pace of aging.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -96,7 +110,7 @@ export function ActivateFastingSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="relative h-[400px] md:h-[600px] rounded-3xl overflow-hidden group"
+            className="relative h-[380px] md:h-[480px] lg:h-[520px] rounded-3xl overflow-hidden group"
           >
             <Image
               src="/images/bento-capsule.jpg"
@@ -125,7 +139,7 @@ export function ActivateFastingSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="relative h-[400px] md:h-[600px] md:col-span-2 rounded-3xl overflow-hidden group"
+            className="relative h-[380px] md:h-[480px] lg:h-[520px] md:col-span-2 rounded-3xl overflow-hidden group"
           >
             <Image
               src="/images/activate-bento-morning.jpg"
