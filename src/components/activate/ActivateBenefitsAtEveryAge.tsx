@@ -254,18 +254,18 @@ export function ActivateBenefitsAtEveryAge() {
                 </div>
 
                 {/* Bottom Card - Solutions */}
-                <div className="bg-gradient-to-br from-[var(--color-levl-cyan)]/10 to-[var(--color-levl-magenta)]/5 border border-[var(--color-levl-cyan)]/20 rounded-3xl p-6 sm:p-8 flex-1 flex flex-col relative overflow-hidden shadow-xl">
-                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[var(--color-levl-cyan)]/20 via-transparent to-transparent opacity-50" />
-                  <h4 className="text-xs sm:text-sm font-bold text-[var(--color-levl-cyan)] uppercase tracking-wider mb-5 relative z-10">
+                <div className="bg-[linear-gradient(135deg,rgba(51,130,199,0.16)_0%,rgba(99,149,208,0.1)_50%,rgba(246,149,32,0.16)_100%)] border border-[#F69520]/30 rounded-3xl p-6 sm:p-8 flex-1 flex flex-col relative overflow-hidden shadow-xl">
+                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#F69520]/20 via-transparent to-transparent opacity-50" />
+                  <h4 className="text-xs sm:text-sm font-bold text-[#F69520] uppercase tracking-wider mb-5 relative z-10">
                     Activate Longevity Benefits
                   </h4>
                   <ul className="flex flex-col gap-4 sm:gap-5 mt-auto relative z-10">
                     {activeContent.levlBenefits?.map(
                       (benefit: string, idx: number) => (
                         <li key={idx} className="flex items-start gap-3.5">
-                          <div className="w-5 h-5 rounded-full bg-[var(--color-levl-cyan)]/20 flex items-center justify-center shrink-0 mt-0.5 border border-[var(--color-levl-cyan)]/40 shadow-[0_0_10px_rgba(14,165,233,0.3)]">
+                          <div className="w-5 h-5 rounded-full bg-[#F69520]/20 flex items-center justify-center shrink-0 mt-0.5 border border-[#F69520]/45 shadow-[0_0_10px_rgba(246,149,32,0.3)]">
                             <Check
-                              className="w-3 h-3 text-[var(--color-levl-cyan)]"
+                              className="w-3 h-3 text-[#F69520]"
                               strokeWidth={3}
                             />
                           </div>

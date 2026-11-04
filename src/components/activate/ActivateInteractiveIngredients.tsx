@@ -71,10 +71,10 @@ export function ActivateInteractiveIngredients() {
                   );
                   setSelectedHall(null);
                 }}
-                className={`w-full text-left px-5 py-3.5 rounded-full transition-all text-base font-medium border border-white/10 cursor-pointer ${
+                className={`w-full text-left px-5 py-3.5 rounded-full transition-all text-base font-medium border border-white/15 cursor-pointer [text-shadow:0_1px_2px_rgba(0,0,0,0.35)] ${
                   selectedBenefit === benefit
-                    ? "bg-[linear-gradient(to_right,rgba(229,128,99,1)_0%,rgba(159,69,118,1)_25%,rgba(45,27,84,1)_60%,rgba(16,5,36,1)_100%)] text-white shadow-[0_0_20px_rgba(229,128,99,0.4)] scale-[1.02]"
-                    : "bg-[linear-gradient(to_right,rgba(229,128,99,0.6)_0%,rgba(159,69,118,0.6)_25%,rgba(45,27,84,0.6)_60%,rgba(16,5,36,0.6)_100%)] text-white/80 hover:bg-[linear-gradient(to_right,rgba(229,128,99,1)_0%,rgba(159,69,118,1)_25%,rgba(45,27,84,1)_60%,rgba(16,5,36,1)_100%)] hover:text-white hover:scale-[1.01]"
+                    ? "bg-[linear-gradient(to_right,rgba(221,77,14,1)_0%,rgba(246,149,32,1)_32%,rgba(99,149,208,1)_68%,rgba(51,130,199,1)_100%)] text-white shadow-[0_0_20px_rgba(246,149,32,0.45)] scale-[1.02]"
+                    : "bg-[linear-gradient(to_right,rgba(221,77,14,0.6)_0%,rgba(246,149,32,0.58)_32%,rgba(99,149,208,0.58)_68%,rgba(51,130,199,0.6)_100%)] text-white/90 hover:bg-[linear-gradient(to_right,rgba(221,77,14,1)_0%,rgba(246,149,32,1)_32%,rgba(99,149,208,1)_68%,rgba(51,130,199,1)_100%)] hover:text-white hover:scale-[1.01]"
                 }`}
               >
                 {benefit}
@@ -95,10 +95,10 @@ export function ActivateInteractiveIngredients() {
                   setSelectedHall(selectedHall === hall ? null : hall);
                   setSelectedBenefit(null);
                 }}
-                className={`w-full text-left px-5 py-3.5 rounded-full transition-all text-base font-medium border border-white/10 cursor-pointer ${
+                className={`w-full text-left px-5 py-3.5 rounded-full transition-all text-base font-medium border border-white/15 cursor-pointer [text-shadow:0_1px_2px_rgba(0,0,0,0.35)] ${
                   selectedHall === hall
-                    ? "bg-[linear-gradient(to_right,rgba(229,128,99,1)_0%,rgba(159,69,118,1)_25%,rgba(45,27,84,1)_60%,rgba(16,5,36,1)_100%)] text-white shadow-[0_0_20px_rgba(229,128,99,0.4)] scale-[1.02]"
-                    : "bg-[linear-gradient(to_right,rgba(229,128,99,0.6)_0%,rgba(159,69,118,0.6)_25%,rgba(45,27,84,0.6)_60%,rgba(16,5,36,0.6)_100%)] text-white/80 hover:bg-[linear-gradient(to_right,rgba(229,128,99,1)_0%,rgba(159,69,118,1)_25%,rgba(45,27,84,1)_60%,rgba(16,5,36,1)_100%)] hover:text-white hover:scale-[1.01]"
+                    ? "bg-[linear-gradient(to_right,rgba(221,77,14,1)_0%,rgba(246,149,32,1)_32%,rgba(99,149,208,1)_68%,rgba(51,130,199,1)_100%)] text-white shadow-[0_0_20px_rgba(246,149,32,0.45)] scale-[1.02]"
+                    : "bg-[linear-gradient(to_right,rgba(221,77,14,0.6)_0%,rgba(246,149,32,0.58)_32%,rgba(99,149,208,0.58)_68%,rgba(51,130,199,0.6)_100%)] text-white/90 hover:bg-[linear-gradient(to_right,rgba(221,77,14,1)_0%,rgba(246,149,32,1)_32%,rgba(99,149,208,1)_68%,rgba(51,130,199,1)_100%)] hover:text-white hover:scale-[1.01]"
                 }`}
               >
                 {hall}
@@ -130,7 +130,7 @@ export function ActivateInteractiveIngredients() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                className={`relative rounded-2xl p-[2px] flex flex-col bg-gradient-to-bl from-[#2D1B54] via-[#9F4576] to-[#E58063] hover:shadow-[0_0_20px_rgba(229,128,99,0.2)] transition-shadow duration-300 ${
+                className={`relative rounded-2xl p-[2px] flex flex-col bg-[linear-gradient(180deg,#3382C7_0%,#6395D0_22%,#EBB589_48%,#F69520_74%,#DD4D0E_100%)] hover:shadow-[0_0_20px_rgba(246,149,32,0.28)] transition-shadow duration-300 ${
                   expandedIngredient === ing.name
                     ? "col-span-2 lg:col-span-4 h-auto aspect-auto"
                     : "aspect-square w-full"

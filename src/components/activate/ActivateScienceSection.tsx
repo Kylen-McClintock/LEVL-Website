@@ -72,7 +72,7 @@ export function ActivateScienceSection() {
           {/* Card 1: Fasting Mimetic */}
           <BentoCard
             colSpan={2}
-            className="bg-[linear-gradient(30deg,#451F52e6,#742D6B33)] backdrop-blur-md p-8 group hover:border-[var(--color-levl-cyan)]/50 cursor-pointer"
+            className="bg-[linear-gradient(135deg,rgba(20,45,76,0.82)_0%,rgba(28,32,52,0.78)_55%,rgba(78,34,15,0.45)_100%)] backdrop-blur-md p-8 group hover:border-[var(--color-levl-cyan)]/50 cursor-pointer"
           >
             <button
               type="button"
@@ -118,7 +118,7 @@ export function ActivateScienceSection() {
           {/* Card 2: Cellular Energy - NAD+ Support */}
           <BentoCard
             colSpan={2}
-            className="bg-[linear-gradient(30deg,#451F52e6,#742D6B33)] p-8 backdrop-blur-md group hover:border-[var(--color-levl-green)]/50 cursor-pointer"
+            className="bg-[linear-gradient(135deg,rgba(20,45,76,0.82)_0%,rgba(28,32,52,0.78)_55%,rgba(78,34,15,0.45)_100%)] p-8 backdrop-blur-md group hover:border-[var(--color-levl-green)]/50 cursor-pointer"
           >
             <button
               type="button"
@@ -169,7 +169,7 @@ export function ActivateScienceSection() {
           {/* Card 3: Lowered Pace of Aging & Methylation */}
           <BentoCard
             colSpan={2}
-            className="bg-[linear-gradient(30deg,#451F52e6,#742D6B33)] p-8 backdrop-blur-md group hover:border-[var(--color-levl-magenta)]/50 cursor-pointer"
+            className="bg-[linear-gradient(135deg,rgba(20,45,76,0.82)_0%,rgba(28,32,52,0.78)_55%,rgba(78,34,15,0.45)_100%)] p-8 backdrop-blur-md group hover:border-[#F69520]/50 cursor-pointer"
           >
             <button
               type="button"
@@ -215,7 +215,7 @@ export function ActivateScienceSection() {
           {/* Card 4: Skin & Joint Longevity */}
           <BentoCard
             colSpan={2}
-            className="bg-[linear-gradient(30deg,#451F52e6,#742D6B33)] p-8 backdrop-blur-md group hover:border-[var(--color-levl-cyan)]/50 cursor-pointer"
+            className="bg-[linear-gradient(135deg,rgba(20,45,76,0.82)_0%,rgba(28,32,52,0.78)_55%,rgba(78,34,15,0.45)_100%)] p-8 backdrop-blur-md group hover:border-[var(--color-levl-cyan)]/50 cursor-pointer"
           >
             <button
               type="button"
@@ -266,7 +266,7 @@ export function ActivateScienceSection() {
           {/* Card 5: Muscle & Brain Longevity */}
           <BentoCard
             colSpan={2}
-            className="bg-[linear-gradient(30deg,#451F52e6,#742D6B33)] p-8 backdrop-blur-md group hover:border-[var(--color-levl-magenta)]/50 cursor-pointer"
+            className="bg-[linear-gradient(135deg,rgba(20,45,76,0.82)_0%,rgba(28,32,52,0.78)_55%,rgba(78,34,15,0.45)_100%)] p-8 backdrop-blur-md group hover:border-[#F69520]/50 cursor-pointer"
           >
             <button
               type="button"
@@ -312,7 +312,7 @@ export function ActivateScienceSection() {
           {/* Card 6: Morning Minerals & Krebs Cycle Malate */}
           <BentoCard
             colSpan={2}
-            className="bg-[linear-gradient(30deg,#451F52e6,#742D6B33)] p-8 backdrop-blur-md group hover:border-[var(--color-levl-green)]/50 cursor-pointer"
+            className="bg-[linear-gradient(135deg,rgba(20,45,76,0.82)_0%,rgba(28,32,52,0.78)_55%,rgba(78,34,15,0.45)_100%)] p-8 backdrop-blur-md group hover:border-[var(--color-levl-green)]/50 cursor-pointer"
           >
             <button
               type="button"
@@ -365,13 +365,13 @@ export function ActivateScienceSection() {
               setShowAllMechanisms(next);
               if (!next) setOpenCards({});
             }}
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-black/30 backdrop-blur-md border border-[var(--color-levl-cyan)]/30 text-white font-bold text-lg md:text-xl hover:border-[var(--color-levl-cyan)] hover:shadow-[0_0_15px_rgba(14,165,233,0.3)] transition-all group cursor-pointer"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[linear-gradient(to_right,rgba(221,77,14,0.88)_0%,rgba(246,149,32,0.88)_32%,rgba(99,149,208,0.88)_68%,rgba(51,130,199,0.88)_100%)] hover:bg-[linear-gradient(to_right,rgba(221,77,14,1)_0%,rgba(246,149,32,1)_32%,rgba(99,149,208,1)_68%,rgba(51,130,199,1)_100%)] border border-white/20 text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.35)] font-bold text-lg md:text-xl shadow-[0_0_24px_rgba(246,149,32,0.35)] hover:shadow-[0_0_30px_rgba(246,149,32,0.5)] transition-all group cursor-pointer"
           >
             {showAllMechanisms ? "Collapse Protocol" : "View Full Protocol"}
             {showAllMechanisms ? (
-              <ChevronUp className="w-4 h-4 text-[var(--color-levl-cyan)] group-hover:-translate-y-0.5 transition-transform" />
+              <ChevronUp className="w-4 h-4 text-white group-hover:-translate-y-0.5 transition-transform" />
             ) : (
-              <ChevronDown className="w-4 h-4 text-[var(--color-levl-cyan)] group-hover:translate-y-0.5 transition-transform" />
+              <ChevronDown className="w-4 h-4 text-white group-hover:translate-y-0.5 transition-transform" />
             )}
           </button>
         </div>

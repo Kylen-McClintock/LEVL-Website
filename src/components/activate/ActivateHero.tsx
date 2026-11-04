@@ -240,7 +240,7 @@ export function ActivateHero() {
                       <div className="text-center mb-3 md:mb-4">
                         <h2 className="text-xl md:text-3xl font-black text-white tracking-tighter mb-1 leading-tight">
                           INCREDIBLE VALUE: <br />
-                          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-levl-magenta)] to-[var(--color-levl-cyan)]">
+                          <span className="text-transparent bg-clip-text bg-[linear-gradient(to_right,#3382C7_0%,#6395D0_28%,#EBB589_55%,#F69520_80%,#DD4D0E_100%)]">
                             SAVE 80%+
                           </span>
                         </h2>
@@ -275,11 +275,11 @@ export function ActivateHero() {
                           </span>
                         </div>
 
-                        <div className="bg-gradient-to-r from-[var(--color-levl-magenta)]/20 to-[var(--color-levl-cyan)]/20 rounded-xl p-3 border border-[var(--color-levl-magenta)]/30 flex justify-between items-center">
+                        <div className="bg-[linear-gradient(to_right,rgba(221,77,14,0.22)_0%,rgba(246,149,32,0.2)_35%,rgba(99,149,208,0.2)_70%,rgba(51,130,199,0.25)_100%)] rounded-xl p-3 border border-[#F69520]/35 flex justify-between items-center">
                           <span className="text-white font-bold text-xs sm:text-sm">
                             Activate Waitlist
                           </span>
-                          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-levl-magenta)] to-[var(--color-levl-cyan)] font-black text-base sm:text-lg">
+                          <span className="text-transparent bg-clip-text bg-[linear-gradient(to_right,#3382C7_0%,#6395D0_28%,#EBB589_55%,#F69520_80%,#DD4D0E_100%)] font-black text-base sm:text-lg">
                             Founding Access
                           </span>
                         </div>
@@ -332,7 +332,7 @@ export function ActivateHero() {
 
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter text-white leading-[1.05] mb-6">
               OutPace Aging <br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[var(--color-levl-cyan)] via-[var(--color-levl-magenta)] to-[#E58063]">
+              <span className="bg-clip-text text-transparent bg-[linear-gradient(to_right,#3382C7_0%,#6395D0_28%,#EBB589_55%,#F69520_80%,#DD4D0E_100%)]">
                 Without Fasting
               </span>
             </h1>
@@ -345,7 +345,7 @@ export function ActivateHero() {
           <ul className="space-y-4 mb-10">
             {activateContent.heroBullets.map((item, i) => (
               <li key={i} className="flex items-center gap-3 text-white/80">
-                <div className="h-1.5 w-1.5 rounded-full bg-[var(--color-levl-cyan)] shadow-[0_0_8px_var(--color-levl-cyan)] shrink-0" />
+                <div className="h-1.5 w-1.5 rounded-full bg-[#F69520] shadow-[0_0_8px_#F69520] shrink-0" />
                 {item}
               </li>
             ))}
@@ -354,7 +354,7 @@ export function ActivateHero() {
           {/* Waitlist & Protocol Quiz Box */}
           <div
             id="purchase-section"
-            className="bg-[linear-gradient(30deg,#1B1237e6,#451F5233)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-5 sm:p-6 md:p-8 flex flex-col gap-5 sm:gap-6 shadow-2xl shadow-black/50 scroll-mt-20"
+            className="bg-[linear-gradient(135deg,rgba(19,42,74,0.88)_0%,rgba(28,33,53,0.85)_50%,rgba(68,28,14,0.48)_100%)] backdrop-blur-md border border-[#6395D0]/30 rounded-2xl p-5 sm:p-6 md:p-8 flex flex-col gap-5 sm:gap-6 shadow-2xl shadow-black/50 scroll-mt-20"
           >
             <div className="flex items-center justify-between gap-2">
               <span className="text-xs font-bold uppercase tracking-wider text-amber-300 bg-amber-500/15 border border-amber-400/30 px-3 py-1 rounded-full">

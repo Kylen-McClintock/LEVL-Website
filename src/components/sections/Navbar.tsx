@@ -39,7 +39,8 @@ export function Navbar({
     });
 
     const totalQuantity = cart?.totalQuantity || 0;
-    const isProductPage = pathname === "/" || pathname?.startsWith("/products/");
+    const isActivatePage = pathname?.startsWith("/activate");
+    const isProductPage = pathname === "/" || pathname?.startsWith("/products/") || isActivatePage;
 
     const handleActionClick = (e: React.MouseEvent) => {
         if (isProductPage) {
@@ -142,9 +143,13 @@ export function Navbar({
                                 <Link
                                     href={isProductPage ? "#purchase-section" : "/products/longevity/#purchase-section"}
                                     onClick={handleActionClick}
-                                    className="flex items-center gap-1.5 px-3.5 py-1.5 md:px-5 md:py-2 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-xs md:text-sm hover:bg-[var(--color-levl-cyan)]/90 transition-all shadow-[0_0_15px_rgba(14,165,233,0.3)] cursor-pointer tracking-tight whitespace-nowrap"
+                                    className={
+                                        isActivatePage
+                                            ? "flex items-center gap-1.5 px-3.5 py-1.5 md:px-5 md:py-2 rounded-full bg-[linear-gradient(to_right,rgba(221,77,14,1)_0%,rgba(246,149,32,1)_32%,rgba(99,149,208,1)_68%,rgba(51,130,199,1)_100%)] text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.35)] font-bold text-xs md:text-sm hover:brightness-110 transition-all shadow-[0_0_18px_rgba(246,149,32,0.4)] cursor-pointer tracking-tight whitespace-nowrap"
+                                            : "flex items-center gap-1.5 px-3.5 py-1.5 md:px-5 md:py-2 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-xs md:text-sm hover:bg-[var(--color-levl-cyan)]/90 transition-all shadow-[0_0_15px_rgba(14,165,233,0.3)] cursor-pointer tracking-tight whitespace-nowrap"
+                                    }
                                 >
-                                    <span>Get DeepCell</span>
+                                    <span>{isActivatePage ? "Join Waitlist" : "Get DeepCell"}</span>
                                     <ArrowRight className="w-3.5 h-3.5 md:w-4 md:h-4" />
                                 </Link>
                             </motion.div>
@@ -189,9 +194,13 @@ export function Navbar({
                     <Link
                         href={isProductPage ? "#purchase-section" : "/products/longevity/#purchase-section"}
                         onClick={handleActionClick}
-                        className="w-full mt-2 py-3 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-sm text-center shadow-lg block"
+                        className={
+                            isActivatePage
+                                ? "w-full mt-2 py-3 rounded-full bg-[linear-gradient(to_right,rgba(221,77,14,1)_0%,rgba(246,149,32,1)_32%,rgba(99,149,208,1)_68%,rgba(51,130,199,1)_100%)] text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.35)] font-bold text-sm text-center shadow-lg block"
+                                : "w-full mt-2 py-3 rounded-full bg-[var(--color-levl-cyan)] text-black font-bold text-sm text-center shadow-lg block"
+                        }
                     >
-                        Get DeepCell
+                        {isActivatePage ? "Join Waitlist" : "Get DeepCell"}
                     </Link>
                 </motion.div>
             )}

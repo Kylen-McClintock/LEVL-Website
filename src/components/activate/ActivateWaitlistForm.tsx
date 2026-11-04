@@ -96,7 +96,7 @@ export function ActivateWaitlistForm({
           </div>
           <Link
             href="/find-your-protocol"
-            className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[var(--color-levl-cyan)] text-slate-950 font-extrabold text-xs sm:text-sm hover:bg-[var(--color-levl-cyan)]/90 transition-all"
+            className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[linear-gradient(to_right,rgba(221,77,14,1)_0%,rgba(246,149,32,1)_32%,rgba(99,149,208,1)_68%,rgba(51,130,199,1)_100%)] text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.35)] font-extrabold text-xs sm:text-sm shadow-[0_0_20px_rgba(246,149,32,0.35)] hover:brightness-110 transition-all"
           >
             <span>Take the 60-Second Protocol Quiz</span>
             <ArrowRight aria-hidden="true" className="w-3.5 h-3.5" />
@@ -159,7 +159,7 @@ export function ActivateWaitlistForm({
             <button
               type="submit"
               disabled={status === "loading" || !email.trim()}
-              className="h-12 px-6 rounded-xl bg-gradient-to-r from-amber-400 via-amber-300 to-[var(--color-levl-cyan)] text-slate-950 font-extrabold text-sm shadow-[0_0_24px_rgba(245,158,11,0.3)] hover:opacity-95 transition-all flex items-center justify-center gap-2 shrink-0 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              className="h-12 px-6 rounded-xl bg-[linear-gradient(to_right,rgba(221,77,14,1)_0%,rgba(246,149,32,1)_32%,rgba(99,149,208,1)_68%,rgba(51,130,199,1)_100%)] text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.35)] font-extrabold text-sm shadow-[0_0_24px_rgba(246,149,32,0.4)] hover:shadow-[0_0_30px_rgba(246,149,32,0.55)] hover:brightness-110 transition-all flex items-center justify-center gap-2 shrink-0 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Sparkles aria-hidden="true" className="w-4 h-4" />
               <span>
@@ -188,16 +188,16 @@ export function ActivateWaitlistForm({
         </div>
         <Link
           href="/find-your-protocol"
-          className="w-full py-3.5 px-5 rounded-xl bg-[var(--color-levl-cyan)]/15 hover:bg-[var(--color-levl-cyan)]/25 border border-[var(--color-levl-cyan)]/40 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all group"
+          className="w-full py-3.5 px-5 rounded-xl bg-[linear-gradient(to_right,rgba(221,77,14,0.32)_0%,rgba(246,149,32,0.3)_32%,rgba(99,149,208,0.3)_68%,rgba(51,130,199,0.35)_100%)] hover:bg-[linear-gradient(to_right,rgba(221,77,14,0.55)_0%,rgba(246,149,32,0.52)_32%,rgba(99,149,208,0.52)_68%,rgba(51,130,199,0.58)_100%)] border border-[#F69520]/40 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all group"
         >
           <Compass
             aria-hidden="true"
-            className="w-4 h-4 text-[var(--color-levl-cyan)]"
+            className="w-4 h-4 text-[#F69520]"
           />
           <span>Take the 60-Second Protocol Quiz</span>
           <ArrowRight
             aria-hidden="true"
-            className="w-4 h-4 text-[var(--color-levl-cyan)] group-hover:translate-x-0.5 transition-transform"
+            className="w-4 h-4 text-[#6395D0] group-hover:translate-x-0.5 transition-transform"
           />
         </Link>
       </div>
