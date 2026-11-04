@@ -8,11 +8,11 @@ import { cn } from "@/components/cart/CheckoutButton";
 import Image from "next/image";
 
 const imageMap: Record<string, string> = {
-  "20s": "/images/benefits/lifestyle_20s.png",
-  "30s": "/images/benefits/lifestyle_30s.png",
-  "40s": "/images/benefits/lifestyle_40s.png",
-  "50s": "/images/benefits/lifestyle_50s.png",
-  "60s": "/images/benefits/lifestyle_60s.png",
+  "20s": "/images/benefits/activate_20s.png",
+  "30s": "/images/benefits/activate_30s.png",
+  "40s": "/images/benefits/activate_40s.png",
+  "50s": "/images/benefits/activate_50s.png",
+  "60s": "/images/benefits/activate_60s.png",
 };
 
 export function ActivateBenefitsAtEveryAge() {

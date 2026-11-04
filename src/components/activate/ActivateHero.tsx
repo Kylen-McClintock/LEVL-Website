@@ -7,12 +7,10 @@ import {
   Activity,
   Award,
   Calendar,
-  Dna,
   Factory,
   Flame,
   RefreshCcw,
   ShieldCheck,
-  Sparkles,
   Sun,
   Truck,
   Zap,
@@ -38,162 +36,33 @@ const VALUE_INGREDIENTS = [
   { name: "Vitamin C (Sodium Ascorbate)", dose: "250 mg", price: 12 },
 ];
 
-/**
- * Renders the signature LEVL Matte-Black Vessel with the authentic Activate Element Square
- * matching `deepcell-bottle.jpg` (vertical LIFESPAN+, Element Square with top-left pill,
- * top-right icon, bold product title, 2-line subtitle, and Today / Long Term horizon bar).
- */
-function ActivateBottleGraphic({ compact = false }: { compact?: boolean }) {
-  return (
-    <div
-      className={`relative flex flex-col items-center select-none ${
-        compact ? "w-28 sm:w-32" : "w-60 sm:w-68"
-      }`}
-    >
-      {/* Matte-Black Cylindrical Cap */}
-      <div
-        className={`w-[92%] ${
-          compact ? "h-6 rounded-t-md" : "h-12 sm:h-14 rounded-t-xl"
-        } bg-gradient-to-r from-[#0A0B0E] via-[#2A2D37] to-[#08090C] border-x border-t border-white/15 shadow-[0_6px_15px_rgba(0,0,0,0.8)] relative z-10`}
-      />
-      {/* Neck Groove */}
-      <div className="w-[88%] h-1.5 bg-black border-x border-white/10" />
-
-      {/* Matte-Black Cylindrical Bottle Body */}
-      <div
-        className={`w-full ${
-          compact ? "rounded-b-xl pb-3" : "rounded-b-2xl rounded-t-sm pb-6"
-        } bg-gradient-to-r from-[#08090C] via-[#1B1D24] to-[#07080B] border border-white/15 shadow-[0_30px_70px_rgba(0,0,0,0.95)] overflow-hidden flex flex-col`}
-      >
-        {/* Top Metallic Band with LEVL+ Wordmark */}
-        <div
-          className={`w-full ${
-            compact ? "h-3.5 mt-1.5" : "h-6 sm:h-7 mt-3"
-          } bg-gradient-to-r from-[#2D1B54] via-[#9F4576] to-[#E58063] flex items-center justify-center shadow-sm`}
-        >
-          <span
-            className={`${
-              compact ? "text-[7px]" : "text-[11px] sm:text-xs"
-            } font-black tracking-[0.28em] text-white uppercase`}
-          >
-            LEVL<sup className="text-[75%]">+</sup>
-          </span>
-        </div>
-
-        {/* Middle Section: Vertical LIFESPAN+ & The Activate Element Square */}
-        <div
-          className={`flex items-center justify-center ${
-            compact ? "px-2 py-2.5 gap-1.5" : "px-4 sm:px-5 py-5 sm:py-6 gap-3"
-          }`}
-        >
-          {/* Vertical LIFESPAN+ along left edge */}
-          <div className="flex items-center justify-center shrink-0">
-            <span
-              className={`[writing-mode:vertical-lr] rotate-180 font-extralight tracking-[0.25em] text-white/90 uppercase leading-none ${
-                compact ? "text-[9px]" : "text-lg sm:text-xl"
-              }`}
-            >
-              LIFESPAN+
-            </span>
-          </div>
-
-          {/* THE ACTIVATE ELEMENT SQUARE (matches DeepCell Element Square) */}
-          <div
-            className={`aspect-square flex-1 rounded-xl p-[1.5px] bg-gradient-to-bl from-[#2D1B54] via-[#9F4576] to-[#E58063] shadow-[0_0_25px_rgba(229,128,99,0.15)]`}
-          >
-            <div
-              className={`w-full h-full rounded-[10px] bg-[#111319]/95 flex flex-col justify-between ${
-                compact ? "p-2" : "p-3.5 sm:p-4"
-              }`}
-            >
-              {/* Top Row inside Square: Pill on left, Sun icon on right */}
-              <div className="flex items-center justify-between gap-1">
-                <span
-                  className={`${
-                    compact
-                      ? "text-[5px] px-1 py-0.5"
-                      : "text-[9px] sm:text-[10px] px-2.5 py-0.5"
-                  } rounded-full bg-[#2D1B54]/70 border border-white/15 text-white/90 font-medium tracking-wide`}
-                >
-                  Caffeine-Free
-                </span>
-                <Sun
-                  aria-hidden="true"
-                  className={`${
-                    compact ? "w-2.5 h-2.5" : "w-4 h-4 sm:w-4.5 sm:h-4.5"
-                  } text-amber-300/90 stroke-[1.75]`}
-                />
-              </div>
-
-              {/* Center Product Title inside Square */}
-              <div className="my-auto text-left">
-                <div
-                  className={`${
-                    compact
-                      ? "text-sm"
-                      : "text-2xl sm:text-3xl"
-                  } font-bold text-white tracking-tight leading-none`}
-                >
-                  Activate
-                </div>
-              </div>
-
-              {/* Bottom 2-Line Descriptor inside Square */}
-              <div
-                className={`${
-                  compact
-                    ? "text-[6px] leading-tight"
-                    : "text-xs sm:text-[13px] leading-snug"
-                } text-white/90 font-normal text-left`}
-              >
-                <div>Fasting-Mimetic</div>
-                <div>Longevity Complex</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Horizon Bar: Immediate vs. Long Term (matches DeepCell bottle) */}
-        <div className={compact ? "px-2.5" : "px-5 sm:px-6"}>
-          <div
-            className={`grid grid-cols-2 text-left ${
-              compact ? "text-[6px]" : "text-[11px] sm:text-xs"
-            } font-medium text-white/90 pb-1`}
-          >
-            <span>Cellular Energy*</span>
-            <span>Cellular Renewal*</span>
-          </div>
-          <div className="h-[1.5px] w-full bg-gradient-to-r from-[#2D1B54] via-[#9F4576] to-[#E58063] opacity-80" />
-          <div
-            className={`grid grid-cols-2 text-left ${
-              compact ? "text-[6px] pt-0.5" : "text-[10px] sm:text-[11px] pt-1"
-            } font-medium text-[#E58063]`}
-          >
-            <span>Today</span>
-            <span>Long Term</span>
-          </div>
-
-          {!compact && (
-            <div className="grid grid-cols-2 text-center text-[10px] text-white/75 pt-4 leading-tight">
-              <div>
-                <div className="font-semibold text-white">30</div>
-                <div>Servings</div>
-              </div>
-              <div>
-                <div className="font-semibold text-white">Dietary</div>
-                <div>Supplement</div>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
+const GALLERY_IMAGES = [
+  {
+    url: "/images/activate-pouch.jpg",
+    altText: "LEVL LIFESPAN+ Activate",
+  },
+  {
+    url: "/images/activate_pathways_bg.png",
+    altText: "5 Core Biological Pathways",
+  },
+  {
+    url: "/images/supplement_facts.png",
+    altText: "Supplement Facts",
+  },
+  {
+    url: "/images/value_prop_thumbnail.png",
+    altText: "Value Proposition",
+  },
+];
 
 export function ActivateHero() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const totalValue = VALUE_INGREDIENTS.reduce((sum, item) => sum + item.price, 0);
+  const safeIndex =
+    currentIndex >= GALLERY_IMAGES.length ? 0 : currentIndex;
+  const totalValue = VALUE_INGREDIENTS.reduce(
+    (sum, item) => sum + item.price,
+    0
+  );
 
   return (
     <section
@@ -201,52 +70,65 @@ export function ActivateHero() {
       className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24"
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
-        {/* Left Column: Gallery (Matches ProductGallery.tsx) */}
+        {/* Left Column: Gallery (Matches ProductGallery.tsx 1-for-1) */}
         <div className="flex flex-col gap-8 h-fit lg:sticky lg:top-24">
           <div className="flex flex-col gap-4">
-            {/* Main Aspect-[4/5] Stage */}
+            {/* Main Image */}
             <div className="relative aspect-[4/5] w-full rounded-2xl overflow-hidden bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)]">
               <AnimatePresence mode="wait">
-                {/* SLIDE 0: Product Bottle & Floating Chips */}
-                {currentIndex === 0 && (
-                  <motion.div
-                    key="slide-0"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute inset-0 flex items-center justify-center overflow-hidden"
-                  >
-                    {/* Sunrise / Twilight Horizon Backdrop matching deepcell-bottle.jpg */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-[#090D1A] via-[#2B1636] to-[#08090C]" />
-                    <div className="absolute top-[42%] left-0 right-0 h-44 bg-gradient-to-b from-transparent via-[#E58063]/35 to-amber-500/20 blur-2xl pointer-events-none" />
-                    <div className="absolute bottom-0 left-0 right-0 h-[28%] bg-gradient-to-t from-black via-[#120A08]/95 to-transparent border-t border-white/5 pointer-events-none" />
+                <motion.div
+                  key={safeIndex}
+                  initial={{ opacity: 1 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute inset-0 z-0"
+                >
+                  <Image
+                    src={GALLERY_IMAGES[safeIndex].url}
+                    alt={GALLERY_IMAGES[safeIndex].altText}
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </motion.div>
+              </AnimatePresence>
 
-                    {/* Matte-Black Activate Vessel with Authentic Element Square */}
-                    <div className="relative z-10">
-                      <ActivateBottleGraphic />
-                    </div>
-
-                    {/* Floating Selling Point Chips (Identical animation & style to ProductGallery.tsx) */}
+              {/* Floating Selling Points (Visible on main product pouch image, identical to ProductGallery.tsx) */}
+              <AnimatePresence>
+                {safeIndex === 0 && (
+                  <>
+                    {/* Chip 1: Mitochondrial Health */}
                     <motion.div
                       initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1, y: [0, -8, 0] }}
+                      animate={{
+                        opacity: 1,
+                        scale: 1,
+                        y: [0, -8, 0],
+                      }}
+                      exit={{ opacity: 0, scale: 0.8 }}
                       transition={{
                         opacity: { duration: 0.3 },
                         scale: { duration: 0.3 },
                         y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
                       }}
-                      className="absolute top-[14%] right-[5%] z-20"
+                      className="absolute top-[15%] right-[5%] z-20"
                     >
                       <div className="px-3 py-2 rounded-full flex items-center gap-2 text-xs font-semibold text-white/90 bg-black/40 backdrop-blur-md border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)] whitespace-nowrap hover:border-[var(--color-levl-magenta)]/50 transition-colors">
                         <Zap className="w-3.5 h-3.5 text-[var(--color-levl-magenta)]" />
-                        Mitochondrial NAD+ &amp; ATP
+                        Mitochondrial Health
                       </div>
                     </motion.div>
 
+                    {/* Chip 2: Cellular Renewal */}
                     <motion.div
                       initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1, y: [0, 8, 0] }}
+                      animate={{
+                        opacity: 1,
+                        scale: 1,
+                        y: [0, 8, 0],
+                      }}
+                      exit={{ opacity: 0, scale: 0.8 }}
                       transition={{
                         opacity: { duration: 0.3, delay: 0.1 },
                         scale: { duration: 0.3, delay: 0.1 },
@@ -265,9 +147,15 @@ export function ActivateHero() {
                       </div>
                     </motion.div>
 
+                    {/* Chip 3: Fasting-Mimetic Autophagy */}
                     <motion.div
                       initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1, y: [0, -6, 0] }}
+                      animate={{
+                        opacity: 1,
+                        scale: 1,
+                        y: [0, -6, 0],
+                      }}
+                      exit={{ opacity: 0, scale: 0.8 }}
                       transition={{
                         opacity: { duration: 0.3, delay: 0.2 },
                         scale: { duration: 0.3, delay: 0.2 },
@@ -285,100 +173,11 @@ export function ActivateHero() {
                         Fasting-Mimetic Autophagy
                       </div>
                     </motion.div>
-                  </motion.div>
+                  </>
                 )}
 
-                {/* SLIDE 1: 5 Synergistic Pathways (Matches deepcell_pathways_bg.png) */}
-                {currentIndex === 1 && (
+                {GALLERY_IMAGES[safeIndex].altText === "Supplement Facts" && (
                   <motion.div
-                    key="slide-1"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute inset-0 z-20 bg-[#0B0E17] p-6 sm:p-8 flex flex-col justify-between overflow-hidden"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#0B0E17] via-[#1B122C] to-[#2C1810] opacity-90" />
-
-                    <div className="relative z-10 max-w-md">
-                      <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight mb-2">
-                        5 SYNERGISTIC
-                        <br />
-                        PATHWAYS
-                      </h2>
-                      <p className="text-xs sm:text-sm text-white/75 leading-relaxed">
-                        Activate combines five scientifically designed daytime
-                        pathways to target all 12 Hallmarks of Aging—even with
-                        breakfast.
-                      </p>
-                    </div>
-
-                    <div className="relative z-10 space-y-3 my-auto py-2">
-                      {[
-                        {
-                          icon: Flame,
-                          color: "text-amber-400 border-amber-400/30 bg-amber-400/10",
-                          title: "Fasting-Mimetic Autophagy",
-                          sub: "AMPK & TFEB cellular cleanup with a meal",
-                        },
-                        {
-                          icon: Zap,
-                          color:
-                            "text-[var(--color-levl-cyan)] border-[var(--color-levl-cyan)]/30 bg-[var(--color-levl-cyan)]/10",
-                          title: "Intracellular NAD+ & ATP",
-                          sub: "NR + Pterostilbene + Creatine bioenergetics",
-                        },
-                        {
-                          icon: Dna,
-                          color:
-                            "text-[var(--color-levl-magenta)] border-[var(--color-levl-magenta)]/30 bg-[var(--color-levl-magenta)]/10",
-                          title: "Pace of Aging & Methylation",
-                          sub: "Ca-AKG + Vitamin C + TMG epigenetic balance",
-                        },
-                        {
-                          icon: Sparkles,
-                          color:
-                            "text-emerald-400 border-emerald-400/30 bg-emerald-400/10",
-                          title: "Skin, Joint, Muscle & Brain",
-                          sub: "Glycine, Glucosamine, Taurine & Creatine matrix",
-                        },
-                        {
-                          icon: Sun,
-                          color:
-                            "text-purple-300 border-purple-400/30 bg-purple-400/10",
-                          title: "Krebs Malate & Morning Minerals",
-                          sub: "Magnesium Malate, Potassium Aspartate & D3",
-                        },
-                      ].map((item, i) => (
-                        <div key={i} className="flex items-center gap-3.5">
-                          <div
-                            className={`w-10 h-10 rounded-xl border flex items-center justify-center shrink-0 ${item.color}`}
-                          >
-                            <item.icon className="w-5 h-5" />
-                          </div>
-                          <div>
-                            <div className="text-sm font-bold text-white leading-tight">
-                              {item.title}
-                            </div>
-                            <div className="text-xs text-white/65">
-                              {item.sub}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Mini bottle in bottom-right corner like deepcell_pathways_bg.png */}
-                    <div className="hidden sm:block absolute bottom-4 right-4 z-10 opacity-95">
-                      <ActivateBottleGraphic compact />
-                    </div>
-                  </motion.div>
-                )}
-
-                {/* SLIDE 2: Supplement Facts (Matches SupplementFacts.tsx) */}
-                {currentIndex === 2 && (
-                  <motion.div
-                    key="slide-2"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -417,22 +216,20 @@ export function ActivateHero() {
 
                       <div className="border-t-4 border-white mt-2 pt-2 mb-3">
                         <p className="text-xs font-medium">
-                          0 mg Caffeine • Guided by LEVL&apos;s AI Synergy Engine
+                          0 mg Caffeine • Natural Orange Flavor
                         </p>
                       </div>
 
                       <p className="text-[11px] text-white/60 pt-2 border-t border-white/20">
-                        Formulated in the USA in a GMP-compliant facility for
+                        Manufactured in the USA in a GMP-compliant facility for
                         LEVL, Inc.
                       </p>
                     </div>
                   </motion.div>
                 )}
 
-                {/* SLIDE 3: Value Proposition (Matches ValueProposition.tsx) */}
-                {currentIndex === 3 && (
+                {GALLERY_IMAGES[safeIndex].altText === "Value Proposition" && (
                   <motion.div
-                    key="slide-3"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -448,7 +245,7 @@ export function ActivateHero() {
                           </span>
                         </h2>
                         <p className="text-[var(--color-levl-text-secondary)] text-xs md:text-sm leading-tight uppercase">
-                          VS 14 INDIVIDUAL SUPPLEMENTS &amp; $600+ NAD+ IV DRIPS
+                          VS INDIVIDUAL SUPPLEMENTS
                         </p>
                       </div>
 
@@ -471,19 +268,19 @@ export function ActivateHero() {
 
                         <div className="bg-black/40 rounded-xl p-3 border border-white/10 mb-2.5 flex justify-between items-center">
                           <span className="text-[var(--color-levl-text-secondary)] text-xs">
-                            14 Bottles Separately
+                            Total Separately
                           </span>
                           <span className="text-[var(--color-levl-text-secondary)] line-through decoration-red-500/50 decoration-2 font-mono text-sm">
-                            ${totalValue} / mo
+                            ${totalValue} USD
                           </span>
                         </div>
 
                         <div className="bg-gradient-to-r from-[var(--color-levl-magenta)]/20 to-[var(--color-levl-cyan)]/20 rounded-xl p-3 border border-[var(--color-levl-magenta)]/30 flex justify-between items-center">
                           <span className="text-white font-bold text-xs sm:text-sm">
-                            LIFESPAN+ Activate (1 Daily Scoop)
+                            Activate Waitlist
                           </span>
                           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-levl-magenta)] to-[var(--color-levl-cyan)] font-black text-base sm:text-lg">
-                            Founding Waitlist
+                            Founding Access
                           </span>
                         </div>
                       </div>
@@ -493,48 +290,32 @@ export function ActivateHero() {
               </AnimatePresence>
             </div>
 
-            {/* 4 Square Thumbnails (Matches ProductGallery.tsx) */}
+            {/* Thumbnails (Actual image previews matching ProductGallery.tsx) */}
             <div className="flex gap-4 overflow-x-auto pb-2 snap-x hide-scrollbar">
-              {[
-                { label: "Activate", sub: "Vessel" },
-                { label: "5 Pathways", sub: "Synergy" },
-                { label: "Supplement", sub: "Facts" },
-                { label: "Save 80%", sub: "Value" },
-              ].map((thumb, index) => (
+              {GALLERY_IMAGES.map((image, index) => (
                 <button
                   key={index}
                   type="button"
                   onClick={() => setCurrentIndex(index)}
-                  className={`relative w-20 h-20 shrink-0 rounded-xl overflow-hidden border-2 transition-all snap-start cursor-pointer bg-[#0B0E17] flex flex-col items-center justify-center p-1.5 text-center ${
-                    currentIndex === index
+                  className={`relative w-20 h-20 shrink-0 rounded-xl overflow-hidden border-2 transition-all snap-start cursor-pointer ${
+                    safeIndex === index
                       ? "border-[var(--color-levl-cyan)]"
-                      : "border-white/10 hover:border-[var(--color-levl-panel-border)]"
+                      : "border-transparent hover:border-[var(--color-levl-panel-border)]"
                   }`}
                 >
-                  {index === 3 ? (
-                    <Image
-                      src="/images/value_prop_thumbnail.png"
-                      alt="Value Proposition"
-                      fill
-                      className="object-cover p-1"
-                    />
-                  ) : (
-                    <>
-                      <span className="text-[10px] font-black text-white leading-tight">
-                        {thumb.label}
-                      </span>
-                      <span className="text-[9px] text-[var(--color-levl-cyan)] font-medium mt-0.5">
-                        {thumb.sub}
-                      </span>
-                    </>
-                  )}
+                  <Image
+                    src={image.url}
+                    alt={`Thumbnail ${index + 1}`}
+                    fill
+                    className="object-cover p-1"
+                  />
                 </button>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Right Column: Info & Waitlist Box (Matches ProductHero.tsx + PurchaseBox.tsx) */}
+        {/* Right Column: Info & Waitlist Box */}
         <div
           className="flex flex-col gap-2 pb-12 lg:pb-0 lg:sticky"
           style={{ top: "max(6rem, calc(100vh - 100% - 2rem))" }}
@@ -570,7 +351,7 @@ export function ActivateHero() {
             ))}
           </ul>
 
-          {/* Waitlist & Protocol Quiz Box (Matches PurchaseBox.tsx styling) */}
+          {/* Waitlist & Protocol Quiz Box */}
           <div
             id="purchase-section"
             className="bg-[linear-gradient(30deg,#1B1237e6,#451F5233)] backdrop-blur-md border border-[var(--color-levl-panel-border)] rounded-2xl p-5 sm:p-6 md:p-8 flex flex-col gap-5 sm:gap-6 shadow-2xl shadow-black/50 scroll-mt-20"
@@ -593,10 +374,9 @@ export function ActivateHero() {
               </p>
             </div>
 
-            {/* Dual CTA: Join Waitlist + Take Protocol Quiz */}
             <ActivateWaitlistForm variant="hero" />
 
-            {/* Trust Badges (Matches PurchaseBox.tsx) */}
+            {/* Trust Badges */}
             <div className="pt-4 border-t border-[var(--color-levl-panel-border)] grid grid-cols-2 gap-3">
               {[
                 { text: "PhD-Formulated & MD-Approved", icon: ShieldCheck },

@@ -18,7 +18,7 @@ export function ActivateFastingSection() {
         >
           <Image
             src="/images/running-lifestyle.jpg"
-            alt="Better Todays. More Tomorrows."
+            alt="Better Days. More Tomorrows."
             fill
             quality={95}
             className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
@@ -32,7 +32,7 @@ export function ActivateFastingSection() {
           {/* Large Hero Text */}
           <div className="absolute top-12 left-0 right-0 px-8 text-center">
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight drop-shadow-xl">
-              Better Todays.
+              Better Days.
               <br />
               <span className="text-[var(--color-levl-text-muted)]">
                 More Tomorrows.
@@ -114,7 +114,7 @@ export function ActivateFastingSection() {
                 Formulated
               </h3>
               <p className="text-[var(--color-levl-cyan)] font-medium text-sm uppercase tracking-widest">
-                Fasting-Mimetic Longevity Complex
+                Energizing Longevity Complex
               </p>
             </div>
           </motion.div>
@@ -128,8 +128,8 @@ export function ActivateFastingSection() {
             className="relative h-[400px] md:h-[600px] md:col-span-2 rounded-3xl overflow-hidden group"
           >
             <Image
-              src="/images/bento-sauna.jpg"
-              alt="What if breakfast didn't have to break your fast?"
+              src="/images/activate-bento-morning.jpg"
+              alt="The morning ritual built for energized days and longer horizons."
               fill
               quality={95}
               className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
