@@ -34,7 +34,7 @@ export function ActivateFastingSection() {
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight drop-shadow-xl">
               Better Days.
               <br />
-              <span className="text-[var(--color-levl-text-muted)]">
+              <span className="text-white/85 drop-shadow-lg">
                 More Tomorrows.
               </span>
             </h2>

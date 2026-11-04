@@ -2,17 +2,19 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Activity,
   ArrowDown,
+  ArrowRight,
   Award,
   Calendar,
+  Compass,
   Factory,
   Flame,
   RefreshCcw,
   ShieldCheck,
-  Sun,
   Truck,
   Zap,
 } from "lucide-react";
@@ -221,8 +223,8 @@ export function ActivateHero() {
                       </div>
 
                       <p className="text-[11px] text-white/60 pt-2 border-t border-white/20">
-                        Manufactured in the USA in a GMP-compliant facility for
-                        LEVL, Inc.
+                        Manufactured in Richardson, TX, USA in a GMP-compliant
+                        facility for LEVL, Inc.
                       </p>
                     </div>
                   </motion.div>
@@ -321,28 +323,24 @@ export function ActivateHero() {
           style={{ top: "max(6rem, calc(100vh - 100% - 2rem))" }}
         >
           <div className="mb-8">
-            <div className="mb-5 flex flex-wrap items-center gap-2.5">
+            <div className="mb-5">
               <a
                 href="#patent-panel"
                 onClick={(e) => {
                   e.preventDefault();
+                  window.dispatchEvent(new CustomEvent("open-patent-panel"));
                   document
                     .getElementById("patent-panel")
                     ?.scrollIntoView({ behavior: "smooth", block: "center" });
                 }}
                 className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[linear-gradient(to_right,rgba(221,77,14,0.22)_0%,rgba(246,149,32,0.2)_32%,rgba(99,149,208,0.2)_68%,rgba(51,130,199,0.25)_100%)] border border-[#F69520]/45 hover:border-[#F69520]/80 text-xs font-semibold text-white shadow-sm transition-all cursor-pointer group"
               >
-                <Flame className="w-3.5 h-3.5 text-[#F69520]" />
-                <span>Built on patented autophagy research</span>
-                <ArrowDown className="w-3 h-3 text-[#6395D0] group-hover:translate-y-0.5 transition-transform" />
-              </a>
-
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--color-levl-panel)] border border-[var(--color-levl-panel-border)] text-xs font-semibold text-white/90 shadow-sm">
-                <Sun className="w-3.5 h-3.5 text-amber-400" />
+                <Flame className="w-3.5 h-3.5 text-[#F69520] shrink-0" />
                 <span>
-                  PhD-Formulated • Guided by LEVL&apos;s AI Synergy Engine
+                  PhD-Formulated • Built on patented autophagy research
                 </span>
-              </div>
+                <ArrowDown className="w-3 h-3 text-[#6395D0] group-hover:translate-y-0.5 transition-transform shrink-0" />
+              </a>
             </div>
 
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter text-white leading-[1.05] mb-6">
@@ -371,12 +369,9 @@ export function ActivateHero() {
             id="purchase-section"
             className="bg-[linear-gradient(135deg,rgba(19,42,74,0.88)_0%,rgba(28,33,53,0.85)_50%,rgba(68,28,14,0.48)_100%)] backdrop-blur-md border border-[#6395D0]/30 rounded-2xl p-5 sm:p-6 md:p-8 flex flex-col gap-5 sm:gap-6 shadow-2xl shadow-black/50 scroll-mt-20"
           >
-            <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center">
               <span className="text-xs font-bold uppercase tracking-wider text-amber-300 bg-amber-500/15 border border-amber-400/30 px-3 py-1 rounded-full">
                 In Development • Priority Waitlist Open
-              </span>
-              <span className="text-xs text-[var(--color-levl-text-secondary)]">
-                0 mg Caffeine • 30 Servings
               </span>
             </div>
 
@@ -398,7 +393,10 @@ export function ActivateHero() {
                 { text: "Guided by AI Synergy Engine", icon: RefreshCcw },
                 { text: "14 Clinically Aligned Actives", icon: Truck },
                 { text: "All 12 Hallmarks of Aging", icon: Calendar },
-                { text: "Manufactured in the USA", icon: Award },
+                {
+                  text: "Manufactured in Richardson, TX, USA",
+                  icon: Award,
+                },
                 { text: "GMP Certified & 3rd-Party Tested", icon: Factory },
               ].map((item, i) => (
                 <div
@@ -414,6 +412,27 @@ export function ActivateHero() {
             <p className="text-[11px] text-[var(--color-levl-text-muted)] text-center">
               {activateContent.purchaseOptions.disclaimer}
             </p>
+          </div>
+
+          {/* Protocol Quiz CTA directly under the product block */}
+          <div className="mt-2 flex flex-col gap-2.5">
+            <div className="text-xs text-white/65 px-1">
+              Don’t wait for launch to start slowing your pace of aging:
+            </div>
+            <Link
+              href="/find-your-protocol"
+              className="w-full py-3.5 px-5 rounded-xl bg-[linear-gradient(to_right,rgba(221,77,14,0.32)_0%,rgba(246,149,32,0.3)_32%,rgba(99,149,208,0.3)_68%,rgba(51,130,199,0.35)_100%)] hover:bg-[linear-gradient(to_right,rgba(221,77,14,0.55)_0%,rgba(246,149,32,0.52)_32%,rgba(99,149,208,0.52)_68%,rgba(51,130,199,0.58)_100%)] border border-[#F69520]/40 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all group shadow-lg"
+            >
+              <Compass
+                aria-hidden="true"
+                className="w-4 h-4 text-[#F69520]"
+              />
+              <span>Take the 60-Second Protocol Quiz</span>
+              <ArrowRight
+                aria-hidden="true"
+                className="w-4 h-4 text-[#6395D0] group-hover:translate-x-0.5 transition-transform"
+              />
+            </Link>
           </div>
         </div>
       </div>

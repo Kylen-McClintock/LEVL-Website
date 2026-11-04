@@ -7,7 +7,6 @@ import {
   CheckCircle2,
   Mail,
   Sparkles,
-  Compass,
 } from "lucide-react";
 import { subscribeUser } from "@/app/actions";
 
@@ -16,11 +15,8 @@ interface ActivateWaitlistFormProps {
   source?: string;
 }
 
-export function ActivateWaitlistForm({
-  variant = "hero",
-}: ActivateWaitlistFormProps) {
+export function ActivateWaitlistForm({}: ActivateWaitlistFormProps) {
   const emailFieldId = useId();
-  const emailHintId = useId();
   const emailErrorId = useId();
 
   const [email, setEmail] = useState("");
@@ -107,21 +103,14 @@ export function ActivateWaitlistForm({
   }
 
   return (
-    <div className="space-y-4">
+    <div>
       <form onSubmit={handleSubmit} className="space-y-3">
-        <div className="space-y-1.5 text-left">
-          <label
-            htmlFor={emailFieldId}
-            className="block text-xs sm:text-sm font-bold text-white"
-          >
-            Join the Activate Waitlist.
+        <div className="text-left">
+          <label htmlFor={emailFieldId} className="sr-only">
+            Email address
           </label>
-          {/* Format hint placed ABOVE input per modern-web-guidance `validate-input-after-interaction` */}
-          <span id={emailHintId} className="block text-[11px] text-white/55">
-            Format: you@example.com • Priority launch pricing &amp; beta updates
-          </span>
 
-          <div className="flex flex-col sm:flex-row gap-2.5 pt-0.5">
+          <div className="flex flex-col sm:flex-row gap-2.5">
             <div className="relative flex-1">
               <Mail
                 aria-hidden="true"
@@ -142,7 +131,6 @@ export function ActivateWaitlistForm({
                     syncEmailAriaInvalid(e.currentTarget);
                   }
                 }}
-                aria-describedby={emailHintId}
                 aria-errormessage={emailErrorId}
                 placeholder="you@example.com"
                 className="quiz-email-input w-full h-12 pl-10 pr-4 rounded-xl bg-black/55 border border-white/15 text-sm text-white placeholder:text-white/35 focus:outline-none focus:border-[var(--color-levl-cyan)] transition-colors disabled:opacity-50"
@@ -176,31 +164,6 @@ export function ActivateWaitlistForm({
           </p>
         )}
       </form>
-
-      {/* Secondary CTA: Protocol Quiz */}
-      <div
-        className={`pt-3 border-t border-white/10 flex flex-col ${
-          variant === "banner" ? "sm:flex-row items-center justify-between" : ""
-        } gap-2.5`}
-      >
-        <div className="flex items-center justify-between gap-2 text-xs text-white/65">
-          <span>Don’t wait for launch to start slowing your pace of aging:</span>
-        </div>
-        <Link
-          href="/find-your-protocol"
-          className="w-full py-3.5 px-5 rounded-xl bg-[linear-gradient(to_right,rgba(221,77,14,0.32)_0%,rgba(246,149,32,0.3)_32%,rgba(99,149,208,0.3)_68%,rgba(51,130,199,0.35)_100%)] hover:bg-[linear-gradient(to_right,rgba(221,77,14,0.55)_0%,rgba(246,149,32,0.52)_32%,rgba(99,149,208,0.52)_68%,rgba(51,130,199,0.58)_100%)] border border-[#F69520]/40 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all group"
-        >
-          <Compass
-            aria-hidden="true"
-            className="w-4 h-4 text-[#F69520]"
-          />
-          <span>Take the 60-Second Protocol Quiz</span>
-          <ArrowRight
-            aria-hidden="true"
-            className="w-4 h-4 text-[#6395D0] group-hover:translate-x-0.5 transition-transform"
-          />
-        </Link>
-      </div>
     </div>
   );
 }

@@ -17,6 +17,7 @@ import { motion, AnimatePresence } from "framer-motion";
 export function ActivateScienceSection() {
   const [showReferences, setShowReferences] = useState(false);
   const [showAllMechanisms, setShowAllMechanisms] = useState(false);
+  const [isPatentOpen, setIsPatentOpen] = useState(false);
   const [openCards, setOpenCards] = useState<Record<number, boolean>>({});
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -24,6 +25,10 @@ export function ActivateScienceSection() {
     if (videoRef.current) {
       videoRef.current.playbackRate = 0.5;
     }
+    const handleOpenPatent = () => setIsPatentOpen(true);
+    window.addEventListener("open-patent-panel", handleOpenPatent);
+    return () =>
+      window.removeEventListener("open-patent-panel", handleOpenPatent);
   }, []);
 
   const toggleCard = (idx: number) => {
@@ -68,44 +73,70 @@ export function ActivateScienceSection() {
           </p>
         </div>
 
-        {/* Compact Patent Research Panel */}
+        {/* Compact Expandable Patent Research Panel */}
         <div
           id="patent-panel"
           className="max-w-4xl mx-auto mb-12 rounded-2xl p-[1px] bg-[linear-gradient(to_right,rgba(51,130,199,0.55)_0%,rgba(99,149,208,0.45)_32%,rgba(246,149,32,0.55)_68%,rgba(221,77,14,0.55)_100%)] shadow-[0_0_24px_rgba(246,149,32,0.12)] scroll-mt-28"
         >
-          <div className="rounded-2xl bg-[#0B0E17]/88 backdrop-blur-md p-5 sm:p-6 md:px-8 md:py-6 flex flex-col gap-3">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
+          <div className="rounded-2xl bg-[#0B0E17]/88 backdrop-blur-md px-5 py-4 sm:px-6 sm:py-5 md:px-8">
+            <button
+              type="button"
+              onClick={() => setIsPatentOpen((prev) => !prev)}
+              aria-expanded={isPatentOpen || showAllMechanisms}
+              className="w-full flex items-center justify-between gap-4 text-left cursor-pointer"
+            >
+              <h3 className="text-base sm:text-lg font-bold text-white tracking-tight m-0">
                 Built on patented autophagy research
               </h3>
-              <a
-                href="https://patentcenter.uspto.gov/applications/16875440"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-[#F69520] hover:text-[#EBB589] transition-colors shrink-0"
-              >
-                <span>View U.S. patent ↗</span>
-              </a>
-            </div>
+              <ChevronDown
+                className={`w-5 h-5 text-white/60 shrink-0 transition-transform duration-300 ${
+                  isPatentOpen || showAllMechanisms ? "rotate-180" : ""
+                }`}
+              />
+            </button>
 
-            <div className="space-y-2 text-xs sm:text-sm text-[var(--color-levl-text-secondary)] leading-relaxed">
-              <p>
-                Activate’s development builds on AEON research combining
-                trehalose, EGCG, and vitamin D3 to investigate synergistic
-                activation of autophagy—the cellular recycling process central
-                to healthy aging.
-              </p>
-              <p className="text-white/90 font-medium">
-                U.S. Patent No. 12,396,994 covers specified methods of using
-                this combination to increase autophagy.
-              </p>
-            </div>
+            <AnimatePresence>
+              {(isPatentOpen || showAllMechanisms) && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                  animate={{ height: "auto", opacity: 1, marginTop: 14 }}
+                  exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                  className="overflow-hidden"
+                >
+                  <div className="pt-3 border-t border-white/10 flex flex-col gap-3">
+                    <div>
+                      <a
+                        href="https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/12396994"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-[#F69520] hover:text-[#EBB589] transition-colors"
+                      >
+                        <span>View U.S. patent ↗</span>
+                      </a>
+                    </div>
 
-            <p className="text-[11px] sm:text-xs text-white/60 leading-relaxed pt-2 border-t border-white/10">
-              LEVL holds a limited exclusive evaluation license and an option
-              for an exclusive commercial license from the University of
-              Colorado Boulder.
-            </p>
+                    <div className="space-y-2 text-xs sm:text-sm text-[var(--color-levl-text-secondary)] leading-relaxed">
+                      <p>
+                        Activate’s development builds on AEON research combining
+                        trehalose, EGCG, and vitamin D3 to investigate
+                        synergistic activation of autophagy—the cellular
+                        recycling process central to healthy aging.
+                      </p>
+                      <p className="text-white/90 font-medium">
+                        U.S. Patent No. 12,396,994 covers specified methods of
+                        using this combination to increase autophagy.
+                      </p>
+                    </div>
+
+                    <p className="text-[11px] sm:text-xs text-white/60 leading-relaxed pt-2 border-t border-white/10">
+                      LEVL holds a limited exclusive evaluation license and an
+                      option for an exclusive commercial license from the
+                      University of Colorado Boulder.
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
 
