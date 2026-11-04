@@ -38,7 +38,7 @@ const VALUE_INGREDIENTS = [
 
 const GALLERY_IMAGES = [
   {
-    url: "/images/activate-pouch.jpg",
+    url: "/images/activate-bottle.jpg",
     altText: "LEVL LIFESPAN+ Activate",
   },
   {
