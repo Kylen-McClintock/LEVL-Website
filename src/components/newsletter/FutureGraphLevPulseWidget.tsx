@@ -24,6 +24,8 @@ interface CohortMetricsSnapshot {
     levInterceptFormatted: string;
     yearsToLev: number;
     biologicalAgeAtLev: number;
+    poaP25?: number;
+    poaP75?: number;
 }
 
 interface KpiMetricItem {
@@ -37,17 +39,22 @@ interface KpiMetricItem {
     weightedContribution: number;
 }
 
+interface QuantileDateCone {
+    p10Formatted: string;
+    p25Formatted: string;
+    p50Formatted: string;
+    p75Formatted: string;
+    p90Formatted: string;
+}
+
 interface LiveFutureGraphData {
     aggregate99thFormatted: string;
     aggregate80thFormatted: string;
     marketAggregate99thYear: number;
     expertAggregate99thYear: number;
     trajectoryIntercept99thYear: number;
-    cone99th: {
-        p10Formatted: string;
-        p50Formatted: string;
-        p90Formatted: string;
-    };
+    cone99th: QuantileDateCone;
+    cone80th: QuantileDateCone;
     cohorts: {
         p99: CohortMetricsSnapshot;
         p80: CohortMetricsSnapshot;
@@ -84,8 +91,17 @@ const FALLBACK_BASELINE: LiveFutureGraphData = {
     trajectoryIntercept99thYear: 2035.8,
     cone99th: {
         p10Formatted: 'Jul 2030',
+        p25Formatted: 'May 2033',
         p50Formatted: 'Oct 2036',
+        p75Formatted: 'Jan 2041',
         p90Formatted: 'May 2045',
+    },
+    cone80th: {
+        p10Formatted: 'Apr 2035',
+        p25Formatted: 'Apr 2038',
+        p50Formatted: 'Feb 2042',
+        p75Formatted: 'Oct 2046',
+        p90Formatted: 'Sep 2051',
     },
     cohorts: {
         p99: {
@@ -98,6 +114,8 @@ const FALLBACK_BASELINE: LiveFutureGraphData = {
             levInterceptFormatted: 'October 2036',
             yearsToLev: 9.9,
             biologicalAgeAtLev: 33.1,
+            poaP25: 0.62,
+            poaP75: 0.715,
         },
         p80: {
             intrinsicPaceOfAging: 0.842,
@@ -109,6 +127,8 @@ const FALLBACK_BASELINE: LiveFutureGraphData = {
             levInterceptFormatted: 'February 2042',
             yearsToLev: 15.3,
             biologicalAgeAtLev: 39.2,
+            poaP25: 0.795,
+            poaP75: 0.895,
         },
     },
     kpiVelocityEngine: {
@@ -314,12 +334,181 @@ export function buildWeeklyPulsePayloadFromIssue(issue: OutpaceAgingIssue) {
     };
 }
 
+/**
+ * Renders the P25 / P50 Median / P75 Bayesian Probability Density Curve
+ * (shown inside the expanded LEV breakdown).
+ */
+function ProbabilityDistributionCurve({
+    idSuffix,
+    p25Label,
+    p50Label,
+    p75Label,
+    tailRangeLabel,
+    accentColor,
+    isLightMode,
+}: {
+    idSuffix: string;
+    p25Label: string;
+    p50Label: string;
+    p75Label: string;
+    tailRangeLabel?: string;
+    accentColor: string;
+    isLightMode: boolean;
+}) {
+    return (
+        <div
+            className={`mt-2.5 pt-2 border-t ${
+                isLightMode ? 'border-slate-200' : 'border-white/10'
+            }`}
+        >
+            <div className="flex flex-wrap items-center justify-between gap-1 text-[10px] font-mono mb-1">
+                <span className={isLightMode ? 'text-emerald-700' : 'text-emerald-300'}>
+                    P25: <strong>{p25Label}</strong>
+                </span>
+                <span className={`font-bold ${isLightMode ? 'text-slate-900' : 'text-white'}`}>
+                    P50: {p50Label}
+                </span>
+                <span className={isLightMode ? 'text-amber-700' : 'text-amber-300'}>
+                    P75: <strong>{p75Label}</strong>
+                </span>
+            </div>
+            <svg viewBox="0 0 240 58" className="w-full h-13 overflow-visible">
+                <defs>
+                    <linearGradient id={`nl-iqr-${idSuffix}`} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor={accentColor} stopOpacity="0.45" />
+                        <stop offset="100%" stopColor={accentColor} stopOpacity="0.06" />
+                    </linearGradient>
+                    <linearGradient id={`nl-tail-${idSuffix}`} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor={accentColor} stopOpacity="0.16" />
+                        <stop offset="100%" stopColor={accentColor} stopOpacity="0.01" />
+                    </linearGradient>
+                </defs>
+
+                {/* Baseline axis */}
+                <line
+                    x1="8"
+                    y1="46"
+                    x2="232"
+                    y2="46"
+                    stroke={isLightMode ? 'rgba(15,23,42,0.2)' : 'rgba(255,255,255,0.18)'}
+                    strokeWidth="1"
+                />
+
+                {/* Full distribution tail area */}
+                <path
+                    d="M 8,46 C 34,45 56,37 82,21 C 96,11 106,6 116,6 C 128,6 142,14 158,26 C 182,39 206,45 232,46 Z"
+                    fill={`url(#nl-tail-${idSuffix})`}
+                />
+
+                {/* Shaded 25th–75th Percentile Interquartile Band (x=84 to x=156) */}
+                <path
+                    d="M 84,46 L 84,20 C 97,10 107,6 116,6 C 128,6 141,13 156,25 L 156,46 Z"
+                    fill={`url(#nl-iqr-${idSuffix})`}
+                />
+
+                {/* Smooth probability density curve */}
+                <path
+                    d="M 8,46 C 34,45 56,37 82,21 C 96,11 106,6 116,6 C 128,6 142,14 158,26 C 182,39 206,45 232,46"
+                    fill="none"
+                    stroke={accentColor}
+                    strokeWidth="1.8"
+                />
+
+                {/* P25 Marker */}
+                <line
+                    x1="84"
+                    y1="20"
+                    x2="84"
+                    y2="46"
+                    stroke="#10b981"
+                    strokeWidth="1.1"
+                    strokeDasharray="2 2"
+                />
+                <circle cx="84" cy="20" r="2.3" fill="#10b981" />
+
+                {/* P50 Median Prominent Marker */}
+                <line
+                    x1="116"
+                    y1="6"
+                    x2="116"
+                    y2="46"
+                    stroke={isLightMode ? '#0f172a' : '#ffffff'}
+                    strokeWidth="1.8"
+                />
+                <circle
+                    cx="116"
+                    cy="6"
+                    r="3.4"
+                    fill={isLightMode ? '#0f172a' : '#ffffff'}
+                    stroke={accentColor}
+                    strokeWidth="1.8"
+                />
+
+                {/* P75 Marker */}
+                <line
+                    x1="156"
+                    y1="25"
+                    x2="156"
+                    y2="46"
+                    stroke="#f59e0b"
+                    strokeWidth="1.1"
+                    strokeDasharray="2 2"
+                />
+                <circle cx="156" cy="25" r="2.3" fill="#f59e0b" />
+
+                {/* Labels below axis */}
+                <text
+                    x="84"
+                    y="55"
+                    textAnchor="middle"
+                    fill={isLightMode ? '#047857' : '#6ee7b7'}
+                    fontSize="7.5"
+                    className="font-mono"
+                >
+                    P25
+                </text>
+                <text
+                    x="116"
+                    y="55"
+                    textAnchor="middle"
+                    fill={isLightMode ? '#0f172a' : '#ffffff'}
+                    fontSize="8"
+                    fontWeight="bold"
+                    className="font-mono"
+                >
+                    P50 Median
+                </text>
+                <text
+                    x="156"
+                    y="55"
+                    textAnchor="middle"
+                    fill={isLightMode ? '#b45309' : '#fcd34d'}
+                    fontSize="7.5"
+                    className="font-mono"
+                >
+                    P75
+                </text>
+            </svg>
+            {tailRangeLabel && (
+                <div
+                    className={`text-[10px] font-mono text-center mt-0.5 ${
+                        isLightMode ? 'text-slate-500' : 'text-slate-400'
+                    }`}
+                >
+                    {tailRangeLabel}
+                </div>
+            )}
+        </div>
+    );
+}
+
 interface FutureGraphLevPulseWidgetProps {
     issue?: OutpaceAgingIssue;
     compact?: boolean;
     showPublisherSync?: boolean;
     isLightMode?: boolean;
     embeddedInIntro?: boolean;
+    hideExpandControls?: boolean;
 }
 
 const DECADE_AGES = [30, 40, 50, 60, 70] as const;
@@ -328,10 +517,12 @@ export default function FutureGraphLevPulseWidget({
     issue,
     isLightMode = false,
     embeddedInIntro = false,
+    hideExpandControls = false,
 }: FutureGraphLevPulseWidgetProps) {
     const [age, setAge] = useState<number>(30);
     const [data, setData] = useState<LiveFutureGraphData>(FALLBACK_BASELINE);
-    // Both detail sections are collapsed by default so only the compact KPIs + concise explanations show
+    const [poaCohortToggle, setPoaCohortToggle] = useState<'p99' | 'p80'>('p99');
+    // Both detail sections are collapsed by default so only the ultra-compact KPIs show
     const [showPulseDigest, setShowPulseDigest] = useState<boolean>(false);
     const [showVelocityMatrix, setShowVelocityMatrix] = useState<boolean>(false);
 
@@ -357,12 +548,37 @@ export default function FutureGraphLevPulseWidget({
                         comp.trajectoryIntercept99thYear ?? prev.trajectoryIntercept99thYear,
                     cone99th: {
                         p10Formatted: comp.cone99th?.p10Formatted || prev.cone99th.p10Formatted,
+                        p25Formatted: comp.cone99th?.p25Formatted || prev.cone99th.p25Formatted,
                         p50Formatted: comp.cone99th?.p50Formatted || prev.cone99th.p50Formatted,
+                        p75Formatted: comp.cone99th?.p75Formatted || prev.cone99th.p75Formatted,
                         p90Formatted: comp.cone99th?.p90Formatted || prev.cone99th.p90Formatted,
                     },
+                    cone80th: {
+                        p10Formatted: comp.cone80th?.p10Formatted || prev.cone80th.p10Formatted,
+                        p25Formatted: comp.cone80th?.p25Formatted || prev.cone80th.p25Formatted,
+                        p50Formatted: comp.cone80th?.p50Formatted || prev.cone80th.p50Formatted,
+                        p75Formatted: comp.cone80th?.p75Formatted || prev.cone80th.p75Formatted,
+                        p90Formatted: comp.cone80th?.p90Formatted || prev.cone80th.p90Formatted,
+                    },
                     cohorts: {
-                        p99: comp.cohorts.p99,
-                        p80: comp.cohorts.p80,
+                        p99: {
+                            ...comp.cohorts.p99,
+                            poaP25:
+                                comp.cohorts.p99.poaP25 ??
+                                Math.round((comp.cohorts.p99.intrinsicPaceOfAging - 0.045) * 1000) / 1000,
+                            poaP75:
+                                comp.cohorts.p99.poaP75 ??
+                                Math.round((comp.cohorts.p99.intrinsicPaceOfAging + 0.05) * 1000) / 1000,
+                        },
+                        p80: {
+                            ...comp.cohorts.p80,
+                            poaP25:
+                                comp.cohorts.p80.poaP25 ??
+                                Math.round((comp.cohorts.p80.intrinsicPaceOfAging - 0.047) * 1000) / 1000,
+                            poaP75:
+                                comp.cohorts.p80.poaP75 ??
+                                Math.round((comp.cohorts.p80.intrinsicPaceOfAging + 0.053) * 1000) / 1000,
+                        },
                     },
                     kpiVelocityEngine: engine?.metrics
                         ? {
@@ -425,11 +641,20 @@ export default function FutureGraphLevPulseWidget({
         (age * 0.95 + data.cohorts.p80.yearsToLev * data.cohorts.p80.netEffectivePaceOfAging).toFixed(1)
     );
 
+    const activePoaCohort = poaCohortToggle === 'p99' ? data.cohorts.p99 : data.cohorts.p80;
+    const activePoaP25 = (
+        activePoaCohort.poaP25 ?? activePoaCohort.intrinsicPaceOfAging - 0.045
+    ).toFixed(3);
+    const activePoaP50 = activePoaCohort.intrinsicPaceOfAging.toFixed(3);
+    const activePoaP75 = (
+        activePoaCohort.poaP75 ?? activePoaCohort.intrinsicPaceOfAging + 0.05
+    ).toFixed(3);
+
     return (
         <div
             className={
                 embeddedInIntro
-                    ? 'space-y-2.5'
+                    ? 'space-y-2'
                     : `rounded-2xl border p-4 shadow-lg transition-colors space-y-2.5 ${
                           isLightMode
                               ? 'border-emerald-200 bg-white text-slate-900'
@@ -437,14 +662,17 @@ export default function FutureGraphLevPulseWidget({
                       }`
             }
         >
-            {/* Compact 3-Card KPI Strip */}
+            {/* Ultra-Compact 3-Card KPI Strip (Collapsed Default State: Headline Label + Value Only, No Subtext) */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
                 {/* Card 1: Estimated LEV Date (Optimal Protocol) */}
                 <div
-                    className={`rounded-xl border px-3.5 py-2.5 flex flex-col justify-between ${
+                    onClick={() => !hideExpandControls && setShowPulseDigest((v) => !v)}
+                    className={`rounded-xl border px-3.5 py-2.5 flex flex-col justify-between transition-colors ${
+                        !hideExpandControls ? 'cursor-pointer' : ''
+                    } ${
                         isLightMode
-                            ? 'border-emerald-200 bg-white shadow-2xs'
-                            : 'border-emerald-500/30 bg-slate-950/75'
+                            ? 'border-emerald-200 bg-white hover:border-emerald-300 shadow-2xs'
+                            : 'border-emerald-500/30 bg-slate-950/75 hover:border-emerald-400/50'
                     }`}
                 >
                     <div className="flex items-center justify-between gap-1.5">
@@ -482,22 +710,17 @@ export default function FutureGraphLevPulseWidget({
                             {Math.abs(days99Shift)}d closer this wk
                         </span>
                     </div>
-
-                    <p
-                        className={`text-[11px] mt-1 leading-snug ${
-                            isLightMode ? 'text-slate-600' : 'text-slate-400'
-                        }`}
-                    >
-                        Full biomarker-guided protocol &amp; early therapeutics (~{data.cohorts.p99.yearsToLev.toFixed(1)} yrs away).
-                    </p>
                 </div>
 
                 {/* Card 2: Estimated LEV Date (Active Health) */}
                 <div
-                    className={`rounded-xl border px-3.5 py-2.5 flex flex-col justify-between ${
+                    onClick={() => !hideExpandControls && setShowPulseDigest((v) => !v)}
+                    className={`rounded-xl border px-3.5 py-2.5 flex flex-col justify-between transition-colors ${
+                        !hideExpandControls ? 'cursor-pointer' : ''
+                    } ${
                         isLightMode
-                            ? 'border-cyan-200 bg-white shadow-2xs'
-                            : 'border-cyan-500/30 bg-slate-950/75'
+                            ? 'border-cyan-200 bg-white hover:border-cyan-300 shadow-2xs'
+                            : 'border-cyan-500/30 bg-slate-950/75 hover:border-cyan-400/50'
                     }`}
                 >
                     <div className="flex items-center justify-between gap-1.5">
@@ -535,22 +758,17 @@ export default function FutureGraphLevPulseWidget({
                             {Math.abs(days80Shift)}d closer this wk
                         </span>
                     </div>
-
-                    <p
-                        className={`text-[11px] mt-1 leading-snug ${
-                            isLightMode ? 'text-slate-600' : 'text-slate-400'
-                        }`}
-                    >
-                        Regular Zone 2/HIIT, circadian fasting &amp; preventive care (~{data.cohorts.p80.yearsToLev.toFixed(1)} yrs away).
-                    </p>
                 </div>
 
                 {/* Card 3: Current Pace of Aging */}
                 <div
-                    className={`rounded-xl border px-3.5 py-2.5 flex flex-col justify-between ${
+                    onClick={() => !hideExpandControls && setShowPulseDigest((v) => !v)}
+                    className={`rounded-xl border px-3.5 py-2.5 flex flex-col justify-between transition-colors ${
+                        !hideExpandControls ? 'cursor-pointer' : ''
+                    } ${
                         isLightMode
-                            ? 'border-purple-200 bg-white shadow-2xs'
-                            : 'border-purple-500/30 bg-slate-950/75'
+                            ? 'border-purple-200 bg-white hover:border-purple-300 shadow-2xs'
+                            : 'border-purple-500/30 bg-slate-950/75 hover:border-purple-400/50'
                     }`}
                 >
                     <div className="flex items-center justify-between gap-1.5">
@@ -601,88 +819,82 @@ export default function FutureGraphLevPulseWidget({
                             +{data.cohorts.p99.daysGainedPerYear}d/yr
                         </span>
                     </div>
-
-                    <p
-                        className={`text-[11px] mt-1 leading-snug ${
-                            isLightMode ? 'text-slate-600' : 'text-slate-400'
-                        }`}
-                    >
-                        Bio-years aged per calendar year (1.00 = avg • only {data.cohorts.p99.bioMonthsPerYear} bio-mo/yr).
-                    </p>
                 </div>
             </div>
 
-            {/* Slim Expandable Controls Strip (Both Collapsed by Default) */}
-            <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5">
-                <div className="flex flex-wrap items-center gap-2">
-                    <button
-                        type="button"
-                        onClick={() => setShowPulseDigest((v) => !v)}
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-all cursor-pointer ${
-                            showPulseDigest
-                                ? isLightMode
-                                    ? 'bg-emerald-600 text-white border-emerald-700'
-                                    : 'bg-emerald-500/20 text-emerald-200 border-emerald-400/40'
-                                : isLightMode
-                                  ? 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300'
-                                  : 'bg-slate-900/90 hover:bg-slate-800 text-slate-300 border-white/10'
-                        }`}
-                    >
-                        <Sparkles
-                            className={`w-3 h-3 ${
-                                showPulseDigest && isLightMode
-                                    ? 'text-white'
+            {/* Slim Expandable Controls Strip (Hidden in Simple Email View) */}
+            {!hideExpandControls && (
+                <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5">
+                    <div className="flex flex-wrap items-center gap-2">
+                        <button
+                            type="button"
+                            onClick={() => setShowPulseDigest((v) => !v)}
+                            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-all cursor-pointer ${
+                                showPulseDigest
+                                    ? isLightMode
+                                        ? 'bg-emerald-600 text-white border-emerald-700'
+                                        : 'bg-emerald-500/20 text-emerald-200 border-emerald-400/40'
                                     : isLightMode
-                                      ? 'text-emerald-600'
-                                      : 'text-emerald-400'
+                                      ? 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300'
+                                      : 'bg-slate-900/90 hover:bg-slate-800 text-slate-300 border-white/10'
                             }`}
-                        />
-                        <span>
-                            {showPulseDigest
-                                ? 'Hide Weekly LEV Shift Details'
-                                : 'Why LEV Shifted This Week & Age Calculator'}
-                        </span>
-                        {showPulseDigest ? (
-                            <ChevronUp className="w-3 h-3" />
-                        ) : (
-                            <ChevronDown className="w-3 h-3" />
-                        )}
-                    </button>
-
-                    <button
-                        type="button"
-                        onClick={() => setShowVelocityMatrix((v) => !v)}
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-mono font-semibold border transition-all cursor-pointer ${
-                            showVelocityMatrix
-                                ? isLightMode
-                                    ? 'bg-purple-600 text-white border-purple-700'
-                                    : 'bg-purple-500/25 text-purple-200 border-purple-400/50'
-                                : isLightMode
-                                  ? 'bg-white hover:bg-slate-100 text-purple-800 border-purple-200'
-                                  : 'bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border-purple-500/30'
-                        }`}
-                    >
-                        <Gauge className="w-3 h-3" />
-                        <span>
-                            Science Velocity: {data.kpiVelocityEngine.weightedAvgVelocityPct.toFixed(1)}%/yr (
-                            {data.kpiVelocityEngine.normalizedAccelerationVector.toFixed(2)}v) •{' '}
-                            <span className="underline">
-                                {showVelocityMatrix ? 'Hide 14 KPIs' : 'View 14 KPIs'}
+                        >
+                            <Sparkles
+                                className={`w-3 h-3 ${
+                                    showPulseDigest && isLightMode
+                                        ? 'text-white'
+                                        : isLightMode
+                                          ? 'text-emerald-600'
+                                          : 'text-emerald-400'
+                                }`}
+                            />
+                            <span>
+                                {showPulseDigest
+                                    ? 'Hide Probability Curves (P25/P50/P75) & Shift Details'
+                                    : 'View P25/P50/P75 Probability Curves, Explanations & Age Calculator'}
                             </span>
-                        </span>
-                        {showVelocityMatrix ? (
-                            <ChevronUp className="w-3 h-3" />
-                        ) : (
-                            <ChevronDown className="w-3 h-3" />
-                        )}
-                    </button>
-                </div>
-            </div>
+                            {showPulseDigest ? (
+                                <ChevronUp className="w-3 h-3" />
+                            ) : (
+                                <ChevronDown className="w-3 h-3" />
+                            )}
+                        </button>
 
-            {/* EXPANDED SECTION 1: Weekly Shift Narrative, Decade Age Calculator & Market/Consensus Digest */}
-            {showPulseDigest && (
+                        <button
+                            type="button"
+                            onClick={() => setShowVelocityMatrix((v) => !v)}
+                            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-mono font-semibold border transition-all cursor-pointer ${
+                                showVelocityMatrix
+                                    ? isLightMode
+                                        ? 'bg-purple-600 text-white border-purple-700'
+                                        : 'bg-purple-500/25 text-purple-200 border-purple-400/50'
+                                    : isLightMode
+                                      ? 'bg-white hover:bg-slate-100 text-purple-800 border-purple-200'
+                                      : 'bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border-purple-500/30'
+                            }`}
+                        >
+                            <Gauge className="w-3 h-3" />
+                            <span>
+                                Science Velocity: {data.kpiVelocityEngine.weightedAvgVelocityPct.toFixed(1)}%/yr (
+                                {data.kpiVelocityEngine.normalizedAccelerationVector.toFixed(2)}v) •{' '}
+                                <span className="underline">
+                                    {showVelocityMatrix ? 'Hide 14 KPIs' : 'View 14 KPIs'}
+                                </span>
+                            </span>
+                            {showVelocityMatrix ? (
+                                <ChevronUp className="w-3 h-3" />
+                            ) : (
+                                <ChevronDown className="w-3 h-3" />
+                            )}
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {/* EXPANDED SECTION 1: Verbalized Shift Note + P25/P50/P75 Probability Curves + Cohort Definitions + Age Calculator + Market Digest */}
+            {!hideExpandControls && showPulseDigest && (
                 <div
-                    className={`rounded-xl border p-3.5 space-y-3 ${
+                    className={`rounded-xl border p-3.5 space-y-3.5 ${
                         isLightMode
                             ? 'bg-white border-slate-200 shadow-xs'
                             : 'bg-slate-950/90 border-white/10'
@@ -698,6 +910,176 @@ export default function FutureGraphLevPulseWidget({
                             {issue.levStateOfPlayExpandedNote}
                         </p>
                     )}
+
+                    {/* 3-Card Bayesian Probability Distribution (P25 / P50 Median / P75) & Cohort Explanations */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        {/* Expanded Card 1: Top 1% Optimal Protocol Probability Curve */}
+                        <div
+                            className={`rounded-xl border p-3 flex flex-col justify-between ${
+                                isLightMode
+                                    ? 'bg-emerald-50/40 border-emerald-200'
+                                    : 'bg-slate-900/80 border-emerald-500/30'
+                            }`}
+                        >
+                            <div>
+                                <div className="flex items-center justify-between gap-1.5">
+                                    <span
+                                        className={`text-[10px] font-bold uppercase tracking-wider ${
+                                            isLightMode ? 'text-emerald-800' : 'text-emerald-300'
+                                        }`}
+                                    >
+                                        Optimal Protocol (Top 1%)
+                                    </span>
+                                    <span
+                                        className={`text-[10px] font-mono font-bold ${
+                                            isLightMode ? 'text-emerald-700' : 'text-emerald-400'
+                                        }`}
+                                    >
+                                        ~{data.cohorts.p99.yearsToLev.toFixed(1)} yrs away
+                                    </span>
+                                </div>
+                                <p
+                                    className={`text-xs mt-1 leading-relaxed ${
+                                        isLightMode ? 'text-slate-600' : 'text-slate-300'
+                                    }`}
+                                >
+                                    For adults following a comprehensive biomarker-guided protocol &amp; early clinical therapeutics.
+                                </p>
+                            </div>
+
+                            <ProbabilityDistributionCurve
+                                idSuffix="opt-p99"
+                                p25Label={data.cone99th.p25Formatted}
+                                p50Label={data.cone99th.p50Formatted}
+                                p75Label={data.cone99th.p75Formatted}
+                                tailRangeLabel={`80% CI (P10–P90): ${data.cone99th.p10Formatted} – ${data.cone99th.p90Formatted}`}
+                                accentColor="#10b981"
+                                isLightMode={isLightMode}
+                            />
+                        </div>
+
+                        {/* Expanded Card 2: Top 20% Active Health Probability Curve */}
+                        <div
+                            className={`rounded-xl border p-3 flex flex-col justify-between ${
+                                isLightMode
+                                    ? 'bg-cyan-50/40 border-cyan-200'
+                                    : 'bg-slate-900/80 border-cyan-500/30'
+                            }`}
+                        >
+                            <div>
+                                <div className="flex items-center justify-between gap-1.5">
+                                    <span
+                                        className={`text-[10px] font-bold uppercase tracking-wider ${
+                                            isLightMode ? 'text-cyan-800' : 'text-cyan-300'
+                                        }`}
+                                    >
+                                        Active Health (Top 20%)
+                                    </span>
+                                    <span
+                                        className={`text-[10px] font-mono font-bold ${
+                                            isLightMode ? 'text-cyan-700' : 'text-cyan-400'
+                                        }`}
+                                    >
+                                        ~{data.cohorts.p80.yearsToLev.toFixed(1)} yrs away
+                                    </span>
+                                </div>
+                                <p
+                                    className={`text-xs mt-1 leading-relaxed ${
+                                        isLightMode ? 'text-slate-600' : 'text-slate-300'
+                                    }`}
+                                >
+                                    For health-conscious adults practicing regular Zone 2/HIIT, circadian fasting &amp; core preventive care.
+                                </p>
+                            </div>
+
+                            <ProbabilityDistributionCurve
+                                idSuffix="act-p80"
+                                p25Label={data.cone80th.p25Formatted}
+                                p50Label={data.cone80th.p50Formatted}
+                                p75Label={data.cone80th.p75Formatted}
+                                tailRangeLabel={`80% CI (P10–P90): ${data.cone80th.p10Formatted} – ${data.cone80th.p90Formatted}`}
+                                accentColor="#06b6d4"
+                                isLightMode={isLightMode}
+                            />
+                        </div>
+
+                        {/* Expanded Card 3: Pace of Aging Probability Distribution with Top 1% / Top 20% Toggle */}
+                        <div
+                            className={`rounded-xl border p-3 flex flex-col justify-between ${
+                                isLightMode
+                                    ? 'bg-purple-50/40 border-purple-200'
+                                    : 'bg-slate-900/80 border-purple-500/30'
+                            }`}
+                        >
+                            <div>
+                                <div className="flex items-center justify-between gap-1.5">
+                                    <span
+                                        className={`text-[10px] font-bold uppercase tracking-wider ${
+                                            isLightMode ? 'text-purple-800' : 'text-purple-300'
+                                        }`}
+                                    >
+                                        Pace of Aging Distribution
+                                    </span>
+                                    <div
+                                        className={`inline-flex items-center rounded-md border p-0.5 font-mono text-[9px] ${
+                                            isLightMode
+                                                ? 'bg-white border-slate-200'
+                                                : 'bg-slate-950 border-white/10'
+                                        }`}
+                                    >
+                                        <button
+                                            type="button"
+                                            onClick={() => setPoaCohortToggle('p99')}
+                                            className={`px-1.5 py-0.5 rounded cursor-pointer transition-colors ${
+                                                poaCohortToggle === 'p99'
+                                                    ? 'bg-purple-600 text-white font-bold'
+                                                    : isLightMode
+                                                      ? 'text-slate-600 hover:text-slate-900'
+                                                      : 'text-slate-400 hover:text-white'
+                                            }`}
+                                        >
+                                            Top 1%
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setPoaCohortToggle('p80')}
+                                            className={`px-1.5 py-0.5 rounded cursor-pointer transition-colors ${
+                                                poaCohortToggle === 'p80'
+                                                    ? 'bg-cyan-600 text-white font-bold'
+                                                    : isLightMode
+                                                      ? 'text-slate-600 hover:text-slate-900'
+                                                      : 'text-slate-400 hover:text-white'
+                                            }`}
+                                        >
+                                            Top 20%
+                                        </button>
+                                    </div>
+                                </div>
+                                <p
+                                    className={`text-xs mt-1 leading-relaxed ${
+                                        isLightMode ? 'text-slate-600' : 'text-slate-300'
+                                    }`}
+                                >
+                                    Biological years aged per calendar year (1.00 = population avg •{' '}
+                                    {activePoaCohort.bioMonthsPerYear} bio-mo/yr).
+                                </p>
+                            </div>
+
+                            <ProbabilityDistributionCurve
+                                idSuffix={`poa-${poaCohortToggle}`}
+                                p25Label={activePoaP25}
+                                p50Label={activePoaP50}
+                                p75Label={activePoaP75}
+                                tailRangeLabel={
+                                    poaCohortToggle === 'p99'
+                                        ? `Top 1% Optimal • +${data.cohorts.p99.daysGainedPerYear}d healthy runway/yr`
+                                        : `Top 20% Active • +${data.cohorts.p80.daysGainedPerYear}d healthy runway/yr`
+                                }
+                                accentColor={poaCohortToggle === 'p99' ? '#a855f7' : '#06b6d4'}
+                                isLightMode={isLightMode}
+                            />
+                        </div>
+                    </div>
 
                     {/* Subtle Decade Age Selector (30 to 70) + Bio-Age at LEV Readout */}
                     <div
@@ -750,14 +1132,6 @@ export default function FutureGraphLevPulseWidget({
                                 </span>
                                 <strong className={isLightMode ? 'text-cyan-700' : 'text-cyan-300'}>
                                     ~{displayedBioAge80} yrs
-                                </strong>
-                            </span>
-                            <span className="hidden sm:inline">
-                                <span className={isLightMode ? 'text-slate-500' : 'text-slate-400'}>
-                                    99th Cone:{' '}
-                                </span>
-                                <strong className={isLightMode ? 'text-slate-800' : 'text-slate-200'}>
-                                    {data.cone99th.p10Formatted} – {data.cone99th.p90Formatted}
                                 </strong>
                             </span>
                         </div>
@@ -836,7 +1210,7 @@ export default function FutureGraphLevPulseWidget({
             )}
 
             {/* EXPANDED SECTION 2: 14-KPI Science Velocity Breakdown Table */}
-            {showVelocityMatrix && (
+            {!hideExpandControls && showVelocityMatrix && (
                 <div
                     className={`rounded-xl border p-3.5 ${
                         isLightMode

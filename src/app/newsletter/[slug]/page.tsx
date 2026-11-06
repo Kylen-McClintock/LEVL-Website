@@ -50,7 +50,11 @@ function NewsletterIssuePageContent() {
   return (
     <OutpaceAgingIssueView
       issue={issue}
-      initialMode={modeParam === 'beehiiv' ? 'beehiiv_studio' : 'web_canonical'}
+      initialMode={
+        modeParam === 'email' || modeParam === 'simple' || modeParam === 'beehiiv'
+          ? 'beehiiv_studio'
+          : 'web_canonical'
+      }
     />
   )
 }

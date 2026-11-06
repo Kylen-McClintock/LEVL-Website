@@ -210,15 +210,15 @@ export default function OutpaceAgingCatalogPage() {
               Latest Issue (#1)
             </Link>
             <Link
-              href="/newsletter/edition-1?mode=beehiiv"
+              href="/newsletter/edition-1?mode=email"
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition-colors ${
                 isLightMode
-                  ? 'bg-amber-50 text-amber-800 border-amber-300 hover:bg-amber-100'
-                  : 'bg-amber-500/15 text-amber-300 border-amber-400/35 hover:bg-amber-500/25'
+                  ? 'bg-slate-100 text-slate-800 border-slate-300 hover:bg-slate-200'
+                  : 'bg-white/5 text-slate-200 border-white/10 hover:bg-white/10'
               }`}
             >
               <Mail className="w-3.5 h-3.5" />
-              Beehiiv Studio
+              Simple Email View
             </Link>
           </div>
         </div>
@@ -533,15 +533,15 @@ export default function OutpaceAgingCatalogPage() {
                       {copiedSlug === issue.shortSlug ? 'Copied URL!' : 'Copy Edition URL'}
                     </button>
                     <Link
-                      href={`/newsletter/${issue.shortSlug}?mode=beehiiv`}
+                      href={`/newsletter/${issue.shortSlug}?mode=email`}
                       className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold border transition-colors ${
                         isLightMode
-                          ? 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-300'
-                          : 'bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border-amber-400/35'
+                          ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300'
+                          : 'bg-white/5 hover:bg-white/10 text-slate-200 border-white/10'
                       }`}
                     >
                       <Mail className="w-3.5 h-3.5" />
-                      Beehiiv Export & PNGs
+                      Simple Email View
                     </Link>
                     <Link
                       href={`/newsletter/${issue.shortSlug}`}

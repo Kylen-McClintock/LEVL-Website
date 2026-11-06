@@ -1598,7 +1598,7 @@ export default function OutpaceAgingIssueView({
               <span className="hidden sm:inline">{copiedUrl ? 'URL Copied!' : 'Share URL'}</span>
             </button>
 
-            {/* Mode Switcher: Canonical Web vs Beehiiv Studio */}
+            {/* Mode Switcher: Interactive View vs Simple Email View */}
             <div
               className={`inline-flex rounded-xl p-1 border ${
                 isLightMode
@@ -1618,21 +1618,21 @@ export default function OutpaceAgingIssueView({
                 }`}
               >
                 <Globe className="w-3.5 h-3.5" />
-                Interactive Edition
+                Interactive View
               </button>
               <button
                 type="button"
                 onClick={() => setPageMode('beehiiv_studio')}
                 className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                   pageMode === 'beehiiv_studio'
-                    ? 'bg-gradient-to-r from-amber-400 to-emerald-400 text-slate-950 shadow'
+                    ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 shadow'
                     : isLightMode
                       ? 'text-slate-600 hover:text-slate-900'
                       : 'text-slate-300 hover:text-white'
                 }`}
               >
                 <Mail className="w-3.5 h-3.5" />
-                Beehiiv Export
+                Simple Email View
               </button>
             </div>
           </div>
@@ -1640,95 +1640,313 @@ export default function OutpaceAgingIssueView({
       </header>
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 pt-8 space-y-10">
-        {/* Beehiiv Export Studio Banner (When Active) */}
-        {pageMode === 'beehiiv_studio' && (
-          <section
-            className={`rounded-3xl border p-6 shadow-2xl space-y-5 ${
-              isLightMode
-                ? 'border-amber-300 bg-amber-50/70'
-                : 'border-amber-400/40 bg-gradient-to-br from-amber-950/30 via-slate-900 to-slate-950'
-            }`}
-          >
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div>
-                <span
-                  className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider border ${
-                    isLightMode
-                      ? 'bg-amber-100 text-amber-900 border-amber-300'
-                      : 'bg-amber-500/20 text-amber-300 border-amber-400/40'
-                  }`}
-                >
-                  ✉️ Beehiiv Weekly Publisher Studio
-                </span>
-                <h2
-                  className={`text-xl sm:text-2xl font-extrabold mt-2 ${
-                    isLightMode ? 'text-slate-900' : 'text-white'
-                  }`}
-                >
-                  1-Click Copy for Beehiiv + Static 16:9 LEVL Graph PNGs
-                </h2>
-                <p
-                  className={`text-xs sm:text-sm mt-1 ${
-                    isLightMode ? 'text-slate-700' : 'text-slate-300'
-                  }`}
-                >
-                  Canonical URL:{' '}
-                  <code
-                    className={`font-mono px-2 py-0.5 rounded border ${
-                      isLightMode
-                        ? 'text-cyan-800 bg-white border-slate-300'
-                        : 'text-cyan-300 bg-slate-950 border-white/10'
-                    }`}
-                  >
-                    {canonicalUrl}
-                  </code>
-                </p>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-2.5">
+        {pageMode === 'beehiiv_studio' ? (
+          /* =====================================================================
+             SIMPLE EMAIL VIEW (Matches what a subscriber sees in their inbox)
+             ===================================================================== */
+          <div className="max-w-2xl mx-auto space-y-6">
+            {/* Subtle Email Copy Utility Strip */}
+            <div
+              className={`flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 rounded-2xl border text-xs ${
+                isLightMode
+                  ? 'bg-slate-100 border-slate-200 text-slate-600'
+                  : 'bg-slate-900/90 border-white/10 text-slate-400'
+              }`}
+            >
+              <span className="font-semibold flex items-center gap-1.5">
+                <Mail className="w-3.5 h-3.5 text-emerald-400" />
+                Email Inbox Preview • Static cards & concise text only
+              </span>
+              <div className="flex flex-wrap items-center gap-2">
                 <button
                   type="button"
                   onClick={handleCopyBeehiivRich}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-950 hover:opacity-95 transition-opacity shadow-lg cursor-pointer"
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-bold border transition-colors cursor-pointer ${
+                    isLightMode
+                      ? 'bg-white text-slate-800 border-slate-300 hover:bg-slate-50'
+                      : 'bg-slate-800 text-slate-200 border-white/10 hover:bg-slate-700'
+                  }`}
                 >
-                  {copiedRich ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                  {copiedRich ? 'Copied Formatted Beehiiv Copy!' : 'Copy Rich Text for Beehiiv'}
+                  {copiedRich ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                  {copiedRich ? 'Copied Email HTML' : 'Copy Email HTML'}
                 </button>
-
                 <button
                   type="button"
                   onClick={handleCopyPlainText}
-                  className={`inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border cursor-pointer ${
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-semibold border transition-colors cursor-pointer ${
                     isLightMode
-                      ? 'bg-white text-slate-800 hover:bg-slate-100 border-slate-300'
-                      : 'bg-slate-800 text-slate-200 hover:bg-slate-700 border-white/10'
+                      ? 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'
+                      : 'bg-slate-800 text-slate-300 border-white/10 hover:bg-slate-700'
                   }`}
                 >
-                  {copiedPlain ? (
-                    <Check className="w-4 h-4 text-emerald-500" />
-                  ) : (
-                    <FileText className="w-4 h-4" />
-                  )}
-                  {copiedPlain ? 'Copied Plain Text!' : 'Copy Plain Text'}
+                  {copiedPlain ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <FileText className="w-3.5 h-3.5" />}
+                  {copiedPlain ? 'Copied Text' : 'Plain Text'}
                 </button>
-
                 <button
                   type="button"
                   onClick={handleDownloadAllPngs}
-                  className={`inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold border cursor-pointer ${
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-semibold border transition-colors cursor-pointer ${
                     isLightMode
-                      ? 'bg-cyan-50 text-cyan-900 border-cyan-300 hover:bg-cyan-100'
-                      : 'bg-cyan-500/20 text-cyan-200 border-cyan-400/40 hover:bg-cyan-500/30'
+                      ? 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'
+                      : 'bg-slate-800 text-slate-300 border-white/10 hover:bg-slate-700'
                   }`}
                 >
-                  <Download className="w-4 h-4" />
-                  Download All 7 Static PNG Cards
+                  <Download className="w-3.5 h-3.5" />
+                  PNGs
                 </button>
               </div>
             </div>
-          </section>
-        )}
 
+            {/* Email Container */}
+            <div
+              className={`rounded-3xl border p-6 sm:p-10 shadow-xl space-y-8 ${
+                isLightMode
+                  ? 'bg-white border-slate-200 text-slate-900'
+                  : 'bg-slate-950 border-white/15 text-slate-100'
+              }`}
+            >
+              {/* Email Header & Intro */}
+              <div className="space-y-4 border-b pb-6 border-slate-500/20">
+                <div className="text-xs font-bold uppercase tracking-wider text-emerald-500">
+                  LEVL Weekly Longevity Roundup • {issue.dateLabel} • Edition #{issue.issueNumber}
+                </div>
+                <h1 className="text-3xl sm:text-4xl font-black tracking-tight">Outpace Aging</h1>
+                <p className={`text-base font-medium ${isLightMode ? 'text-slate-600' : 'text-slate-300'}`}>
+                  {issue.subtitle}
+                </p>
+
+                {/* LEV State of Play + Compact 3-Card KPI Strip (No expanded drawers in email) */}
+                <div
+                  className={`p-4 rounded-2xl border space-y-3 ${
+                    isLightMode
+                      ? 'bg-emerald-50/70 border-emerald-200'
+                      : 'bg-slate-900/90 border-emerald-500/30'
+                  }`}
+                >
+                  <div
+                    className={`text-[11px] font-extrabold uppercase tracking-wider ${
+                      isLightMode ? 'text-emerald-800' : 'text-emerald-300'
+                    }`}
+                  >
+                    🚀 Longevity Escape Velocity (LEV) State of Play
+                  </div>
+                  <p className={`text-sm leading-relaxed ${isLightMode ? 'text-slate-800' : 'text-slate-200'}`}>
+                    {issue.levStateOfPlayParagraph}
+                  </p>
+                  <FutureGraphLevPulseWidget
+                    issue={issue}
+                    isLightMode={isLightMode}
+                    embeddedInIntro={true}
+                    hideExpandControls={true}
+                  />
+                </div>
+
+                {/* Rest of Intro right after */}
+                <p className={`text-sm sm:text-base leading-relaxed pt-1 ${isLightMode ? 'text-slate-700' : 'text-slate-200'}`}>
+                  {issue.introSummaryParagraph}
+                </p>
+              </div>
+
+              {/* 5 Studies in Simple Email Format */}
+              <div className="space-y-8">
+                {issue.studies.map(study => (
+                  <article
+                    key={study.id}
+                    className={`space-y-3.5 pb-8 border-b ${
+                      isLightMode ? 'border-slate-200' : 'border-white/10'
+                    }`}
+                  >
+                    <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                      <span className={`font-bold uppercase tracking-wider ${isLightMode ? 'text-slate-500' : 'text-slate-400'}`}>
+                        Study #{study.number} • {study.journal} ({study.publishDate})
+                      </span>
+                      <span
+                        className={`px-2.5 py-0.5 rounded-full font-extrabold border ${
+                          isLightMode
+                            ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                            : 'bg-emerald-500/15 text-emerald-300 border-emerald-400/30'
+                        }`}
+                      >
+                        {study.keyStatBadge}
+                      </span>
+                    </div>
+
+                    <h2 className="text-lg sm:text-xl font-extrabold leading-snug">
+                      {study.number}. {study.headline}
+                    </h2>
+
+                    <div className={`space-y-3 text-sm leading-relaxed ${isLightMode ? 'text-slate-700' : 'text-slate-200'}`}>
+                      {study.paragraphs.map((p, idx) => (
+                        <p key={idx}>{p}</p>
+                      ))}
+                    </div>
+
+                    {/* Static Email Summary Card (Placed before Limits) */}
+                    <div
+                      className={`p-4 rounded-2xl border space-y-2.5 my-3 ${
+                        isLightMode
+                          ? 'bg-slate-50 border-slate-200'
+                          : 'bg-slate-900/90 border-white/10'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <span className={`text-xs font-extrabold ${isLightMode ? 'text-slate-900' : 'text-white'}`}>
+                          📊 {study.visualSpec.chartTitle}
+                        </span>
+                        <span className={`text-[11px] font-mono font-bold ${isLightMode ? 'text-emerald-700' : 'text-emerald-300'}`}>
+                          {study.keyStatBadge}
+                        </span>
+                      </div>
+                      <div className="space-y-2">
+                        {study.visualSpec.cohortBars.slice(0, 3).map((bar, bIdx) => (
+                          <div key={bIdx}>
+                            <div className="flex justify-between text-xs font-semibold mb-1">
+                              <span>{bar.label}</span>
+                              <span className="font-mono text-emerald-500">{bar.deltaText}</span>
+                            </div>
+                            <div className={`h-2 rounded-full overflow-hidden ${isLightMode ? 'bg-slate-200' : 'bg-slate-800'}`}>
+                              <div
+                                className={`h-full rounded-full ${
+                                  bIdx === 0
+                                    ? 'bg-gradient-to-r from-emerald-500 to-cyan-500'
+                                    : 'bg-slate-500'
+                                }`}
+                                style={{ width: `${Math.max(12, Math.min(100, bar.percentWidth))}%` }}
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <p className={`text-xs leading-relaxed pt-1 ${isLightMode ? 'text-slate-600' : 'text-slate-300'}`}>
+                        {study.visualSpec.chartSubtitle}
+                      </p>
+                    </div>
+
+                    <p className={`text-sm leading-relaxed ${isLightMode ? 'text-slate-700' : 'text-slate-300'}`}>
+                      <strong className={isLightMode ? 'text-amber-800' : 'text-amber-300'}>Limits: </strong>
+                      {study.limits}
+                    </p>
+
+                    <p className={`text-sm leading-relaxed ${isLightMode ? 'text-slate-800' : 'text-slate-200'}`}>
+                      <strong className={isLightMode ? 'text-emerald-800' : 'text-emerald-300'}>Future Implications: </strong>
+                      {study.futureImplications}
+                    </p>
+
+                    <div className="text-xs pt-1">
+                      <a
+                        href={study.studyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`font-bold underline ${isLightMode ? 'text-cyan-700' : 'text-cyan-300'}`}
+                      >
+                        Study link: {study.studyUrl}
+                      </a>
+                    </div>
+                  </article>
+                ))}
+              </div>
+
+              {/* Protocol & Modality in Simple Email Format (Steps BEFORE Graph) */}
+              {[issue.protocolOfTheWeek, issue.modalityOfTheWeek].map(item => (
+                <section
+                  key={item.id}
+                  className={`space-y-4 pb-8 border-b ${
+                    isLightMode ? 'border-slate-200' : 'border-white/10'
+                  }`}
+                >
+                  <div className="text-xs font-extrabold uppercase tracking-wider text-cyan-500">
+                    {item.kind === 'protocol' ? '🧬 Protocol of the Week' : '⚡ Modality of the Week'} • {item.badgeText}
+                  </div>
+                  <h2 className="text-xl sm:text-2xl font-extrabold">{item.name}</h2>
+                  <p className={`text-sm font-medium ${isLightMode ? 'text-slate-600' : 'text-slate-300'}`}>
+                    {item.oneLinePromise}
+                  </p>
+
+                  {/* 3 Hook Stats */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                    {item.hookStats.map((st, idx) => (
+                      <div
+                        key={idx}
+                        className={`p-3 rounded-xl border ${
+                          isLightMode ? 'bg-slate-50 border-slate-200' : 'bg-slate-900 border-white/10'
+                        }`}
+                      >
+                        <div className="text-lg font-black font-mono text-emerald-500">{st.value}</div>
+                        <div className="text-xs font-bold mt-0.5">{st.label}</div>
+                        <div className={`text-[11px] mt-0.5 ${isLightMode ? 'text-slate-500' : 'text-slate-400'}`}>
+                          {st.sublabel}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <p className={`text-sm leading-relaxed ${isLightMode ? 'text-slate-700' : 'text-slate-200'}`}>
+                    <strong>Why it is included this week: </strong>
+                    {item.whyIncluded}
+                  </p>
+
+                  {/* Numbered Steps FIRST (Before the Graph) */}
+                  <div className="space-y-2">
+                    <h3 className="text-sm font-extrabold uppercase tracking-wider">Numbered Steps:</h3>
+                    {item.steps.map(step => (
+                      <div
+                        key={step.stepNumber}
+                        className={`p-3 rounded-xl border text-xs sm:text-sm space-y-1 ${
+                          isLightMode ? 'bg-slate-50 border-slate-200' : 'bg-slate-900/80 border-white/10'
+                        }`}
+                      >
+                        <div className="font-bold">
+                          {step.stepNumber}. {step.title} ({step.timingAndFrequency}) —{' '}
+                          <span className="font-mono text-emerald-500">{step.optimalDoseBadge}</span>
+                        </div>
+                        <p className={isLightMode ? 'text-slate-700' : 'text-slate-300'}>{step.optimalInstruction}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Static Summary Graph Card AFTER Steps */}
+                  <div
+                    className={`p-4 rounded-2xl border space-y-2.5 ${
+                      isLightMode ? 'bg-slate-50 border-slate-200' : 'bg-slate-900/90 border-white/10'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between text-xs font-bold">
+                      <span>📈 {item.curveSpec.title}</span>
+                      <span className="font-mono text-emerald-500">{item.levlScoreOptimal}</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      {item.vectorScores.map(v => (
+                        <div key={v.vectorName} className="text-xs">
+                          <div className="flex justify-between font-semibold mb-0.5">
+                            <span>{v.vectorName}</span>
+                            <span className="font-mono">{v.score}/100 ({v.effectStat})</span>
+                          </div>
+                          <div className={`h-1.5 rounded-full overflow-hidden ${isLightMode ? 'bg-slate-200' : 'bg-slate-800'}`}>
+                            <div
+                              className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500"
+                              style={{ width: `${v.score}%` }}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </section>
+              ))}
+
+              {/* Closing & About LEVL */}
+              <div className="space-y-3 text-sm leading-relaxed">
+                <h3 className="text-base font-extrabold">Closing</h3>
+                <p className={isLightMode ? 'text-slate-700' : 'text-slate-200'}>{issue.closingParagraph}</p>
+                <p className={`pt-2 ${isLightMode ? 'text-slate-600' : 'text-slate-300'}`}>
+                  <strong>About LEVL: </strong>
+                  {issue.aboutLevlParagraph}
+                </p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <>
         {/* Newsletter Hero & Opening Intro */}
         <section
           className={`rounded-3xl border p-6 sm:p-10 shadow-xl space-y-6 transition-colors ${
@@ -2126,6 +2344,8 @@ export default function OutpaceAgingIssueView({
             </div>
           </div>
         </section>
+          </>
+        )}
       </main>
     </div>
   )
