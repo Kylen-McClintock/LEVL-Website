@@ -1,9 +1,8 @@
 'use client'
 
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import {
-  ArrowLeft,
   ArrowRight,
   Sparkles,
   ExternalLink,
@@ -18,7 +17,10 @@ import {
   Compass,
   Calendar,
   Share2,
-  LayoutGrid
+  LayoutGrid,
+  Sun,
+  Moon,
+  CheckCircle2
 } from 'lucide-react'
 import BiologicalTelemetryCurveCard from '@/components/science/BiologicalTelemetryCurveCard'
 import FutureGraphLevPulseWidget from '@/components/newsletter/FutureGraphLevPulseWidget'
@@ -37,45 +39,75 @@ const ACCENT_STYLES: Record<
   {
     badgeBg: string
     badgeText: string
+    lightBadgeBg: string
+    lightBadgeText: string
     border: string
+    lightBorder: string
     glow: string
+    lightGlow: string
     numberBg: string
+    lightNumberBg: string
   }
 > = {
   emerald: {
     badgeBg: 'bg-emerald-500/15 border-emerald-400/35',
     badgeText: 'text-emerald-300',
+    lightBadgeBg: 'bg-emerald-50 border-emerald-300',
+    lightBadgeText: 'text-emerald-800',
     border: 'border-emerald-500/30',
+    lightBorder: 'border-emerald-200',
     glow: 'from-emerald-500/10 via-slate-900/95 to-slate-950',
-    numberBg: 'bg-emerald-500/20 text-emerald-300 border-emerald-400/40'
+    lightGlow: 'from-emerald-50/50 via-white to-white',
+    numberBg: 'bg-emerald-500/20 text-emerald-300 border-emerald-400/40',
+    lightNumberBg: 'bg-emerald-100 text-emerald-800 border-emerald-300'
   },
   cyan: {
     badgeBg: 'bg-cyan-500/15 border-cyan-400/35',
     badgeText: 'text-cyan-300',
+    lightBadgeBg: 'bg-cyan-50 border-cyan-300',
+    lightBadgeText: 'text-cyan-800',
     border: 'border-cyan-500/30',
+    lightBorder: 'border-cyan-200',
     glow: 'from-cyan-500/10 via-slate-900/95 to-slate-950',
-    numberBg: 'bg-cyan-500/20 text-cyan-300 border-cyan-400/40'
+    lightGlow: 'from-cyan-50/50 via-white to-white',
+    numberBg: 'bg-cyan-500/20 text-cyan-300 border-cyan-400/40',
+    lightNumberBg: 'bg-cyan-100 text-cyan-800 border-cyan-300'
   },
   purple: {
     badgeBg: 'bg-purple-500/15 border-purple-400/35',
     badgeText: 'text-purple-300',
+    lightBadgeBg: 'bg-purple-50 border-purple-300',
+    lightBadgeText: 'text-purple-800',
     border: 'border-purple-500/30',
+    lightBorder: 'border-purple-200',
     glow: 'from-purple-500/10 via-slate-900/95 to-slate-950',
-    numberBg: 'bg-purple-500/20 text-purple-300 border-purple-400/40'
+    lightGlow: 'from-purple-50/50 via-white to-white',
+    numberBg: 'bg-purple-500/20 text-purple-300 border-purple-400/40',
+    lightNumberBg: 'bg-purple-100 text-purple-800 border-purple-300'
   },
   amber: {
     badgeBg: 'bg-amber-500/15 border-amber-400/35',
     badgeText: 'text-amber-300',
+    lightBadgeBg: 'bg-amber-50 border-amber-300',
+    lightBadgeText: 'text-amber-800',
     border: 'border-amber-500/30',
+    lightBorder: 'border-amber-200',
     glow: 'from-amber-500/10 via-slate-900/95 to-slate-950',
-    numberBg: 'bg-amber-500/20 text-amber-300 border-amber-400/40'
+    lightGlow: 'from-amber-50/50 via-white to-white',
+    numberBg: 'bg-amber-500/20 text-amber-300 border-amber-400/40',
+    lightNumberBg: 'bg-amber-100 text-amber-800 border-amber-300'
   },
   rose: {
     badgeBg: 'bg-rose-500/15 border-rose-400/35',
     badgeText: 'text-rose-300',
+    lightBadgeBg: 'bg-rose-50 border-rose-300',
+    lightBadgeText: 'text-rose-800',
     border: 'border-rose-500/30',
+    lightBorder: 'border-rose-200',
     glow: 'from-rose-500/10 via-slate-900/95 to-slate-950',
-    numberBg: 'bg-rose-500/20 text-rose-300 border-rose-400/40'
+    lightGlow: 'from-rose-50/50 via-white to-white',
+    numberBg: 'bg-rose-500/20 text-rose-300 border-rose-400/40',
+    lightNumberBg: 'bg-rose-100 text-rose-800 border-rose-300'
   }
 }
 
@@ -229,10 +261,12 @@ export function downloadStaticNewsletterCardPng(options: {
  */
 function StudyInteractiveCard({
   study,
-  issueShortSlug
+  issueShortSlug,
+  isLightMode
 }: {
   study: NewsletterStudySection
   issueShortSlug: string
+  isLightMode: boolean
 }) {
   const [activeTab, setActiveTab] = useState<StudyVisualTab>(
     study.visualSpec.defaultChartType === 'telemetry_curve' ? 'curve' : 'bars'
@@ -257,16 +291,34 @@ function StudyInteractiveCard({
   }
 
   return (
-    <div className="my-6 rounded-2xl border border-cyan-500/25 bg-slate-950/90 shadow-[0_12px_40px_rgba(0,0,0,0.65)] overflow-hidden">
+    <div
+      className={`my-6 rounded-2xl border overflow-hidden transition-colors ${
+        isLightMode
+          ? 'border-slate-200 bg-slate-50/80 shadow-md'
+          : 'border-cyan-500/25 bg-slate-950/90 shadow-[0_12px_40px_rgba(0,0,0,0.65)]'
+      }`}
+    >
       {/* Top Bar: Visual Mode Toggles */}
-      <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 bg-slate-900/90 border-b border-white/10">
+      <div
+        className={`flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b ${
+          isLightMode
+            ? 'bg-white border-slate-200'
+            : 'bg-slate-900/90 border-white/10'
+        }`}
+      >
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-cyan-500/15 text-cyan-300 border border-cyan-400/30">
+          <span
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider border ${
+              isLightMode
+                ? 'bg-cyan-50 text-cyan-800 border-cyan-300'
+                : 'bg-cyan-500/15 text-cyan-300 border-cyan-400/30'
+            }`}
+          >
             <Activity className="w-3.5 h-3.5" />
             LEVL Study Telemetry
           </span>
-          <span className="text-xs text-slate-400 hidden sm:inline">
-            Toggle between plain-English graph, deep mechanism cascade, and trial table
+          <span className={`text-xs hidden sm:inline ${isLightMode ? 'text-slate-500' : 'text-slate-400'}`}>
+            Explore interactive curve, cohort outcomes, and mechanism cascade
           </span>
         </div>
 
@@ -274,10 +326,12 @@ function StudyInteractiveCard({
           <button
             type="button"
             onClick={() => setActiveTab('curve')}
-            className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               activeTab === 'curve'
                 ? 'bg-cyan-500 text-slate-950 shadow-sm'
-                : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800'
+                : isLightMode
+                  ? 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                  : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800'
             }`}
           >
             📈 Telemetry Curve
@@ -285,10 +339,12 @@ function StudyInteractiveCard({
           <button
             type="button"
             onClick={() => setActiveTab('bars')}
-            className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               activeTab === 'bars'
                 ? 'bg-cyan-500 text-slate-950 shadow-sm'
-                : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800'
+                : isLightMode
+                  ? 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                  : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800'
             }`}
           >
             📊 Cohort Bars
@@ -296,10 +352,12 @@ function StudyInteractiveCard({
           <button
             type="button"
             onClick={() => setActiveTab('cascade')}
-            className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               activeTab === 'cascade'
                 ? 'bg-purple-500 text-white shadow-sm'
-                : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800'
+                : isLightMode
+                  ? 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                  : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800'
             }`}
           >
             🧬 Geek Mode Cascade
@@ -307,10 +365,12 @@ function StudyInteractiveCard({
           <button
             type="button"
             onClick={() => setActiveTab('table')}
-            className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               activeTab === 'table'
                 ? 'bg-emerald-500 text-slate-950 shadow-sm'
-                : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800'
+                : isLightMode
+                  ? 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                  : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800'
             }`}
           >
             📄 Trial Data
@@ -322,26 +382,49 @@ function StudyInteractiveCard({
       <div className="p-4 sm:p-5">
         {activeTab === 'curve' && (
           <div>
-            <BiologicalTelemetryCurveCard curves={[study.visualSpec.curveSpec]} />
+            <BiologicalTelemetryCurveCard
+              curves={[study.visualSpec.curveSpec]}
+              isLightMode={isLightMode}
+            />
           </div>
         )}
 
         {activeTab === 'bars' && (
           <div className="space-y-4">
             <div>
-              <h4 className="text-sm sm:text-base font-bold text-white">
+              <h4
+                className={`text-sm sm:text-base font-bold ${
+                  isLightMode ? 'text-slate-900' : 'text-white'
+                }`}
+              >
                 {study.visualSpec.chartTitle}
               </h4>
-              <p className="text-xs text-slate-400 mt-0.5">{study.visualSpec.chartSubtitle}</p>
+              <p className={`text-xs mt-0.5 ${isLightMode ? 'text-slate-600' : 'text-slate-400'}`}>
+                {study.visualSpec.chartSubtitle}
+              </p>
             </div>
             <div className="space-y-3 pt-1">
               {study.visualSpec.cohortBars.map((bar, idx) => (
                 <div key={idx} className="space-y-1.5">
                   <div className="flex items-center justify-between gap-2 text-xs sm:text-sm">
-                    <span className="font-semibold text-slate-200">{bar.label}</span>
-                    <span className={`font-bold ${bar.textColorClass}`}>{bar.deltaText}</span>
+                    <span className={`font-semibold ${isLightMode ? 'text-slate-800' : 'text-slate-200'}`}>
+                      {bar.label}
+                    </span>
+                    <span
+                      className={`font-bold ${
+                        isLightMode ? 'text-cyan-800' : bar.textColorClass
+                      }`}
+                    >
+                      {bar.deltaText}
+                    </span>
                   </div>
-                  <div className="w-full h-3 rounded-full bg-slate-900 border border-white/10 overflow-hidden">
+                  <div
+                    className={`w-full h-3 rounded-full overflow-hidden border ${
+                      isLightMode
+                        ? 'bg-slate-200 border-slate-300'
+                        : 'bg-slate-900 border-white/10'
+                    }`}
+                  >
                     <div
                       className={`h-full rounded-full ${bar.barColorClass} transition-all duration-500`}
                       style={{ width: `${bar.percentWidth}%` }}
@@ -355,12 +438,22 @@ function StudyInteractiveCard({
 
         {activeTab === 'cascade' && (
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h4 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
-                <Microscope className="w-4 h-4 text-purple-400" />
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <h4
+                className={`text-sm sm:text-base font-bold flex items-center gap-2 ${
+                  isLightMode ? 'text-slate-900' : 'text-white'
+                }`}
+              >
+                <Microscope className={`w-4 h-4 ${isLightMode ? 'text-purple-600' : 'text-purple-400'}`} />
                 4-Stage Cellular & Molecular Mechanism Cascade
               </h4>
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-purple-300 bg-purple-500/15 px-2.5 py-0.5 rounded-full border border-purple-400/30">
+              <span
+                className={`text-[11px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${
+                  isLightMode
+                    ? 'bg-purple-50 text-purple-800 border-purple-200'
+                    : 'bg-purple-500/15 text-purple-300 border-purple-400/30'
+                }`}
+              >
                 Deep Science View
               </span>
             </div>
@@ -368,15 +461,37 @@ function StudyInteractiveCard({
               {study.visualSpec.molecularCascade.map(stage => (
                 <div
                   key={stage.stepNum}
-                  className={`p-3.5 rounded-xl border ${stage.accentClass} transition-all`}
+                  className={`p-3.5 rounded-xl border transition-all ${
+                    isLightMode
+                      ? 'bg-white border-slate-200 shadow-2xs'
+                      : stage.accentClass
+                  }`}
                 >
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="w-5 h-5 rounded-full bg-black/40 border border-current flex items-center justify-center text-[11px] font-bold">
+                    <span
+                      className={`w-5 h-5 rounded-full border flex items-center justify-center text-[11px] font-bold ${
+                        isLightMode
+                          ? 'bg-purple-50 border-purple-300 text-purple-800'
+                          : 'bg-black/40 border-current'
+                      }`}
+                    >
                       {stage.stepNum}
                     </span>
-                    <span className="text-xs sm:text-sm font-bold text-white">{stage.title}</span>
+                    <span
+                      className={`text-xs sm:text-sm font-bold ${
+                        isLightMode ? 'text-slate-900' : 'text-white'
+                      }`}
+                    >
+                      {stage.title}
+                    </span>
                   </div>
-                  <p className="text-xs text-slate-300 leading-relaxed">{stage.detail}</p>
+                  <p
+                    className={`text-xs leading-relaxed ${
+                      isLightMode ? 'text-slate-700' : 'text-slate-300'
+                    }`}
+                  >
+                    {stage.detail}
+                  </p>
                 </div>
               ))}
             </div>
@@ -385,13 +500,27 @@ function StudyInteractiveCard({
 
         {activeTab === 'table' && (
           <div className="space-y-3">
-            <h4 className="text-sm sm:text-base font-bold text-white">
+            <h4
+              className={`text-sm sm:text-base font-bold ${
+                isLightMode ? 'text-slate-900' : 'text-white'
+              }`}
+            >
               {study.visualSpec.trialComparison.title}
             </h4>
-            <div className="overflow-x-auto rounded-xl border border-white/10">
+            <div
+              className={`overflow-x-auto rounded-xl border ${
+                isLightMode ? 'border-slate-200 bg-white' : 'border-white/10'
+              }`}
+            >
               <table className="w-full text-left border-collapse text-xs sm:text-sm">
                 <thead>
-                  <tr className="bg-slate-900/95 border-b border-white/10 text-slate-300">
+                  <tr
+                    className={`border-b ${
+                      isLightMode
+                        ? 'bg-slate-100 border-slate-200 text-slate-700'
+                        : 'bg-slate-900/95 border-white/10 text-slate-300'
+                    }`}
+                  >
                     {study.visualSpec.trialComparison.headers.map((h, i) => (
                       <th key={i} className="py-2.5 px-3 font-semibold">
                         {h}
@@ -399,12 +528,39 @@ function StudyInteractiveCard({
                     ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5 bg-slate-950/60">
+                <tbody
+                  className={
+                    isLightMode
+                      ? 'divide-y divide-slate-200 bg-white'
+                      : 'divide-y divide-white/5 bg-slate-950/60'
+                  }
+                >
                   {study.visualSpec.trialComparison.rows.map((row, rIdx) => (
-                    <tr key={rIdx} className="hover:bg-white/[0.02]">
-                      <td className="py-2.5 px-3 font-medium text-white">{row.col1}</td>
-                      <td className="py-2.5 px-3 text-slate-300">{row.col2}</td>
-                      <td className={`py-2.5 px-3 ${row.col3ColorClass}`}>{row.col3}</td>
+                    <tr
+                      key={rIdx}
+                      className={isLightMode ? 'hover:bg-slate-50' : 'hover:bg-white/[0.02]'}
+                    >
+                      <td
+                        className={`py-2.5 px-3 font-medium ${
+                          isLightMode ? 'text-slate-900' : 'text-white'
+                        }`}
+                      >
+                        {row.col1}
+                      </td>
+                      <td
+                        className={`py-2.5 px-3 ${
+                          isLightMode ? 'text-slate-700' : 'text-slate-300'
+                        }`}
+                      >
+                        {row.col2}
+                      </td>
+                      <td
+                        className={`py-2.5 px-3 ${
+                          isLightMode ? 'text-emerald-700 font-bold' : row.col3ColorClass
+                        }`}
+                      >
+                        {row.col3}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -415,13 +571,25 @@ function StudyInteractiveCard({
       </div>
 
       {/* Bottom Source Credibility Strip */}
-      <div className="px-4 py-2.5 bg-slate-900/95 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400">
-        <span className="font-mono text-slate-300">{study.visualSpec.sourceFigureBadge}</span>
+      <div
+        className={`px-4 py-2.5 border-t flex flex-wrap items-center justify-between gap-2 text-[11px] ${
+          isLightMode
+            ? 'bg-slate-100/90 border-slate-200 text-slate-600'
+            : 'bg-slate-900/95 border-white/10 text-slate-400'
+        }`}
+      >
+        <span className={`font-mono ${isLightMode ? 'text-slate-700' : 'text-slate-300'}`}>
+          {study.visualSpec.sourceFigureBadge}
+        </span>
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={handleDownloadPng}
-            className="inline-flex items-center gap-1 text-cyan-300 hover:text-cyan-200 font-semibold"
+            className={`inline-flex items-center gap-1 font-semibold cursor-pointer ${
+              isLightMode
+                ? 'text-cyan-700 hover:text-cyan-900'
+                : 'text-cyan-300 hover:text-cyan-200'
+            }`}
           >
             <Download className="w-3.5 h-3.5" />
             Download Beehiiv PNG
@@ -430,7 +598,11 @@ function StudyInteractiveCard({
             href={study.studyUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-emerald-300 hover:text-emerald-200 font-semibold"
+            className={`inline-flex items-center gap-1 font-semibold ${
+              isLightMode
+                ? 'text-emerald-700 hover:text-emerald-900'
+                : 'text-emerald-300 hover:text-emerald-200'
+            }`}
           >
             Verify in Primary Paper
             <ExternalLink className="w-3 h-3" />
@@ -442,15 +614,20 @@ function StudyInteractiveCard({
 }
 
 /**
- * Interactive Protocol / Modality Sandbox Card with Beginner vs. Optimal Scaling Toggle,
- * 3-Tab Visual Explorer (Telemetry Curve / Onset Timeline / 8-Vector Impact), and 1-Click LEVL App Deep-Link.
+ * Interactive Protocol / Modality Sandbox Card with:
+ * - Prominent Hero Image Banner
+ * - 3 Big Hook Stat Cards
+ * - Key Benefits List
+ * - Beginner vs. Optimal Scaling Toggle & 3-Tab Visual Explorer
  */
 function ActionableProtocolModalitySection({
   item,
-  issueShortSlug
+  issueShortSlug,
+  isLightMode
 }: {
   item: NewsletterActionableItem
   issueShortSlug: string
+  isLightMode: boolean
 }) {
   const [scalingMode, setScalingMode] = useState<ScalingMode>('optimal')
   const [visualTab, setVisualTab] = useState<ActionableVisualTab>('telemetry')
@@ -479,300 +656,590 @@ function ActionableProtocolModalitySection({
   return (
     <section
       id={item.id}
-      className={`rounded-3xl border p-5 sm:p-8 shadow-2xl ${
-        isProtocol
-          ? 'border-purple-500/35 bg-gradient-to-br from-purple-950/25 via-slate-900/95 to-slate-950'
-          : 'border-emerald-500/35 bg-gradient-to-br from-emerald-950/25 via-slate-900/95 to-slate-950'
+      className={`rounded-3xl border overflow-hidden shadow-2xl transition-colors ${
+        isLightMode
+          ? isProtocol
+            ? 'border-purple-200 bg-white'
+            : 'border-emerald-200 bg-white'
+          : isProtocol
+            ? 'border-purple-500/35 bg-gradient-to-br from-purple-950/25 via-slate-900/95 to-slate-950'
+            : 'border-emerald-500/35 bg-gradient-to-br from-emerald-950/25 via-slate-900/95 to-slate-950'
       }`}
     >
-      {/* Top Header Badges */}
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-        <div className="flex flex-wrap items-center gap-2">
-          <span
-            className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border ${
-              isProtocol
-                ? 'bg-purple-500/20 text-purple-200 border-purple-400/40'
-                : 'bg-emerald-500/20 text-emerald-200 border-emerald-400/40'
-            }`}
-          >
-            {isProtocol ? '🧬 Protocol of the Week' : '⚡ Modality of the Week'}
-          </span>
-          <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-white/5 text-slate-300 border border-white/10">
-            {item.badgeText}
-          </span>
-        </div>
+      {/* 1. PROMINENT HERO IMAGE BANNER */}
+      <div className="relative w-full h-64 sm:h-80 overflow-hidden bg-slate-950">
+        <img
+          src={item.heroImageUrl}
+          alt={item.name}
+          className="w-full h-full object-cover object-center opacity-85"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/20" />
 
-        <div className="flex items-center gap-2">
-          <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-400/40">
+        {/* Top Badges inside Hero Image */}
+        <div className="absolute top-4 left-4 right-4 sm:top-6 sm:left-8 sm:right-8 flex flex-wrap items-center justify-between gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <span
+              className={`px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider border backdrop-blur-md ${
+                isProtocol
+                  ? 'bg-purple-500/30 text-purple-100 border-purple-400/50'
+                  : 'bg-emerald-500/30 text-emerald-100 border-emerald-400/50'
+              }`}
+            >
+              {isProtocol ? '🧬 Protocol of the Week' : '⚡ Modality of the Week'}
+            </span>
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-black/55 text-slate-200 border border-white/15 backdrop-blur-md">
+              {item.badgeText}
+            </span>
+          </div>
+
+          <span className="px-3.5 py-1 rounded-full text-xs font-black bg-emerald-500 text-slate-950 shadow-lg">
             {activeScoreBadge} Projected Impact
           </span>
         </div>
-      </div>
 
-      {/* Title & One-Line Promise */}
-      <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-        {item.name}
-      </h2>
-      <p className="mt-2 text-base sm:text-lg font-medium text-cyan-200 leading-relaxed">
-        <span className="font-bold text-white">One-line promise:</span> {item.oneLinePromise}
-      </p>
-
-      {/* Why It Is Included This Week */}
-      <div className="mt-4 p-4 rounded-2xl bg-slate-900/85 border border-white/10">
-        <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
-          <span className="font-bold text-white">Why it is included this week: </span>
-          {item.whyIncluded}
-        </p>
-        <div className="mt-3 flex flex-wrap items-center gap-2">
-          <span className="text-xs font-semibold text-slate-400">Verified Clinical Sources:</span>
-          {item.pubmedLinks.map(link => (
-            <a
-              key={link.pmid}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-cyan-500/15 text-cyan-300 border border-cyan-400/30 hover:bg-cyan-500/25 transition-colors"
-            >
-              📄 {link.label}
-              <ExternalLink className="w-3 h-3" />
-            </a>
-          ))}
+        {/* Bottom Headline & Promise inside Hero Image */}
+        <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-8 sm:right-8">
+          <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight drop-shadow-md">
+            {item.name}
+          </h2>
+          <p className="mt-1.5 text-sm sm:text-base font-medium text-cyan-100 leading-snug max-w-3xl drop-shadow">
+            {item.oneLinePromise}
+          </p>
         </div>
       </div>
 
-      {/* Interactive Telemetry & Dosing Sandbox Card (Placed Before Steps) */}
-      <div className="my-6 rounded-2xl border border-cyan-500/30 bg-slate-950/95 overflow-hidden shadow-xl">
-        {/* Top Controls: Scaling Mode Toggle + Visual View Toggle */}
-        <div className="p-4 bg-slate-900/95 border-b border-white/10 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-          {/* Beginner vs Optimal Scaling Switcher */}
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
-              Select Dosing Tier:
-            </span>
-            <div className="inline-flex rounded-xl p-1 bg-slate-950 border border-white/10">
-              <button
-                type="button"
-                onClick={() => setScalingMode('beginner')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  scalingMode === 'beginner'
-                    ? 'bg-emerald-500 text-slate-950 shadow'
-                    : 'text-slate-300 hover:text-white'
-                }`}
-              >
-                🌱 Beginner Scaling ({item.levlScoreBeginner})
-              </button>
-              <button
-                type="button"
-                onClick={() => setScalingMode('optimal')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  scalingMode === 'optimal'
-                    ? 'bg-cyan-400 text-slate-950 shadow'
-                    : 'text-slate-300 hover:text-white'
-                }`}
-              >
-                ⚡ Clinical Optimal ({item.levlScoreOptimal})
-              </button>
-            </div>
+      {/* Main Content Container */}
+      <div className="p-5 sm:p-8 space-y-6">
+        {/* 2. PROMINENT 3 HOOK STATS CARDS */}
+        <div>
+          <div
+            className={`text-[11px] font-extrabold uppercase tracking-wider mb-2.5 ${
+              isLightMode ? 'text-slate-500' : 'text-slate-400'
+            }`}
+          >
+            Headline Clinical & Biomarker Outcomes:
           </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+            {item.hookStats.map((stat, idx) => {
+              const statAccent =
+                stat.accent === 'emerald'
+                  ? isLightMode
+                    ? 'border-emerald-300 bg-emerald-50/70 text-emerald-800'
+                    : 'border-emerald-500/35 bg-emerald-950/30 text-emerald-300'
+                  : stat.accent === 'cyan'
+                    ? isLightMode
+                      ? 'border-cyan-300 bg-cyan-50/70 text-cyan-800'
+                      : 'border-cyan-500/35 bg-cyan-950/30 text-cyan-300'
+                    : stat.accent === 'purple'
+                      ? isLightMode
+                        ? 'border-purple-300 bg-purple-50/70 text-purple-800'
+                        : 'border-purple-500/35 bg-purple-950/30 text-purple-300'
+                      : isLightMode
+                        ? 'border-amber-300 bg-amber-50/70 text-amber-800'
+                        : 'border-amber-500/35 bg-amber-950/30 text-amber-300'
 
-          {/* Graph / Onset / Vectors View Switcher */}
-          <div className="flex flex-wrap items-center gap-1.5">
-            <button
-              type="button"
-              onClick={() => setVisualTab('telemetry')}
-              className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${
-                visualTab === 'telemetry'
-                  ? 'bg-cyan-500 text-slate-950'
-                  : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-              }`}
-            >
-              📈 24h Telemetry Curve
-            </button>
-            <button
-              type="button"
-              onClick={() => setVisualTab('onset')}
-              className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${
-                visualTab === 'onset'
-                  ? 'bg-emerald-500 text-slate-950'
-                  : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-              }`}
-            >
-              🎯 Onset Timeline
-            </button>
-            <button
-              type="button"
-              onClick={() => setVisualTab('vectors')}
-              className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${
-                visualTab === 'vectors'
-                  ? 'bg-purple-500 text-white'
-                  : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-              }`}
-            >
-              ⬢ Longevity Vectors
-            </button>
-          </div>
-        </div>
-
-        {/* Visual Body */}
-        <div className="p-4 sm:p-5">
-          {visualTab === 'telemetry' && (
-            <BiologicalTelemetryCurveCard curves={[item.curveSpec]} />
-          )}
-
-          {visualTab === 'onset' && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              {item.onsetPhases.map((p, idx) => (
+              return (
                 <div
                   key={idx}
-                  className="p-4 rounded-xl bg-slate-900/90 border border-white/10 space-y-1.5"
+                  className={`rounded-2xl border p-4 flex flex-col justify-between ${statAccent}`}
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold uppercase tracking-wider text-cyan-300">
-                      {p.phase}
-                    </span>
-                    <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-400/30">
-                      {p.window}
-                    </span>
+                  <div>
+                    <div className="text-2xl sm:text-3xl font-black tracking-tight font-mono">
+                      {stat.value}
+                    </div>
+                    <div
+                      className={`text-sm font-extrabold mt-1 ${
+                        isLightMode ? 'text-slate-900' : 'text-white'
+                      }`}
+                    >
+                      {stat.label}
+                    </div>
                   </div>
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">{p.detail}</p>
+                  <p
+                    className={`text-xs mt-1.5 leading-relaxed ${
+                      isLightMode ? 'text-slate-600' : 'text-slate-300'
+                    }`}
+                  >
+                    {stat.sublabel}
+                  </p>
                 </div>
-              ))}
-            </div>
-          )}
+              )
+            })}
+          </div>
+        </div>
 
-          {visualTab === 'vectors' && (
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <h4 className="text-sm font-bold text-white">
-                  Targeted Biological Longevity Vectors & Quantified Biomarker Shifts
-                </h4>
-                <span className="text-xs text-slate-400">Calibrated 0–100 Clinical Rubric</span>
+        {/* 3. PROMINENT KEY BENEFITS GRID */}
+        <div
+          className={`p-4 sm:p-5 rounded-2xl border ${
+            isLightMode
+              ? 'bg-slate-50 border-slate-200'
+              : 'bg-slate-900/90 border-white/10'
+          }`}
+        >
+          <div
+            className={`text-xs font-extrabold uppercase tracking-wider mb-3 flex items-center gap-1.5 ${
+              isLightMode ? 'text-emerald-700' : 'text-emerald-300'
+            }`}
+          >
+            <Sparkles className="w-4 h-4" />
+            Key Longevity & Performance Benefits
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {item.keyBenefits.map((benefit, bIdx) => (
+              <div
+                key={bIdx}
+                className={`flex items-start gap-2.5 p-3 rounded-xl border ${
+                  isLightMode
+                    ? 'bg-white border-slate-200/90 text-slate-800'
+                    : 'bg-slate-950/70 border-white/5 text-slate-200'
+                }`}
+              >
+                <CheckCircle2
+                  className={`w-4 h-4 shrink-0 mt-0.5 ${
+                    isLightMode ? 'text-emerald-600' : 'text-emerald-400'
+                  }`}
+                />
+                <span className="text-xs sm:text-sm font-medium leading-snug">{benefit}</span>
               </div>
-              <div className="space-y-2.5">
-                {item.vectorScores.map(vec => (
-                  <div key={vec.vectorName} className="space-y-1">
-                    <div className="flex items-center justify-between text-xs sm:text-sm">
-                      <span className="font-semibold text-white">{vec.vectorName}</span>
-                      <span className="font-bold text-cyan-300">
-                        {vec.score}/100 • {vec.effectStat}
+            ))}
+          </div>
+        </div>
+
+        {/* Why It Is Included This Week */}
+        <div
+          className={`p-4 rounded-2xl border ${
+            isLightMode
+              ? 'bg-white border-slate-200'
+              : 'bg-slate-900/85 border-white/10'
+          }`}
+        >
+          <p
+            className={`text-sm sm:text-base leading-relaxed ${
+              isLightMode ? 'text-slate-700' : 'text-slate-200'
+            }`}
+          >
+            <span className={`font-bold ${isLightMode ? 'text-slate-900' : 'text-white'}`}>
+              Why it is included this week:{' '}
+            </span>
+            {item.whyIncluded}
+          </p>
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <span
+              className={`text-xs font-semibold ${
+                isLightMode ? 'text-slate-500' : 'text-slate-400'
+              }`}
+            >
+              Verified Clinical Sources:
+            </span>
+            {item.pubmedLinks.map(link => (
+              <a
+                key={link.pmid}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border transition-colors ${
+                  isLightMode
+                    ? 'bg-cyan-50 text-cyan-800 border-cyan-200 hover:bg-cyan-100'
+                    : 'bg-cyan-500/15 text-cyan-300 border-cyan-400/30 hover:bg-cyan-500/25'
+                }`}
+              >
+                📄 {link.label}
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Interactive Telemetry & Dosing Sandbox Card */}
+        <div
+          className={`rounded-2xl border overflow-hidden shadow-lg ${
+            isLightMode
+              ? 'border-slate-200 bg-slate-50/70'
+              : 'border-cyan-500/30 bg-slate-950/95'
+          }`}
+        >
+          {/* Top Controls: Scaling Mode Toggle + Visual View Toggle */}
+          <div
+            className={`p-4 border-b flex flex-col lg:flex-row lg:items-center justify-between gap-3 ${
+              isLightMode
+                ? 'bg-white border-slate-200'
+                : 'bg-slate-900/95 border-white/10'
+            }`}
+          >
+            {/* Beginner vs Optimal Scaling Switcher */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span
+                className={`text-xs font-bold uppercase tracking-wider ${
+                  isLightMode ? 'text-slate-600' : 'text-slate-400'
+                }`}
+              >
+                Select Dosing Tier:
+              </span>
+              <div
+                className={`inline-flex rounded-xl p-1 border ${
+                  isLightMode
+                    ? 'bg-slate-100 border-slate-200'
+                    : 'bg-slate-950 border-white/10'
+                }`}
+              >
+                <button
+                  type="button"
+                  onClick={() => setScalingMode('beginner')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                    scalingMode === 'beginner'
+                      ? 'bg-emerald-500 text-slate-950 shadow'
+                      : isLightMode
+                        ? 'text-slate-600 hover:text-slate-900'
+                        : 'text-slate-300 hover:text-white'
+                  }`}
+                >
+                  🌱 Beginner Scaling ({item.levlScoreBeginner})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setScalingMode('optimal')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                    scalingMode === 'optimal'
+                      ? 'bg-cyan-400 text-slate-950 shadow'
+                      : isLightMode
+                        ? 'text-slate-600 hover:text-slate-900'
+                        : 'text-slate-300 hover:text-white'
+                  }`}
+                >
+                  ⚡ Clinical Optimal ({item.levlScoreOptimal})
+                </button>
+              </div>
+            </div>
+
+            {/* Graph / Onset / Vectors View Switcher */}
+            <div className="flex flex-wrap items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => setVisualTab('telemetry')}
+                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  visualTab === 'telemetry'
+                    ? 'bg-cyan-500 text-slate-950'
+                    : isLightMode
+                      ? 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                }`}
+              >
+                📈 24h Telemetry Curve
+              </button>
+              <button
+                type="button"
+                onClick={() => setVisualTab('onset')}
+                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  visualTab === 'onset'
+                    ? 'bg-emerald-500 text-slate-950'
+                    : isLightMode
+                      ? 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                }`}
+              >
+                🎯 Onset Timeline
+              </button>
+              <button
+                type="button"
+                onClick={() => setVisualTab('vectors')}
+                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  visualTab === 'vectors'
+                    ? 'bg-purple-500 text-white'
+                    : isLightMode
+                      ? 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                }`}
+              >
+                ⬢ Longevity Vectors
+              </button>
+            </div>
+          </div>
+
+          {/* Visual Body */}
+          <div className="p-4 sm:p-5">
+            {visualTab === 'telemetry' && (
+              <BiologicalTelemetryCurveCard
+                curves={[item.curveSpec]}
+                isLightMode={isLightMode}
+              />
+            )}
+
+            {visualTab === 'onset' && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                {item.onsetPhases.map((p, idx) => (
+                  <div
+                    key={idx}
+                    className={`p-4 rounded-xl border space-y-1.5 ${
+                      isLightMode
+                        ? 'bg-white border-slate-200 shadow-2xs'
+                        : 'bg-slate-900/90 border-white/10'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span
+                        className={`text-xs font-bold uppercase tracking-wider ${
+                          isLightMode ? 'text-cyan-800' : 'text-cyan-300'
+                        }`}
+                      >
+                        {p.phase}
+                      </span>
+                      <span
+                        className={`px-2 py-0.5 rounded-full text-[11px] font-bold border ${
+                          isLightMode
+                            ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                            : 'bg-emerald-500/15 text-emerald-300 border-emerald-400/30'
+                        }`}
+                      >
+                        {p.window}
                       </span>
                     </div>
-                    <div className="w-full h-2.5 rounded-full bg-slate-900 border border-white/10 overflow-hidden">
-                      <div
-                        className="h-full rounded-full transition-all duration-500"
-                        style={{ width: `${vec.score}%`, backgroundColor: vec.color }}
-                      />
-                    </div>
+                    <p
+                      className={`text-xs sm:text-sm leading-relaxed ${
+                        isLightMode ? 'text-slate-700' : 'text-slate-300'
+                      }`}
+                    >
+                      {p.detail}
+                    </p>
                   </div>
                 ))}
               </div>
-            </div>
-          )}
-        </div>
+            )}
 
-        {/* Bottom Action Bar: Deep-Link to LEVL Discovery & Download Beehiiv PNG */}
-        <div className="px-4 py-3 bg-slate-900/95 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex flex-wrap items-center gap-2">
-            <Link
-              href={item.exploreDeepLink}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 hover:opacity-95 transition-opacity shadow-lg"
-            >
-              <Compass className="w-4 h-4" />
-              Open Interactive Card in LEVL Discovery
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              href="/today"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 text-slate-200 hover:bg-slate-700 border border-white/10 transition-colors"
-            >
-              <Calendar className="w-4 h-4 text-cyan-400" />
-              Go to Today Timeline
-            </Link>
-          </div>
-
-          <button
-            type="button"
-            onClick={handleDownloadBlueprintPng}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-300 hover:text-cyan-200"
-          >
-            <Download className="w-3.5 h-3.5" />
-            Download Static Blueprint Card (PNG)
-          </button>
-        </div>
-      </div>
-
-      {/* Numbered Steps (Dynamically Responds to Beginner vs Optimal Toggle) */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <h3 className="text-base sm:text-lg font-bold text-white">
-            Numbered Steps ({scalingMode === 'optimal' ? 'Clinical Optimal Dosing' : 'Beginner Entry Scaling'}):
-          </h3>
-          <span className="text-xs text-slate-400">
-            Click the Dosing Tier toggle above to compare Beginner vs. Optimal
-          </span>
-        </div>
-
-        <div className="space-y-2.5">
-          {item.steps.map(step => {
-            const activeBadge =
-              scalingMode === 'optimal' ? step.optimalDoseBadge : step.beginnerDoseBadge
-            const activeInstruction =
-              scalingMode === 'optimal' ? step.optimalInstruction : step.beginnerInstruction
-
-            return (
-              <div
-                key={step.stepNumber}
-                className="p-4 rounded-2xl bg-slate-900/90 border border-white/10 hover:border-cyan-500/30 transition-all"
-              >
-                <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 text-xs font-extrabold flex items-center justify-center">
-                      {step.stepNumber}
-                    </span>
-                    <span className="font-bold text-white text-sm sm:text-base">{step.title}</span>
-                    <span className="text-xs text-slate-400">({step.timingAndFrequency})</span>
-                  </div>
-                  <span
-                    className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${
-                      scalingMode === 'optimal'
-                        ? 'bg-cyan-500/15 text-cyan-300 border-cyan-400/30'
-                        : 'bg-emerald-500/15 text-emerald-300 border-emerald-400/30'
+            {visualTab === 'vectors' && (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <h4
+                    className={`text-sm font-bold ${
+                      isLightMode ? 'text-slate-900' : 'text-white'
                     }`}
                   >
-                    {activeBadge}
+                    Targeted Biological Longevity Vectors & Quantified Biomarker Shifts
+                  </h4>
+                  <span className={`text-xs ${isLightMode ? 'text-slate-500' : 'text-slate-400'}`}>
+                    Calibrated 0–100 Clinical Rubric
                   </span>
                 </div>
-                <p className="text-sm text-slate-200 leading-relaxed pl-8">{activeInstruction}</p>
+                <div className="space-y-2.5">
+                  {item.vectorScores.map(vec => (
+                    <div key={vec.vectorName} className="space-y-1">
+                      <div className="flex items-center justify-between text-xs sm:text-sm">
+                        <span
+                          className={`font-semibold ${
+                            isLightMode ? 'text-slate-900' : 'text-white'
+                          }`}
+                        >
+                          {vec.vectorName}
+                        </span>
+                        <span
+                          className={`font-bold ${
+                            isLightMode ? 'text-cyan-800' : 'text-cyan-300'
+                          }`}
+                        >
+                          {vec.score}/100 • {vec.effectStat}
+                        </span>
+                      </div>
+                      <div
+                        className={`w-full h-2.5 rounded-full border overflow-hidden ${
+                          isLightMode
+                            ? 'bg-slate-200 border-slate-300'
+                            : 'bg-slate-900 border-white/10'
+                        }`}
+                      >
+                        <div
+                          className="h-full rounded-full transition-all duration-500"
+                          style={{ width: `${vec.score}%`, backgroundColor: vec.color }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            )
-          })}
+            )}
+          </div>
+
+          {/* Bottom Action Bar: Deep-Link to LEVL Discovery & Download Beehiiv PNG */}
+          <div
+            className={`px-4 py-3 border-t flex flex-wrap items-center justify-between gap-3 ${
+              isLightMode
+                ? 'bg-white border-slate-200'
+                : 'bg-slate-900/95 border-white/10'
+            }`}
+          >
+            <div className="flex flex-wrap items-center gap-2">
+              <Link
+                href={item.exploreDeepLink}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 hover:opacity-95 transition-opacity shadow-md"
+              >
+                <Compass className="w-4 h-4" />
+                Open Interactive Card in LEVL Discovery
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="/today"
+                className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border transition-colors ${
+                  isLightMode
+                    ? 'bg-slate-100 text-slate-800 hover:bg-slate-200 border-slate-300'
+                    : 'bg-slate-800 text-slate-200 hover:bg-slate-700 border-white/10'
+                }`}
+              >
+                <Calendar className={`w-4 h-4 ${isLightMode ? 'text-cyan-700' : 'text-cyan-400'}`} />
+                Go to Today Timeline
+              </Link>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleDownloadBlueprintPng}
+              className={`inline-flex items-center gap-1.5 text-xs font-semibold cursor-pointer ${
+                isLightMode
+                  ? 'text-cyan-700 hover:text-cyan-900'
+                  : 'text-cyan-300 hover:text-cyan-200'
+              }`}
+            >
+              <Download className="w-3.5 h-3.5" />
+              Download Static Blueprint Card (PNG)
+            </button>
+          </div>
         </div>
+
+        {/* Numbered Steps (Dynamically Responds to Beginner vs Optimal Toggle) */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <h3
+              className={`text-base sm:text-lg font-bold ${
+                isLightMode ? 'text-slate-900' : 'text-white'
+              }`}
+            >
+              Numbered Steps (
+              {scalingMode === 'optimal' ? 'Clinical Optimal Dosing' : 'Beginner Entry Scaling'}):
+            </h3>
+            <span className={`text-xs ${isLightMode ? 'text-slate-500' : 'text-slate-400'}`}>
+              Click the Dosing Tier toggle above to compare Beginner vs. Optimal
+            </span>
+          </div>
+
+          <div className="space-y-2.5">
+            {item.steps.map(step => {
+              const activeBadge =
+                scalingMode === 'optimal' ? step.optimalDoseBadge : step.beginnerDoseBadge
+              const activeInstruction =
+                scalingMode === 'optimal' ? step.optimalInstruction : step.beginnerInstruction
+
+              return (
+                <div
+                  key={step.stepNumber}
+                  className={`p-4 rounded-2xl border transition-all ${
+                    isLightMode
+                      ? 'bg-slate-50/90 border-slate-200 hover:border-cyan-400'
+                      : 'bg-slate-900/90 border-white/10 hover:border-cyan-500/30'
+                  }`}
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+                    <div className="flex items-center gap-2.5">
+                      <span
+                        className={`w-6 h-6 rounded-full border text-xs font-extrabold flex items-center justify-center ${
+                          isLightMode
+                            ? 'bg-cyan-100 border-cyan-300 text-cyan-800'
+                            : 'bg-cyan-500/20 border-cyan-400/40 text-cyan-300'
+                        }`}
+                      >
+                        {step.stepNumber}
+                      </span>
+                      <span
+                        className={`font-bold text-sm sm:text-base ${
+                          isLightMode ? 'text-slate-900' : 'text-white'
+                        }`}
+                      >
+                        {step.title}
+                      </span>
+                      <span
+                        className={`text-xs ${isLightMode ? 'text-slate-500' : 'text-slate-400'}`}
+                      >
+                        ({step.timingAndFrequency})
+                      </span>
+                    </div>
+                    <span
+                      className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${
+                        scalingMode === 'optimal'
+                          ? isLightMode
+                            ? 'bg-cyan-50 text-cyan-800 border-cyan-300'
+                            : 'bg-cyan-500/15 text-cyan-300 border-cyan-400/30'
+                          : isLightMode
+                            ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                            : 'bg-emerald-500/15 text-emerald-300 border-emerald-400/30'
+                      }`}
+                    >
+                      {activeBadge}
+                    </span>
+                  </div>
+                  <p
+                    className={`text-sm leading-relaxed pl-8 ${
+                      isLightMode ? 'text-slate-700' : 'text-slate-200'
+                    }`}
+                  >
+                    {activeInstruction}
+                  </p>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* Beginner Scaling Note & Cautions */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div
+            className={`p-4 rounded-2xl border transition-all ${
+              isLightMode
+                ? scalingMode === 'beginner'
+                  ? 'bg-emerald-50 border-emerald-400 ring-1 ring-emerald-300'
+                  : 'bg-emerald-50/50 border-emerald-200'
+                : scalingMode === 'beginner'
+                  ? 'bg-emerald-950/40 border-emerald-400/50 ring-1 ring-emerald-400/30'
+                  : 'bg-slate-900/80 border-emerald-500/25'
+            }`}
+          >
+            <p
+              className={`text-xs sm:text-sm leading-relaxed ${
+                isLightMode ? 'text-slate-800' : 'text-slate-200'
+              }`}
+            >
+              <span
+                className={`font-bold ${
+                  isLightMode ? 'text-emerald-800' : 'text-emerald-300'
+                }`}
+              >
+                Beginner Scaling Note:{' '}
+              </span>
+              {item.beginnerScalingNote}
+            </p>
+          </div>
+
+          <div
+            className={`p-4 rounded-2xl border ${
+              isLightMode
+                ? 'bg-amber-50/70 border-amber-200'
+                : 'bg-amber-950/20 border-amber-500/30'
+            }`}
+          >
+            <p
+              className={`text-xs sm:text-sm leading-relaxed ${
+                isLightMode ? 'text-slate-800' : 'text-slate-200'
+              }`}
+            >
+              <span
+                className={`font-bold ${isLightMode ? 'text-amber-800' : 'text-amber-300'}`}
+              >
+                Cautions:{' '}
+              </span>
+              {item.cautions}
+            </p>
+          </div>
+        </div>
+
+        <p className={`text-xs italic ${isLightMode ? 'text-slate-500' : 'text-slate-400'}`}>
+          {item.disclaimer}
+        </p>
       </div>
-
-      {/* Beginner Scaling Note & Cautions */}
-      <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div
-          className={`p-4 rounded-2xl border transition-all ${
-            scalingMode === 'beginner'
-              ? 'bg-emerald-950/40 border-emerald-400/50 ring-1 ring-emerald-400/30'
-              : 'bg-slate-900/80 border-emerald-500/25'
-          }`}
-        >
-          <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
-            <span className="font-bold text-emerald-300">Beginner Scaling Note: </span>
-            {item.beginnerScalingNote}
-          </p>
-        </div>
-
-        <div className="p-4 rounded-2xl bg-amber-950/20 border border-amber-500/30">
-          <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
-            <span className="font-bold text-amber-300">Cautions: </span>
-            {item.cautions}
-          </p>
-        </div>
-      </div>
-
-      <p className="mt-4 text-xs text-slate-400 italic">{item.disclaimer}</p>
     </section>
   )
 }
@@ -907,9 +1374,33 @@ export default function OutpaceAgingIssueView({
   initialMode?: 'web_canonical' | 'beehiiv_studio'
 }) {
   const [pageMode, setPageMode] = useState<'web_canonical' | 'beehiiv_studio'>(initialMode)
+  const [isLightMode, setIsLightMode] = useState<boolean>(false)
   const [copiedRich, setCopiedRich] = useState(false)
   const [copiedPlain, setCopiedPlain] = useState(false)
   const [copiedUrl, setCopiedUrl] = useState(false)
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('levl_newsletter_theme')
+      if (saved === 'light') {
+        setIsLightMode(true)
+        document.documentElement.style.colorScheme = 'light'
+      } else {
+        document.documentElement.style.colorScheme = 'dark'
+      }
+    } catch {}
+  }, [])
+
+  const handleToggleTheme = useCallback(() => {
+    setIsLightMode(prev => {
+      const next = !prev
+      try {
+        localStorage.setItem('levl_newsletter_theme', next ? 'light' : 'dark')
+        document.documentElement.style.colorScheme = next ? 'light' : 'dark'
+      } catch {}
+      return next
+    })
+  }, [])
 
   const canonicalUrl = `https://levlhealth.com/newsletter/${issue.shortSlug}`
 
@@ -995,48 +1486,115 @@ export default function OutpaceAgingIssueView({
   }
 
   return (
-    <div className="min-h-screen bg-[#060913] text-slate-100 pb-28">
+    <div
+      className={`min-h-screen pb-28 transition-colors ${
+        isLightMode
+          ? 'bg-[#F8FAFC] text-slate-900'
+          : 'bg-[#060913] text-slate-100'
+      }`}
+    >
       {/* Top Sticky Editorial Bar */}
-      <header className="sticky top-0 z-40 backdrop-blur-xl bg-slate-950/85 border-b border-white/10">
+      <header
+        className={`sticky top-0 z-40 backdrop-blur-xl border-b transition-colors ${
+          isLightMode
+            ? 'bg-white/90 border-slate-200'
+            : 'bg-slate-950/85 border-white/10'
+        }`}
+      >
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/newsletter"
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-300 hover:text-cyan-200 px-2.5 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-400/30 transition-colors"
+              className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1.5 rounded-lg border transition-colors ${
+                isLightMode
+                  ? 'text-cyan-800 hover:text-cyan-950 bg-cyan-50 border-cyan-200'
+                  : 'text-cyan-300 hover:text-cyan-200 bg-cyan-500/10 border-cyan-400/30'
+              }`}
             >
               <LayoutGrid className="w-3.5 h-3.5" />
               All Editions
             </Link>
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 text-emerald-300 border border-emerald-400/30">
+              <span
+                className={`px-2.5 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wider border ${
+                  isLightMode
+                    ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                    : 'bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 text-emerald-300 border-emerald-400/30'
+                }`}
+              >
                 Edition #{issue.issueNumber}
               </span>
-              <span className="text-xs text-slate-400 hidden md:inline">
+              <span
+                className={`text-xs hidden md:inline ${
+                  isLightMode ? 'text-slate-500' : 'text-slate-400'
+                }`}
+              >
                 {issue.dateLabel} • /newsletter/{issue.shortSlug}
               </span>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
+            {/* Light / Dark Mode Toggle */}
+            <button
+              type="button"
+              onClick={handleToggleTheme}
+              aria-pressed={isLightMode}
+              aria-label={isLightMode ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-colors cursor-pointer ${
+                isLightMode
+                  ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300'
+                  : 'bg-white/5 hover:bg-white/10 text-slate-200 border-white/10'
+              }`}
+            >
+              {isLightMode ? (
+                <>
+                  <Moon className="w-3.5 h-3.5 text-slate-700" />
+                  <span>Dark Mode</span>
+                </>
+              ) : (
+                <>
+                  <Sun className="w-3.5 h-3.5 text-amber-300" />
+                  <span>Light Mode</span>
+                </>
+              )}
+            </button>
+
             <button
               type="button"
               onClick={handleCopyShareUrl}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-colors"
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-colors cursor-pointer ${
+                isLightMode
+                  ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300'
+                  : 'bg-white/5 hover:bg-white/10 text-slate-300 border-white/10'
+              }`}
               title={canonicalUrl}
             >
-              {copiedUrl ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
+              {copiedUrl ? (
+                <Check className="w-3.5 h-3.5 text-emerald-500" />
+              ) : (
+                <Share2 className="w-3.5 h-3.5" />
+              )}
               <span className="hidden sm:inline">{copiedUrl ? 'URL Copied!' : 'Share URL'}</span>
             </button>
 
             {/* Mode Switcher: Canonical Web vs Beehiiv Studio */}
-            <div className="inline-flex rounded-xl p-1 bg-slate-900 border border-white/10">
+            <div
+              className={`inline-flex rounded-xl p-1 border ${
+                isLightMode
+                  ? 'bg-slate-100 border-slate-200'
+                  : 'bg-slate-900 border-white/10'
+              }`}
+            >
               <button
                 type="button"
                 onClick={() => setPageMode('web_canonical')}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                   pageMode === 'web_canonical'
                     ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 shadow'
-                    : 'text-slate-300 hover:text-white'
+                    : isLightMode
+                      ? 'text-slate-600 hover:text-slate-900'
+                      : 'text-slate-300 hover:text-white'
                 }`}
               >
                 <Globe className="w-3.5 h-3.5" />
@@ -1045,10 +1603,12 @@ export default function OutpaceAgingIssueView({
               <button
                 type="button"
                 onClick={() => setPageMode('beehiiv_studio')}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                   pageMode === 'beehiiv_studio'
                     ? 'bg-gradient-to-r from-amber-400 to-emerald-400 text-slate-950 shadow'
-                    : 'text-slate-300 hover:text-white'
+                    : isLightMode
+                      ? 'text-slate-600 hover:text-slate-900'
+                      : 'text-slate-300 hover:text-white'
                 }`}
               >
                 <Mail className="w-3.5 h-3.5" />
@@ -1062,18 +1622,44 @@ export default function OutpaceAgingIssueView({
       <main className="max-w-4xl mx-auto px-4 sm:px-6 pt-8 space-y-10">
         {/* Beehiiv Export Studio Banner (When Active) */}
         {pageMode === 'beehiiv_studio' && (
-          <section className="rounded-3xl border border-amber-400/40 bg-gradient-to-br from-amber-950/30 via-slate-900 to-slate-950 p-6 shadow-2xl space-y-5">
+          <section
+            className={`rounded-3xl border p-6 shadow-2xl space-y-5 ${
+              isLightMode
+                ? 'border-amber-300 bg-amber-50/70'
+                : 'border-amber-400/40 bg-gradient-to-br from-amber-950/30 via-slate-900 to-slate-950'
+            }`}
+          >
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <span className="px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-400/40">
+                <span
+                  className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider border ${
+                    isLightMode
+                      ? 'bg-amber-100 text-amber-900 border-amber-300'
+                      : 'bg-amber-500/20 text-amber-300 border-amber-400/40'
+                  }`}
+                >
                   ✉️ Beehiiv Weekly Publisher Studio
                 </span>
-                <h2 className="text-xl sm:text-2xl font-extrabold text-white mt-2">
+                <h2
+                  className={`text-xl sm:text-2xl font-extrabold mt-2 ${
+                    isLightMode ? 'text-slate-900' : 'text-white'
+                  }`}
+                >
                   1-Click Copy for Beehiiv + Static 16:9 LEVL Graph PNGs
                 </h2>
-                <p className="text-xs sm:text-sm text-slate-300 mt-1">
+                <p
+                  className={`text-xs sm:text-sm mt-1 ${
+                    isLightMode ? 'text-slate-700' : 'text-slate-300'
+                  }`}
+                >
                   Canonical URL:{' '}
-                  <code className="text-cyan-300 font-mono bg-slate-950 px-2 py-0.5 rounded border border-white/10">
+                  <code
+                    className={`font-mono px-2 py-0.5 rounded border ${
+                      isLightMode
+                        ? 'text-cyan-800 bg-white border-slate-300'
+                        : 'text-cyan-300 bg-slate-950 border-white/10'
+                    }`}
+                  >
                     {canonicalUrl}
                   </code>
                 </p>
@@ -1083,7 +1669,7 @@ export default function OutpaceAgingIssueView({
                 <button
                   type="button"
                   onClick={handleCopyBeehiivRich}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-950 hover:opacity-95 transition-opacity shadow-lg"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-950 hover:opacity-95 transition-opacity shadow-lg cursor-pointer"
                 >
                   {copiedRich ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                   {copiedRich ? 'Copied Formatted Beehiiv Copy!' : 'Copy Rich Text for Beehiiv'}
@@ -1092,10 +1678,14 @@ export default function OutpaceAgingIssueView({
                 <button
                   type="button"
                   onClick={handleCopyPlainText}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 text-slate-200 hover:bg-slate-700 border border-white/10"
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border cursor-pointer ${
+                    isLightMode
+                      ? 'bg-white text-slate-800 hover:bg-slate-100 border-slate-300'
+                      : 'bg-slate-800 text-slate-200 hover:bg-slate-700 border-white/10'
+                  }`}
                 >
                   {copiedPlain ? (
-                    <Check className="w-4 h-4 text-emerald-400" />
+                    <Check className="w-4 h-4 text-emerald-500" />
                   ) : (
                     <FileText className="w-4 h-4" />
                   )}
@@ -1105,69 +1695,91 @@ export default function OutpaceAgingIssueView({
                 <button
                   type="button"
                   onClick={handleDownloadAllPngs}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-cyan-500/20 text-cyan-200 border border-cyan-400/40 hover:bg-cyan-500/30"
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold border cursor-pointer ${
+                    isLightMode
+                      ? 'bg-cyan-50 text-cyan-900 border-cyan-300 hover:bg-cyan-100'
+                      : 'bg-cyan-500/20 text-cyan-200 border-cyan-400/40 hover:bg-cyan-500/30'
+                  }`}
                 >
                   <Download className="w-4 h-4" />
                   Download All 7 Static PNG Cards
                 </button>
               </div>
             </div>
-
-            {/* Editorial Compliance Checklist */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2">
-              <div className="p-3 rounded-xl bg-slate-900/90 border border-white/10 text-xs">
-                <div className="text-emerald-400 font-bold">✓ Zero Em Dashes</div>
-                <div className="text-slate-400 mt-0.5">Verified 0 em dashes in copy</div>
-              </div>
-              <div className="p-3 rounded-xl bg-slate-900/90 border border-white/10 text-xs">
-                <div className="text-emerald-400 font-bold">✓ Primary Sources</div>
-                <div className="text-slate-400 mt-0.5">5 direct DOIs + 3 PubMed RCTs</div>
-              </div>
-              <div className="p-3 rounded-xl bg-slate-900/90 border border-white/10 text-xs">
-                <div className="text-emerald-400 font-bold">✓ Limits & Future</div>
-                <div className="text-slate-400 mt-0.5">Complete factual sentences</div>
-              </div>
-              <div className="p-3 rounded-xl bg-slate-900/90 border border-white/10 text-xs">
-                <div className="text-emerald-400 font-bold">✓ 1 Protocol + 1 Modality</div>
-                <div className="text-slate-400 mt-0.5">Deep-linked to LEVL Discovery</div>
-              </div>
-            </div>
           </section>
         )}
 
         {/* Newsletter Hero & Opening Intro */}
-        <section className="rounded-3xl border border-white/15 bg-gradient-to-b from-slate-900/95 via-slate-950 to-slate-950 p-6 sm:p-10 shadow-2xl space-y-6">
+        <section
+          className={`rounded-3xl border p-6 sm:p-10 shadow-xl space-y-6 transition-colors ${
+            isLightMode
+              ? 'border-slate-200 bg-white'
+              : 'border-white/15 bg-gradient-to-b from-slate-900/95 via-slate-950 to-slate-950'
+          }`}
+        >
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-300 border border-emerald-400/30">
+            <span
+              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border ${
+                isLightMode
+                  ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                  : 'bg-emerald-500/15 text-emerald-300 border-emerald-400/30'
+              }`}
+            >
               <Sparkles className="w-3.5 h-3.5" />
               LEVL Weekly Longevity Roundup
             </span>
-            <span className="text-xs font-medium text-slate-400">
+            <span className={`text-xs font-medium ${isLightMode ? 'text-slate-500' : 'text-slate-400'}`}>
               {issue.dateLabel} • Edition #{issue.issueNumber} • {issue.readTimeLabel}
             </span>
           </div>
 
           <div>
-            <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-[1.12]">
+            <h1
+              className={`text-3xl sm:text-5xl font-black tracking-tight leading-[1.12] ${
+                isLightMode ? 'text-slate-900' : 'text-white'
+              }`}
+            >
               Outpace Aging
             </h1>
-            <p className="mt-2 text-base sm:text-lg text-slate-300 font-medium">
+            <p
+              className={`mt-2 text-base sm:text-lg font-medium ${
+                isLightMode ? 'text-slate-600' : 'text-slate-300'
+              }`}
+            >
               {issue.subtitle}
             </p>
           </div>
 
           {/* Paragraph 1: LEV State of Play */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-cyan-950/30 to-slate-900/80 border border-emerald-500/30">
-            <div className="text-[11px] font-extrabold uppercase tracking-wider text-emerald-300 mb-1.5">
+          <div
+            className={`p-4 sm:p-5 rounded-2xl border ${
+              isLightMode
+                ? 'bg-emerald-50/70 border-emerald-200'
+                : 'bg-gradient-to-r from-emerald-950/40 via-cyan-950/30 to-slate-900/80 border-emerald-500/30'
+            }`}
+          >
+            <div
+              className={`text-[11px] font-extrabold uppercase tracking-wider mb-1.5 ${
+                isLightMode ? 'text-emerald-800' : 'text-emerald-300'
+              }`}
+            >
               🚀 Longevity Escape Velocity (LEV) State of Play
             </div>
-            <p className="text-sm sm:text-base text-slate-100 leading-relaxed">
+            <p
+              className={`text-sm sm:text-base leading-relaxed ${
+                isLightMode ? 'text-slate-800' : 'text-slate-100'
+              }`}
+            >
               {issue.levStateOfPlayParagraph}
             </p>
           </div>
 
           {/* Paragraph 2: Weekly Spotlight + Lead-in to Protocol & Modality */}
-          <p className="text-base sm:text-lg text-slate-200 leading-relaxed">
+          <p
+            className={`text-base sm:text-lg leading-relaxed ${
+              isLightMode ? 'text-slate-700' : 'text-slate-200'
+            }`}
+          >
             {issue.introSummaryParagraph}
           </p>
 
@@ -1176,43 +1788,81 @@ export default function OutpaceAgingIssueView({
             {issue.themes.map(t => (
               <div
                 key={t.id}
-                className="p-3.5 rounded-2xl bg-slate-900/85 border border-white/10 space-y-1"
+                className={`p-3.5 rounded-2xl border space-y-1 ${
+                  isLightMode
+                    ? 'bg-slate-50 border-slate-200'
+                    : 'bg-slate-900/85 border-white/10'
+                }`}
               >
-                <div className="text-xs font-bold text-cyan-300">{t.title}</div>
-                <p className="text-xs text-slate-400 leading-relaxed">{t.summary}</p>
+                <div
+                  className={`text-xs font-bold ${
+                    isLightMode ? 'text-cyan-800' : 'text-cyan-300'
+                  }`}
+                >
+                  {t.title}
+                </div>
+                <p
+                  className={`text-xs leading-relaxed ${
+                    isLightMode ? 'text-slate-600' : 'text-slate-400'
+                  }`}
+                >
+                  {t.summary}
+                </p>
               </div>
             ))}
           </div>
 
           {/* Quick Jump Anchors */}
-          <div className="pt-2 flex flex-wrap items-center gap-2 border-t border-white/10">
-            <span className="text-xs font-semibold text-slate-400 mr-1">Jump to:</span>
+          <div
+            className={`pt-3 flex flex-wrap items-center gap-2 border-t ${
+              isLightMode ? 'border-slate-200' : 'border-white/10'
+            }`}
+          >
+            <span
+              className={`text-xs font-semibold mr-1 ${
+                isLightMode ? 'text-slate-500' : 'text-slate-400'
+              }`}
+            >
+              Jump to:
+            </span>
             {issue.studies.map(s => (
               <a
                 key={s.id}
                 href={`#${s.id}`}
-                className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10 transition-colors"
+                className={`px-2.5 py-1 rounded-lg text-xs font-semibold border transition-colors ${
+                  isLightMode
+                    ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200'
+                    : 'bg-white/5 hover:bg-white/10 text-slate-200 border-white/10'
+                }`}
               >
                 #{s.number} {s.themeTag}
               </a>
             ))}
             <a
               href={`#${issue.protocolOfTheWeek.id}`}
-              className="px-2.5 py-1 rounded-lg text-xs font-bold bg-purple-500/20 hover:bg-purple-500/30 text-purple-200 border border-purple-400/35 transition-colors"
+              className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-colors ${
+                isLightMode
+                  ? 'bg-purple-50 hover:bg-purple-100 text-purple-800 border-purple-200'
+                  : 'bg-purple-500/20 hover:bg-purple-500/30 text-purple-200 border-purple-400/35'
+              }`}
             >
               🧬 Protocol of the Week
             </a>
             <a
               href={`#${issue.modalityOfTheWeek.id}`}
-              className="px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-200 border border-emerald-400/35 transition-colors"
+              className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-colors ${
+                isLightMode
+                  ? 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200'
+                  : 'bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-200 border-emerald-400/35'
+              }`}
             >
               ⚡ Modality of the Week
             </a>
           </div>
         </section>
 
-        {/* Live Two-Way FutureGraph LEV & Pace of Aging Observatory */}
-        <FutureGraphLevPulseWidget issue={issue} showPublisherSync={true} />
+        {/* Live LEV & Pace of Aging Tracker */}
+        <FutureGraphLevPulseWidget issue={issue} isLightMode={isLightMode} />
 
         {/* Five Study Briefings */}
         <div className="space-y-8">
@@ -1222,67 +1872,137 @@ export default function OutpaceAgingIssueView({
               <article
                 key={study.id}
                 id={study.id}
-                className={`rounded-3xl border ${style.border} bg-gradient-to-b ${style.glow} p-6 sm:p-8 shadow-xl`}
+                className={`rounded-3xl border bg-gradient-to-b p-6 sm:p-8 shadow-xl transition-colors ${
+                  isLightMode
+                    ? `${style.lightBorder} ${style.lightGlow}`
+                    : `${style.border} ${style.glow}`
+                }`}
               >
                 {/* Study Meta Header */}
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
                   <div className="flex items-center gap-2.5">
                     <span
-                      className={`w-7 h-7 rounded-full border flex items-center justify-center text-xs font-black ${style.numberBg}`}
+                      className={`w-7 h-7 rounded-full border flex items-center justify-center text-xs font-black ${
+                        isLightMode ? style.lightNumberBg : style.numberBg
+                      }`}
                     >
                       {study.number}
                     </span>
-                    <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                    <span
+                      className={`text-xs font-bold uppercase tracking-wider ${
+                        isLightMode ? 'text-slate-600' : 'text-slate-300'
+                      }`}
+                    >
                       {study.journal} • {study.publishDate}
                     </span>
                   </div>
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-extrabold border ${style.badgeBg} ${style.badgeText}`}
+                    className={`px-3 py-1 rounded-full text-xs font-extrabold border ${
+                      isLightMode
+                        ? `${style.lightBadgeBg} ${style.lightBadgeText}`
+                        : `${style.badgeBg} ${style.badgeText}`
+                    }`}
                   >
                     {study.keyStatBadge}
                   </span>
                 </div>
 
                 {/* Numbered Headline */}
-                <h2 className="text-xl sm:text-2xl font-extrabold text-white leading-snug">
+                <h2
+                  className={`text-xl sm:text-2xl font-extrabold leading-snug ${
+                    isLightMode ? 'text-slate-900' : 'text-white'
+                  }`}
+                >
                   {study.number}. {study.headline}
                 </h2>
 
                 {/* 3 Core Paragraphs (Question, Method, Findings) */}
-                <div className="mt-4 space-y-4 text-sm sm:text-base text-slate-200 leading-relaxed">
+                <div
+                  className={`mt-4 space-y-4 text-sm sm:text-base leading-relaxed ${
+                    isLightMode ? 'text-slate-700' : 'text-slate-200'
+                  }`}
+                >
                   {study.paragraphs.map((p, idx) => (
                     <p key={idx}>{p}</p>
                   ))}
                 </div>
 
                 {/* Interactive LEVL Visual Card Placed Right Before Limits */}
-                <StudyInteractiveCard study={study} issueShortSlug={issue.shortSlug} />
+                <StudyInteractiveCard
+                  study={study}
+                  issueShortSlug={issue.shortSlug}
+                  isLightMode={isLightMode}
+                />
 
                 {/* Limits & Future Implications Blocks */}
                 <div className="space-y-3 mt-5">
-                  <div className="p-4 rounded-2xl bg-slate-900/90 border border-white/10">
-                    <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
-                      <span className="font-bold text-amber-300">Limits: </span>
+                  <div
+                    className={`p-4 rounded-2xl border ${
+                      isLightMode
+                        ? 'bg-amber-50/60 border-amber-200'
+                        : 'bg-slate-900/90 border-white/10'
+                    }`}
+                  >
+                    <p
+                      className={`text-sm sm:text-base leading-relaxed ${
+                        isLightMode ? 'text-slate-700' : 'text-slate-300'
+                      }`}
+                    >
+                      <span
+                        className={`font-bold ${
+                          isLightMode ? 'text-amber-800' : 'text-amber-300'
+                        }`}
+                      >
+                        Limits:{' '}
+                      </span>
                       {study.limits}
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-emerald-950/25 border border-emerald-500/30">
-                    <p className="text-sm sm:text-base text-slate-100 leading-relaxed">
-                      <span className="font-bold text-emerald-300">Future Implications: </span>
+                  <div
+                    className={`p-4 rounded-2xl border ${
+                      isLightMode
+                        ? 'bg-emerald-50/70 border-emerald-200'
+                        : 'bg-emerald-950/25 border-emerald-500/30'
+                    }`}
+                  >
+                    <p
+                      className={`text-sm sm:text-base leading-relaxed ${
+                        isLightMode ? 'text-slate-800' : 'text-slate-100'
+                      }`}
+                    >
+                      <span
+                        className={`font-bold ${
+                          isLightMode ? 'text-emerald-800' : 'text-emerald-300'
+                        }`}
+                      >
+                        Future Implications:{' '}
+                      </span>
                       {study.futureImplications}
                     </p>
                   </div>
                 </div>
 
                 {/* Primary Source Link */}
-                <div className="mt-4 pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs">
-                  <span className="text-slate-400 font-mono">{study.doiLabel}</span>
+                <div
+                  className={`mt-4 pt-3 border-t flex flex-wrap items-center justify-between gap-2 text-xs ${
+                    isLightMode ? 'border-slate-200' : 'border-white/10'
+                  }`}
+                >
+                  <span
+                    className={`font-mono ${isLightMode ? 'text-slate-500' : 'text-slate-400'}`}
+                  >
+                    {study.doiLabel}
+                  </span>
                   <a
                     href={study.studyUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-bold text-cyan-300 hover:text-cyan-200"
+                    className={`inline-flex items-center gap-1.5 font-bold ${
+                      isLightMode
+                        ? 'text-cyan-700 hover:text-cyan-900'
+                        : 'text-cyan-300 hover:text-cyan-200'
+                    }`}
                   >
                     Study link: {study.studyUrl}
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -1297,30 +2017,64 @@ export default function OutpaceAgingIssueView({
         <ActionableProtocolModalitySection
           item={issue.protocolOfTheWeek}
           issueShortSlug={issue.shortSlug}
+          isLightMode={isLightMode}
         />
 
         {/* Modality of the Week */}
         <ActionableProtocolModalitySection
           item={issue.modalityOfTheWeek}
           issueShortSlug={issue.shortSlug}
+          isLightMode={isLightMode}
         />
 
         {/* Closing & About LEVL */}
-        <section className="rounded-3xl border border-white/15 bg-slate-900/90 p-6 sm:p-8 shadow-xl space-y-5">
-          <h2 className="text-xl sm:text-2xl font-extrabold text-white">Closing</h2>
-          <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
+        <section
+          className={`rounded-3xl border p-6 sm:p-8 shadow-xl space-y-5 transition-colors ${
+            isLightMode
+              ? 'border-slate-200 bg-white'
+              : 'border-white/15 bg-slate-900/90'
+          }`}
+        >
+          <h2
+            className={`text-xl sm:text-2xl font-extrabold ${
+              isLightMode ? 'text-slate-900' : 'text-white'
+            }`}
+          >
+            Closing
+          </h2>
+          <p
+            className={`text-sm sm:text-base leading-relaxed ${
+              isLightMode ? 'text-slate-700' : 'text-slate-200'
+            }`}
+          >
             {issue.closingParagraph}
           </p>
 
-          <div className="p-5 rounded-2xl bg-gradient-to-r from-cyan-950/50 via-slate-900 to-emerald-950/40 border border-cyan-500/30 space-y-3">
-            <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
-              <span className="font-bold text-white">About LEVL: </span>
+          <div
+            className={`p-5 rounded-2xl border space-y-3 ${
+              isLightMode
+                ? 'bg-gradient-to-r from-cyan-50 via-white to-emerald-50 border-cyan-200'
+                : 'bg-gradient-to-r from-cyan-950/50 via-slate-900 to-emerald-950/40 border-cyan-500/30'
+            }`}
+          >
+            <p
+              className={`text-sm sm:text-base leading-relaxed ${
+                isLightMode ? 'text-slate-700' : 'text-slate-200'
+              }`}
+            >
+              <span className={`font-bold ${isLightMode ? 'text-slate-900' : 'text-white'}`}>
+                About LEVL:{' '}
+              </span>
               {issue.aboutLevlParagraph}
             </p>
             <div className="flex flex-wrap items-center gap-3 pt-1">
               <Link
                 href="/newsletter"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-800 text-cyan-300 hover:bg-slate-700 border border-cyan-500/30"
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold border ${
+                  isLightMode
+                    ? 'bg-white text-cyan-800 hover:bg-slate-50 border-cyan-300'
+                    : 'bg-slate-800 text-cyan-300 hover:bg-slate-700 border-cyan-500/30'
+                }`}
               >
                 <LayoutGrid className="w-4 h-4" />
                 Browse All Newsletter Editions
@@ -1334,9 +2088,13 @@ export default function OutpaceAgingIssueView({
               </Link>
               <Link
                 href="/today"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 text-slate-200 hover:bg-slate-700 border border-white/10"
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold border ${
+                  isLightMode
+                    ? 'bg-slate-100 text-slate-800 hover:bg-slate-200 border-slate-300'
+                    : 'bg-slate-800 text-slate-200 hover:bg-slate-700 border-white/10'
+                }`}
               >
-                <Calendar className="w-4 h-4 text-emerald-400" />
+                <Calendar className={`w-4 h-4 ${isLightMode ? 'text-emerald-600' : 'text-emerald-400'}`} />
                 Open My Today Routine
               </Link>
             </div>

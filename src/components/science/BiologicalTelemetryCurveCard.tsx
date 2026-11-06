@@ -19,6 +19,7 @@ interface BiologicalTelemetryCurveCardProps {
   protocolId?: string | null
   protocolName?: string | null
   edgeToEdge?: boolean
+  isLightMode?: boolean
   className?: string
 }
 
@@ -123,6 +124,7 @@ export const BiologicalTelemetryCurveCard: React.FC<BiologicalTelemetryCurveCard
   protocolId,
   protocolName,
   edgeToEdge = false,
+  isLightMode = false,
   className = ''
 }) => {
   const uniqueSvgId = useId().replace(/:/g, '')
@@ -157,8 +159,16 @@ export const BiologicalTelemetryCurveCard: React.FC<BiologicalTelemetryCurveCard
     <div
       className={
         edgeToEdge
-          ? `rounded-2xl bg-[#070B14] border border-slate-800/90 overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.65)] text-left keep-white ${className}`
-          : `rounded-2xl bg-[#070B14] border border-cyan-500/30 p-3.5 sm:p-4 space-y-3 shadow-[0_10px_35px_rgba(0,0,0,0.65)] text-left keep-white ${className}`
+          ? `rounded-2xl ${
+              isLightMode
+                ? 'bg-white border border-slate-200 shadow-lg text-slate-900'
+                : 'bg-[#070B14] border border-slate-800/90 shadow-[0_10px_35px_rgba(0,0,0,0.65)] keep-white'
+            } overflow-hidden text-left ${className}`
+          : `rounded-2xl ${
+              isLightMode
+                ? 'bg-white border border-slate-200/90 shadow-md text-slate-900'
+                : 'bg-[#070B14] border border-cyan-500/30 shadow-[0_10px_35px_rgba(0,0,0,0.65)] keep-white'
+            } p-3.5 sm:p-4 space-y-3 text-left ${className}`
       }
     >
       {/* Top Bar: Telemetry Badge + Multi-Curve Switcher Tabs */}
@@ -166,13 +176,23 @@ export const BiologicalTelemetryCurveCard: React.FC<BiologicalTelemetryCurveCard
         className={
           edgeToEdge
             ? 'px-2.5 pt-2 pb-1.5 flex flex-col gap-1'
-            : 'space-y-3'
+            : 'space-y-2.5'
         }
       >
-        <div className="flex flex-wrap items-center justify-between gap-1.5 border-b border-white/10 pb-1.5">
+        <div
+          className={`flex flex-wrap items-center justify-between gap-1.5 border-b ${
+            isLightMode ? 'border-slate-200' : 'border-white/10'
+          } pb-1.5`}
+        >
           <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="px-1.5 py-0.5 rounded bg-cyan-500/15 border border-cyan-400/35 text-cyan-300 text-[9px] font-mono font-extrabold uppercase tracking-wider flex items-center gap-1">
-              <Activity size={10} className="text-cyan-400" />
+            <span
+              className={`px-1.5 py-0.5 rounded text-[9px] font-mono font-extrabold uppercase tracking-wider flex items-center gap-1 ${
+                isLightMode
+                  ? 'bg-cyan-50 border border-cyan-300 text-cyan-800'
+                  : 'bg-cyan-500/15 border border-cyan-400/35 text-cyan-300'
+              }`}
+            >
+              <Activity size={10} className={isLightMode ? 'text-cyan-700' : 'text-cyan-400'} />
               <span>Bio-Telemetry</span>
             </span>
 
@@ -181,11 +201,17 @@ export const BiologicalTelemetryCurveCard: React.FC<BiologicalTelemetryCurveCard
               target="_blank"
               rel="noopener noreferrer"
               onClick={e => e.stopPropagation()}
-              className="text-[10px] font-mono text-slate-400 hover:text-cyan-300 transition-colors inline-flex items-center gap-1"
+              className={`text-[10px] font-mono ${
+                isLightMode
+                  ? 'text-slate-600 hover:text-cyan-700'
+                  : 'text-slate-400 hover:text-cyan-300'
+              } transition-colors inline-flex items-center gap-1`}
               title={`View PubMed Study: ${activeSpec.citation.study}`}
             >
               <span>{activeSpec.citation.study}</span>
-              <span className="text-cyan-400 font-bold">(PMID: {activeSpec.citation.pmid})</span>
+              <span className={isLightMode ? 'text-cyan-700 font-bold' : 'text-cyan-400 font-bold'}>
+                (PMID: {activeSpec.citation.pmid})
+              </span>
               <ExternalLink size={9} className="shrink-0" />
             </a>
           </div>
@@ -204,8 +230,12 @@ export const BiologicalTelemetryCurveCard: React.FC<BiologicalTelemetryCurveCard
                     }}
                     className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-bold transition-all cursor-pointer ${
                       isTabActive
-                        ? 'bg-cyan-500/25 text-cyan-200 border border-cyan-400/50 shadow-[0_0_12px_rgba(6,182,212,0.25)]'
-                        : 'bg-white/5 text-slate-400 hover:text-white hover:bg-white/10 border border-transparent'
+                        ? isLightMode
+                          ? 'bg-cyan-600 text-white border border-cyan-700 shadow-sm'
+                          : 'bg-cyan-500/25 text-cyan-200 border border-cyan-400/50 shadow-[0_0_12px_rgba(6,182,212,0.25)]'
+                        : isLightMode
+                          ? 'bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-200 border border-transparent'
+                          : 'bg-white/5 text-slate-400 hover:text-white hover:bg-white/10 border border-transparent'
                     }`}
                   >
                     {c.tabLabel}
@@ -216,32 +246,52 @@ export const BiologicalTelemetryCurveCard: React.FC<BiologicalTelemetryCurveCard
           )}
         </div>
 
-        {/* Title & Dual-Curve Legend */}
-        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-1">
-          <div className="min-w-0">
-            <h4 className="text-xs sm:text-sm font-black text-white tracking-tight leading-snug">
+        {/* Title & Dual-Curve Legend — Stacked Vertically so Title/Subtitle Always Span 100% Width */}
+        <div className="flex flex-col gap-2">
+          <div className="w-full">
+            <h4
+              className={`text-sm sm:text-base font-black ${
+                isLightMode ? 'text-slate-900' : 'text-white'
+              } tracking-tight leading-snug`}
+            >
               {activeSpec.title}
             </h4>
             {!edgeToEdge && (
-              <p className="text-xs text-slate-400 mt-0.5 leading-snug">
+              <p
+                className={`text-xs ${
+                  isLightMode ? 'text-slate-600' : 'text-slate-400'
+                } mt-0.5 leading-relaxed`}
+              >
                 {activeSpec.subtitle}
               </p>
             )}
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 text-[10px] font-mono shrink-0">
-            <span className={`${theme.legendText} font-bold flex items-center gap-1`}>
-              <span className="inline-block w-2.5 h-0.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#22d3ee]" />
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[10px] sm:text-[11px] font-mono">
+            <span
+              className={`${
+                isLightMode ? 'text-cyan-800' : theme.legendText
+              } font-bold flex items-center gap-1.5`}
+            >
+              <span className="inline-block w-3 h-0.5 rounded-full bg-cyan-500 shadow-[0_0_6px_#22d3ee] shrink-0" />
               <span>{activeSpec.solidCurve.label}</span>
             </span>
             <span
               className={`${
-                isWarningSecondary ? 'text-rose-400/90' : 'text-sky-300/90'
-              } flex items-center gap-1`}
+                isWarningSecondary
+                  ? isLightMode
+                    ? 'text-rose-700 font-semibold'
+                    : 'text-rose-400/90'
+                  : isLightMode
+                    ? 'text-sky-700 font-semibold'
+                    : 'text-sky-300/90'
+              } flex items-center gap-1.5`}
             >
               <span
-                className={`inline-block w-2.5 border-b-2 ${
-                  isWarningSecondary ? 'border-dashed border-rose-400' : 'border-dotted border-sky-400'
+                className={`inline-block w-3 border-b-2 shrink-0 ${
+                  isWarningSecondary
+                    ? 'border-dashed border-rose-500'
+                    : 'border-dotted border-sky-500'
                 }`}
               />
               <span>{activeSpec.secondaryCurve.label}</span>
@@ -255,7 +305,9 @@ export const BiologicalTelemetryCurveCard: React.FC<BiologicalTelemetryCurveCard
         className={
           edgeToEdge
             ? 'relative w-full bg-[#050912] border-y border-slate-800/70 overflow-hidden'
-            : 'relative w-full rounded-xl bg-slate-950/95 border border-white/10 p-2 sm:p-2.5 overflow-hidden'
+            : `relative w-full rounded-xl bg-slate-950/95 border ${
+                isLightMode ? 'border-slate-300 shadow-inner' : 'border-white/10'
+              } p-2 sm:p-2.5 overflow-hidden`
         }
       >
         <svg
@@ -537,8 +589,12 @@ export const BiologicalTelemetryCurveCard: React.FC<BiologicalTelemetryCurveCard
 
       {/* Interactive Node Selector Pills + Bottom HUD Readout Box */}
       <div className={edgeToEdge ? 'px-2.5 pb-2 pt-1.5 space-y-1.5' : 'space-y-3'}>
-        <div className="flex items-center gap-1 flex-wrap">
-          <span className="text-[9px] font-mono uppercase tracking-wider text-slate-400 font-bold mr-0.5">
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <span
+            className={`text-[9px] font-mono uppercase tracking-wider ${
+              isLightMode ? 'text-slate-600' : 'text-slate-400'
+            } font-bold mr-0.5`}
+          >
             {edgeToEdge ? 'Tap Node:' : 'Inspect Curve Point:'}
           </span>
           {activeSpec.nodes.map((node, idx) => {
@@ -554,10 +610,16 @@ export const BiologicalTelemetryCurveCard: React.FC<BiologicalTelemetryCurveCard
                 }}
                 className={`px-2 py-0.5 rounded-md text-[10px] font-mono transition-all cursor-pointer flex items-center gap-1 ${
                   isSelected
-                    ? isSecWarn
-                      ? 'bg-rose-500/25 text-rose-200 border border-rose-400/50 font-bold shadow-sm'
-                      : `${theme.hudBadgeBg} ${theme.hudBadgeText} border font-bold shadow-sm`
-                    : 'bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 border border-white/10'
+                    ? isLightMode
+                      ? isSecWarn
+                        ? 'bg-rose-600 text-white border border-rose-700 font-bold shadow-sm'
+                        : 'bg-cyan-700 text-white border border-cyan-800 font-bold shadow-sm'
+                      : isSecWarn
+                        ? 'bg-rose-500/25 text-rose-200 border border-rose-400/50 font-bold shadow-sm'
+                        : `${theme.hudBadgeBg} ${theme.hudBadgeText} border font-bold shadow-sm`
+                    : isLightMode
+                      ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300'
+                      : 'bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 border border-white/10'
                 }`}
               >
                 <span>{node.badge}</span>
@@ -569,33 +631,63 @@ export const BiologicalTelemetryCurveCard: React.FC<BiologicalTelemetryCurveCard
         {/* Bottom HUD Readout Box: Active Node Mechanism + Key Citation Takeaway */}
         {activeNode && (
           <div
-            className={`${edgeToEdge ? 'p-2' : 'p-2.5'} rounded-xl border ${
-              activeNode.curve === 'secondary' && isWarningSecondary
-                ? 'bg-rose-950/30 border-rose-500/35'
-                : `${theme.hudBg} ${theme.hudBorder}`
-            } space-y-1 transition-all duration-150`}
+            className={`${edgeToEdge ? 'p-2' : 'p-3'} rounded-xl border ${
+              isLightMode
+                ? activeNode.curve === 'secondary' && isWarningSecondary
+                  ? 'bg-rose-50/90 border-rose-200'
+                  : 'bg-slate-50 border-slate-200'
+                : activeNode.curve === 'secondary' && isWarningSecondary
+                  ? 'bg-rose-950/30 border-rose-500/35'
+                  : `${theme.hudBg} ${theme.hudBorder}`
+            } space-y-1.5 transition-all duration-150`}
           >
             <div className="flex items-center justify-between gap-2 flex-wrap">
-              <span className="text-[11px] font-extrabold text-white flex items-center gap-1">
+              <span
+                className={`text-[11px] sm:text-xs font-extrabold ${
+                  isLightMode ? 'text-slate-900' : 'text-white'
+                } flex items-center gap-1.5`}
+              >
                 <Zap
                   size={12}
                   className={
                     activeNode.curve === 'secondary' && isWarningSecondary
-                      ? 'text-rose-400'
-                      : 'text-cyan-400'
+                      ? isLightMode
+                        ? 'text-rose-600'
+                        : 'text-rose-400'
+                      : isLightMode
+                        ? 'text-cyan-700'
+                        : 'text-cyan-400'
                   }
                 />
                 <span>{activeNode.badge}</span>
               </span>
-              <span className="px-1.5 py-0.5 rounded bg-black/50 border border-white/10 text-[10px] font-mono font-bold text-amber-300">
+              <span
+                className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold border ${
+                  isLightMode
+                    ? 'bg-amber-50 border-amber-300 text-amber-800'
+                    : 'bg-black/50 border-white/10 text-amber-300'
+                }`}
+              >
                 {activeNode.valueTag}
               </span>
             </div>
-            <p className={`text-[11px] text-slate-200 leading-snug ${edgeToEdge ? 'line-clamp-2' : ''}`}>
+            <p
+              className={`text-xs ${
+                isLightMode ? 'text-slate-700' : 'text-slate-200'
+              } leading-relaxed ${edgeToEdge ? 'line-clamp-2' : ''}`}
+            >
               {activeNode.mechanismDetail}
             </p>
-            <div className="pt-1 border-t border-white/10 flex items-center justify-between gap-2 text-[10px] text-slate-400 font-mono flex-wrap">
-              <span className="flex items-center gap-1 text-emerald-300 font-semibold">
+            <div
+              className={`pt-1.5 border-t ${
+                isLightMode ? 'border-slate-200 text-slate-500' : 'border-white/10 text-slate-400'
+              } flex items-center justify-between gap-2 text-[10px] font-mono flex-wrap`}
+            >
+              <span
+                className={`flex items-center gap-1 ${
+                  isLightMode ? 'text-emerald-700' : 'text-emerald-300'
+                } font-semibold`}
+              >
                 <Sparkles size={10} />
                 <span>Outcome: {activeSpec.citation.keyMetric}</span>
               </span>

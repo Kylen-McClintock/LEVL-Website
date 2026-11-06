@@ -68,6 +68,13 @@ export interface NewsletterActionableStep {
   beginnerDoseBadge: string
 }
 
+export interface NewsletterHookStat {
+  value: string
+  label: string
+  sublabel: string
+  accent: 'emerald' | 'cyan' | 'purple' | 'amber'
+}
+
 export interface NewsletterActionableItem {
   kind: 'protocol' | 'modality'
   id: string
@@ -75,6 +82,9 @@ export interface NewsletterActionableItem {
   exploreDeepLink: string
   name: string
   badgeText: string
+  heroImageUrl: string
+  hookStats: [NewsletterHookStat, NewsletterHookStat, NewsletterHookStat]
+  keyBenefits: string[]
   oneLinePromise: string
   whyIncluded: string
   pubmedLinks: { label: string; pmid: string; url: string }[]
@@ -1074,6 +1084,33 @@ export const OUTPACE_AGING_ISSUE_01: OutpaceAgingIssue = {
     exploreDeepLink: '/explore?mode=discover&tab=protocols&item=protocol_sinclair_epigenetic&type=protocol',
     name: 'NAD+ Salvage & Sirtuin Renewal Protocol',
     badgeText: '5-Step Daily Cellular Stack • Bridges Studies #1 & #3',
+    heroImageUrl: '/images/discover/hero_cellular_nad_senolytic.jpg',
+    hookStats: [
+      {
+        value: '+60%',
+        label: 'Cellular NAD+ Pool',
+        sublabel: 'Restores youthful whole-blood & tissue NAD+/NADH ratio in human RCTs',
+        accent: 'purple'
+      },
+      {
+        value: '+34%',
+        label: 'Muscle NAMPT Enzyme',
+        sublabel: 'Aerobic & interval training upregulate the native NAD+ recycling factory',
+        accent: 'cyan'
+      },
+      {
+        value: '-38%',
+        label: 'CD38 Drain & Inflammation',
+        sublabel: 'Evening apigenin & spermidine plug the NAD+ leak and trigger overnight autophagy',
+        accent: 'emerald'
+      }
+    ],
+    keyBenefits: [
+      'Restores youthful mitochondrial ATP energy output and daytime cognitive stamina within 14 days',
+      'Protects the body\'s native NAMPT recycling enzyme so NAD+ precursors aren\'t wasted',
+      'Activates SIRT1/PARP1 DNA repair and overnight autophagic clearance of damaged proteins',
+      'Improves skeletal muscle insulin sensitivity (+25% in human trials) and deep slow-wave sleep'
+    ],
     oneLinePromise:
       'Refill cellular NAD+ pools, block age-related NAD+ drain, and activate sirtuin-driven cellular recycling in five coordinated steps.',
     whyIncluded:
@@ -1253,6 +1290,33 @@ export const OUTPACE_AGING_ISSUE_01: OutpaceAgingIssue = {
     exploreDeepLink: '/explore?mode=discover&tab=modalities&item=fasting_etre&type=modality',
     name: 'Early 16:8 Time-Restricted Eating (eTRE)',
     badgeText: 'Zero-Cost Daily Modality • Bridges Studies #1, #2 & #3',
+    heroImageUrl: '/images/discover/hero_fasting_etre.jpg',
+    hookStats: [
+      {
+        value: '-28%',
+        label: 'Fasting Insulin Drop',
+        sublabel: '5-week controlled human crossover trial without calorie reduction (Cell Metabolism)',
+        accent: 'emerald'
+      },
+      {
+        value: '-11 / -10 mmHg',
+        label: 'Blood Pressure Reduction',
+        sublabel: 'Clinically significant systolic & diastolic improvement matching first-line therapy',
+        accent: 'cyan'
+      },
+      {
+        value: '-32%',
+        label: 'Oxidative Stress & Autophagy',
+        sublabel: 'Drops 8-isoprostane markers and flips the 16-hour overnight AMPK/ULK1 switch',
+        accent: 'amber'
+      }
+    ],
+    keyBenefits: [
+      'Dramatically lowers fasting insulin (-28%) and improves morning beta-cell responsiveness',
+      'Eliminates the late-night melatonin-insulin collision by closing the kitchen 4 hours before sleep',
+      'Lowers overnight resting heart rate by 3–5 bpm and boosts deep sleep heart-rate variability (HRV)',
+      'Triggers daily 16-hour hepatic glycogen depletion and ULK1-driven cellular autophagy at zero cost'
+    ],
     oneLinePromise:
       'Align your 8-hour eating window with morning insulin sensitivity and close the kitchen 4 hours before sleep to lower fasting insulin and trigger nightly autophagy at zero cost.',
     whyIncluded:

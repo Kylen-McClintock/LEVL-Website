@@ -3,16 +3,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
     Activity,
-    ArrowUpRight,
-    CheckCircle2,
     ChevronDown,
     ChevronUp,
     Clock,
     Compass,
-    ExternalLink,
     Gauge,
-    RefreshCw,
-    Send,
     Sparkles,
     TrendingDown,
     Zap,
@@ -20,8 +15,6 @@ import {
 import type { OutpaceAgingIssue } from '@/lib/data/outpaceAgingIssues';
 
 const FUTUREGRAPH_WEEKLY_PULSE_API = 'https://futuregraph-beta.vercel.app/api/v1/lev/weekly-pulse';
-const FUTUREGRAPH_OBSERVATORY_URL = 'https://futuregraph-beta.vercel.app/lev';
-const AGIFUTURES_TRACKER_URL = 'https://www.agifutures.org/singularity-tracker';
 
 interface CohortMetricsSnapshot {
     intrinsicPaceOfAging: number;
@@ -106,7 +99,7 @@ const FALLBACK_BASELINE: LiveFutureGraphData = {
             levInterceptYear: 2036.8,
             levInterceptFormatted: 'October 2036',
             yearsToLev: 9.9,
-            biologicalAgeAtLev: 37.8,
+            biologicalAgeAtLev: 33.1,
         },
         p80: {
             intrinsicPaceOfAging: 0.842,
@@ -117,7 +110,7 @@ const FALLBACK_BASELINE: LiveFutureGraphData = {
             levInterceptYear: 2042.1,
             levInterceptFormatted: 'February 2042',
             yearsToLev: 15.3,
-            biologicalAgeAtLev: 41.6,
+            biologicalAgeAtLev: 39.2,
         },
     },
     kpiVelocityEngine: {
@@ -206,6 +199,66 @@ const FALLBACK_BASELINE: LiveFutureGraphData = {
                 indexWeight: 0.8,
                 weightedContribution: 19.2,
             },
+            {
+                id: 'kpi-approved-gene-therapies',
+                name: 'FDA/EMA Approved Gene & Base-Editing Therapies',
+                shortLabel: 'Approved Gene Therapies',
+                displayValue: '34 Approved',
+                trendMagnitude: '+6 approvals YoY (+21.4%/yr)',
+                annualVelocityPct: 21.4,
+                indexWeight: 0.75,
+                weightedContribution: 16.05,
+            },
+            {
+                id: 'kpi-tissue-organ-engineering',
+                name: 'Bio-Engineered Tissue & Xenotransplant Survival',
+                shortLabel: 'Organ & Tissue Replacement',
+                displayValue: 'Phase 1/2 Human Trials',
+                trendMagnitude: 'Gene-edited porcine kidney >1 yr survival',
+                annualVelocityPct: 18.5,
+                indexWeight: 0.7,
+                weightedContribution: 12.95,
+            },
+            {
+                id: 'kpi-approved-cell-therapies',
+                name: 'Approved Cellular & Immune Rejuvenation Therapies',
+                shortLabel: 'Approved Cell Therapies',
+                displayValue: '42 Approved',
+                trendMagnitude: '+19.0% YoY expansion into autoimmunity',
+                annualVelocityPct: 19.0,
+                indexWeight: 0.65,
+                weightedContribution: 12.35,
+            },
+            {
+                id: 'kpi-longevity-clinical-trials',
+                name: 'Active Human Geroscience & Longevity Clinical Trials',
+                shortLabel: 'Longevity Clinical Trials',
+                displayValue: '195 Active Trials',
+                trendMagnitude: '+16.5% YoY pipeline growth',
+                annualVelocityPct: 16.5,
+                indexWeight: 0.6,
+                weightedContribution: 9.9,
+            },
+            {
+                id: 'kpi-early-cancer-survival-panel',
+                name: 'Lung, Breast & Colorectal 5-Yr Survival Velocity',
+                shortLabel: 'Solid-Tumor Survival Trend',
+                displayValue: '28% Lung • 91% Breast',
+                trendMagnitude: '+1.6% annualized stage-shift gain',
+                annualVelocityPct: 1.6,
+                indexWeight: 0.3,
+                weightedContribution: 0.48,
+            },
+            {
+                id: 'kpi-biostasis-cryonics-readiness',
+                name: 'Reversible Cryopreservation & Biostasis Research',
+                shortLabel: 'Cryobiology & Biostasis',
+                displayValue: 'Whole-Organ Rat Kidney',
+                trendMagnitude: '+12.0%/yr nanowarming progress',
+                annualVelocityPct: 12.0,
+                indexWeight: 0.2,
+                weightedContribution: 2.4,
+            },
         ],
     },
     latestPulse: {
@@ -215,7 +268,7 @@ const FALLBACK_BASELINE: LiveFutureGraphData = {
             'Enzyme Shield Extends Mouse Lifespan 17%, Spider-Silk Senolytic Nanovaccine Cuts Mortality 72%, and 51-Trial TranslAGE Clock Benchmark',
         newsletterUrl: 'https://www.levlhealth.com/newsletter/edition-1',
         predictionMarketsSummary:
-            'Metaculus #6592 (national LEV) held at Nov 2053 while Manifold 2036/2040 frontier LEV markets firmed (+1.5% WoW), pulling our 99th-percentile LEV aggregate 26 days closer to October 2036.',
+            'Metaculus #6592 (national LEV) held at Nov 2053 while Manifold 2036/2040 frontier LEV markets firmed (+1.5% WoW), pulling our Optimal Protocol LEV estimate 26 days closer to October 2036.',
         expertConsensusSummary:
             'Translational geroscience teams highlighted that standardized surrogate methylation clocks (DunedinPACE, PCGrimAge across 51 human trials) and immune-mediated senolytics are compressing Phase 2 efficacy readouts from multi-year survival studies to 6-month biomarker windows.',
         breakthroughsSummary:
@@ -239,97 +292,21 @@ export function buildWeeklyPulsePayloadFromIssue(issue: OutpaceAgingIssue) {
         newsletterUrl: `https://www.levlhealth.com/newsletter/${issue.shortSlug}`,
         authorOrSource: 'Outpace Aging • LEVL Weekly Longevity Roundup',
         predictionMarketsSummary:
-            'Metaculus #6592 (national LEV) held at Nov 2053 while Manifold 2036/2040 frontier LEV markets firmed (+1.5% WoW), pulling the 99th-percentile LEV aggregate 26 days closer to October 2036.',
+            'Metaculus #6592 (national LEV) held at Nov 2053 while Manifold 2036/2040 frontier LEV markets firmed (+1.5% WoW), pulling the Optimal Protocol LEV aggregate 26 days closer to October 2036.',
         expertConsensusSummary:
             'Translational geroscience teams highlighted that standardized surrogate methylation clocks (DunedinPACE, PCGrimAge across 51 human trials) and immune-mediated senolytics are compressing Phase 2 efficacy readouts from multi-year survival studies to 6-month biomarker windows.',
         breakthroughsSummary: issue.subtitle,
-        breakthroughs: [
-            {
-                id: 'bt-outpace-01-1',
-                title: issue.studies[0]?.headline || 'Oral AEP Inhibitor #11a Extends Mouse Lifespan 17%',
-                category: 'ai_biotech',
-                summary: issue.studies[0]?.keyStatBadge || 'Preserves NAMPT and tissue NAD+.',
-                sourceUrl: issue.studies[0]?.studyUrl || 'https://www.levlhealth.com/newsletter/edition-1',
-                sourceLabel: `${issue.studies[0]?.journal || 'iScience'} (${issue.studies[0]?.publishDate || 'Oct 2026'})`,
-                delta99thLevYears: -0.02,
-                deltaPoA99th: -0.0008,
-                deltaPoA80th: -0.0004,
-            },
-            {
-                id: 'bt-outpace-01-2',
-                title: issue.studies[1]?.headline || 'Spider-Silk Senolytic Nanovaccine Cuts Mortality 72%',
-                category: 'clinical_trial',
-                summary: issue.studies[1]?.keyStatBadge || 'Mobilizes CD8+ T cells against Gpnmb+ senescent cells.',
-                sourceUrl: issue.studies[1]?.studyUrl || 'https://www.levlhealth.com/newsletter/edition-1',
-                sourceLabel: `${issue.studies[1]?.journal || 'Advanced Science'} (${issue.studies[1]?.publishDate || 'Oct 2026'})`,
-                delta99thLevYears: -0.025,
-                deltaPoA99th: -0.001,
-                deltaPoA80th: -0.0005,
-            },
-            {
-                id: 'bt-outpace-01-3',
-                title: issue.studies[2]?.headline || 'Restoring Astrocyte FGF13 Reactivates Autophagy & Lowers IL-6',
-                category: 'ai_biotech',
-                summary: issue.studies[2]?.keyStatBadge || 'Reverses prefrontal astrocyte autophagy decline.',
-                sourceUrl: issue.studies[2]?.studyUrl || 'https://www.levlhealth.com/newsletter/edition-1',
-                sourceLabel: `${issue.studies[2]?.journal || 'Aging Cell'} (${issue.studies[2]?.publishDate || 'Oct 2026'})`,
-                delta99thLevYears: -0.01,
-                deltaPoA99th: -0.0004,
-                deltaPoA80th: -0.0002,
-            },
-            {
-                id: 'bt-outpace-01-4',
-                title: issue.studies[3]?.headline || 'Neuronal PLA2G2F Clears 66% of Toxic Microglial Lipid Droplets',
-                category: 'ai_biotech',
-                summary: issue.studies[3]?.keyStatBadge || 'Clears peroxidized lipids in human iPSC microglia.',
-                sourceUrl: issue.studies[3]?.studyUrl || 'https://www.levlhealth.com/newsletter/edition-1',
-                sourceLabel: `${issue.studies[3]?.journal || 'Nature Neuroscience'} (${issue.studies[3]?.publishDate || 'Oct 2026'})`,
-                delta99thLevYears: -0.01,
-                deltaPoA99th: -0.0004,
-                deltaPoA80th: -0.0002,
-            },
-            {
-                id: 'bt-outpace-01-5',
-                title: issue.studies[4]?.headline || 'TranslAGE Benchmarks 16 Epigenetic Clocks Across 51 Human Trials',
-                category: 'biomarker_clock',
-                summary: issue.studies[4]?.keyStatBadge || 'Validates DunedinPACE & PCGrimAge across 51 trials.',
-                sourceUrl: issue.studies[4]?.studyUrl || 'https://www.levlhealth.com/newsletter/edition-1',
-                sourceLabel: `${issue.studies[4]?.journal || 'Nature Medicine'} (${issue.studies[4]?.publishDate || 'Aug 2026'})`,
-                delta99thLevYears: -0.025,
-                deltaPoA99th: -0.0009,
-                deltaPoA80th: -0.0007,
-            },
-        ],
-        kpiUpdates: [
-            {
-                id: 'kpi-epigenetic-clock-validation',
-                annualVelocityPct: 38.0,
-                displayValue: '51 Human RCTs • $85/assay',
-                trendMagnitude: 'DunedinPACE & PCGrimAge validated across 51 trials',
-                lastUpdated: isoDate,
-            },
-            {
-                id: 'kpi-senolytics-clinical',
-                annualVelocityPct: 26.0,
-                displayValue: 'Phase 2 + Nanovaccines',
-                trendMagnitude: 'HR 0.28 survival gain in Gpnmb+ nanovaccine',
-                lastUpdated: isoDate,
-            },
-            {
-                id: 'kpi-nad-salvage-proteostasis',
-                annualVelocityPct: 22.5,
-                displayValue: '+17% Lifespan (AEP/NAMPT)',
-                trendMagnitude: '24m → 28m murine lifespan via #11a AEP blockade',
-                lastUpdated: isoDate,
-            },
-            {
-                id: 'kpi-neuro-glial-rejuvenation',
-                annualVelocityPct: 24.0,
-                displayValue: 'FGF13 + PLA2G2F Rescue',
-                trendMagnitude: '-66% microglial lipid load & lower systemic IL-6',
-                lastUpdated: isoDate,
-            },
-        ],
+        breakthroughs: issue.studies.map((s, idx) => ({
+            id: `bt-outpace-0${issue.issueNumber}-${idx + 1}`,
+            title: s.headline,
+            category: idx === 4 ? 'biomarker_clock' : idx === 1 ? 'clinical_trial' : 'ai_biotech',
+            summary: s.keyStatBadge,
+            sourceUrl: s.studyUrl,
+            sourceLabel: `${s.journal} (${s.publishDate})`,
+            delta99thLevYears: idx === 1 || idx === 4 ? -0.025 : -0.015,
+            deltaPoA99th: -0.0007,
+            deltaPoA80th: -0.0004,
+        })),
         netWeeklyDelta: {
             days99thLevShift: -26,
             days80thLevShift: -16,
@@ -343,371 +320,448 @@ interface FutureGraphLevPulseWidgetProps {
     issue?: OutpaceAgingIssue;
     compact?: boolean;
     showPublisherSync?: boolean;
+    isLightMode?: boolean;
 }
 
+const DECADE_AGES = [30, 40, 50, 60, 70] as const;
+
 export default function FutureGraphLevPulseWidget({
-    issue,
     compact = false,
-    showPublisherSync = false,
+    isLightMode = false,
 }: FutureGraphLevPulseWidgetProps) {
-    const [age, setAge] = useState<number>(35);
-    const [mode, setMode] = useState<'moderate' | 'conservative'>('moderate');
+    const [age, setAge] = useState<number>(30);
     const [data, setData] = useState<LiveFutureGraphData>(FALLBACK_BASELINE);
     const [isLiveConnected, setIsLiveConnected] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [isSyncingPost, setIsSyncingPost] = useState<boolean>(false);
-    const [syncSuccessMsg, setSyncSuccessMsg] = useState<string | null>(null);
     const [showPulseDigest, setShowPulseDigest] = useState<boolean>(!compact);
     const [showVelocityMatrix, setShowVelocityMatrix] = useState<boolean>(false);
 
-    const fetchLivePulse = useCallback(
-        async (targetAge: number, targetMode: 'moderate' | 'conservative') => {
-            setIsLoading(true);
-            try {
-                const res = await fetch(
-                    `${FUTUREGRAPH_WEEKLY_PULSE_API}?age=${targetAge}&mode=${targetMode}`,
-                    { cache: 'no-store' }
-                );
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                const json = await res.json();
-                const comp = json.computation;
-                const pulse = json.latestPulse || comp?.latestWeeklyPulse;
-                const engine = json.kpiVelocityEngine || comp?.kpiVelocityEngine;
-
-                if (comp && comp.cohorts?.p99 && comp.cohorts?.p80) {
-                    setData((prev) => ({
-                        aggregate99thFormatted: comp.aggregate99thFormatted || prev.aggregate99thFormatted,
-                        aggregate80thFormatted: comp.aggregate80thFormatted || prev.aggregate80thFormatted,
-                        marketAggregate99thYear: comp.marketAggregate99thYear ?? prev.marketAggregate99thYear,
-                        expertAggregate99thYear: comp.expertAggregate99thYear ?? prev.expertAggregate99thYear,
-                        trajectoryIntercept99thYear:
-                            comp.trajectoryIntercept99thYear ?? prev.trajectoryIntercept99thYear,
-                        cone99th: {
-                            p10Formatted: comp.cone99th?.p10Formatted || prev.cone99th.p10Formatted,
-                            p50Formatted: comp.cone99th?.p50Formatted || prev.cone99th.p50Formatted,
-                            p90Formatted: comp.cone99th?.p90Formatted || prev.cone99th.p90Formatted,
-                        },
-                        cohorts: {
-                            p99: comp.cohorts.p99,
-                            p80: comp.cohorts.p80,
-                        },
-                        kpiVelocityEngine: engine?.metrics
-                            ? {
-                                  weightedAvgVelocityPct: engine.weightedAvgVelocityPct,
-                                  normalizedAccelerationVector: engine.normalizedAccelerationVector,
-                                  totalWeightedVelocity: engine.totalWeightedVelocity,
-                                  totalWeight: engine.totalWeight,
-                                  metrics: engine.metrics,
-                              }
-                            : prev.kpiVelocityEngine,
-                        latestPulse: pulse
-                            ? {
-                                  weekOf: pulse.weekOf || prev.latestPulse.weekOf,
-                                  issueLabel: pulse.issueLabel || prev.latestPulse.issueLabel,
-                                  newsletterTitle: pulse.newsletterTitle || prev.latestPulse.newsletterTitle,
-                                  newsletterUrl: pulse.newsletterUrl || prev.latestPulse.newsletterUrl,
-                                  predictionMarketsSummary:
-                                      pulse.predictionMarketsSummary ||
-                                      prev.latestPulse.predictionMarketsSummary,
-                                  expertConsensusSummary:
-                                      pulse.expertConsensusSummary || prev.latestPulse.expertConsensusSummary,
-                                  breakthroughsSummary:
-                                      pulse.breakthroughsSummary || prev.latestPulse.breakthroughsSummary,
-                                  netWeeklyDelta: {
-                                      days99thLevShift:
-                                          pulse.netWeeklyDelta?.days99thLevShift ??
-                                          prev.latestPulse.netWeeklyDelta.days99thLevShift,
-                                      days80thLevShift:
-                                          pulse.netWeeklyDelta?.days80thLevShift ??
-                                          prev.latestPulse.netWeeklyDelta.days80thLevShift,
-                                      poa99thShift:
-                                          pulse.netWeeklyDelta?.poa99thShift ??
-                                          prev.latestPulse.netWeeklyDelta.poa99thShift,
-                                      poa80thShift:
-                                          pulse.netWeeklyDelta?.poa80thShift ??
-                                          prev.latestPulse.netWeeklyDelta.poa80thShift,
-                                  },
-                              }
-                            : prev.latestPulse,
-                    }));
-                    setIsLiveConnected(true);
-                }
-            } catch {
-                // Keep calibrated local snapshot if remote endpoint is unreachable
-                setIsLiveConnected(false);
-            } finally {
-                setIsLoading(false);
-            }
-        },
-        []
-    );
-
-    useEffect(() => {
-        fetchLivePulse(age, mode);
-    }, [age, mode, fetchLivePulse]);
-
-    const handlePushIssueToFutureGraph = async () => {
-        if (!issue) return;
-        setIsSyncingPost(true);
-        setSyncSuccessMsg(null);
+    const fetchLivePulse = useCallback(async (targetAge: number) => {
+        setIsLoading(true);
         try {
-            const payload = {
-                ...buildWeeklyPulsePayloadFromIssue(issue),
-                age,
-                mode,
-            };
-            const res = await fetch(FUTUREGRAPH_WEEKLY_PULSE_API, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload),
-            });
+            const res = await fetch(
+                `${FUTUREGRAPH_WEEKLY_PULSE_API}?age=${targetAge}&mode=moderate`,
+                { cache: 'no-store' }
+            );
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const json = await res.json();
-            if (json.computation) {
-                await fetchLivePulse(age, mode);
+            const comp = json.computation;
+            const pulse = json.latestPulse || comp?.latestWeeklyPulse;
+            const engine = json.kpiVelocityEngine || comp?.kpiVelocityEngine;
+
+            if (comp && comp.cohorts?.p99 && comp.cohorts?.p80) {
+                setData((prev) => ({
+                    aggregate99thFormatted: comp.aggregate99thFormatted || prev.aggregate99thFormatted,
+                    aggregate80thFormatted: comp.aggregate80thFormatted || prev.aggregate80thFormatted,
+                    marketAggregate99thYear: comp.marketAggregate99thYear ?? prev.marketAggregate99thYear,
+                    expertAggregate99thYear: comp.expertAggregate99thYear ?? prev.expertAggregate99thYear,
+                    trajectoryIntercept99thYear:
+                        comp.trajectoryIntercept99thYear ?? prev.trajectoryIntercept99thYear,
+                    cone99th: {
+                        p10Formatted: comp.cone99th?.p10Formatted || prev.cone99th.p10Formatted,
+                        p50Formatted: comp.cone99th?.p50Formatted || prev.cone99th.p50Formatted,
+                        p90Formatted: comp.cone99th?.p90Formatted || prev.cone99th.p90Formatted,
+                    },
+                    cohorts: {
+                        p99: comp.cohorts.p99,
+                        p80: comp.cohorts.p80,
+                    },
+                    kpiVelocityEngine: engine?.metrics
+                        ? {
+                              weightedAvgVelocityPct: engine.weightedAvgVelocityPct,
+                              normalizedAccelerationVector: engine.normalizedAccelerationVector,
+                              totalWeightedVelocity: engine.totalWeightedVelocity,
+                              totalWeight: engine.totalWeight,
+                              metrics: engine.metrics,
+                          }
+                        : prev.kpiVelocityEngine,
+                    latestPulse: pulse
+                        ? {
+                              weekOf: pulse.weekOf || prev.latestPulse.weekOf,
+                              issueLabel: pulse.issueLabel || prev.latestPulse.issueLabel,
+                              newsletterTitle: pulse.newsletterTitle || prev.latestPulse.newsletterTitle,
+                              newsletterUrl: pulse.newsletterUrl || prev.latestPulse.newsletterUrl,
+                              predictionMarketsSummary:
+                                  pulse.predictionMarketsSummary ||
+                                  prev.latestPulse.predictionMarketsSummary,
+                              expertConsensusSummary:
+                                  pulse.expertConsensusSummary || prev.latestPulse.expertConsensusSummary,
+                              breakthroughsSummary:
+                                  pulse.breakthroughsSummary || prev.latestPulse.breakthroughsSummary,
+                              netWeeklyDelta: {
+                                  days99thLevShift:
+                                      pulse.netWeeklyDelta?.days99thLevShift ??
+                                      prev.latestPulse.netWeeklyDelta.days99thLevShift,
+                                  days80thLevShift:
+                                      pulse.netWeeklyDelta?.days80thLevShift ??
+                                      prev.latestPulse.netWeeklyDelta.days80thLevShift,
+                                  poa99thShift:
+                                      pulse.netWeeklyDelta?.poa99thShift ??
+                                      prev.latestPulse.netWeeklyDelta.poa99thShift,
+                                  poa80thShift:
+                                      pulse.netWeeklyDelta?.poa80thShift ??
+                                      prev.latestPulse.netWeeklyDelta.poa80thShift,
+                              },
+                          }
+                        : prev.latestPulse,
+                }));
+                setIsLiveConnected(true);
             }
-            setSyncSuccessMsg(
-                `Synced Edition #${issue.issueNumber} to FutureGraph & AGI Futures (${payload.netWeeklyDelta.days99thLevShift}d LEV shift applied)`
-            );
-            setTimeout(() => setSyncSuccessMsg(null), 6000);
         } catch {
-            setSyncSuccessMsg('Synced to local telemetry state (remote endpoint updating)');
-            setTimeout(() => setSyncSuccessMsg(null), 5000);
+            setIsLiveConnected(false);
         } finally {
-            setIsSyncingPost(false);
+            setIsLoading(false);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        fetchLivePulse(age);
+    }, [age, fetchLivePulse]);
 
     const days99Shift = data.latestPulse.netWeeklyDelta.days99thLevShift;
     const days80Shift = data.latestPulse.netWeeklyDelta.days80thLevShift;
     const poa99Shift = data.latestPulse.netWeeklyDelta.poa99thShift;
 
-    // Adjust displayed bioAgeAtLev when user toggles age if using fallback
-    const ageDelta = age - 35;
-    const displayedBioAge99 = Number((data.cohorts.p99.biologicalAgeAtLev + (isLiveConnected ? 0 : ageDelta * 0.92)).toFixed(1));
-    const displayedBioAge80 = Number((data.cohorts.p80.biologicalAgeAtLev + (isLiveConnected ? 0 : ageDelta * 0.96)).toFixed(1));
+    // Instant deterministic calculation for decades 30, 40, 50, 60, 70
+    const displayedBioAge99 = Number(
+        (age * 0.92 + data.cohorts.p99.yearsToLev * data.cohorts.p99.netEffectivePaceOfAging).toFixed(1)
+    );
+    const displayedBioAge80 = Number(
+        (age * 0.95 + data.cohorts.p80.yearsToLev * data.cohorts.p80.netEffectivePaceOfAging).toFixed(1)
+    );
 
     return (
-        <section className="rounded-2xl border border-emerald-500/25 bg-gradient-to-br from-[#0B1220] via-[#0F172A] to-[#0B1528] p-5 sm:p-6 shadow-2xl relative overflow-hidden">
-            <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none" />
+        <section
+            className={`rounded-2xl border p-5 sm:p-6 shadow-xl relative overflow-hidden transition-colors ${
+                isLightMode
+                    ? 'border-emerald-200 bg-gradient-to-br from-white via-slate-50 to-emerald-50/40 text-slate-900'
+                    : 'border-emerald-500/25 bg-gradient-to-br from-[#0B1220] via-[#0F172A] to-[#0B1528] text-slate-100'
+            }`}
+        >
+            {!isLightMode && (
+                <>
+                    <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none" />
+                    <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none" />
+                </>
+            )}
 
-            {/* Top Telemetry Header & Controls */}
-            <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-800/80">
+            {/* Top Header & Clickable Velocity Badge */}
+            <div
+                className={`relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b ${
+                    isLightMode ? 'border-slate-200' : 'border-slate-800/80'
+                }`}
+            >
                 <div>
                     <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                            LIVE TWO-WAY LEV OBSERVATORY
-                        </span>
-                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-cyan-500/10 text-cyan-300 border border-cyan-500/25">
+                        <span
+                            className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${
+                                isLightMode
+                                    ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                                    : 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
+                            }`}
+                        >
                             <TrendingDown className="w-3 h-3" />
                             {days99Shift < 0
-                                ? `99th-Pct LEV Pulled ${Math.abs(days99Shift)} Days Closer This Week`
+                                ? `Optimal LEV Pulled ${Math.abs(days99Shift)} Days Closer This Week`
                                 : `Weekly Shift: +${days99Shift} Days`}
                         </span>
-                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-mono bg-purple-500/10 text-purple-300 border border-purple-500/25">
-                            <Gauge className="w-3 h-3" />
-                            Velocity: {data.kpiVelocityEngine.weightedAvgVelocityPct.toFixed(1)}% ({data.kpiVelocityEngine.normalizedAccelerationVector.toFixed(2)}v)
-                        </span>
-                    </div>
-                    <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
-                        Longevity Escape Velocity (LEV) & Cohort Pace of Aging Tracker
-                    </h3>
-                    <p className="text-xs text-slate-400 mt-0.5">
-                        Bayesian synthesis of Prediction Markets (40%), Expert Consensus (35%), and 14-KPI Biological Velocity Trajectory (25%) • Synced across{' '}
-                        <a
-                            href={FUTUREGRAPH_OBSERVATORY_URL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-emerald-400 hover:underline inline-flex items-center gap-0.5"
-                        >
-                            FutureGraph <ArrowUpRight className="w-3 h-3" />
-                        </a>{' '}
-                        &{' '}
-                        <a
-                            href={AGIFUTURES_TRACKER_URL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-cyan-400 hover:underline inline-flex items-center gap-0.5"
-                        >
-                            AGI Futures <ArrowUpRight className="w-3 h-3" />
-                        </a>
-                    </p>
-                </div>
 
-                {/* Age & Mode Controls */}
-                <div className="flex flex-wrap items-center gap-2">
-                    <div className="inline-flex items-center rounded-xl bg-slate-900/90 border border-slate-800 p-1">
-                        <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 px-2">
-                            Age:
-                        </span>
-                        {[25, 35, 45, 55].map((a) => (
-                            <button
-                                key={a}
-                                type="button"
-                                onClick={() => setAge(a)}
-                                className={`px-2 py-1 rounded-lg text-xs font-semibold transition-all ${
-                                    age === a
-                                        ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
-                                        : 'text-slate-400 hover:text-white'
-                                }`}
-                            >
-                                {a}
-                            </button>
-                        ))}
-                    </div>
-
-                    <div className="inline-flex items-center rounded-xl bg-slate-900/90 border border-slate-800 p-1">
-                        {(['moderate', 'conservative'] as const).map((m) => (
-                            <button
-                                key={m}
-                                type="button"
-                                onClick={() => setMode(m)}
-                                className={`px-2.5 py-1 rounded-lg text-xs font-semibold capitalize transition-all ${
-                                    mode === m
-                                        ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
-                                        : 'text-slate-400 hover:text-white'
-                                }`}
-                            >
-                                {m}
-                            </button>
-                        ))}
-                    </div>
-
-                    {(showPublisherSync && issue) && (
+                        {/* Clickable Velocity Pill */}
                         <button
                             type="button"
-                            onClick={handlePushIssueToFutureGraph}
-                            disabled={isSyncingPost}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition-all disabled:opacity-60"
-                            title="Push this week's newsletter breakthroughs & KPI velocity updates to FutureGraph POST /api/v1/lev/weekly-pulse"
+                            onClick={() => setShowVelocityMatrix((v) => !v)}
+                            className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold border transition-all cursor-pointer ${
+                                showVelocityMatrix
+                                    ? isLightMode
+                                        ? 'bg-purple-600 text-white border-purple-700 shadow-sm'
+                                        : 'bg-purple-500 text-white border-purple-400 shadow-sm'
+                                    : isLightMode
+                                      ? 'bg-purple-50 hover:bg-purple-100 text-purple-800 border-purple-300'
+                                      : 'bg-purple-500/15 hover:bg-purple-500/25 text-purple-200 border-purple-500/35'
+                            }`}
+                            title="Click to inspect the 14 Longevity Velocity KPIs"
                         >
-                            {isSyncingPost ? (
-                                <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                            <Gauge className="w-3 h-3" />
+                            <span>
+                                Science Velocity: {data.kpiVelocityEngine.weightedAvgVelocityPct.toFixed(1)}%/yr (
+                                {data.kpiVelocityEngine.normalizedAccelerationVector.toFixed(2)}v)
+                            </span>
+                            <span className="underline ml-0.5">
+                                {showVelocityMatrix ? 'Hide KPIs' : 'View 14 KPIs'}
+                            </span>
+                            {showVelocityMatrix ? (
+                                <ChevronUp className="w-3 h-3" />
                             ) : (
-                                <Send className="w-3.5 h-3.5" />
+                                <ChevronDown className="w-3 h-3" />
                             )}
-                            Sync Pulse to FutureGraph
                         </button>
-                    )}
+                    </div>
+
+                    <h3
+                        className={`text-base sm:text-lg font-extrabold tracking-tight ${
+                            isLightMode ? 'text-slate-900' : 'text-white'
+                        }`}
+                    >
+                        Longevity Escape Velocity (LEV) & Pace of Aging Forecast
+                    </h3>
+                    <p className={`text-xs mt-0.5 ${isLightMode ? 'text-slate-600' : 'text-slate-400'}`}>
+                        When medical rejuvenation advances faster than biological aging (&gt;1 year of life expectancy gained per calendar year).
+                    </p>
                 </div>
             </div>
 
-            {syncSuccessMsg && (
-                <div className="mt-3 rounded-xl bg-emerald-500/15 border border-emerald-500/30 px-3.5 py-2 text-xs text-emerald-300 flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
-                    <span>{syncSuccessMsg}</span>
-                </div>
-            )}
-
-            {/* 3 Headline Cards (Minimal, Clean LEVL Aesthetic — No 50th-Pct Clutter) */}
+            {/* 3 Simple, Obvious Headline Cards */}
             <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                {/* Card 1: 99th Percentile Frontier Optimizer */}
-                <div className="rounded-xl border border-emerald-500/30 bg-slate-900/75 p-4 flex flex-col justify-between">
+                {/* Card 1: Estimated LEV Date (Optimal Protocol) */}
+                <div
+                    className={`rounded-xl border p-4 flex flex-col justify-between ${
+                        isLightMode
+                            ? 'border-emerald-300 bg-white shadow-sm'
+                            : 'border-emerald-500/30 bg-slate-900/75'
+                    }`}
+                >
                     <div>
                         <div className="flex items-center justify-between gap-2">
-                            <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-400">
-                                99th-Percentile LEV (Top 1%)
+                            <span
+                                className={`text-xs font-extrabold uppercase tracking-wide ${
+                                    isLightMode ? 'text-emerald-700' : 'text-emerald-400'
+                                }`}
+                            >
+                                Estimated LEV Date • Optimal Protocol
                             </span>
-                            <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-                                {days99Shift}d this week
+                            <span
+                                className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-bold border shrink-0 ${
+                                    isLightMode
+                                        ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                                        : 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
+                                }`}
+                            >
+                                Top 1%
                             </span>
                         </div>
-                        <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-2">
+                        <div
+                            className={`text-2xl sm:text-3xl font-black tracking-tight mt-2 ${
+                                isLightMode ? 'text-slate-900' : 'text-white'
+                            }`}
+                        >
                             {data.aggregate99thFormatted}
                         </div>
-                        <p className="text-xs text-slate-400 mt-1">
-                            Full multi-biomarker protocol adherent + early Phase II/III rejuvenation access
+                        <div
+                            className={`inline-flex items-center gap-1 mt-1 text-[11px] font-semibold ${
+                                isLightMode ? 'text-emerald-700' : 'text-emerald-300'
+                            }`}
+                        >
+                            <span>Pulled {Math.abs(days99Shift)} days closer this week</span>
+                        </div>
+                        <p
+                            className={`text-xs mt-1.5 leading-relaxed ${
+                                isLightMode ? 'text-slate-600' : 'text-slate-400'
+                            }`}
+                        >
+                            For adults following a comprehensive biomarker-guided longevity protocol and early clinical therapeutics.
                         </p>
                     </div>
-                    <div className="mt-4 pt-3 border-t border-slate-800/80 grid grid-cols-2 gap-2 text-xs">
+                    <div
+                        className={`mt-4 pt-3 border-t grid grid-cols-2 gap-2 text-xs ${
+                            isLightMode ? 'border-slate-200' : 'border-slate-800/80'
+                        }`}
+                    >
                         <div>
-                            <div className="text-[10px] text-slate-500 uppercase">Runway to Intercept</div>
-                            <div className="font-mono font-bold text-emerald-300">
+                            <div className={`text-[10px] uppercase ${isLightMode ? 'text-slate-500' : 'text-slate-500'}`}>
+                                Years Until LEV
+                            </div>
+                            <div
+                                className={`font-mono font-bold ${
+                                    isLightMode ? 'text-emerald-700' : 'text-emerald-300'
+                                }`}
+                            >
                                 {data.cohorts.p99.yearsToLev.toFixed(1)} yrs
                             </div>
                         </div>
                         <div>
-                            <div className="text-[10px] text-slate-500 uppercase">Bio-Age at LEV (Age {age})</div>
-                            <div className="font-mono font-bold text-slate-200">
+                            <div className={`text-[10px] uppercase ${isLightMode ? 'text-slate-500' : 'text-slate-500'}`}>
+                                Bio-Age at LEV (Age {age})
+                            </div>
+                            <div
+                                className={`font-mono font-bold ${
+                                    isLightMode ? 'text-slate-900' : 'text-slate-200'
+                                }`}
+                            >
                                 ~{displayedBioAge99} yrs
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Card 2: 80th Percentile Proactive Adopter */}
-                <div className="rounded-xl border border-cyan-500/30 bg-slate-900/75 p-4 flex flex-col justify-between">
+                {/* Card 2: Estimated LEV Date (Active Health) */}
+                <div
+                    className={`rounded-xl border p-4 flex flex-col justify-between ${
+                        isLightMode
+                            ? 'border-cyan-300 bg-white shadow-sm'
+                            : 'border-cyan-500/30 bg-slate-900/75'
+                    }`}
+                >
                     <div>
                         <div className="flex items-center justify-between gap-2">
-                            <span className="text-[11px] font-bold uppercase tracking-wider text-cyan-400">
-                                80th-Percentile LEV (Top 20%)
+                            <span
+                                className={`text-xs font-extrabold uppercase tracking-wide ${
+                                    isLightMode ? 'text-cyan-700' : 'text-cyan-400'
+                                }`}
+                            >
+                                Estimated LEV Date • Active Health
                             </span>
-                            <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
-                                {days80Shift}d this week
+                            <span
+                                className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-bold border shrink-0 ${
+                                    isLightMode
+                                        ? 'bg-cyan-50 text-cyan-800 border-cyan-200'
+                                        : 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30'
+                                }`}
+                            >
+                                Top 20%
                             </span>
                         </div>
-                        <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-2">
+                        <div
+                            className={`text-2xl sm:text-3xl font-black tracking-tight mt-2 ${
+                                isLightMode ? 'text-slate-900' : 'text-white'
+                            }`}
+                        >
                             {data.aggregate80thFormatted}
                         </div>
-                        <p className="text-xs text-slate-400 mt-1">
-                            Structured Zone-2/HIIT exercise, circadian fasting, & Tier-1 preventive stack
+                        <div
+                            className={`inline-flex items-center gap-1 mt-1 text-[11px] font-semibold ${
+                                isLightMode ? 'text-cyan-700' : 'text-cyan-300'
+                            }`}
+                        >
+                            <span>Pulled {Math.abs(days80Shift)} days closer this week</span>
+                        </div>
+                        <p
+                            className={`text-xs mt-1.5 leading-relaxed ${
+                                isLightMode ? 'text-slate-600' : 'text-slate-400'
+                            }`}
+                        >
+                            For health-conscious adults practicing regular Zone 2/HIIT exercise, circadian fasting, and core preventive care.
                         </p>
                     </div>
-                    <div className="mt-4 pt-3 border-t border-slate-800/80 grid grid-cols-2 gap-2 text-xs">
+                    <div
+                        className={`mt-4 pt-3 border-t grid grid-cols-2 gap-2 text-xs ${
+                            isLightMode ? 'border-slate-200' : 'border-slate-800/80'
+                        }`}
+                    >
                         <div>
-                            <div className="text-[10px] text-slate-500 uppercase">Runway to Intercept</div>
-                            <div className="font-mono font-bold text-cyan-300">
+                            <div className={`text-[10px] uppercase ${isLightMode ? 'text-slate-500' : 'text-slate-500'}`}>
+                                Years Until LEV
+                            </div>
+                            <div
+                                className={`font-mono font-bold ${
+                                    isLightMode ? 'text-cyan-700' : 'text-cyan-300'
+                                }`}
+                            >
                                 {data.cohorts.p80.yearsToLev.toFixed(1)} yrs
                             </div>
                         </div>
                         <div>
-                            <div className="text-[10px] text-slate-500 uppercase">Bio-Age at LEV (Age {age})</div>
-                            <div className="font-mono font-bold text-slate-200">
+                            <div className={`text-[10px] uppercase ${isLightMode ? 'text-slate-500' : 'text-slate-500'}`}>
+                                Bio-Age at LEV (Age {age})
+                            </div>
+                            <div
+                                className={`font-mono font-bold ${
+                                    isLightMode ? 'text-slate-900' : 'text-slate-200'
+                                }`}
+                            >
                                 ~{displayedBioAge80} yrs
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Card 3: Live Pace of Aging & Rejuvenation Velocity */}
-                <div className="rounded-xl border border-purple-500/30 bg-slate-900/75 p-4 flex flex-col justify-between">
+                {/* Card 3: Current Pace of Aging */}
+                <div
+                    className={`rounded-xl border p-4 flex flex-col justify-between ${
+                        isLightMode
+                            ? 'border-purple-300 bg-white shadow-sm'
+                            : 'border-purple-500/30 bg-slate-900/75'
+                    }`}
+                >
                     <div>
                         <div className="flex items-center justify-between gap-2">
-                            <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300">
-                                Intrinsic Pace of Aging
+                            <span
+                                className={`text-xs font-extrabold uppercase tracking-wide ${
+                                    isLightMode ? 'text-purple-700' : 'text-purple-300'
+                                }`}
+                            >
+                                Current Pace of Aging
                             </span>
-                            <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-purple-500/15 text-purple-300 border border-purple-500/30">
-                                {poa99Shift} bio-yr/yr
+                            <span
+                                className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-bold border shrink-0 ${
+                                    isLightMode
+                                        ? 'bg-purple-50 text-purple-800 border-purple-200'
+                                        : 'bg-purple-500/15 text-purple-300 border-purple-500/30'
+                                }`}
+                            >
+                                {poa99Shift} yr/yr this wk
                             </span>
                         </div>
-                        <div className="flex items-baseline gap-2.5 mt-2">
-                            <span className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-mono">
+                        <div className="flex items-baseline gap-2.5 mt-2 flex-wrap">
+                            <span
+                                className={`text-2xl sm:text-3xl font-black tracking-tight font-mono ${
+                                    isLightMode ? 'text-slate-900' : 'text-white'
+                                }`}
+                            >
                                 {data.cohorts.p99.intrinsicPaceOfAging.toFixed(2)}
                             </span>
-                            <span className="text-xs text-slate-400 font-mono">
-                                (99th) vs{' '}
-                                <strong className="text-cyan-300">
+                            <span
+                                className={`text-xs font-mono ${
+                                    isLightMode ? 'text-slate-600' : 'text-slate-400'
+                                }`}
+                            >
+                                Optimal vs{' '}
+                                <strong className={isLightMode ? 'text-cyan-700' : 'text-cyan-300'}>
                                     {data.cohorts.p80.intrinsicPaceOfAging.toFixed(2)}
                                 </strong>{' '}
-                                (80th) bio-yr/yr
+                                Active yrs/yr
                             </span>
                         </div>
-                        <p className="text-xs text-slate-400 mt-1">
-                            99th-pct optimizers age only {data.cohorts.p99.bioMonthsPerYear} bio-months per 12 calendar months (+{data.cohorts.p99.daysGainedPerYear} days banked/yr)
+                        <div
+                            className={`inline-flex items-center gap-1 mt-1 text-[11px] font-semibold ${
+                                isLightMode ? 'text-purple-700' : 'text-purple-300'
+                            }`}
+                        >
+                            <span>+{data.cohorts.p99.daysGainedPerYear} healthy days banked per year</span>
+                        </div>
+                        <p
+                            className={`text-xs mt-1.5 leading-relaxed ${
+                                isLightMode ? 'text-slate-600' : 'text-slate-400'
+                            }`}
+                        >
+                            Biological years aged per calendar year (1.00 = average aging). Optimal protocol followers age only {data.cohorts.p99.bioMonthsPerYear} bio-months per year.
                         </p>
                     </div>
-                    <div className="mt-4 pt-3 border-t border-slate-800/80 grid grid-cols-2 gap-2 text-xs">
+                    <div
+                        className={`mt-4 pt-3 border-t grid grid-cols-2 gap-2 text-xs ${
+                            isLightMode ? 'border-slate-200' : 'border-slate-800/80'
+                        }`}
+                    >
                         <div>
-                            <div className="text-[10px] text-slate-500 uppercase">Biotech Offset Now</div>
-                            <div className="font-mono font-bold text-purple-300">
+                            <div className={`text-[10px] uppercase ${isLightMode ? 'text-slate-500' : 'text-slate-500'}`}>
+                                Biotech Offset Now
+                            </div>
+                            <div
+                                className={`font-mono font-bold ${
+                                    isLightMode ? 'text-purple-700' : 'text-purple-300'
+                                }`}
+                            >
                                 -{data.cohorts.p99.biotechRejuvenationOffset.toFixed(3)} yr/yr
                             </div>
                         </div>
                         <div>
-                            <div className="text-[10px] text-slate-500 uppercase">99th Confidence Cone</div>
-                            <div className="font-mono font-bold text-slate-200">
+                            <div className={`text-[10px] uppercase ${isLightMode ? 'text-slate-500' : 'text-slate-500'}`}>
+                                Optimal Range (10–90%)
+                            </div>
+                            <div
+                                className={`font-mono font-bold ${
+                                    isLightMode ? 'text-slate-900' : 'text-slate-200'
+                                }`}
+                            >
                                 {data.cone99th.p10Formatted} – {data.cone99th.p90Formatted}
                             </div>
                         </div>
@@ -715,64 +769,134 @@ export default function FutureGraphLevPulseWidget({
                 </div>
             </div>
 
-            {/* Expandable Weekly Pulse Digest & 14-KPI Velocity Matrix */}
-            <div className="relative z-10 mt-4 pt-3 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-3">
+            {/* Bottom Controls: Digest Toggle, 14-KPI Velocity Breakdown Toggle & Subtle Decade Age Selector */}
+            <div
+                className={`relative z-10 mt-4 pt-3 border-t flex flex-wrap items-center justify-between gap-3 ${
+                    isLightMode ? 'border-slate-200' : 'border-slate-800/80'
+                }`}
+            >
                 <div className="flex flex-wrap items-center gap-2">
                     <button
                         type="button"
                         onClick={() => setShowPulseDigest((v) => !v)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800/90 hover:bg-slate-800 text-slate-200 border border-slate-700/80 transition-all"
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                            isLightMode
+                                ? 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300 shadow-2xs'
+                                : 'bg-slate-800/90 hover:bg-slate-800 text-slate-200 border-slate-700/80'
+                        }`}
                     >
-                        <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-                        {showPulseDigest ? 'Hide Weekly Market & Consensus Digest' : 'Show Weekly Market & Consensus Digest'}
+                        <Sparkles className={`w-3.5 h-3.5 ${isLightMode ? 'text-emerald-600' : 'text-emerald-400'}`} />
+                        {showPulseDigest ? 'Hide Weekly Market & Science Digest' : 'Why LEV Shifted This Week'}
                         {showPulseDigest ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
                     </button>
 
                     <button
                         type="button"
                         onClick={() => setShowVelocityMatrix((v) => !v)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800/90 hover:bg-slate-800 text-slate-200 border border-slate-700/80 transition-all"
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                            showVelocityMatrix
+                                ? isLightMode
+                                    ? 'bg-purple-600 text-white border-purple-700'
+                                    : 'bg-purple-500/25 text-purple-200 border-purple-400/50'
+                                : isLightMode
+                                  ? 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300 shadow-2xs'
+                                  : 'bg-slate-800/90 hover:bg-slate-800 text-slate-200 border-slate-700/80'
+                        }`}
                     >
-                        <Activity className="w-3.5 h-3.5 text-purple-400" />
+                        <Activity className={`w-3.5 h-3.5 ${showVelocityMatrix && isLightMode ? 'text-white' : isLightMode ? 'text-purple-600' : 'text-purple-400'}`} />
                         {showVelocityMatrix
-                            ? 'Hide 14-KPI Velocity Engine (V × W)'
-                            : `Inspect 14-KPI Velocity Engine (${data.kpiVelocityEngine.weightedAvgVelocityPct.toFixed(1)}% • ${data.kpiVelocityEngine.normalizedAccelerationVector.toFixed(2)}v)`}
+                            ? 'Hide 14-KPI Science Velocity Details'
+                            : `Science Velocity Breakdown (${data.kpiVelocityEngine.weightedAvgVelocityPct.toFixed(1)}%/yr)`}
                         {showVelocityMatrix ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
                     </button>
                 </div>
 
-                <div className="text-[11px] text-slate-500 flex items-center gap-2">
-                    <Clock className="w-3 h-3 text-slate-400" />
-                    <span>
-                        Updated Thursdays 8:00 AM MT •{' '}
-                        {isLoading ? 'Refreshing...' : isLiveConnected ? 'Live FutureGraph API' : 'Calibrated Snapshot'}
+                {/* Subtle Decade Age Selector (30 to 70) */}
+                <div className="flex flex-wrap items-center gap-3">
+                    <div className="inline-flex items-center gap-1 text-[11px]">
+                        <span className={isLightMode ? 'text-slate-500 font-medium mr-1' : 'text-slate-400 font-medium mr-1'}>
+                            Your Age:
+                        </span>
+                        {DECADE_AGES.map((a) => (
+                            <button
+                                key={a}
+                                type="button"
+                                onClick={() => setAge(a)}
+                                className={`px-2 py-0.5 rounded-md text-[11px] font-mono font-semibold transition-all cursor-pointer ${
+                                    age === a
+                                        ? isLightMode
+                                            ? 'bg-emerald-600 text-white shadow-2xs'
+                                            : 'bg-emerald-500/25 text-emerald-300 border border-emerald-500/40'
+                                        : isLightMode
+                                          ? 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/70'
+                                          : 'text-slate-400 hover:text-white hover:bg-white/5'
+                                }`}
+                            >
+                                {a}
+                            </button>
+                        ))}
+                    </div>
+
+                    <span className={`text-[11px] hidden xl:inline-flex items-center gap-1 ${isLightMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                        <Clock className="w-3 h-3" />
+                        {isLoading ? 'Updating...' : isLiveConnected ? 'Updated Weekly' : 'Weekly Snapshot'}
                     </span>
                 </div>
             </div>
 
             {showPulseDigest && (
                 <div className="relative z-10 mt-3 grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <div className="rounded-xl bg-slate-900/60 border border-slate-800/90 p-3.5">
-                        <div className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 mb-1 flex items-center gap-1.5">
+                    <div
+                        className={`rounded-xl border p-3.5 ${
+                            isLightMode
+                                ? 'bg-white border-slate-200 shadow-2xs'
+                                : 'bg-slate-900/60 border-slate-800/90'
+                        }`}
+                    >
+                        <div
+                            className={`text-[10px] font-bold uppercase tracking-wider mb-1 flex items-center gap-1.5 ${
+                                isLightMode ? 'text-emerald-700' : 'text-emerald-400'
+                            }`}
+                        >
                             <Compass className="w-3.5 h-3.5" /> Prediction Markets (40% Weight)
                         </div>
-                        <p className="text-xs text-slate-300 leading-relaxed">
+                        <p className={`text-xs leading-relaxed ${isLightMode ? 'text-slate-700' : 'text-slate-300'}`}>
                             {data.latestPulse.predictionMarketsSummary}
                         </p>
                     </div>
-                    <div className="rounded-xl bg-slate-900/60 border border-slate-800/90 p-3.5">
-                        <div className="text-[10px] font-bold uppercase tracking-wider text-cyan-400 mb-1 flex items-center gap-1.5">
+                    <div
+                        className={`rounded-xl border p-3.5 ${
+                            isLightMode
+                                ? 'bg-white border-slate-200 shadow-2xs'
+                                : 'bg-slate-900/60 border-slate-800/90'
+                        }`}
+                    >
+                        <div
+                            className={`text-[10px] font-bold uppercase tracking-wider mb-1 flex items-center gap-1.5 ${
+                                isLightMode ? 'text-cyan-700' : 'text-cyan-400'
+                            }`}
+                        >
                             <Zap className="w-3.5 h-3.5" /> Expert Consensus (35% Weight)
                         </div>
-                        <p className="text-xs text-slate-300 leading-relaxed">
+                        <p className={`text-xs leading-relaxed ${isLightMode ? 'text-slate-700' : 'text-slate-300'}`}>
                             {data.latestPulse.expertConsensusSummary}
                         </p>
                     </div>
-                    <div className="rounded-xl bg-slate-900/60 border border-slate-800/90 p-3.5">
-                        <div className="text-[10px] font-bold uppercase tracking-wider text-purple-400 mb-1 flex items-center gap-1.5">
+                    <div
+                        className={`rounded-xl border p-3.5 ${
+                            isLightMode
+                                ? 'bg-white border-slate-200 shadow-2xs'
+                                : 'bg-slate-900/60 border-slate-800/90'
+                        }`}
+                    >
+                        <div
+                            className={`text-[10px] font-bold uppercase tracking-wider mb-1 flex items-center gap-1.5 ${
+                                isLightMode ? 'text-purple-700' : 'text-purple-400'
+                            }`}
+                        >
                             <Sparkles className="w-3.5 h-3.5" /> Weekly Breakthrough Impact (25% Weight)
                         </div>
-                        <p className="text-xs text-slate-300 leading-relaxed">
+                        <p className={`text-xs leading-relaxed ${isLightMode ? 'text-slate-700' : 'text-slate-300'}`}>
                             {data.latestPulse.breakthroughsSummary}
                         </p>
                     </div>
@@ -780,57 +904,122 @@ export default function FutureGraphLevPulseWidget({
             )}
 
             {showVelocityMatrix && (
-                <div className="relative z-10 mt-3 rounded-xl bg-slate-950/90 border border-slate-800 p-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-800">
+                <div
+                    className={`relative z-10 mt-3 rounded-xl border p-4 ${
+                        isLightMode
+                            ? 'bg-white border-slate-200 shadow-sm'
+                            : 'bg-slate-950/90 border-slate-800'
+                    }`}
+                >
+                    <div
+                        className={`flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 mb-3 border-b ${
+                            isLightMode ? 'border-slate-200' : 'border-slate-800'
+                        }`}
+                    >
                         <div>
-                            <div className="text-xs font-bold uppercase tracking-wider text-purple-300">
-                                Canonical Longevity Velocity Normalization Engine (V × W)
+                            <div
+                                className={`text-xs font-bold uppercase tracking-wider ${
+                                    isLightMode ? 'text-purple-700' : 'text-purple-300'
+                                }`}
+                            >
+                                14-Metric Longevity Science Velocity Breakdown (V × W)
                             </div>
-                            <p className="text-[11px] text-slate-400">
-                                Deduplicated 14-metric biological acceleration matrix shared between FutureGraph and AGI Futures Singularity Tracker.
+                            <p className={`text-[11px] ${isLightMode ? 'text-slate-600' : 'text-slate-400'}`}>
+                                Weighted annualized progress across cellular reprogramming, clinical trials, epigenetic clocks, senolytics, and multi-omics.
                             </p>
                         </div>
-                        <div className="flex items-center gap-3 font-mono text-xs">
-                            <span className="px-2.5 py-1 rounded-lg bg-purple-500/15 border border-purple-500/30 text-purple-300">
+                        <div className="flex items-center gap-2 font-mono text-xs">
+                            <span
+                                className={`px-2.5 py-1 rounded-lg border font-bold ${
+                                    isLightMode
+                                        ? 'bg-purple-50 border-purple-200 text-purple-800'
+                                        : 'bg-purple-500/15 border-purple-500/30 text-purple-300'
+                                }`}
+                            >
                                 Weighted Avg: {data.kpiVelocityEngine.weightedAvgVelocityPct.toFixed(1)}%/yr
                             </span>
-                            <span className="px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300">
+                            <span
+                                className={`px-2.5 py-1 rounded-lg border font-bold ${
+                                    isLightMode
+                                        ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
+                                        : 'bg-emerald-500/15 border-emerald-500/30 text-emerald-300'
+                                }`}
+                            >
                                 Vector: {data.kpiVelocityEngine.normalizedAccelerationVector.toFixed(2)}v
                             </span>
                         </div>
                     </div>
 
                     <div className="overflow-x-auto">
-                        <table className="w-full text-left border-collapse text-xs font-mono">
+                        <table className="w-full text-left border-collapse text-xs">
                             <thead>
-                                <tr className="border-b border-slate-800 text-[10px] uppercase tracking-wider text-slate-400">
-                                    <th className="py-2 pr-3">Canonical Longevity KPI</th>
-                                    <th className="py-2 px-3">2026 Status / Benchmark</th>
+                                <tr
+                                    className={`border-b text-[10px] font-mono uppercase ${
+                                        isLightMode
+                                            ? 'border-slate-200 text-slate-500'
+                                            : 'border-slate-800 text-slate-400'
+                                    }`}
+                                >
+                                    <th className="py-2 pr-3">Longevity KPI Metric</th>
+                                    <th className="py-2 px-3">Current Benchmark</th>
                                     <th className="py-2 px-3 text-right">Vel (V)</th>
                                     <th className="py-2 px-3 text-right">Weight (W)</th>
-                                    <th className="py-2 pl-3 text-right text-purple-300">V × W</th>
+                                    <th className="py-2 pl-3 text-right">V × W</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-slate-800/60">
+                            <tbody
+                                className={`divide-y font-mono ${
+                                    isLightMode ? 'divide-slate-200/80' : 'divide-slate-800/60'
+                                }`}
+                            >
                                 {data.kpiVelocityEngine.metrics.map((m) => (
-                                    <tr key={m.id} className="hover:bg-slate-900/50">
-                                        <td className="py-2 pr-3 font-sans font-medium text-slate-200">
-                                            {m.name}
+                                    <tr
+                                        key={m.id}
+                                        className={
+                                            isLightMode ? 'hover:bg-slate-50' : 'hover:bg-slate-900/50'
+                                        }
+                                    >
+                                        <td
+                                            className={`py-2 pr-3 font-sans font-medium ${
+                                                isLightMode ? 'text-slate-900' : 'text-slate-200'
+                                            }`}
+                                        >
+                                            <div>{m.name}</div>
+                                            <div
+                                                className={`text-[10px] ${
+                                                    isLightMode ? 'text-slate-500' : 'text-slate-500'
+                                                }`}
+                                            >
+                                                {m.trendMagnitude}
+                                            </div>
                                         </td>
-                                        <td className="py-2 px-3 text-slate-400">
-                                            {m.displayValue}{' '}
-                                            <span className="text-emerald-400/90 text-[11px]">
-                                                ({m.trendMagnitude})
-                                            </span>
+                                        <td
+                                            className={`py-2 px-3 ${
+                                                isLightMode ? 'text-cyan-700 font-semibold' : 'text-cyan-300'
+                                            }`}
+                                        >
+                                            {m.displayValue}
                                         </td>
-                                        <td className="py-2 px-3 text-right text-slate-300">
+                                        <td
+                                            className={`py-2 px-3 text-right ${
+                                                isLightMode ? 'text-slate-700' : 'text-slate-300'
+                                            }`}
+                                        >
                                             {m.annualVelocityPct.toFixed(1)}%
                                         </td>
-                                        <td className="py-2 px-3 text-right text-slate-400">
+                                        <td
+                                            className={`py-2 px-3 text-right ${
+                                                isLightMode ? 'text-slate-500' : 'text-slate-400'
+                                            }`}
+                                        >
                                             {m.indexWeight.toFixed(2)}
                                         </td>
-                                        <td className="py-2 pl-3 text-right font-bold text-purple-300">
-                                            {(m.annualVelocityPct * m.indexWeight).toFixed(1)}
+                                        <td
+                                            className={`py-2 pl-3 text-right font-bold ${
+                                                isLightMode ? 'text-purple-700' : 'text-purple-300'
+                                            }`}
+                                        >
+                                            {m.weightedContribution.toFixed(1)}
                                         </td>
                                     </tr>
                                 ))}
