@@ -118,6 +118,7 @@ export interface OutpaceAgingIssue {
   dateLabel: string
   readTimeLabel: string
   levStateOfPlayParagraph: string
+  levStateOfPlayExpandedNote?: string
   introSummaryParagraph: string
   themes: { id: string; title: string; summary: string }[]
   studies: NewsletterStudySection[]
@@ -136,7 +137,9 @@ export const OUTPACE_AGING_ISSUE_01: OutpaceAgingIssue = {
   dateLabel: 'November 5, 2026',
   readTimeLabel: '6 min read',
   levStateOfPlayParagraph:
-    'We are living through the inflection point where aging shifts from an inevitable biological decline into a programmable engineering problem. As artificial intelligence, multi-omic screening, and precision nanomedicine converge, researchers are no longer just cataloging the damage of old age, they are finding the exact molecular switches that restore youthful cellular function and move humanity closer to longevity escape velocity. On the live LEVL x FutureGraph Observatory this week, five peer-reviewed breakthroughs and firming 2036 to 2040 prediction markets pulled our 99th-percentile Longevity Escape Velocity intercept 26 days closer to October 2036 (and 16 days closer to February 2042 for 80th-percentile proactive adopters), while improving the 99th-percentile intrinsic Pace of Aging benchmark by 0.0035 to 0.665 biological years per calendar year.',
+    'We are living through the inflection point where aging shifts from an inevitable biological decline into a programmable engineering problem. As artificial intelligence, multi-omic screening, and precision nanomedicine converge, researchers are no longer just cataloging the damage of old age, they are finding the exact molecular switches that restore youthful cellular function and move humanity closer to longevity escape velocity.',
+  levStateOfPlayExpandedNote:
+    'On the live LEVL x FutureGraph Observatory this week, five peer-reviewed breakthroughs and firming 2036 to 2040 prediction markets pulled our Optimal Protocol (99th-percentile) Longevity Escape Velocity intercept 26 days closer to October 2036 (and 16 days closer to February 2042 for Active Health 80th-percentile adopters), while improving the Optimal Pace of Aging benchmark by 0.0035 to 0.665 biological years per calendar year.',
   introSummaryParagraph:
     'This week, we cover an oral enzyme blocker that extended mouse lifespan from 24 to 28 months by stopping a single age-activated enzyme from shredding the body\'s energy machinery, a spider-silk nanovaccine that wakes up aged immune cells to clear senescent fat, and more across five landmark studies in Nature Medicine, Nature Neuroscience, Aging Cell, Advanced Science, and iScience. A clear thread connects all five breakthroughs: aging accelerates when the cell\'s internal recycling and immune-clearing systems stall, and reactivating those single bottlenecks reverses inflammation across the brain and body. At the end of this edition, we pair these discoveries with one Protocol of the Week and one Modality of the Week so you can implement the frontier of longevity science right now, slow your personal pace of aging, and best position yourself to reach longevity escape velocity.',
   themes: [

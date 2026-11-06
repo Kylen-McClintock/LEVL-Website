@@ -850,22 +850,18 @@ function ActionableProtocolModalitySection({
           </div>
         </div>
 
-        {/* Interactive Telemetry & Dosing Sandbox Card */}
-        <div
-          className={`rounded-2xl border overflow-hidden shadow-lg ${
-            isLightMode
-              ? 'border-slate-200 bg-slate-50/70'
-              : 'border-cyan-500/30 bg-slate-950/95'
-          }`}
-        >
-          {/* Top Controls: Scaling Mode Toggle + Visual View Toggle */}
-          <div
-            className={`p-4 border-b flex flex-col lg:flex-row lg:items-center justify-between gap-3 ${
-              isLightMode
-                ? 'bg-white border-slate-200'
-                : 'bg-slate-900/95 border-white/10'
-            }`}
-          >
+        {/* Numbered Steps FIRST (Before the Telemetry Graphs) with Dosing Tier Toggle */}
+        <div className="space-y-3">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h3
+              className={`text-base sm:text-lg font-bold ${
+                isLightMode ? 'text-slate-900' : 'text-white'
+              }`}
+            >
+              Numbered Steps (
+              {scalingMode === 'optimal' ? 'Clinical Optimal Dosing' : 'Beginner Entry Scaling'}):
+            </h3>
+
             {/* Beginner vs Optimal Scaling Switcher */}
             <div className="flex flex-wrap items-center gap-2">
               <span
@@ -873,7 +869,7 @@ function ActionableProtocolModalitySection({
                   isLightMode ? 'text-slate-600' : 'text-slate-400'
                 }`}
               >
-                Select Dosing Tier:
+                Dosing Tier:
               </span>
               <div
                 className={`inline-flex rounded-xl p-1 border ${
@@ -885,7 +881,7 @@ function ActionableProtocolModalitySection({
                 <button
                   type="button"
                   onClick={() => setScalingMode('beginner')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                     scalingMode === 'beginner'
                       ? 'bg-emerald-500 text-slate-950 shadow'
                       : isLightMode
@@ -893,12 +889,12 @@ function ActionableProtocolModalitySection({
                         : 'text-slate-300 hover:text-white'
                   }`}
                 >
-                  🌱 Beginner Scaling ({item.levlScoreBeginner})
+                  🌱 Beginner ({item.levlScoreBeginner})
                 </button>
                 <button
                   type="button"
                   onClick={() => setScalingMode('optimal')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                     scalingMode === 'optimal'
                       ? 'bg-cyan-400 text-slate-950 shadow'
                       : isLightMode
@@ -906,216 +902,10 @@ function ActionableProtocolModalitySection({
                         : 'text-slate-300 hover:text-white'
                   }`}
                 >
-                  ⚡ Clinical Optimal ({item.levlScoreOptimal})
+                  ⚡ Optimal ({item.levlScoreOptimal})
                 </button>
               </div>
             </div>
-
-            {/* Graph / Onset / Vectors View Switcher */}
-            <div className="flex flex-wrap items-center gap-1.5">
-              <button
-                type="button"
-                onClick={() => setVisualTab('telemetry')}
-                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                  visualTab === 'telemetry'
-                    ? 'bg-cyan-500 text-slate-950'
-                    : isLightMode
-                      ? 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                }`}
-              >
-                📈 24h Telemetry Curve
-              </button>
-              <button
-                type="button"
-                onClick={() => setVisualTab('onset')}
-                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                  visualTab === 'onset'
-                    ? 'bg-emerald-500 text-slate-950'
-                    : isLightMode
-                      ? 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                }`}
-              >
-                🎯 Onset Timeline
-              </button>
-              <button
-                type="button"
-                onClick={() => setVisualTab('vectors')}
-                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                  visualTab === 'vectors'
-                    ? 'bg-purple-500 text-white'
-                    : isLightMode
-                      ? 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                }`}
-              >
-                ⬢ Longevity Vectors
-              </button>
-            </div>
-          </div>
-
-          {/* Visual Body */}
-          <div className="p-4 sm:p-5">
-            {visualTab === 'telemetry' && (
-              <BiologicalTelemetryCurveCard
-                curves={[item.curveSpec]}
-                isLightMode={isLightMode}
-              />
-            )}
-
-            {visualTab === 'onset' && (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                {item.onsetPhases.map((p, idx) => (
-                  <div
-                    key={idx}
-                    className={`p-4 rounded-xl border space-y-1.5 ${
-                      isLightMode
-                        ? 'bg-white border-slate-200 shadow-2xs'
-                        : 'bg-slate-900/90 border-white/10'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between gap-2">
-                      <span
-                        className={`text-xs font-bold uppercase tracking-wider ${
-                          isLightMode ? 'text-cyan-800' : 'text-cyan-300'
-                        }`}
-                      >
-                        {p.phase}
-                      </span>
-                      <span
-                        className={`px-2 py-0.5 rounded-full text-[11px] font-bold border ${
-                          isLightMode
-                            ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
-                            : 'bg-emerald-500/15 text-emerald-300 border-emerald-400/30'
-                        }`}
-                      >
-                        {p.window}
-                      </span>
-                    </div>
-                    <p
-                      className={`text-xs sm:text-sm leading-relaxed ${
-                        isLightMode ? 'text-slate-700' : 'text-slate-300'
-                      }`}
-                    >
-                      {p.detail}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {visualTab === 'vectors' && (
-              <div className="space-y-3">
-                <div className="flex items-center justify-between flex-wrap gap-2">
-                  <h4
-                    className={`text-sm font-bold ${
-                      isLightMode ? 'text-slate-900' : 'text-white'
-                    }`}
-                  >
-                    Targeted Biological Longevity Vectors & Quantified Biomarker Shifts
-                  </h4>
-                  <span className={`text-xs ${isLightMode ? 'text-slate-500' : 'text-slate-400'}`}>
-                    Calibrated 0–100 Clinical Rubric
-                  </span>
-                </div>
-                <div className="space-y-2.5">
-                  {item.vectorScores.map(vec => (
-                    <div key={vec.vectorName} className="space-y-1">
-                      <div className="flex items-center justify-between text-xs sm:text-sm">
-                        <span
-                          className={`font-semibold ${
-                            isLightMode ? 'text-slate-900' : 'text-white'
-                          }`}
-                        >
-                          {vec.vectorName}
-                        </span>
-                        <span
-                          className={`font-bold ${
-                            isLightMode ? 'text-cyan-800' : 'text-cyan-300'
-                          }`}
-                        >
-                          {vec.score}/100 • {vec.effectStat}
-                        </span>
-                      </div>
-                      <div
-                        className={`w-full h-2.5 rounded-full border overflow-hidden ${
-                          isLightMode
-                            ? 'bg-slate-200 border-slate-300'
-                            : 'bg-slate-900 border-white/10'
-                        }`}
-                      >
-                        <div
-                          className="h-full rounded-full transition-all duration-500"
-                          style={{ width: `${vec.score}%`, backgroundColor: vec.color }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Bottom Action Bar: Deep-Link to LEVL Discovery & Download Beehiiv PNG */}
-          <div
-            className={`px-4 py-3 border-t flex flex-wrap items-center justify-between gap-3 ${
-              isLightMode
-                ? 'bg-white border-slate-200'
-                : 'bg-slate-900/95 border-white/10'
-            }`}
-          >
-            <div className="flex flex-wrap items-center gap-2">
-              <Link
-                href={item.exploreDeepLink}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 hover:opacity-95 transition-opacity shadow-md"
-              >
-                <Compass className="w-4 h-4" />
-                Open Interactive Card in LEVL Discovery
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                href="/today"
-                className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border transition-colors ${
-                  isLightMode
-                    ? 'bg-slate-100 text-slate-800 hover:bg-slate-200 border-slate-300'
-                    : 'bg-slate-800 text-slate-200 hover:bg-slate-700 border-white/10'
-                }`}
-              >
-                <Calendar className={`w-4 h-4 ${isLightMode ? 'text-cyan-700' : 'text-cyan-400'}`} />
-                Go to Today Timeline
-              </Link>
-            </div>
-
-            <button
-              type="button"
-              onClick={handleDownloadBlueprintPng}
-              className={`inline-flex items-center gap-1.5 text-xs font-semibold cursor-pointer ${
-                isLightMode
-                  ? 'text-cyan-700 hover:text-cyan-900'
-                  : 'text-cyan-300 hover:text-cyan-200'
-              }`}
-            >
-              <Download className="w-3.5 h-3.5" />
-              Download Static Blueprint Card (PNG)
-            </button>
-          </div>
-        </div>
-
-        {/* Numbered Steps (Dynamically Responds to Beginner vs Optimal Toggle) */}
-        <div className="space-y-3">
-          <div className="flex items-center justify-between flex-wrap gap-2">
-            <h3
-              className={`text-base sm:text-lg font-bold ${
-                isLightMode ? 'text-slate-900' : 'text-white'
-              }`}
-            >
-              Numbered Steps (
-              {scalingMode === 'optimal' ? 'Clinical Optimal Dosing' : 'Beginner Entry Scaling'}):
-            </h3>
-            <span className={`text-xs ${isLightMode ? 'text-slate-500' : 'text-slate-400'}`}>
-              Click the Dosing Tier toggle above to compare Beginner vs. Optimal
-            </span>
           </div>
 
           <div className="space-y-2.5">
@@ -1236,6 +1026,226 @@ function ActionableProtocolModalitySection({
           </div>
         </div>
 
+        {/* Interactive Telemetry & Vectors Graph Card (Placed AFTER Steps) */}
+        <div
+          className={`rounded-2xl border overflow-hidden shadow-lg ${
+            isLightMode
+              ? 'border-slate-200 bg-slate-50/70'
+              : 'border-cyan-500/30 bg-slate-950/95'
+          }`}
+        >
+          {/* Top Controls: Visual View Toggle */}
+          <div
+            className={`p-4 border-b flex flex-wrap items-center justify-between gap-3 ${
+              isLightMode
+                ? 'bg-white border-slate-200'
+                : 'bg-slate-900/95 border-white/10'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <span
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider border ${
+                  isLightMode
+                    ? 'bg-cyan-50 text-cyan-800 border-cyan-300'
+                    : 'bg-cyan-500/15 text-cyan-300 border-cyan-400/30'
+                }`}
+              >
+                <Activity className="w-3.5 h-3.5" />
+                24-Hour Biological Telemetry &amp; Vectors
+              </span>
+            </div>
+
+            {/* Graph / Onset / Vectors View Switcher */}
+            <div className="flex flex-wrap items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => setVisualTab('telemetry')}
+                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  visualTab === 'telemetry'
+                    ? 'bg-cyan-500 text-slate-950'
+                    : isLightMode
+                      ? 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                }`}
+              >
+                📈 24h Telemetry Curve
+              </button>
+              <button
+                type="button"
+                onClick={() => setVisualTab('onset')}
+                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  visualTab === 'onset'
+                    ? 'bg-emerald-500 text-slate-950'
+                    : isLightMode
+                      ? 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                }`}
+              >
+                🎯 Onset Timeline
+              </button>
+              <button
+                type="button"
+                onClick={() => setVisualTab('vectors')}
+                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  visualTab === 'vectors'
+                    ? 'bg-purple-500 text-white'
+                    : isLightMode
+                      ? 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                }`}
+              >
+                ⬢ Longevity Vectors
+              </button>
+            </div>
+          </div>
+
+          {/* Visual Body */}
+          <div className="p-4 sm:p-5">
+            {visualTab === 'telemetry' && (
+              <BiologicalTelemetryCurveCard
+                curves={[item.curveSpec]}
+                isLightMode={isLightMode}
+              />
+            )}
+
+            {visualTab === 'onset' && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                {item.onsetPhases.map((p, idx) => (
+                  <div
+                    key={idx}
+                    className={`p-4 rounded-xl border space-y-1.5 ${
+                      isLightMode
+                        ? 'bg-white border-slate-200 shadow-2xs'
+                        : 'bg-slate-900/90 border-white/10'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span
+                        className={`text-xs font-bold uppercase tracking-wider ${
+                          isLightMode ? 'text-cyan-800' : 'text-cyan-300'
+                        }`}
+                      >
+                        {p.phase}
+                      </span>
+                      <span
+                        className={`px-2 py-0.5 rounded-full text-[11px] font-bold border ${
+                          isLightMode
+                            ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                            : 'bg-emerald-500/15 text-emerald-300 border-emerald-400/30'
+                        }`}
+                      >
+                        {p.window}
+                      </span>
+                    </div>
+                    <p
+                      className={`text-xs sm:text-sm leading-relaxed ${
+                        isLightMode ? 'text-slate-700' : 'text-slate-300'
+                      }`}
+                    >
+                      {p.detail}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {visualTab === 'vectors' && (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <h4
+                    className={`text-sm font-bold ${
+                      isLightMode ? 'text-slate-900' : 'text-white'
+                    }`}
+                  >
+                    Targeted Biological Longevity Vectors &amp; Quantified Biomarker Shifts
+                  </h4>
+                  <span className={`text-xs ${isLightMode ? 'text-slate-500' : 'text-slate-400'}`}>
+                    Calibrated 0–100 Clinical Rubric
+                  </span>
+                </div>
+                <div className="space-y-2.5">
+                  {item.vectorScores.map(vec => (
+                    <div key={vec.vectorName} className="space-y-1">
+                      <div className="flex items-center justify-between text-xs sm:text-sm">
+                        <span
+                          className={`font-semibold ${
+                            isLightMode ? 'text-slate-900' : 'text-white'
+                          }`}
+                        >
+                          {vec.vectorName}
+                        </span>
+                        <span
+                          className={`font-bold ${
+                            isLightMode ? 'text-cyan-800' : 'text-cyan-300'
+                          }`}
+                        >
+                          {vec.score}/100 • {vec.effectStat}
+                        </span>
+                      </div>
+                      <div
+                        className={`w-full h-2.5 rounded-full border overflow-hidden ${
+                          isLightMode
+                            ? 'bg-slate-200 border-slate-300'
+                            : 'bg-slate-900 border-white/10'
+                        }`}
+                      >
+                        <div
+                          className="h-full rounded-full transition-all duration-500"
+                          style={{ width: `${vec.score}%`, backgroundColor: vec.color }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Bottom Action Bar: Deep-Link to LEVL Discovery & Download Beehiiv PNG */}
+          <div
+            className={`px-4 py-3 border-t flex flex-wrap items-center justify-between gap-3 ${
+              isLightMode
+                ? 'bg-white border-slate-200'
+                : 'bg-slate-900/95 border-white/10'
+            }`}
+          >
+            <div className="flex flex-wrap items-center gap-2">
+              <Link
+                href={item.exploreDeepLink}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 hover:opacity-95 transition-opacity shadow-md"
+              >
+                <Compass className="w-4 h-4" />
+                Open Interactive Card in LEVL Discovery
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="/today"
+                className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border transition-colors ${
+                  isLightMode
+                    ? 'bg-slate-100 text-slate-800 hover:bg-slate-200 border-slate-300'
+                    : 'bg-slate-800 text-slate-200 hover:bg-slate-700 border-white/10'
+                }`}
+              >
+                <Calendar className={`w-4 h-4 ${isLightMode ? 'text-cyan-700' : 'text-cyan-400'}`} />
+                Go to Today Timeline
+              </Link>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleDownloadBlueprintPng}
+              className={`inline-flex items-center gap-1.5 text-xs font-semibold cursor-pointer ${
+                isLightMode
+                  ? 'text-cyan-700 hover:text-cyan-900'
+                  : 'text-cyan-300 hover:text-cyan-200'
+              }`}
+            >
+              <Download className="w-3.5 h-3.5" />
+              Download Static Blueprint Card (PNG)
+            </button>
+          </div>
+        </div>
+
         <p className={`text-xs italic ${isLightMode ? 'text-slate-500' : 'text-slate-400'}`}>
           {item.disclaimer}
         </p>
@@ -1258,6 +1268,13 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
     `<p><strong>${issue.dateLabel} | Edition #${issue.issueNumber}</strong> • <a href="${canonicalIssueUrl}">Read Interactive Web Edition on LEVL →</a></p>`
   )
   htmlParts.push(`<p>${issue.levStateOfPlayParagraph}</p>`)
+  htmlParts.push(
+    `<ul>
+      <li><strong>Estimated LEV Date (Optimal Protocol • Top 1%):</strong> October 2036 (Pulled 26 days closer this week • ~9.9 yrs away)</li>
+      <li><strong>Estimated LEV Date (Active Health • Top 20%):</strong> February 2042 (Pulled 16 days closer this week • ~15.3 yrs away)</li>
+      <li><strong>Current Pace of Aging:</strong> 0.67 Optimal vs 0.84 Active bio-yrs/yr (-0.0035 yr/yr this week • +122 healthy days banked/yr)</li>
+    </ul>`
+  )
   htmlParts.push(`<p>${issue.introSummaryParagraph}</p>`)
   htmlParts.push(`<hr />`)
 
@@ -1266,6 +1283,9 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
     `${issue.dateLabel} | Edition #${issue.issueNumber} • Interactive Web Edition: ${canonicalIssueUrl}\n`
   )
   textParts.push(`${issue.levStateOfPlayParagraph}\n`)
+  textParts.push(
+    `• Estimated LEV Date (Optimal Protocol • Top 1%): October 2036 (26d closer this week • ~9.9 yrs away)\n• Estimated LEV Date (Active Health • Top 20%): February 2042 (16d closer this week • ~15.3 yrs away)\n• Current Pace of Aging: 0.67 Optimal vs 0.84 Active bio-yrs/yr (-0.0035 yr/yr this week • +122 healthy days banked/yr)\n`
+  )
   textParts.push(`${issue.introSummaryParagraph}\n`)
   textParts.push(`------------------------------------------------------------\n`)
 
@@ -1305,9 +1325,6 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
         .map(l => `<a href="${l.url}">${l.url}</a>`)
         .join(' and ')}</p>`
     )
-    htmlParts.push(
-      `<p><em>[Insert Static Blueprint Card PNG: outpace_aging_${issue.shortSlug}_${item.kind}_${item.id}.png | Link image to: https://levlhealth.com${item.exploreDeepLink}]</em></p>`
-    )
     htmlParts.push(`<p><strong>Numbered Steps:</strong></p><ol>`)
 
     textParts.push(`${headingPrefix}: ${item.name}\n`)
@@ -1316,9 +1333,6 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
       `Why it is included this week: ${item.whyIncluded}\nSource links: ${item.pubmedLinks
         .map(l => l.url)
         .join(' and ')}\n`
-    )
-    textParts.push(
-      `[Insert Static Blueprint Card PNG: outpace_aging_${issue.shortSlug}_${item.kind}_${item.id}.png -> https://levlhealth.com${item.exploreDeepLink}]\n`
     )
     textParts.push(`Numbered Steps:`)
 
@@ -1336,12 +1350,18 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
     htmlParts.push(`<p><strong>Beginner Scaling Note:</strong> ${item.beginnerScalingNote}</p>`)
     htmlParts.push(`<p><strong>Cautions:</strong> ${item.cautions}</p>`)
     htmlParts.push(
+      `<p><em>[Insert Static Blueprint Card PNG: outpace_aging_${issue.shortSlug}_${item.kind}_${item.id}.png | Link image to: https://levlhealth.com${item.exploreDeepLink}]</em></p>`
+    )
+    htmlParts.push(
       `<p><a href="https://levlhealth.com${item.exploreDeepLink}"><strong>Try ${item.name} interactively in the LEVL app →</strong></a></p>`
     )
     htmlParts.push(`<p><em>${item.disclaimer}</em></p><hr />`)
 
     textParts.push(`Beginner Scaling Note: ${item.beginnerScalingNote}\n`)
     textParts.push(`Cautions: ${item.cautions}\n`)
+    textParts.push(
+      `[Insert Static Blueprint Card PNG: outpace_aging_${issue.shortSlug}_${item.kind}_${item.id}.png -> https://levlhealth.com${item.exploreDeepLink}]\n`
+    )
     textParts.push(
       `Try ${item.name} interactively in the LEVL app: https://levlhealth.com${item.exploreDeepLink}\n`
     )
@@ -1750,28 +1770,37 @@ export default function OutpaceAgingIssueView({
             </p>
           </div>
 
-          {/* Paragraph 1: LEV State of Play */}
+          {/* Paragraph 1: LEV State of Play + Compact LEV KPIs directly underneath */}
           <div
-            className={`p-4 sm:p-5 rounded-2xl border ${
+            className={`p-4 sm:p-5 rounded-2xl border space-y-3.5 ${
               isLightMode
                 ? 'bg-emerald-50/70 border-emerald-200'
                 : 'bg-gradient-to-r from-emerald-950/40 via-cyan-950/30 to-slate-900/80 border-emerald-500/30'
             }`}
           >
-            <div
-              className={`text-[11px] font-extrabold uppercase tracking-wider mb-1.5 ${
-                isLightMode ? 'text-emerald-800' : 'text-emerald-300'
-              }`}
-            >
-              🚀 Longevity Escape Velocity (LEV) State of Play
+            <div>
+              <div
+                className={`text-[11px] font-extrabold uppercase tracking-wider mb-1.5 ${
+                  isLightMode ? 'text-emerald-800' : 'text-emerald-300'
+                }`}
+              >
+                🚀 Longevity Escape Velocity (LEV) State of Play
+              </div>
+              <p
+                className={`text-sm sm:text-base leading-relaxed ${
+                  isLightMode ? 'text-slate-800' : 'text-slate-100'
+                }`}
+              >
+                {issue.levStateOfPlayParagraph}
+              </p>
             </div>
-            <p
-              className={`text-sm sm:text-base leading-relaxed ${
-                isLightMode ? 'text-slate-800' : 'text-slate-100'
-              }`}
-            >
-              {issue.levStateOfPlayParagraph}
-            </p>
+
+            {/* Compact LEV KPIs right under the State of Play text (everything else collapsed by default) */}
+            <FutureGraphLevPulseWidget
+              issue={issue}
+              isLightMode={isLightMode}
+              embeddedInIntro={true}
+            />
           </div>
 
           {/* Paragraph 2: Weekly Spotlight + Lead-in to Protocol & Modality */}
@@ -1860,9 +1889,6 @@ export default function OutpaceAgingIssueView({
             </a>
           </div>
         </section>
-
-        {/* Live LEV & Pace of Aging Tracker */}
-        <FutureGraphLevPulseWidget issue={issue} isLightMode={isLightMode} />
 
         {/* Five Study Briefings */}
         <div className="space-y-8">
