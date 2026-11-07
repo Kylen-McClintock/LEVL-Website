@@ -1290,11 +1290,25 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
       textParts.push(`${p}\n`)
     }
 
+    const cohortRowsHtml = s.visualSpec.cohortBars
+      .slice(0, 3)
+      .map(
+        b =>
+          `<tr><td style="padding: 4px 0; font-size: 13px; font-weight: 600;">${b.label}</td><td align="right" style="padding: 4px 0; font-size: 13px; font-weight: 700; color: #10b981;">${b.deltaText}</td></tr>`
+      )
+      .join('')
     htmlParts.push(
-      `<p><em>[Insert Static Graph PNG: outpace_aging_${issue.shortSlug}_study_0${s.number}_${s.id}.png | Link image to: ${canonicalIssueUrl}#${s.id}]</em></p>`
+      `<div style="margin: 14px 0; padding: 14px 16px; border: 1px solid #334155; border-radius: 12px; background-color: #0f172a; color: #f8fafc;">
+        <div style="font-size: 12px; font-weight: 800; margin-bottom: 8px;">📊 ${s.visualSpec.chartTitle} (${s.keyStatBadge})</div>
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${cohortRowsHtml}</table>
+        <div style="font-size: 12px; color: #94a3b8; margin-top: 6px;">${s.visualSpec.chartSubtitle} • <a href="${canonicalIssueUrl}#${s.id}" style="color: #38bdf8;">Interactive graph →</a></div>
+      </div>`
     )
     textParts.push(
-      `[Insert Static Graph PNG: outpace_aging_${issue.shortSlug}_study_0${s.number}_${s.id}.png -> ${canonicalIssueUrl}#${s.id}]\n`
+      `[${s.visualSpec.chartTitle}: ${s.visualSpec.cohortBars
+        .slice(0, 3)
+        .map(b => `${b.label}: ${b.deltaText}`)
+        .join(' | ')} -> ${canonicalIssueUrl}#${s.id}]\n`
     )
 
     htmlParts.push(`<p><strong>Limits:</strong> ${s.limits}</p>`)
@@ -1341,8 +1355,17 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
 
     htmlParts.push(`<p><strong>Beginner Scaling Note:</strong> ${item.beginnerScalingNote}</p>`)
     htmlParts.push(`<p><strong>Cautions:</strong> ${item.cautions}</p>`)
+    const vectorRowsHtml = item.vectorScores
+      .map(
+        v =>
+          `<tr><td style="padding: 3px 0; font-size: 13px; font-weight: 600;">${v.vectorName}</td><td align="right" style="padding: 3px 0; font-size: 13px; font-weight: 700; color: #10b981;">${v.score}/100 (${v.effectStat})</td></tr>`
+      )
+      .join('')
     htmlParts.push(
-      `<p><em>[Insert Static Blueprint Card PNG: outpace_aging_${issue.shortSlug}_${item.kind}_${item.id}.png | Link image to: https://levlhealth.com${item.exploreDeepLink}]</em></p>`
+      `<div style="margin: 14px 0; padding: 14px 16px; border: 1px solid #334155; border-radius: 12px; background-color: #0f172a; color: #f8fafc;">
+        <div style="font-size: 12px; font-weight: 800; margin-bottom: 8px;">📈 ${item.curveSpec.title} (${item.levlScoreOptimal})</div>
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${vectorRowsHtml}</table>
+      </div>`
     )
     htmlParts.push(
       `<p><a href="https://levlhealth.com${item.exploreDeepLink}"><strong>Try ${item.name} interactively in the LEVL app →</strong></a></p>`
@@ -1351,9 +1374,6 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
 
     textParts.push(`Beginner Scaling Note: ${item.beginnerScalingNote}\n`)
     textParts.push(`Cautions: ${item.cautions}\n`)
-    textParts.push(
-      `[Insert Static Blueprint Card PNG: outpace_aging_${issue.shortSlug}_${item.kind}_${item.id}.png -> https://levlhealth.com${item.exploreDeepLink}]\n`
-    )
     textParts.push(
       `Try ${item.name} interactively in the LEVL app: https://levlhealth.com${item.exploreDeepLink}\n`
     )
@@ -1674,8 +1694,31 @@ ${html}
             >
               {/* Email Header & Intro */}
               <div className="space-y-4 border-b pb-6 border-slate-500/20">
-                <div className="text-xs font-bold uppercase tracking-wider text-emerald-500">
-                  LEVL Weekly Longevity Roundup • {issue.dateLabel} • Edition #{issue.issueNumber}
+                <div className="flex items-center justify-between gap-2">
+                  <div className="text-xs font-bold uppercase tracking-wider text-emerald-500">
+                    LEVL Weekly Longevity Roundup • {issue.dateLabel} • Edition #{issue.issueNumber}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleCopyBeehiivRich}
+                    className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border transition-colors cursor-pointer ${
+                      isLightMode
+                        ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200'
+                        : 'bg-white/5 hover:bg-white/10 text-slate-300 border-white/10'
+                    }`}
+                  >
+                    {copiedRich ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-emerald-500" />
+                        <span>Copied</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3.5 h-3.5" />
+                        <span>Copy</span>
+                      </>
+                    )}
+                  </button>
                 </div>
                 <h1 className="text-3xl sm:text-4xl font-black tracking-tight">Outpace Aging</h1>
                 <p className={`text-base font-medium ${isLightMode ? 'text-slate-600' : 'text-slate-300'}`}>
