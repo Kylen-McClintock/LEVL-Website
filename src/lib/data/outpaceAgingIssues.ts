@@ -1476,7 +1476,7 @@ export const OUTPACE_AGING_ISSUE_01: OutpaceAgingIssue = {
   closingParagraph:
     'From oral enzyme blockers that protect our native NAD+ factory and spider-silk nanovaccines that wake up aged immune cells, to brain support cells that quiet whole-body inflammation and 51-trial epigenetic clock benchmarks that compress human clinical trials from decades into months, the blueprint for age reversal is coming together rapidly. While next-generation biologics advance toward human trials, you can activate those exact same cellular maintenance pathways today.',
   aboutLevlParagraph:
-    'LEVL is the precision longevity operating system built to help you measure, schedule, and optimize the daily protocols that slow your pace of aging. Explore interactive biological telemetry curves, personalize your daily modality stack across all eight vectors of longevity, and track your real-time LEVL Score at levlhealth.com.'
+    'LEVL is the precision longevity operating system built to help you measure, schedule, and optimize the daily protocols that slow your pace of aging. Explore interactive biological telemetry curves, personalize your daily modality stack across all eight vectors of longevity, and track your real-time LEVL Pace of Aging Score at levlhealth.com.'
 }
 
 export const OUTPACE_AGING_ISSUES: OutpaceAgingIssue[] = [OUTPACE_AGING_ISSUE_01]

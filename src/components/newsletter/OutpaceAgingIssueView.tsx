@@ -1269,11 +1269,25 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
   )
   htmlParts.push(`<p>${issue.levStateOfPlayParagraph}</p>`)
   htmlParts.push(
-    `<ul>
-      <li><strong>Estimated LEV Date (Optimal Protocol • Top 1%):</strong> October 2036 (Pulled 26 days closer this week • ~9.9 yrs away)</li>
-      <li><strong>Estimated LEV Date (Active Health • Top 20%):</strong> February 2042 (Pulled 16 days closer this week • ~15.3 yrs away)</li>
-      <li><strong>Current Pace of Aging:</strong> 0.67 Optimal vs 0.84 Active bio-yrs/yr (-0.0035 yr/yr this week • +122 healthy days banked/yr)</li>
-    </ul>`
+    `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin: 16px 0; border-collapse: separate; border-spacing: 8px;">
+      <tr>
+        <td width="33%" valign="top" style="padding: 12px 14px; border: 1px solid #10b981; border-radius: 12px; background-color: #0b1322; color: #f8fafc;">
+          <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #34d399;">Estimated LEV Date • Optimal (Top 1%)</div>
+          <div style="font-size: 20px; font-weight: 900; margin-top: 6px; color: #ffffff;">October 2036</div>
+          <div style="font-size: 11px; font-weight: 600; margin-top: 2px; color: #6ee7b7;">26 days closer this week</div>
+        </td>
+        <td width="33%" valign="top" style="padding: 12px 14px; border: 1px solid #06b6d4; border-radius: 12px; background-color: #0b1322; color: #f8fafc;">
+          <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #22d3ee;">Estimated LEV Date • Active (Top 20%)</div>
+          <div style="font-size: 20px; font-weight: 900; margin-top: 6px; color: #ffffff;">February 2042</div>
+          <div style="font-size: 11px; font-weight: 600; margin-top: 2px; color: #67e8f9;">16 days closer this week</div>
+        </td>
+        <td width="33%" valign="top" style="padding: 12px 14px; border: 1px solid #a855f7; border-radius: 12px; background-color: #0b1322; color: #f8fafc;">
+          <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #c084fc;">Current Pace of Aging (bio-yrs/yr)</div>
+          <div style="font-size: 20px; font-weight: 900; margin-top: 6px; color: #ffffff;">0.67 <span style="font-size: 12px; font-weight: 600; color: #94a3b8;">Optimal vs 0.84 Active</span></div>
+          <div style="font-size: 11px; font-weight: 600; margin-top: 2px; color: #d8b4fe;">-0.0035 yr/yr this week</div>
+        </td>
+      </tr>
+    </table>`
   )
   htmlParts.push(`<p>${issue.introSummaryParagraph}</p>`)
   htmlParts.push(`<hr />`)
@@ -1284,7 +1298,7 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
   )
   textParts.push(`${issue.levStateOfPlayParagraph}\n`)
   textParts.push(
-    `• Estimated LEV Date (Optimal Protocol • Top 1%): October 2036 (26d closer this week • ~9.9 yrs away)\n• Estimated LEV Date (Active Health • Top 20%): February 2042 (16d closer this week • ~15.3 yrs away)\n• Current Pace of Aging: 0.67 Optimal vs 0.84 Active bio-yrs/yr (-0.0035 yr/yr this week • +122 healthy days banked/yr)\n`
+    `• Estimated LEV Date • Optimal (Top 1%): October 2036 (26 days closer this week)\n• Estimated LEV Date • Active (Top 20%): February 2042 (16 days closer this week)\n• Current Pace of Aging: 0.67 Optimal vs 0.84 Active bio-yrs/yr (-0.0035 yr/yr this week)\n`
   )
   textParts.push(`${issue.introSummaryParagraph}\n`)
   textParts.push(`------------------------------------------------------------\n`)
@@ -1461,6 +1475,30 @@ export default function OutpaceAgingIssueView({
     await navigator.clipboard.writeText(text)
     setCopiedPlain(true)
     setTimeout(() => setCopiedPlain(false), 3000)
+  }, [issue])
+
+  const handleDownloadBeehiivHtml = useCallback(() => {
+    const { html } = buildBeehiivRichHtmlAndText(issue)
+    const fullDoc = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${issue.title} — Edition #${issue.issueNumber}</title>
+</head>
+<body style="max-width: 680px; margin: 0 auto; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #0f172a;">
+${html}
+</body>
+</html>`
+    const blob = new Blob([fullDoc], { type: 'text/html;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `outpace-aging-${issue.shortSlug}-beehiiv.html`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
   }, [issue])
 
   const handleDownloadAllPngs = () => {
@@ -1681,6 +1719,18 @@ export default function OutpaceAgingIssueView({
                 >
                   {copiedPlain ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <FileText className="w-3.5 h-3.5" />}
                   {copiedPlain ? 'Copied Text' : 'Plain Text'}
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDownloadBeehiivHtml}
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-bold border transition-colors cursor-pointer ${
+                    isLightMode
+                      ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100'
+                      : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 hover:bg-emerald-500/30'
+                  }`}
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  Download .HTML
                 </button>
                 <button
                   type="button"

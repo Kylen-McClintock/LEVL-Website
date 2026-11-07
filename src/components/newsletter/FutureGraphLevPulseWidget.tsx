@@ -662,7 +662,7 @@ export default function FutureGraphLevPulseWidget({
                       }`
             }
         >
-            {/* Ultra-Compact 3-Card KPI Strip (Collapsed Default State: Headline Label + Value Only, No Subtext) */}
+            {/* Ultra-Compact 3-Card KPI Strip (Collapsed Default State: Headline Label + Main Number + Weekly Shift Underneath) */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
                 {/* Card 1: Estimated LEV Date (Optimal Protocol) */}
                 <div
@@ -694,21 +694,23 @@ export default function FutureGraphLevPulseWidget({
                         </span>
                     </div>
 
-                    <div className="flex items-baseline justify-between gap-2 mt-1">
-                        <span
-                            className={`text-lg sm:text-xl font-black tracking-tight ${
+                    <div className="mt-1.5 space-y-0.5">
+                        <div
+                            className={`text-xl sm:text-2xl font-black tracking-tight leading-tight ${
                                 isLightMode ? 'text-slate-900' : 'text-white'
                             }`}
                         >
                             {data.aggregate99thFormatted}
-                        </span>
-                        <span
-                            className={`text-[10px] font-mono font-semibold shrink-0 ${
+                        </div>
+                        <div
+                            className={`text-[11px] font-mono font-semibold ${
                                 isLightMode ? 'text-emerald-700' : 'text-emerald-300'
                             }`}
                         >
-                            {Math.abs(days99Shift)}d closer this wk
-                        </span>
+                            {days99Shift <= 0
+                                ? `${Math.abs(days99Shift)} days closer this week`
+                                : `${days99Shift} days further this week`}
+                        </div>
                     </div>
                 </div>
 
@@ -742,21 +744,23 @@ export default function FutureGraphLevPulseWidget({
                         </span>
                     </div>
 
-                    <div className="flex items-baseline justify-between gap-2 mt-1">
-                        <span
-                            className={`text-lg sm:text-xl font-black tracking-tight ${
+                    <div className="mt-1.5 space-y-0.5">
+                        <div
+                            className={`text-xl sm:text-2xl font-black tracking-tight leading-tight ${
                                 isLightMode ? 'text-slate-900' : 'text-white'
                             }`}
                         >
                             {data.aggregate80thFormatted}
-                        </span>
-                        <span
-                            className={`text-[10px] font-mono font-semibold shrink-0 ${
+                        </div>
+                        <div
+                            className={`text-[11px] font-mono font-semibold ${
                                 isLightMode ? 'text-cyan-700' : 'text-cyan-300'
                             }`}
                         >
-                            {Math.abs(days80Shift)}d closer this wk
-                        </span>
+                            {days80Shift <= 0
+                                ? `${Math.abs(days80Shift)} days closer this week`
+                                : `${days80Shift} days further this week`}
+                        </div>
                     </div>
                 </div>
 
@@ -786,21 +790,21 @@ export default function FutureGraphLevPulseWidget({
                                     : 'bg-purple-500/15 text-purple-300 border-purple-500/30'
                             }`}
                         >
-                            {poa99Shift} yr/yr this wk
+                            bio-yrs / yr
                         </span>
                     </div>
 
-                    <div className="flex items-baseline justify-between gap-2 mt-1">
-                        <div className="flex items-baseline gap-1.5">
+                    <div className="mt-1.5 space-y-0.5">
+                        <div className="flex items-baseline gap-2">
                             <span
-                                className={`text-lg sm:text-xl font-black tracking-tight font-mono ${
+                                className={`text-xl sm:text-2xl font-black tracking-tight font-mono leading-tight ${
                                     isLightMode ? 'text-slate-900' : 'text-white'
                                 }`}
                             >
                                 {data.cohorts.p99.intrinsicPaceOfAging.toFixed(2)}
                             </span>
                             <span
-                                className={`text-[11px] font-mono ${
+                                className={`text-xs font-mono ${
                                     isLightMode ? 'text-slate-600' : 'text-slate-400'
                                 }`}
                             >
@@ -811,13 +815,13 @@ export default function FutureGraphLevPulseWidget({
                                 Active
                             </span>
                         </div>
-                        <span
-                            className={`text-[10px] font-mono font-semibold shrink-0 ${
+                        <div
+                            className={`text-[11px] font-mono font-semibold ${
                                 isLightMode ? 'text-purple-700' : 'text-purple-300'
                             }`}
                         >
-                            +{data.cohorts.p99.daysGainedPerYear}d/yr
-                        </span>
+                            {poa99Shift} yr/yr this week
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1072,8 +1076,8 @@ export default function FutureGraphLevPulseWidget({
                                 p75Label={activePoaP75}
                                 tailRangeLabel={
                                     poaCohortToggle === 'p99'
-                                        ? `Top 1% Optimal • +${data.cohorts.p99.daysGainedPerYear}d healthy runway/yr`
-                                        : `Top 20% Active • +${data.cohorts.p80.daysGainedPerYear}d healthy runway/yr`
+                                        ? `Top 1% Optimal • ~${data.cohorts.p99.bioMonthsPerYear} bio-months aged/yr`
+                                        : `Top 20% Active • ~${data.cohorts.p80.bioMonthsPerYear} bio-months aged/yr`
                                 }
                                 accentColor={poaCohortToggle === 'p99' ? '#a855f7' : '#06b6d4'}
                                 isLightMode={isLightMode}
