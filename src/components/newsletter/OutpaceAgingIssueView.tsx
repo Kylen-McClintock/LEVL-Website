@@ -1545,22 +1545,22 @@ ${html}
             : 'bg-slate-950/85 border-white/10'
         }`}
       >
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2 sm:gap-3">
+        <div className="max-w-5xl mx-auto px-3 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2.5">
             <Link
               href="/newsletter"
-              className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1.5 rounded-lg border transition-colors ${
+              className={`h-8 inline-flex items-center gap-1.5 text-xs font-bold px-2.5 rounded-lg border whitespace-nowrap transition-colors ${
                 isLightMode
                   ? 'text-cyan-800 hover:text-cyan-950 bg-cyan-50 border-cyan-200'
                   : 'text-cyan-300 hover:text-cyan-200 bg-cyan-500/10 border-cyan-400/30'
               }`}
             >
-              <LayoutGrid className="w-3.5 h-3.5" />
-              All Editions
+              <LayoutGrid className="w-3.5 h-3.5 shrink-0" />
+              <span>All Editions</span>
             </Link>
             <div className="flex items-center gap-2">
               <span
-                className={`px-2.5 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wider border ${
+                className={`h-8 inline-flex items-center px-2.5 rounded-lg text-[11px] font-extrabold uppercase tracking-wider border whitespace-nowrap ${
                   isLightMode
                     ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
                     : 'bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 text-emerald-300 border-emerald-400/30'
@@ -1569,7 +1569,7 @@ ${html}
                 Edition #{issue.issueNumber}
               </span>
               <span
-                className={`text-xs hidden md:inline ${
+                className={`text-xs hidden md:inline whitespace-nowrap ${
                   isLightMode ? 'text-slate-500' : 'text-slate-400'
                 }`}
               >
@@ -1578,36 +1578,31 @@ ${html}
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            {/* Light / Dark Mode Toggle */}
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {/* Light / Dark Mode Toggle (Symbol Only, h-8) */}
             <button
               type="button"
               onClick={handleToggleTheme}
               aria-pressed={isLightMode}
               aria-label={isLightMode ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-colors cursor-pointer ${
+              title={isLightMode ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+              className={`h-8 w-8 inline-flex items-center justify-center rounded-lg border shrink-0 transition-colors cursor-pointer ${
                 isLightMode
                   ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300'
                   : 'bg-white/5 hover:bg-white/10 text-slate-200 border-white/10'
               }`}
             >
               {isLightMode ? (
-                <>
-                  <Moon className="w-3.5 h-3.5 text-slate-700" />
-                  <span>Dark Mode</span>
-                </>
+                <Moon className="w-4 h-4 text-slate-700" />
               ) : (
-                <>
-                  <Sun className="w-3.5 h-3.5 text-amber-300" />
-                  <span>Light Mode</span>
-                </>
+                <Sun className="w-4 h-4 text-amber-300" />
               )}
             </button>
 
             <button
               type="button"
               onClick={handleCopyShareUrl}
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-colors cursor-pointer ${
+              className={`h-8 inline-flex items-center justify-center gap-1.5 px-2.5 rounded-lg text-xs font-semibold border whitespace-nowrap shrink-0 transition-colors cursor-pointer ${
                 isLightMode
                   ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300'
                   : 'bg-white/5 hover:bg-white/10 text-slate-300 border-white/10'
@@ -1615,19 +1610,19 @@ ${html}
               title={canonicalUrl}
             >
               {copiedUrl ? (
-                <Check className="w-3.5 h-3.5 text-emerald-500" />
+                <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
               ) : (
-                <Share2 className="w-3.5 h-3.5" />
+                <Share2 className="w-3.5 h-3.5 shrink-0" />
               )}
-              <span className="hidden sm:inline">{copiedUrl ? 'URL Copied!' : 'Share URL'}</span>
+              <span className="hidden sm:inline">{copiedUrl ? 'Copied!' : 'Share'}</span>
             </button>
 
-            {/* Subscribe Free / Subscribed Pill */}
+            {/* Subscribe / Subscribed Pill (h-8) */}
             <NewsletterHeaderSubscribeButton isLightMode={isLightMode} />
 
-            {/* Mode Switcher: Interactive View vs Simple Email View */}
+            {/* Mode Switcher: Interactive vs Simple (h-8) */}
             <div
-              className={`inline-flex rounded-xl p-1 border ${
+              className={`h-8 inline-flex items-center rounded-lg p-0.5 border shrink-0 ${
                 isLightMode
                   ? 'bg-slate-100 border-slate-200'
                   : 'bg-slate-900 border-white/10'
@@ -1636,30 +1631,30 @@ ${html}
               <button
                 type="button"
                 onClick={() => setPageMode('web_canonical')}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                className={`h-full inline-flex items-center gap-1 px-2.5 rounded-md text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
                   pageMode === 'web_canonical'
-                    ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 shadow'
+                    ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 shadow-xs'
                     : isLightMode
                       ? 'text-slate-600 hover:text-slate-900'
                       : 'text-slate-300 hover:text-white'
                 }`}
               >
-                <Globe className="w-3.5 h-3.5" />
-                Interactive View
+                <Globe className="w-3.5 h-3.5 shrink-0" />
+                <span>Interactive</span>
               </button>
               <button
                 type="button"
                 onClick={() => setPageMode('beehiiv_studio')}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                className={`h-full inline-flex items-center gap-1 px-2.5 rounded-md text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
                   pageMode === 'beehiiv_studio'
-                    ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 shadow'
+                    ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 shadow-xs'
                     : isLightMode
                       ? 'text-slate-600 hover:text-slate-900'
                       : 'text-slate-300 hover:text-white'
                 }`}
               >
-                <Mail className="w-3.5 h-3.5" />
-                Simple Email View
+                <Mail className="w-3.5 h-3.5 shrink-0" />
+                <span>Simple</span>
               </button>
             </div>
           </div>

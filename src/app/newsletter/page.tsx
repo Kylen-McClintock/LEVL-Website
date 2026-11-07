@@ -179,29 +179,24 @@ export default function OutpaceAgingCatalogPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            {/* Light / Dark Mode Toggle */}
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {/* Light / Dark Mode Toggle (Symbol Only, h-8) */}
             <button
               type="button"
               onClick={handleToggleTheme}
               aria-pressed={isLightMode}
               aria-label={isLightMode ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-colors cursor-pointer ${
+              title={isLightMode ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+              className={`h-8 w-8 inline-flex items-center justify-center rounded-lg border shrink-0 transition-colors cursor-pointer ${
                 isLightMode
                   ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300'
                   : 'bg-white/5 hover:bg-white/10 text-slate-200 border-white/10'
               }`}
             >
               {isLightMode ? (
-                <>
-                  <Moon className="w-3.5 h-3.5 text-slate-700" />
-                  <span>Dark Mode</span>
-                </>
+                <Moon className="w-4 h-4 text-slate-700" />
               ) : (
-                <>
-                  <Sun className="w-3.5 h-3.5 text-amber-300" />
-                  <span>Light Mode</span>
-                </>
+                <Sun className="w-4 h-4 text-amber-300" />
               )}
             </button>
 
@@ -209,25 +204,25 @@ export default function OutpaceAgingCatalogPage() {
 
             <Link
               href="/newsletter/edition-1"
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition-colors ${
+              className={`h-8 inline-flex items-center gap-1.5 px-2.5 rounded-lg text-xs font-bold border whitespace-nowrap transition-colors ${
                 isLightMode
                   ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100'
                   : 'bg-emerald-500/15 text-emerald-300 border-emerald-400/35 hover:bg-emerald-500/25'
               }`}
             >
-              <Globe className="w-3.5 h-3.5" />
-              Latest Issue (#1)
+              <Globe className="w-3.5 h-3.5 shrink-0" />
+              <span>Latest Issue (#1)</span>
             </Link>
             <Link
               href="/newsletter/edition-1?mode=email"
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition-colors ${
+              className={`h-8 inline-flex items-center gap-1.5 px-2.5 rounded-lg text-xs font-bold border whitespace-nowrap transition-colors ${
                 isLightMode
                   ? 'bg-slate-100 text-slate-800 border-slate-300 hover:bg-slate-200'
                   : 'bg-white/5 text-slate-200 border-white/10 hover:bg-white/10'
               }`}
             >
-              <Mail className="w-3.5 h-3.5" />
-              Simple Email View
+              <Mail className="w-3.5 h-3.5 shrink-0" />
+              <span>Simple</span>
             </Link>
           </div>
         </div>

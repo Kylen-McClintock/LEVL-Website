@@ -98,13 +98,13 @@ export function NewsletterHeaderSubscribeButton({
         type="button"
         onClick={() => window.dispatchEvent(new CustomEvent('levl_open_newsletter_signup'))}
         title="You're subscribed to Outpace Aging (click to add another email)"
-        className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold border transition-colors cursor-pointer ${
+        className={`h-8 inline-flex items-center justify-center gap-1.5 px-2.5 rounded-lg text-xs font-bold border whitespace-nowrap shrink-0 transition-colors cursor-pointer ${
           isLightMode
             ? 'bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100'
             : 'bg-emerald-500/15 text-emerald-300 border-emerald-400/30 hover:bg-emerald-500/25'
         }`}
       >
-        <CheckCircle2 className="w-3.5 h-3.5" />
+        <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
         <span className="hidden sm:inline">Subscribed</span>
       </button>
     )
@@ -114,10 +114,10 @@ export function NewsletterHeaderSubscribeButton({
     <button
       type="button"
       onClick={handleScrollToSignup}
-      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 hover:opacity-95 transition-opacity shadow cursor-pointer"
+      className="h-8 inline-flex items-center justify-center gap-1.5 px-3 rounded-lg text-xs font-extrabold whitespace-nowrap shrink-0 bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 hover:opacity-95 transition-opacity shadow cursor-pointer"
     >
-      <Mail className="w-3.5 h-3.5" />
-      <span>Subscribe Free</span>
+      <Mail className="w-3.5 h-3.5 shrink-0" />
+      <span>Subscribe</span>
     </button>
   )
 }
