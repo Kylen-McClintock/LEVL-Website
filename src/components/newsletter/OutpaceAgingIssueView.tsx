@@ -1237,7 +1237,8 @@ function ActionableProtocolModalitySection({
  * Links directly to `https://levlhealth.com/newsletter/<shortSlug>`!
  */
 export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
-  const canonicalIssueUrl = `https://levlhealth.com/newsletter/${issue.shortSlug}`
+  const siteOrigin = 'https://www.levlhealth.com'
+  const canonicalIssueUrl = `${siteOrigin}/newsletter/${issue.shortSlug}`
   const htmlParts: string[] = []
   const textParts: string[] = []
 
@@ -1245,27 +1246,9 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
   htmlParts.push(
     `<p><strong>${issue.dateLabel} | Edition #${issue.issueNumber}</strong> • <a href="${canonicalIssueUrl}">Read Interactive Web Edition on LEVL →</a></p>`
   )
-  htmlParts.push(`<p>${issue.levStateOfPlayParagraph}</p>`)
+  htmlParts.push(`<p><strong>Longevity Escape Velocity (LEV) State of Play:</strong> ${issue.levStateOfPlayParagraph}</p>`)
   htmlParts.push(
-    `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin: 16px 0; border-collapse: separate; border-spacing: 8px;">
-      <tr>
-        <td width="33%" valign="top" style="padding: 12px 14px; border: 1px solid #10b981; border-radius: 12px; background-color: #0b1322; color: #f8fafc;">
-          <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #34d399;">Estimated LEV Date • Optimal (Top 1%)</div>
-          <div style="font-size: 20px; font-weight: 900; margin-top: 6px; color: #ffffff;">October 2036</div>
-          <div style="font-size: 11px; font-weight: 600; margin-top: 2px; color: #6ee7b7;">26 days closer this week</div>
-        </td>
-        <td width="33%" valign="top" style="padding: 12px 14px; border: 1px solid #06b6d4; border-radius: 12px; background-color: #0b1322; color: #f8fafc;">
-          <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #22d3ee;">Estimated LEV Date • Active (Top 20%)</div>
-          <div style="font-size: 20px; font-weight: 900; margin-top: 6px; color: #ffffff;">February 2042</div>
-          <div style="font-size: 11px; font-weight: 600; margin-top: 2px; color: #67e8f9;">16 days closer this week</div>
-        </td>
-        <td width="33%" valign="top" style="padding: 12px 14px; border: 1px solid #a855f7; border-radius: 12px; background-color: #0b1322; color: #f8fafc;">
-          <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #c084fc;">Current Pace of Aging (bio-yrs/yr)</div>
-          <div style="font-size: 20px; font-weight: 900; margin-top: 6px; color: #ffffff;">0.67 <span style="font-size: 12px; font-weight: 600; color: #94a3b8;">Optimal vs 0.84 Active</span></div>
-          <div style="font-size: 11px; font-weight: 600; margin-top: 2px; color: #d8b4fe;">-0.0035 yr/yr this week</div>
-        </td>
-      </tr>
-    </table>`
+    `<p><a href="${canonicalIssueUrl}"><img src="${siteOrigin}/api/newsletter/card-png?slug=${issue.shortSlug}&type=lev" alt="Longevity Escape Velocity State of Play KPIs" width="600" style="width: 100%; max-width: 680px; height: auto; border-radius: 16px; display: block; margin: 16px 0;" /></a></p>`
   )
   htmlParts.push(`<p>${issue.introSummaryParagraph}</p>`)
   htmlParts.push(`<hr />`)
@@ -1290,19 +1273,8 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
       textParts.push(`${p}\n`)
     }
 
-    const cohortRowsHtml = s.visualSpec.cohortBars
-      .slice(0, 3)
-      .map(
-        b =>
-          `<tr><td style="padding: 4px 0; font-size: 13px; font-weight: 600;">${b.label}</td><td align="right" style="padding: 4px 0; font-size: 13px; font-weight: 700; color: #10b981;">${b.deltaText}</td></tr>`
-      )
-      .join('')
     htmlParts.push(
-      `<div style="margin: 14px 0; padding: 14px 16px; border: 1px solid #334155; border-radius: 12px; background-color: #0f172a; color: #f8fafc;">
-        <div style="font-size: 12px; font-weight: 800; margin-bottom: 8px;">📊 ${s.visualSpec.chartTitle} (${s.keyStatBadge})</div>
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${cohortRowsHtml}</table>
-        <div style="font-size: 12px; color: #94a3b8; margin-top: 6px;">${s.visualSpec.chartSubtitle} • <a href="${canonicalIssueUrl}#${s.id}" style="color: #38bdf8;">Interactive graph →</a></div>
-      </div>`
+      `<p><a href="${canonicalIssueUrl}#${s.id}"><img src="${siteOrigin}/api/newsletter/card-png?slug=${issue.shortSlug}&type=study&num=${s.number}" alt="${s.visualSpec.chartTitle}" width="600" style="width: 100%; max-width: 680px; height: auto; border-radius: 16px; display: block; margin: 16px 0;" /></a></p>`
     )
     textParts.push(
       `[${s.visualSpec.chartTitle}: ${s.visualSpec.cohortBars
@@ -1325,7 +1297,15 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
     const headingPrefix =
       item.kind === 'protocol' ? 'Protocol of the Week' : 'Modality of the Week'
     htmlParts.push(`<h2>${headingPrefix}: ${item.name}</h2>`)
+    htmlParts.push(
+      `<p><a href="${siteOrigin}${item.exploreDeepLink}"><img src="${siteOrigin}${item.heroImageUrl}" alt="${item.name}" width="600" style="width: 100%; max-width: 680px; height: auto; border-radius: 16px; display: block; margin: 14px 0;" /></a></p>`
+    )
     htmlParts.push(`<p><strong>One-line promise:</strong> ${item.oneLinePromise}</p>`)
+    htmlParts.push(
+      `<p><strong>Key Outcomes:</strong> ${item.hookStats
+        .map(st => `${st.value} ${st.label} (${st.sublabel})`)
+        .join(' • ')}</p>`
+    )
     htmlParts.push(
       `<p><strong>Why it is included this week:</strong> ${item.whyIncluded}<br />Source links: ${item.pubmedLinks
         .map(l => `<a href="${l.url}">${l.url}</a>`)
@@ -1344,7 +1324,7 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
 
     for (const step of item.steps) {
       htmlParts.push(
-        `<li><strong>${step.title} (${step.timingAndFrequency}):</strong> ${step.optimalInstruction}</li>`
+        `<li><strong>${step.title} (${step.timingAndFrequency}) — ${step.optimalDoseBadge}:</strong> ${step.optimalInstruction}</li>`
       )
       textParts.push(
         `${step.stepNumber}. ${step.title} (${step.timingAndFrequency}): ${step.optimalInstruction}`
@@ -1355,27 +1335,18 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
 
     htmlParts.push(`<p><strong>Beginner Scaling Note:</strong> ${item.beginnerScalingNote}</p>`)
     htmlParts.push(`<p><strong>Cautions:</strong> ${item.cautions}</p>`)
-    const vectorRowsHtml = item.vectorScores
-      .map(
-        v =>
-          `<tr><td style="padding: 3px 0; font-size: 13px; font-weight: 600;">${v.vectorName}</td><td align="right" style="padding: 3px 0; font-size: 13px; font-weight: 700; color: #10b981;">${v.score}/100 (${v.effectStat})</td></tr>`
-      )
-      .join('')
     htmlParts.push(
-      `<div style="margin: 14px 0; padding: 14px 16px; border: 1px solid #334155; border-radius: 12px; background-color: #0f172a; color: #f8fafc;">
-        <div style="font-size: 12px; font-weight: 800; margin-bottom: 8px;">📈 ${item.curveSpec.title} (${item.levlScoreOptimal})</div>
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${vectorRowsHtml}</table>
-      </div>`
+      `<p><a href="${siteOrigin}${item.exploreDeepLink}"><img src="${siteOrigin}/api/newsletter/card-png?slug=${issue.shortSlug}&type=${item.kind}" alt="${item.curveSpec.title}" width="600" style="width: 100%; max-width: 680px; height: auto; border-radius: 16px; display: block; margin: 16px 0;" /></a></p>`
     )
     htmlParts.push(
-      `<p><a href="https://levlhealth.com${item.exploreDeepLink}"><strong>Try ${item.name} interactively in the LEVL app →</strong></a></p>`
+      `<p><a href="${siteOrigin}${item.exploreDeepLink}"><strong>Try ${item.name} interactively in the LEVL app →</strong></a></p>`
     )
     htmlParts.push(`<p><em>${item.disclaimer}</em></p><hr />`)
 
     textParts.push(`Beginner Scaling Note: ${item.beginnerScalingNote}\n`)
     textParts.push(`Cautions: ${item.cautions}\n`)
     textParts.push(
-      `Try ${item.name} interactively in the LEVL app: https://levlhealth.com${item.exploreDeepLink}\n`
+      `Try ${item.name} interactively in the LEVL app: ${siteOrigin}${item.exploreDeepLink}\n`
     )
     textParts.push(`${item.disclaimer}\n------------------------------------------------------------\n`)
   }
@@ -1385,7 +1356,7 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
   htmlParts.push(
     `<p><strong>About LEVL:</strong> ${issue.aboutLevlParagraph.replace(
       'levlhealth.com',
-      '<a href="https://levlhealth.com">levlhealth.com</a>'
+      `<a href="${siteOrigin}">levlhealth.com</a>`
     )}</p>`
   )
 
@@ -1725,7 +1696,7 @@ ${html}
                   {issue.subtitle}
                 </p>
 
-                {/* LEV State of Play + Compact 3-Card KPI Strip (No expanded drawers in email) */}
+                {/* LEV State of Play + Compact 3-Card KPI Strip Image */}
                 <div
                   className={`p-4 rounded-2xl border space-y-3 ${
                     isLightMode
@@ -1743,11 +1714,10 @@ ${html}
                   <p className={`text-sm leading-relaxed ${isLightMode ? 'text-slate-800' : 'text-slate-200'}`}>
                     {issue.levStateOfPlayParagraph}
                   </p>
-                  <FutureGraphLevPulseWidget
-                    issue={issue}
-                    isLightMode={isLightMode}
-                    embeddedInIntro={true}
-                    hideExpandControls={true}
+                  <img
+                    src={`/api/newsletter/card-png?slug=${issue.shortSlug}&type=lev`}
+                    alt="Longevity Escape Velocity (LEV) State of Play KPIs"
+                    className="w-full rounded-2xl border border-white/10 shadow-md block"
                   />
                 </div>
 
@@ -1791,45 +1761,13 @@ ${html}
                       ))}
                     </div>
 
-                    {/* Static Email Summary Card (Placed before Limits) */}
-                    <div
-                      className={`p-4 rounded-2xl border space-y-2.5 my-3 ${
-                        isLightMode
-                          ? 'bg-slate-50 border-slate-200'
-                          : 'bg-slate-900/90 border-white/10'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between gap-2">
-                        <span className={`text-xs font-extrabold ${isLightMode ? 'text-slate-900' : 'text-white'}`}>
-                          📊 {study.visualSpec.chartTitle}
-                        </span>
-                        <span className={`text-[11px] font-mono font-bold ${isLightMode ? 'text-emerald-700' : 'text-emerald-300'}`}>
-                          {study.keyStatBadge}
-                        </span>
-                      </div>
-                      <div className="space-y-2">
-                        {study.visualSpec.cohortBars.slice(0, 3).map((bar, bIdx) => (
-                          <div key={bIdx}>
-                            <div className="flex justify-between text-xs font-semibold mb-1">
-                              <span>{bar.label}</span>
-                              <span className="font-mono text-emerald-500">{bar.deltaText}</span>
-                            </div>
-                            <div className={`h-2 rounded-full overflow-hidden ${isLightMode ? 'bg-slate-200' : 'bg-slate-800'}`}>
-                              <div
-                                className={`h-full rounded-full ${
-                                  bIdx === 0
-                                    ? 'bg-gradient-to-r from-emerald-500 to-cyan-500'
-                                    : 'bg-slate-500'
-                                }`}
-                                style={{ width: `${Math.max(12, Math.min(100, bar.percentWidth))}%` }}
-                              />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      <p className={`text-xs leading-relaxed pt-1 ${isLightMode ? 'text-slate-600' : 'text-slate-300'}`}>
-                        {study.visualSpec.chartSubtitle}
-                      </p>
+                    {/* Real PNG Graph Card Image (Placed before Limits so it copies as an image) */}
+                    <div className="my-3">
+                      <img
+                        src={`/api/newsletter/card-png?slug=${issue.shortSlug}&type=study&num=${study.number}`}
+                        alt={study.visualSpec.chartTitle}
+                        className="w-full rounded-2xl border border-white/10 shadow-md block"
+                      />
                     </div>
 
                     <p className={`text-sm leading-relaxed ${isLightMode ? 'text-slate-700' : 'text-slate-300'}`}>
@@ -1856,7 +1794,7 @@ ${html}
                 ))}
               </div>
 
-              {/* Protocol & Modality in Simple Email Format (Steps BEFORE Graph) */}
+              {/* Protocol & Modality in Simple Email Format (Hero Image -> Steps -> Graph Image) */}
               {[issue.protocolOfTheWeek, issue.modalityOfTheWeek].map(item => (
                 <section
                   key={item.id}
@@ -1868,34 +1806,24 @@ ${html}
                     {item.kind === 'protocol' ? '🧬 Protocol of the Week' : '⚡ Modality of the Week'} • {item.badgeText}
                   </div>
                   <h2 className="text-xl sm:text-2xl font-extrabold">{item.name}</h2>
+
+                  {/* Hero Image */}
+                  <img
+                    src={item.heroImageUrl}
+                    alt={item.name}
+                    className="w-full h-56 sm:h-64 object-cover rounded-2xl border border-white/10 shadow-md block"
+                  />
+
                   <p className={`text-sm font-medium ${isLightMode ? 'text-slate-600' : 'text-slate-300'}`}>
                     {item.oneLinePromise}
                   </p>
-
-                  {/* 3 Hook Stats */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                    {item.hookStats.map((st, idx) => (
-                      <div
-                        key={idx}
-                        className={`p-3 rounded-xl border ${
-                          isLightMode ? 'bg-slate-50 border-slate-200' : 'bg-slate-900 border-white/10'
-                        }`}
-                      >
-                        <div className="text-lg font-black font-mono text-emerald-500">{st.value}</div>
-                        <div className="text-xs font-bold mt-0.5">{st.label}</div>
-                        <div className={`text-[11px] mt-0.5 ${isLightMode ? 'text-slate-500' : 'text-slate-400'}`}>
-                          {st.sublabel}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
 
                   <p className={`text-sm leading-relaxed ${isLightMode ? 'text-slate-700' : 'text-slate-200'}`}>
                     <strong>Why it is included this week: </strong>
                     {item.whyIncluded}
                   </p>
 
-                  {/* Numbered Steps FIRST (Before the Graph) */}
+                  {/* Numbered Steps FIRST (Before the Telemetry Graph Image) */}
                   <div className="space-y-2">
                     <h3 className="text-sm font-extrabold uppercase tracking-wider">Numbered Steps:</h3>
                     {item.steps.map(step => (
@@ -1914,32 +1842,13 @@ ${html}
                     ))}
                   </div>
 
-                  {/* Static Summary Graph Card AFTER Steps */}
-                  <div
-                    className={`p-4 rounded-2xl border space-y-2.5 ${
-                      isLightMode ? 'bg-slate-50 border-slate-200' : 'bg-slate-900/90 border-white/10'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between text-xs font-bold">
-                      <span>📈 {item.curveSpec.title}</span>
-                      <span className="font-mono text-emerald-500">{item.levlScoreOptimal}</span>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
-                      {item.vectorScores.map(v => (
-                        <div key={v.vectorName} className="text-xs">
-                          <div className="flex justify-between font-semibold mb-0.5">
-                            <span>{v.vectorName}</span>
-                            <span className="font-mono">{v.score}/100 ({v.effectStat})</span>
-                          </div>
-                          <div className={`h-1.5 rounded-full overflow-hidden ${isLightMode ? 'bg-slate-200' : 'bg-slate-800'}`}>
-                            <div
-                              className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500"
-                              style={{ width: `${v.score}%` }}
-                            />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                  {/* Real PNG Telemetry & Hook Stats Card Image AFTER Steps */}
+                  <div className="my-3">
+                    <img
+                      src={`/api/newsletter/card-png?slug=${issue.shortSlug}&type=${item.kind}`}
+                      alt={item.curveSpec.title}
+                      className="w-full rounded-2xl border border-white/10 shadow-md block"
+                    />
                   </div>
                 </section>
               ))}
