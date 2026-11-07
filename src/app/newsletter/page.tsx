@@ -24,6 +24,9 @@ import {
 } from 'lucide-react'
 import { OUTPACE_AGING_ISSUES } from '@/lib/data/outpaceAgingIssues'
 import FutureGraphLevPulseWidget from '@/components/newsletter/FutureGraphLevPulseWidget'
+import NewsletterSignupBanner, {
+  NewsletterHeaderSubscribeButton
+} from '@/components/newsletter/NewsletterSignupWidget'
 
 type CatalogTab = 'editions' | 'studies' | 'protocols'
 
@@ -202,9 +205,15 @@ export default function OutpaceAgingCatalogPage() {
               )}
             </button>
 
+            <NewsletterHeaderSubscribeButton isLightMode={isLightMode} />
+
             <Link
               href="/newsletter/edition-1"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 hover:opacity-95 transition-opacity shadow"
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition-colors ${
+                isLightMode
+                  ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100'
+                  : 'bg-emerald-500/15 text-emerald-300 border-emerald-400/35 hover:bg-emerald-500/25'
+              }`}
             >
               <Globe className="w-3.5 h-3.5" />
               Latest Issue (#1)
@@ -258,6 +267,15 @@ export default function OutpaceAgingCatalogPage() {
             >
               Every week, we distill the five most important primary-source breakthroughs in longevity science into interactive biological telemetry curves, plain-English mechanisms, and one Protocol + one Modality you can launch directly in the LEVL app to slow your pace of aging and reach longevity escape velocity.
             </p>
+          </div>
+
+          {/* Inline Newsletter Signup Bar (Auto-hides if reader is already subscribed) */}
+          <div className="mt-6 max-w-2xl">
+            <NewsletterSignupBanner
+              isLightMode={isLightMode}
+              variant="hero"
+              source="newsletter_catalog_hero"
+            />
           </div>
 
           {/* 4 Archive Pillar Badges */}

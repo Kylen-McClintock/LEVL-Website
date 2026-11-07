@@ -24,6 +24,9 @@ import {
 } from 'lucide-react'
 import BiologicalTelemetryCurveCard from '@/components/science/BiologicalTelemetryCurveCard'
 import FutureGraphLevPulseWidget from '@/components/newsletter/FutureGraphLevPulseWidget'
+import NewsletterSignupBanner, {
+  NewsletterHeaderSubscribeButton
+} from '@/components/newsletter/NewsletterSignupWidget'
 import {
   OutpaceAgingIssue,
   NewsletterStudySection,
@@ -1636,6 +1639,9 @@ ${html}
               <span className="hidden sm:inline">{copiedUrl ? 'URL Copied!' : 'Share URL'}</span>
             </button>
 
+            {/* Subscribe Free / Subscribed Pill */}
+            <NewsletterHeaderSubscribeButton isLightMode={isLightMode} />
+
             {/* Mode Switcher: Interactive View vs Simple Email View */}
             <div
               className={`inline-flex rounded-xl p-1 border ${
@@ -1696,6 +1702,17 @@ ${html}
                 Email Inbox Preview • Static cards & concise text only
               </span>
               <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await handleCopyBeehiivRich()
+                    window.open('https://app.beehiiv.com/posts', '_blank', 'noopener,noreferrer')
+                  }}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg font-extrabold bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 hover:opacity-95 transition-opacity shadow cursor-pointer"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  1-Click Copy + Open Beehiiv Editor
+                </button>
                 <button
                   type="button"
                   onClick={handleCopyBeehiivRich}
@@ -2038,6 +2055,14 @@ ${html}
             </p>
           </div>
 
+          {/*Newsletter Signup in Hero (Auto-hides if reader is already subscribed) */}
+          <NewsletterSignupBanner
+            isLightMode={isLightMode}
+            variant="hero"
+            issueSlug={issue.shortSlug}
+            source="newsletter_issue_hero"
+          />
+
           {/* Paragraph 1: LEV State of Play + Compact LEV KPIs directly underneath */}
           <div
             className={`p-4 sm:p-5 rounded-2xl border space-y-3.5 ${
@@ -2343,6 +2368,14 @@ ${html}
           >
             {issue.closingParagraph}
           </p>
+
+          {/* Closing Newsletter Signup Bar (Shows confirmation if already subscribed) */}
+          <NewsletterSignupBanner
+            isLightMode={isLightMode}
+            variant="closing"
+            issueSlug={issue.shortSlug}
+            source="newsletter_issue_closing"
+          />
 
           <div
             className={`p-5 rounded-2xl border space-y-3 ${
