@@ -82,6 +82,10 @@ export interface NewsletterActionableItem {
   exploreDeepLink: string
   name: string
   badgeText: string
+  stepsAndTimeBadge?: string
+  creatorName?: string
+  creatorAffiliation?: string
+  creatorAvatarUrl?: string
   heroImageUrl: string
   hookStats: [NewsletterHookStat, NewsletterHookStat, NewsletterHookStat]
   keyBenefits: string[]
@@ -1087,6 +1091,10 @@ export const OUTPACE_AGING_ISSUE_01: OutpaceAgingIssue = {
     exploreDeepLink: '/explore?mode=discover&tab=protocols&item=protocol_sinclair_epigenetic&type=protocol',
     name: 'NAD+ Salvage & Sirtuin Renewal Protocol',
     badgeText: '5-Step Daily Cellular Stack • Bridges Studies #1 & #3',
+    stepsAndTimeBadge: '5 Steps • ~15 min/day',
+    creatorName: 'Dr. David Sinclair',
+    creatorAffiliation: 'Harvard NAD+ & Sirtuin Lab • 5-Step Daily Stack',
+    creatorAvatarUrl: '/images/discover/creator_sketch_avatar.jpg',
     heroImageUrl: '/images/discover/hero_cellular_nad_senolytic.jpg',
     hookStats: [
       {
@@ -1293,6 +1301,10 @@ export const OUTPACE_AGING_ISSUE_01: OutpaceAgingIssue = {
     exploreDeepLink: '/explore?mode=discover&tab=modalities&item=fasting_etre&type=modality',
     name: 'Early 16:8 Time-Restricted Eating (eTRE)',
     badgeText: 'Zero-Cost Daily Modality • Bridges Studies #1, #2 & #3',
+    stepsAndTimeBadge: '4 Steps • 16h Fast / 8h Window (0 min prep)',
+    creatorName: 'Dr. Satchin Panda & Dr. Courtney Peterson',
+    creatorAffiliation: 'Salk Institute & UAB Circadian Trials',
+    creatorAvatarUrl: '/images/discover/creator_sketch_avatar.jpg',
     heroImageUrl: '/images/discover/hero_fasting_etre.jpg',
     hookStats: [
       {

@@ -8,11 +8,11 @@ export const metadata: Metadata = {
     title: "LEVL: OutPace Aging | Personalized Longevity Protocols App",
     description:
       "Longevity Science, Calibrated to Your Biology. Identify what actually works to slow your pace of aging across all 8 biological vectors and 12 Hallmarks of Aging.",
-    url: "https://www.levlhealth.com/app",
+    url: "https://www.levlhealth.com/app/",
     siteName: "LEVL Health",
     images: [
       {
-        url: "https://www.levlhealth.com/images/protocol_app_visual_v2.png",
+        url: "https://www.levlhealth.com/images/app-og-preview.png",
         width: 1200,
         height: 630,
         alt: "LEVL: OutPace Aging — Personalized Longevity Protocols App",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     title: "LEVL: OutPace Aging | Personalized Longevity Protocols App",
     description:
       "Longevity Science, Calibrated to Your Biology. Identify what actually works to slow your pace of aging in LEVL: OutPace Aging.",
-    images: ["https://www.levlhealth.com/images/protocol_app_visual_v2.png"],
+    images: ["https://www.levlhealth.com/images/app-og-preview.png"],
   },
 };
 

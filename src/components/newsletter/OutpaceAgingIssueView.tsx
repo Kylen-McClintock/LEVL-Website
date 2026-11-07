@@ -644,10 +644,24 @@ function ActionableProtocolModalitySection({
     })
   }
 
+  const scoreNumber = activeScoreBadge.replace(/\s*LEVL/i, '').trim()
+  const stepsBadge =
+    item.stepsAndTimeBadge ||
+    (isProtocol
+      ? `${item.steps.length} Steps • ~15 min/day`
+      : `${item.steps.length} Steps • 16h Fast / 8h Window`)
+  const creatorName =
+    item.creatorName ||
+    (isProtocol ? 'Dr. David Sinclair' : 'Dr. Satchin Panda & Dr. Courtney Peterson')
+  const creatorAffiliation =
+    item.creatorAffiliation ||
+    (isProtocol ? 'Harvard NAD+ & Sirtuin Lab' : 'Salk Institute & UAB Circadian Trials')
+  const creatorAvatarUrl = item.creatorAvatarUrl || '/images/discover/creator_sketch_avatar.jpg'
+
   return (
     <section
       id={item.id}
-      className={`rounded-3xl border overflow-hidden shadow-2xl transition-colors ${
+      className={`rounded-none sm:rounded-3xl border-x-0 sm:border-x border-y overflow-hidden shadow-none sm:shadow-2xl transition-colors ${
         isLightMode
           ? isProtocol
             ? 'border-purple-200 bg-white'
@@ -657,100 +671,99 @@ function ActionableProtocolModalitySection({
             : 'border-emerald-500/35 bg-gradient-to-br from-emerald-950/25 via-slate-900/95 to-slate-950'
       }`}
     >
-      {/* 1. PROMINENT HERO IMAGE BANNER */}
-      <div className="relative w-full h-64 sm:h-80 overflow-hidden bg-slate-950">
+      {/* 1. SOCIAL-MEDIA STYLE TALLER HERO COVER BANNER (With #Steps/Time, +Score LEVL Logo, Creator, & Hook Stats Overlaid) */}
+      <div className="relative w-full min-h-[440px] sm:min-h-[510px] flex flex-col justify-between p-4 sm:p-7 overflow-hidden bg-slate-950">
         <img
           src={item.heroImageUrl}
           alt={item.name}
-          className="w-full h-full object-cover object-center opacity-85"
+          className="absolute inset-0 w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/20" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(2,6,23,0.76) 0%, rgba(2,6,23,0.12) 24%, rgba(2,6,23,0.22) 44%, rgba(2,6,23,0.90) 68%, rgba(2,6,23,0.98) 100%)'
+          }}
+        />
 
-        {/* Top Badges inside Hero Image */}
-        <div className="absolute top-4 left-4 right-4 sm:top-6 sm:left-8 sm:right-8 flex flex-wrap items-center justify-between gap-2">
-          <div className="flex flex-wrap items-center gap-2">
-            <span
-              className={`px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider border backdrop-blur-md ${
-                isProtocol
-                  ? 'bg-purple-500/30 text-purple-100 border-purple-400/50'
-                  : 'bg-emerald-500/30 text-emerald-100 border-emerald-400/50'
-              }`}
-            >
-              {isProtocol ? '🧬 Protocol of the Week' : '⚡ Modality of the Week'}
-            </span>
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-black/55 text-slate-200 border border-white/15 backdrop-blur-md">
-              {item.badgeText}
-            </span>
-          </div>
-
-          <span className="px-3.5 py-1 rounded-full text-xs font-black bg-emerald-500 text-slate-950 shadow-lg">
-            {activeScoreBadge} Projected Impact
-          </span>
-        </div>
-
-        {/* Bottom Headline & Promise inside Hero Image */}
-        <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-8 sm:right-8">
-          <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight drop-shadow-md">
-            {item.name}
-          </h2>
-          <p className="mt-1.5 text-sm sm:text-base font-medium text-cyan-100 leading-snug max-w-3xl drop-shadow">
-            {item.oneLinePromise}
-          </p>
-        </div>
-      </div>
-
-      {/* Main Content Container */}
-      <div className="p-5 sm:p-8 space-y-6">
-        {/* 2. PROMINENT 3 HOOK STATS CARDS */}
-        <div>
-          <div
-            className={`text-[11px] font-extrabold uppercase tracking-wider mb-2.5 ${
-              isLightMode ? 'text-slate-500' : 'text-slate-400'
+        {/* Top Row: # Steps & Time (Left) + Bright Green Score & Official LEVL Logo (Right) */}
+        <div className="relative z-10 flex items-center justify-between gap-2">
+          <span
+            className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-black uppercase tracking-wider border backdrop-blur-md ${
+              isProtocol
+                ? 'bg-slate-950/80 text-purple-200 border-purple-400/50'
+                : 'bg-slate-950/80 text-emerald-200 border-emerald-400/50'
             }`}
           >
-            Headline Clinical & Biomarker Outcomes:
+            {isProtocol ? '🧬 Protocol' : '⚡ Modality'} • {stepsBadge}
+          </span>
+
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-950/75 backdrop-blur-md">
+            <span className="text-xl sm:text-2xl font-black tracking-tight text-emerald-400">
+              {scoreNumber}
+            </span>
+            <img
+              src="/images/discover/levl_logo_official.png"
+              alt="LEVL"
+              className="h-4 sm:h-5 w-auto object-contain"
+            />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+        </div>
+
+        {/* Bottom Stack: Title + Creator Attribution + Promise + 3 Hook Stat Cards */}
+        <div className="relative z-10 space-y-3 pt-28 sm:pt-36">
+          <div>
+            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight leading-tight drop-shadow-md">
+              {item.name}
+            </h2>
+
+            {/* Creator Avatar + Creator Name & Affiliation */}
+            <div className="mt-2 flex flex-wrap items-center gap-2">
+              <img
+                src={creatorAvatarUrl}
+                alt={creatorName}
+                className="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover border border-emerald-400/60"
+              />
+              <span className="text-xs sm:text-sm font-extrabold text-emerald-300">
+                {creatorName}
+              </span>
+              <span className="text-slate-500 text-xs">•</span>
+              <span className="text-xs sm:text-sm font-medium text-slate-300">
+                {creatorAffiliation}
+              </span>
+            </div>
+
+            <p className="mt-2 text-xs sm:text-sm font-medium text-slate-200 leading-relaxed max-w-3xl">
+              {item.oneLinePromise}
+            </p>
+          </div>
+
+          {/* 3 Prominent Hook Stat Cards Overlaid at Bottom of Hero Image */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
             {item.hookStats.map((stat, idx) => {
-              const statAccent =
+              const borderClass =
                 stat.accent === 'emerald'
-                  ? isLightMode
-                    ? 'border-emerald-300 bg-emerald-50/70 text-emerald-800'
-                    : 'border-emerald-500/35 bg-emerald-950/30 text-emerald-300'
+                  ? 'border-emerald-400/45 text-emerald-300'
                   : stat.accent === 'cyan'
-                    ? isLightMode
-                      ? 'border-cyan-300 bg-cyan-50/70 text-cyan-800'
-                      : 'border-cyan-500/35 bg-cyan-950/30 text-cyan-300'
+                    ? 'border-cyan-400/45 text-cyan-300'
                     : stat.accent === 'purple'
-                      ? isLightMode
-                        ? 'border-purple-300 bg-purple-50/70 text-purple-800'
-                        : 'border-purple-500/35 bg-purple-950/30 text-purple-300'
-                      : isLightMode
-                        ? 'border-amber-300 bg-amber-50/70 text-amber-800'
-                        : 'border-amber-500/35 bg-amber-950/30 text-amber-300'
+                      ? 'border-purple-400/45 text-purple-300'
+                      : 'border-amber-400/45 text-amber-300'
 
               return (
                 <div
                   key={idx}
-                  className={`rounded-2xl border p-4 flex flex-col justify-between ${statAccent}`}
+                  className={`rounded-2xl border bg-slate-950/85 backdrop-blur-md p-3 sm:p-3.5 flex flex-col justify-between ${borderClass}`}
                 >
                   <div>
-                    <div className="text-2xl sm:text-3xl font-black tracking-tight font-mono">
+                    <div className="text-xl sm:text-2xl font-black tracking-tight font-mono">
                       {stat.value}
                     </div>
-                    <div
-                      className={`text-sm font-extrabold mt-1 ${
-                        isLightMode ? 'text-slate-900' : 'text-white'
-                      }`}
-                    >
+                    <div className="text-xs sm:text-sm font-extrabold text-white mt-0.5">
                       {stat.label}
                     </div>
                   </div>
-                  <p
-                    className={`text-xs mt-1.5 leading-relaxed ${
-                      isLightMode ? 'text-slate-600' : 'text-slate-300'
-                    }`}
-                  >
+                  <p className="text-[11px] sm:text-xs text-slate-300 mt-1 leading-snug">
                     {stat.sublabel}
                   </p>
                 </div>
@@ -758,6 +771,10 @@ function ActionableProtocolModalitySection({
             })}
           </div>
         </div>
+      </div>
+
+      {/* Main Content Container */}
+      <div className="p-3.5 sm:p-8 space-y-6">
 
         {/* 3. PROMINENT KEY BENEFITS GRID */}
         <div
@@ -1298,7 +1315,7 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
       item.kind === 'protocol' ? 'Protocol of the Week' : 'Modality of the Week'
     htmlParts.push(`<h2>${headingPrefix}: ${item.name}</h2>`)
     htmlParts.push(
-      `<p><a href="${siteOrigin}${item.exploreDeepLink}"><img src="${siteOrigin}${item.heroImageUrl}" alt="${item.name}" width="600" style="width: 100%; max-width: 680px; height: auto; border-radius: 16px; display: block; margin: 14px 0;" /></a></p>`
+      `<p><a href="${siteOrigin}${item.exploreDeepLink}"><img src="${siteOrigin}/api/newsletter/card-png?slug=${issue.shortSlug}&type=${item.kind}-hero" alt="${item.name}" width="600" style="width: 100%; max-width: 680px; height: auto; border-radius: 16px; display: block; margin: 14px 0;" /></a></p>`
     )
     htmlParts.push(`<p><strong>One-line promise:</strong> ${item.oneLinePromise}</p>`)
     htmlParts.push(
@@ -1649,15 +1666,15 @@ ${html}
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 pt-8 space-y-10">
+      <main className="max-w-4xl mx-auto px-0 sm:px-6 pt-3 sm:pt-8 space-y-5 sm:space-y-10">
         {pageMode === 'beehiiv_studio' ? (
           /* =====================================================================
              SIMPLE EMAIL VIEW (Matches what a subscriber sees in their inbox)
              ===================================================================== */
           <div className="max-w-2xl mx-auto space-y-6">
-            {/* Email Container */}
+            {/* Email Container (Zero outer border on mobile so content goes edge-to-edge!) */}
             <div
-              className={`rounded-3xl border p-6 sm:p-10 shadow-xl space-y-8 ${
+              className={`rounded-none sm:rounded-3xl border-0 sm:border px-3.5 py-4 sm:p-10 shadow-none sm:shadow-xl space-y-7 ${
                 isLightMode
                   ? 'bg-white border-slate-200 text-slate-900'
                   : 'bg-slate-950 border-white/15 text-slate-100'
@@ -1696,14 +1713,8 @@ ${html}
                   {issue.subtitle}
                 </p>
 
-                {/* LEV State of Play + Compact 3-Card KPI Strip Image */}
-                <div
-                  className={`p-4 rounded-2xl border space-y-3 ${
-                    isLightMode
-                      ? 'bg-emerald-50/70 border-emerald-200'
-                      : 'bg-slate-900/90 border-emerald-500/30'
-                  }`}
-                >
+                {/* LEV State of Play + Compact 3-Card KPI Strip Image (Zero Extra Wrapper Border!) */}
+                <div className="space-y-3 pt-1">
                   <div
                     className={`text-[11px] font-extrabold uppercase tracking-wider ${
                       isLightMode ? 'text-emerald-800' : 'text-emerald-300'
@@ -1717,7 +1728,7 @@ ${html}
                   <img
                     src={`/api/newsletter/card-png?slug=${issue.shortSlug}&type=lev`}
                     alt="Longevity Escape Velocity (LEV) State of Play KPIs"
-                    className="w-full rounded-2xl border border-white/10 shadow-md block"
+                    className="w-full h-auto rounded-xl block"
                   />
                 </div>
 
@@ -1766,7 +1777,7 @@ ${html}
                       <img
                         src={`/api/newsletter/card-png?slug=${issue.shortSlug}&type=study&num=${study.number}`}
                         alt={study.visualSpec.chartTitle}
-                        className="w-full rounded-2xl border border-white/10 shadow-md block"
+                        className="w-full h-auto rounded-2xl shadow-md block"
                       />
                     </div>
 
@@ -1794,7 +1805,7 @@ ${html}
                 ))}
               </div>
 
-              {/* Protocol & Modality in Simple Email Format (Hero Image -> Steps -> Graph Image) */}
+              {/* Protocol & Modality in Simple Email Format (Social-Media Hero Cover Image -> Steps -> Vector Graph Image) */}
               {[issue.protocolOfTheWeek, issue.modalityOfTheWeek].map(item => (
                 <section
                   key={item.id}
@@ -1807,16 +1818,12 @@ ${html}
                   </div>
                   <h2 className="text-xl sm:text-2xl font-extrabold">{item.name}</h2>
 
-                  {/* Hero Image */}
+                  {/* Taller Social-Media Style Hero Cover PNG (with #Steps/Time, +Score LEVL Logo, Creator, & Hook Stats) */}
                   <img
-                    src={item.heroImageUrl}
+                    src={`/api/newsletter/card-png?slug=${issue.shortSlug}&type=${item.kind}-hero`}
                     alt={item.name}
-                    className="w-full h-56 sm:h-64 object-cover rounded-2xl border border-white/10 shadow-md block"
+                    className="w-full h-auto rounded-2xl shadow-md block"
                   />
-
-                  <p className={`text-sm font-medium ${isLightMode ? 'text-slate-600' : 'text-slate-300'}`}>
-                    {item.oneLinePromise}
-                  </p>
 
                   <p className={`text-sm leading-relaxed ${isLightMode ? 'text-slate-700' : 'text-slate-200'}`}>
                     <strong>Why it is included this week: </strong>
@@ -1842,12 +1849,12 @@ ${html}
                     ))}
                   </div>
 
-                  {/* Real PNG Telemetry & Hook Stats Card Image AFTER Steps */}
+                  {/* Real PNG Vector & Telemetry Card Image AFTER Steps */}
                   <div className="my-3">
                     <img
                       src={`/api/newsletter/card-png?slug=${issue.shortSlug}&type=${item.kind}`}
                       alt={item.curveSpec.title}
-                      className="w-full rounded-2xl border border-white/10 shadow-md block"
+                      className="w-full h-auto rounded-2xl shadow-md block"
                     />
                   </div>
                 </section>
@@ -1868,7 +1875,7 @@ ${html}
           <>
         {/* Newsletter Hero & Opening Intro */}
         <section
-          className={`rounded-3xl border p-6 sm:p-10 shadow-xl space-y-6 transition-colors ${
+          className={`rounded-none sm:rounded-3xl border-x-0 sm:border-x border-y px-3.5 py-5 sm:p-10 shadow-none sm:shadow-xl space-y-6 transition-colors ${
             isLightMode
               ? 'border-slate-200 bg-white'
               : 'border-white/15 bg-gradient-to-b from-slate-900/95 via-slate-950 to-slate-950'
@@ -1915,12 +1922,12 @@ ${html}
             source="newsletter_issue_hero"
           />
 
-          {/* Paragraph 1: LEV State of Play + Compact LEV KPIs directly underneath */}
+          {/* Paragraph 1: LEV State of Play + Compact LEV KPIs directly underneath (Zero extra border on mobile!) */}
           <div
-            className={`p-4 sm:p-5 rounded-2xl border space-y-3.5 ${
+            className={`p-0 sm:p-5 rounded-none sm:rounded-2xl border-0 sm:border space-y-3.5 ${
               isLightMode
-                ? 'bg-emerald-50/70 border-emerald-200'
-                : 'bg-gradient-to-r from-emerald-950/40 via-cyan-950/30 to-slate-900/80 border-emerald-500/30'
+                ? 'sm:bg-emerald-50/70 sm:border-emerald-200'
+                : 'sm:bg-gradient-to-r sm:from-emerald-950/40 sm:via-cyan-950/30 sm:to-slate-900/80 sm:border-emerald-500/30'
             }`}
           >
             <div>
@@ -2036,14 +2043,14 @@ ${html}
         </section>
 
         {/* Five Study Briefings */}
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
           {issue.studies.map(study => {
             const style = ACCENT_STYLES[study.accentColor]
             return (
               <article
                 key={study.id}
                 id={study.id}
-                className={`rounded-3xl border bg-gradient-to-b p-6 sm:p-8 shadow-xl transition-colors ${
+                className={`rounded-none sm:rounded-3xl border-x-0 sm:border-x border-y bg-gradient-to-b px-3.5 py-5 sm:p-8 shadow-none sm:shadow-xl transition-colors ${
                   isLightMode
                     ? `${style.lightBorder} ${style.lightGlow}`
                     : `${style.border} ${style.glow}`
@@ -2200,7 +2207,7 @@ ${html}
 
         {/* Closing & About LEVL */}
         <section
-          className={`rounded-3xl border p-6 sm:p-8 shadow-xl space-y-5 transition-colors ${
+          className={`rounded-none sm:rounded-3xl border-x-0 sm:border-x border-y px-3.5 py-5 sm:p-8 shadow-none sm:shadow-xl space-y-5 transition-colors ${
             isLightMode
               ? 'border-slate-200 bg-white'
               : 'border-white/15 bg-slate-900/90'
