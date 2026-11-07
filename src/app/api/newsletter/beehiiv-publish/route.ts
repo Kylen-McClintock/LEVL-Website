@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getOutpaceAgingIssueBySlug, OUTPACE_AGING_ISSUE_01 } from '@/lib/data/outpaceAgingIssues'
-import { buildBeehiivRichHtmlAndText } from '@/components/newsletter/OutpaceAgingIssueView'
+import {
+  getOutpaceAgingIssueBySlug,
+  OUTPACE_AGING_ISSUE_01,
+  buildBeehiivRichHtmlAndText
+} from '@/lib/data/outpaceAgingIssues'
 
 /**
  * POST /api/newsletter/beehiiv-publish

@@ -1512,3 +1512,149 @@ export function getOutpaceAgingIssueBySlug(rawSlug?: string | null): OutpaceAgin
   return null
 }
 
+/**
+ * Generates clean HTML & plain-text newsletter copy for 1-click pasting or uploading into Beehiiv.
+ * Safe to call from both Server Route Handlers and Client Components.
+ */
+export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
+  const canonicalIssueUrl = `https://levlhealth.com/newsletter/${issue.shortSlug}`
+  const htmlParts: string[] = []
+  const textParts: string[] = []
+
+  htmlParts.push(`<h1>${issue.title}</h1>`)
+  htmlParts.push(
+    `<p><strong>${issue.dateLabel} | Edition #${issue.issueNumber}</strong> • <a href="${canonicalIssueUrl}">Read Interactive Web Edition on LEVL →</a></p>`
+  )
+  htmlParts.push(`<p>${issue.levStateOfPlayParagraph}</p>`)
+  htmlParts.push(
+    `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin: 16px 0; border-collapse: separate; border-spacing: 8px;">
+      <tr>
+        <td width="33%" valign="top" style="padding: 12px 14px; border: 1px solid #10b981; border-radius: 12px; background-color: #0b1322; color: #f8fafc;">
+          <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #34d399;">Estimated LEV Date • Optimal (Top 1%)</div>
+          <div style="font-size: 20px; font-weight: 900; margin-top: 6px; color: #ffffff;">October 2036</div>
+          <div style="font-size: 11px; font-weight: 600; margin-top: 2px; color: #6ee7b7;">26 days closer this week</div>
+        </td>
+        <td width="33%" valign="top" style="padding: 12px 14px; border: 1px solid #06b6d4; border-radius: 12px; background-color: #0b1322; color: #f8fafc;">
+          <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #22d3ee;">Estimated LEV Date • Active (Top 20%)</div>
+          <div style="font-size: 20px; font-weight: 900; margin-top: 6px; color: #ffffff;">February 2042</div>
+          <div style="font-size: 11px; font-weight: 600; margin-top: 2px; color: #67e8f9;">16 days closer this week</div>
+        </td>
+        <td width="33%" valign="top" style="padding: 12px 14px; border: 1px solid #a855f7; border-radius: 12px; background-color: #0b1322; color: #f8fafc;">
+          <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #c084fc;">Current Pace of Aging (bio-yrs/yr)</div>
+          <div style="font-size: 20px; font-weight: 900; margin-top: 6px; color: #ffffff;">0.67 <span style="font-size: 12px; font-weight: 600; color: #94a3b8;">Optimal vs 0.84 Active</span></div>
+          <div style="font-size: 11px; font-weight: 600; margin-top: 2px; color: #d8b4fe;">-0.0035 yr/yr this week</div>
+        </td>
+      </tr>
+    </table>`
+  )
+  htmlParts.push(`<p>${issue.introSummaryParagraph}</p>`)
+  htmlParts.push(`<hr />`)
+
+  textParts.push(`${issue.title}`)
+  textParts.push(
+    `${issue.dateLabel} | Edition #${issue.issueNumber} • Interactive Web Edition: ${canonicalIssueUrl}\n`
+  )
+  textParts.push(`${issue.levStateOfPlayParagraph}\n`)
+  textParts.push(
+    `• Estimated LEV Date • Optimal (Top 1%): October 2036 (26 days closer this week)\n• Estimated LEV Date • Active (Top 20%): February 2042 (16 days closer this week)\n• Current Pace of Aging: 0.67 Optimal vs 0.84 Active bio-yrs/yr (-0.0035 yr/yr this week)\n`
+  )
+  textParts.push(`${issue.introSummaryParagraph}\n`)
+  textParts.push(`------------------------------------------------------------\n`)
+
+  for (const s of issue.studies) {
+    htmlParts.push(`<h2>${s.number}. ${s.headline}</h2>`)
+    textParts.push(`${s.number}. ${s.headline}\n`)
+
+    for (const p of s.paragraphs) {
+      htmlParts.push(`<p>${p}</p>`)
+      textParts.push(`${p}\n`)
+    }
+
+    htmlParts.push(
+      `<p><em>[Insert Static Graph PNG: outpace_aging_${issue.shortSlug}_study_0${s.number}_${s.id}.png | Link image to: ${canonicalIssueUrl}#${s.id}]</em></p>`
+    )
+    textParts.push(
+      `[Insert Static Graph PNG: outpace_aging_${issue.shortSlug}_study_0${s.number}_${s.id}.png -> ${canonicalIssueUrl}#${s.id}]\n`
+    )
+
+    htmlParts.push(`<p><strong>Limits:</strong> ${s.limits}</p>`)
+    textParts.push(`Limits: ${s.limits}\n`)
+
+    htmlParts.push(`<p><strong>Future Implications:</strong> ${s.futureImplications}</p>`)
+    textParts.push(`Future Implications: ${s.futureImplications}\n`)
+
+    htmlParts.push(`<p>Study link: <a href="${s.studyUrl}">${s.studyUrl}</a></p><hr />`)
+    textParts.push(`Study link: ${s.studyUrl}\n------------------------------------------------------------\n`)
+  }
+
+  for (const item of [issue.protocolOfTheWeek, issue.modalityOfTheWeek]) {
+    const headingPrefix =
+      item.kind === 'protocol' ? 'Protocol of the Week' : 'Modality of the Week'
+    htmlParts.push(`<h2>${headingPrefix}: ${item.name}</h2>`)
+    htmlParts.push(`<p><strong>One-line promise:</strong> ${item.oneLinePromise}</p>`)
+    htmlParts.push(
+      `<p><strong>Why it is included this week:</strong> ${item.whyIncluded}<br />Source links: ${item.pubmedLinks
+        .map(l => `<a href="${l.url}">${l.url}</a>`)
+        .join(' and ')}</p>`
+    )
+    htmlParts.push(`<p><strong>Numbered Steps:</strong></p><ol>`)
+
+    textParts.push(`${headingPrefix}: ${item.name}\n`)
+    textParts.push(`One-line promise: ${item.oneLinePromise}\n`)
+    textParts.push(
+      `Why it is included this week: ${item.whyIncluded}\nSource links: ${item.pubmedLinks
+        .map(l => l.url)
+        .join(' and ')}\n`
+    )
+    textParts.push(`Numbered Steps:`)
+
+    for (const step of item.steps) {
+      htmlParts.push(
+        `<li><strong>${step.title} (${step.timingAndFrequency}):</strong> ${step.optimalInstruction}</li>`
+      )
+      textParts.push(
+        `${step.stepNumber}. ${step.title} (${step.timingAndFrequency}): ${step.optimalInstruction}`
+      )
+    }
+    htmlParts.push(`</ol>`)
+    textParts.push(``)
+
+    htmlParts.push(`<p><strong>Beginner Scaling Note:</strong> ${item.beginnerScalingNote}</p>`)
+    htmlParts.push(`<p><strong>Cautions:</strong> ${item.cautions}</p>`)
+    htmlParts.push(
+      `<p><em>[Insert Static Blueprint Card PNG: outpace_aging_${issue.shortSlug}_${item.kind}_${item.id}.png | Link image to: https://levlhealth.com${item.exploreDeepLink}]</em></p>`
+    )
+    htmlParts.push(
+      `<p><a href="https://levlhealth.com${item.exploreDeepLink}"><strong>Try ${item.name} interactively in the LEVL app →</strong></a></p>`
+    )
+    htmlParts.push(`<p><em>${item.disclaimer}</em></p><hr />`)
+
+    textParts.push(`Beginner Scaling Note: ${item.beginnerScalingNote}\n`)
+    textParts.push(`Cautions: ${item.cautions}\n`)
+    textParts.push(
+      `[Insert Static Blueprint Card PNG: outpace_aging_${issue.shortSlug}_${item.kind}_${item.id}.png -> https://levlhealth.com${item.exploreDeepLink}]\n`
+    )
+    textParts.push(
+      `Try ${item.name} interactively in the LEVL app: https://levlhealth.com${item.exploreDeepLink}\n`
+    )
+    textParts.push(`${item.disclaimer}\n------------------------------------------------------------\n`)
+  }
+
+  htmlParts.push(`<h2>Closing</h2>`)
+  htmlParts.push(`<p>${issue.closingParagraph}</p>`)
+  htmlParts.push(
+    `<p><strong>About LEVL:</strong> ${issue.aboutLevlParagraph.replace(
+      'levlhealth.com',
+      '<a href="https://levlhealth.com">levlhealth.com</a>'
+    )}</p>`
+  )
+
+  textParts.push(`Closing\n${issue.closingParagraph}\n`)
+  textParts.push(`About LEVL: ${issue.aboutLevlParagraph}\n`)
+
+  return {
+    html: htmlParts.join('\n'),
+    text: textParts.join('\n')
+  }
+}
+
