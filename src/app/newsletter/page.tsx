@@ -369,7 +369,7 @@ export default function OutpaceAgingCatalogPage() {
                   isLightMode ? 'text-slate-600' : 'text-slate-400'
                 }`}
               >
-                Clean permanent links (/newsletter/edition-1) + Beehiiv PNG exporter
+                Clean permanent links (/newsletter/edition-1) + Simple Email View
               </div>
             </div>
           </div>

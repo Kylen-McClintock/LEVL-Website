@@ -585,18 +585,6 @@ function StudyInteractiveCard({
           {study.visualSpec.sourceFigureBadge}
         </span>
         <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={handleDownloadPng}
-            className={`inline-flex items-center gap-1 font-semibold cursor-pointer ${
-              isLightMode
-                ? 'text-cyan-700 hover:text-cyan-900'
-                : 'text-cyan-300 hover:text-cyan-200'
-            }`}
-          >
-            <Download className="w-3.5 h-3.5" />
-            Download Beehiiv PNG
-          </button>
           <a
             href={study.studyUrl}
             target="_blank"
@@ -1204,7 +1192,7 @@ function ActionableProtocolModalitySection({
             )}
           </div>
 
-          {/* Bottom Action Bar: Deep-Link to LEVL Discovery & Download Beehiiv PNG */}
+          {/* Bottom Action Bar: Deep-Link to LEVL Discovery */}
           <div
             className={`px-4 py-3 border-t flex flex-wrap items-center justify-between gap-3 ${
               isLightMode
@@ -1233,19 +1221,6 @@ function ActionableProtocolModalitySection({
                 Go to Today Timeline
               </Link>
             </div>
-
-            <button
-              type="button"
-              onClick={handleDownloadBlueprintPng}
-              className={`inline-flex items-center gap-1.5 text-xs font-semibold cursor-pointer ${
-                isLightMode
-                  ? 'text-cyan-700 hover:text-cyan-900'
-                  : 'text-cyan-300 hover:text-cyan-200'
-              }`}
-            >
-              <Download className="w-3.5 h-3.5" />
-              Download Static Blueprint Card (PNG)
-            </button>
           </div>
         </div>
 
@@ -1689,81 +1664,6 @@ ${html}
              SIMPLE EMAIL VIEW (Matches what a subscriber sees in their inbox)
              ===================================================================== */
           <div className="max-w-2xl mx-auto space-y-6">
-            {/* Subtle Email Copy Utility Strip */}
-            <div
-              className={`flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 rounded-2xl border text-xs ${
-                isLightMode
-                  ? 'bg-slate-100 border-slate-200 text-slate-600'
-                  : 'bg-slate-900/90 border-white/10 text-slate-400'
-              }`}
-            >
-              <span className="font-semibold flex items-center gap-1.5">
-                <Mail className="w-3.5 h-3.5 text-emerald-400" />
-                Email Inbox Preview • Static cards & concise text only
-              </span>
-              <div className="flex flex-wrap items-center gap-2">
-                <button
-                  type="button"
-                  onClick={async () => {
-                    await handleCopyBeehiivRich()
-                    window.open('https://app.beehiiv.com/posts', '_blank', 'noopener,noreferrer')
-                  }}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg font-extrabold bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 hover:opacity-95 transition-opacity shadow cursor-pointer"
-                >
-                  <ExternalLink className="w-3.5 h-3.5" />
-                  1-Click Copy + Open Beehiiv Editor
-                </button>
-                <button
-                  type="button"
-                  onClick={handleCopyBeehiivRich}
-                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-bold border transition-colors cursor-pointer ${
-                    isLightMode
-                      ? 'bg-white text-slate-800 border-slate-300 hover:bg-slate-50'
-                      : 'bg-slate-800 text-slate-200 border-white/10 hover:bg-slate-700'
-                  }`}
-                >
-                  {copiedRich ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-                  {copiedRich ? 'Copied Email HTML' : 'Copy Email HTML'}
-                </button>
-                <button
-                  type="button"
-                  onClick={handleCopyPlainText}
-                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-semibold border transition-colors cursor-pointer ${
-                    isLightMode
-                      ? 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'
-                      : 'bg-slate-800 text-slate-300 border-white/10 hover:bg-slate-700'
-                  }`}
-                >
-                  {copiedPlain ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <FileText className="w-3.5 h-3.5" />}
-                  {copiedPlain ? 'Copied Text' : 'Plain Text'}
-                </button>
-                <button
-                  type="button"
-                  onClick={handleDownloadBeehiivHtml}
-                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-bold border transition-colors cursor-pointer ${
-                    isLightMode
-                      ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100'
-                      : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 hover:bg-emerald-500/30'
-                  }`}
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  Download .HTML
-                </button>
-                <button
-                  type="button"
-                  onClick={handleDownloadAllPngs}
-                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-semibold border transition-colors cursor-pointer ${
-                    isLightMode
-                      ? 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'
-                      : 'bg-slate-800 text-slate-300 border-white/10 hover:bg-slate-700'
-                  }`}
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  PNGs
-                </button>
-              </div>
-            </div>
-
             {/* Email Container */}
             <div
               className={`rounded-3xl border p-6 sm:p-10 shadow-xl space-y-8 ${
