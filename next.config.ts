@@ -16,16 +16,28 @@ const nextConfig: NextConfig = {
     ],
   },
   async rewrites() {
-    return [
-      {
-        source: '/research',
-        destination: 'https://research-hub.levlhealth.com/',
-      },
-      {
-        source: '/research/:path*',
-        destination: 'https://research-hub.levlhealth.com/:path*',
-      },
-    ]
+    return {
+      afterFiles: [
+        {
+          source: '/research',
+          destination: 'https://research-hub.levlhealth.com/',
+        },
+        {
+          source: '/research/:path*',
+          destination: 'https://research-hub.levlhealth.com/:path*',
+        },
+      ],
+      fallback: [
+        {
+          source: '/app/:path+/',
+          destination: 'https://2026-levl-protocols-app.vercel.app/app/:path+',
+        },
+        {
+          source: '/app/:path+',
+          destination: 'https://2026-levl-protocols-app.vercel.app/app/:path+',
+        },
+      ],
+    }
   },
   async redirects() {
     const founderCodes = [
