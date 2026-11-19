@@ -6,7 +6,7 @@ const RESEND_AUDIENCE_ID =
 
 const SUPABASE_URL =
   process.env.NEXT_PUBLIC_SUPABASE_URL ||
-  'https://kzzqlwtwfaoskbuvtwcn.supabase.co'
+  'https://allzcxnbvabahocbgbmt.supabase.co'
 const SUPABASE_KEY =
   process.env.SUPABASE_SERVICE_ROLE_KEY ||
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
@@ -115,8 +115,8 @@ export async function POST(req: NextRequest) {
     }
 
     // 3. Optional Beehiiv Free-Plan Subscriber Sync (works on Free/Launch plan if BEEHIIV_API_KEY + BEEHIIV_PUBLICATION_ID are set)
-    const beehiivApiKey = process.env.BEEHIIV_API_KEY
-    const beehiivPubId = process.env.BEEHIIV_PUBLICATION_ID
+    const beehiivApiKey = process.env.BEEHIIV_API_KEY?.trim()
+    const beehiivPubId = process.env.BEEHIIV_PUBLICATION_ID?.trim()
     if (beehiivApiKey && beehiivPubId) {
       try {
         const bhRes = await fetch(
@@ -145,12 +145,23 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    if (syncedChannels.length === 0) {
+      return NextResponse.json(
+        {
+          ok: false,
+          message:
+            'Subscription service is temporarily unavailable. Please try again in a moment.'
+        },
+        { status: 503 }
+      )
+    }
+
     return NextResponse.json({
       ok: true,
       email,
       syncedChannels,
       message:
-        "You're subscribed to Outpace Aging! Every Thursday you'll get the 5 top longevity breakthroughs and daily protocols."
+        "You're subscribed to Outpace Aging! Check your inbox for your welcome email. New editions arrive every Thursday."
     })
   } catch (err: unknown) {
     return NextResponse.json(
