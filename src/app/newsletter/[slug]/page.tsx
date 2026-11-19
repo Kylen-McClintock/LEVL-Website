@@ -1,74 +1,105 @@
-'use client'
+import type { Metadata } from 'next'
+import NewsletterIssueClient from './NewsletterIssueClient'
+import {
+  OUTPACE_AGING_ISSUES,
+  getOutpaceAgingIssueBySlug,
+} from '@/lib/data/outpaceAgingIssues'
 
-import React, { Suspense } from 'react'
-import { useParams, useSearchParams } from 'next/navigation'
-import Link from 'next/link'
-import { ArrowLeft, Sparkles } from 'lucide-react'
-import OutpaceAgingIssueView from '@/components/newsletter/OutpaceAgingIssueView'
-import { getOutpaceAgingIssueBySlug, OUTPACE_AGING_ISSUE_01 } from '@/lib/data/outpaceAgingIssues'
-
-function NewsletterIssuePageContent() {
-  const params = useParams()
-  const searchParams = useSearchParams()
-  const rawSlug = typeof params?.slug === 'string' ? params.slug : Array.isArray(params?.slug) ? params.slug[0] : ''
-  const modeParam = searchParams.get('mode')
-
-  const issue = getOutpaceAgingIssueBySlug(rawSlug)
-
-  if (!issue) {
-    return (
-      <div className="min-h-screen bg-[#060913] text-slate-100 flex items-center justify-center p-6">
-        <div className="max-w-lg w-full rounded-3xl border border-white/15 bg-slate-900/90 p-8 text-center space-y-4 shadow-2xl">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-500/15 text-amber-300 border border-amber-400/30">
-            <Sparkles className="w-3.5 h-3.5" />
-            Outpace Aging Archive
-          </span>
-          <h1 className="text-2xl font-extrabold text-white">Edition Not Found</h1>
-          <p className="text-sm text-slate-300 leading-relaxed">
-            We couldn&apos;t find an edition matching <code className="text-cyan-300">{rawSlug}</code>. Browse the full catalog of published editions or jump straight into Edition #1.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-            <Link
-              href="/newsletter"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-800 text-white hover:bg-slate-700 border border-white/15"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Newsletter Catalog
-            </Link>
-            <Link
-              href={`/newsletter/${OUTPACE_AGING_ISSUE_01.shortSlug}`}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950"
-            >
-              Read Edition #1 →
-            </Link>
-          </div>
-        </div>
-      </div>
-    )
+export function generateStaticParams() {
+  const params: { slug: string }[] = []
+  for (const issue of OUTPACE_AGING_ISSUES) {
+    params.push({ slug: issue.slug })
+    if (issue.shortSlug && issue.shortSlug !== issue.slug) {
+      params.push({ slug: issue.shortSlug })
+    }
   }
-
-  return (
-    <OutpaceAgingIssueView
-      issue={issue}
-      initialMode={
-        modeParam === 'email' || modeParam === 'simple' || modeParam === 'beehiiv'
-          ? 'beehiiv_studio'
-          : 'web_canonical'
-      }
-    />
-  )
+  return params
 }
 
-export default function NewsletterIssuePage() {
-  return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen bg-[#060913] text-slate-400 flex items-center justify-center text-sm">
-          Loading Outpace Aging Edition...
-        </div>
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const issue = getOutpaceAgingIssueBySlug(slug)
+  if (!issue) {
+    return {
+      title: 'Edition Not Found | Outpace Aging | LEVL Health',
+      robots: { index: false, follow: true },
+    }
+  }
+
+  const canonicalPath = `/newsletter/${issue.slug}/`
+  const canonicalUrl = `https://www.levlhealth.com${canonicalPath}`
+
+  return {
+    title: `Edition #${issue.issueNumber}: ${issue.title} | LEVL Health`,
+    description: issue.introSummaryParagraph.slice(0, 160),
+    alternates: {
+      canonical: canonicalPath,
+    },
+    openGraph: {
+      title: `Edition #${issue.issueNumber}: ${issue.title} | LEVL Health`,
+      description: issue.subtitle,
+      url: canonicalUrl,
+      type: 'article',
+      siteName: 'LEVL Health',
+      images: ['https://www.levlhealth.com/images/levl-escape-velocity.png'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Edition #${issue.issueNumber}: ${issue.title} | LEVL Health`,
+      description: issue.subtitle,
+      images: ['https://www.levlhealth.com/images/levl-escape-velocity.png'],
+    },
+  }
+}
+
+export default async function NewsletterIssuePage({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+  const issue = getOutpaceAgingIssueBySlug(slug)
+
+  const articleLd = issue
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'NewsArticle',
+        '@id': `https://www.levlhealth.com/newsletter/${issue.slug}/#article`,
+        headline: `Edition #${issue.issueNumber}: ${issue.title}`,
+        description: issue.introSummaryParagraph,
+        url: `https://www.levlhealth.com/newsletter/${issue.slug}/`,
+        datePublished: issue.isoDate || '2026-11-19',
+        author: {
+          '@type': 'Person',
+          '@id': 'https://kylen.vc/#kylen',
+          name: 'Kylen McClintock',
+          url: 'https://kylen.vc/',
+        },
+        publisher: {
+          '@id': 'https://www.levlhealth.com/#organization',
+        },
+        citation: issue.studies.map((s) => ({
+          '@type': 'ScholarlyArticle',
+          headline: s.headline,
+          url: s.studyUrl,
+          identifier: s.doiLabel,
+        })),
       }
-    >
-      <NewsletterIssuePageContent />
-    </Suspense>
+    : null
+
+  return (
+    <>
+      {articleLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }}
+        />
+      )}
+      <NewsletterIssueClient rawSlug={slug} />
+    </>
   )
 }

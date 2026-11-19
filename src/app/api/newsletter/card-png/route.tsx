@@ -27,11 +27,20 @@ function readPublicImageAsDataUrl(relPath: string): string | null {
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url)
-    const slug = searchParams.get('slug') || 'edition-1'
+    const slug = searchParams.get('slug') || OUTPACE_AGING_ISSUES[0].shortSlug
     const type = searchParams.get('type') || 'study'
     const num = parseInt(searchParams.get('num') || '1', 10)
 
     const issue = getOutpaceAgingIssueBySlug(slug) || OUTPACE_AGING_ISSUES[0]
+    const levSnap = issue.levSnapshot || {
+      optimalDate: 'October 2036',
+      optimalShiftText: '26 days closer this week',
+      activeDate: 'February 2042',
+      activeShiftText: '16 days closer this week',
+      poaOptimal: '0.67',
+      poaActive: '0.84',
+      poaShiftText: '-0.0035 yr/yr this week'
+    }
 
     // -------------------------------------------------------------------------
     // 1. LEV STATE OF PLAY 3-KPI STRIP PNG (800 x 175 — Zero Outer Box/Border!)
@@ -106,7 +115,7 @@ export async function GET(req: NextRequest) {
                   letterSpacing: '-0.02em'
                 }}
               >
-                October 2036
+                {levSnap.optimalDate}
               </div>
               <div
                 style={{
@@ -116,7 +125,7 @@ export async function GET(req: NextRequest) {
                   color: '#34d399'
                 }}
               >
-                26 days closer this week
+                {levSnap.optimalShiftText}
               </div>
             </div>
 
@@ -175,7 +184,7 @@ export async function GET(req: NextRequest) {
                   letterSpacing: '-0.02em'
                 }}
               >
-                February 2042
+                {levSnap.activeDate}
               </div>
               <div
                 style={{
@@ -185,7 +194,7 @@ export async function GET(req: NextRequest) {
                   color: '#22d3ee'
                 }}
               >
-                16 days closer this week
+                {levSnap.activeShiftText}
               </div>
             </div>
 
@@ -242,9 +251,11 @@ export async function GET(req: NextRequest) {
                   gap: '8px'
                 }}
               >
-                <span style={{ fontSize: '32px', fontWeight: 900, color: '#ffffff' }}>0.67</span>
+                <span style={{ fontSize: '32px', fontWeight: 900, color: '#ffffff' }}>
+                  {levSnap.poaOptimal}
+                </span>
                 <span style={{ fontSize: '13px', fontWeight: 700, color: '#94a3b8' }}>
-                  vs 0.84 Active
+                  vs {levSnap.poaActive} Active
                 </span>
               </div>
               <div
@@ -255,7 +266,7 @@ export async function GET(req: NextRequest) {
                   color: '#c084fc'
                 }}
               >
-                -0.0035 yr/yr this week
+                {levSnap.poaShiftText}
               </div>
             </div>
           </div>

@@ -203,7 +203,7 @@ export default function OutpaceAgingCatalogPage() {
             <NewsletterHeaderSubscribeButton isLightMode={isLightMode} />
 
             <Link
-              href="/newsletter/edition-1"
+              href={`/newsletter/${OUTPACE_AGING_ISSUES[0].shortSlug}`}
               className={`h-8 inline-flex items-center gap-1.5 px-2.5 rounded-lg text-xs font-bold border whitespace-nowrap transition-colors ${
                 isLightMode
                   ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100'
@@ -211,10 +211,10 @@ export default function OutpaceAgingCatalogPage() {
               }`}
             >
               <Globe className="w-3.5 h-3.5 shrink-0" />
-              <span>Latest Issue (#1)</span>
+              <span>Latest Issue (#{OUTPACE_AGING_ISSUES[0].issueNumber})</span>
             </Link>
             <Link
-              href="/newsletter/edition-1?mode=email"
+              href={`/newsletter/${OUTPACE_AGING_ISSUES[0].shortSlug}?mode=email`}
               className={`h-8 inline-flex items-center gap-1.5 px-2.5 rounded-lg text-xs font-bold border whitespace-nowrap transition-colors ${
                 isLightMode
                   ? 'bg-slate-100 text-slate-800 border-slate-300 hover:bg-slate-200'

@@ -1275,8 +1275,17 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
     `${issue.dateLabel} | Edition #${issue.issueNumber} • Interactive Web Edition: ${canonicalIssueUrl}\n`
   )
   textParts.push(`${issue.levStateOfPlayParagraph}\n`)
+  const levSnap = issue.levSnapshot || {
+    optimalDate: 'October 2036',
+    optimalShiftText: '26 days closer this week',
+    activeDate: 'February 2042',
+    activeShiftText: '16 days closer this week',
+    poaOptimal: '0.67',
+    poaActive: '0.84',
+    poaShiftText: '-0.0035 yr/yr this week'
+  }
   textParts.push(
-    `• Estimated LEV Date • Optimal (Top 1%): October 2036 (26 days closer this week)\n• Estimated LEV Date • Active (Top 20%): February 2042 (16 days closer this week)\n• Current Pace of Aging: 0.67 Optimal vs 0.84 Active bio-yrs/yr (-0.0035 yr/yr this week)\n`
+    `• Estimated LEV Date • Optimal (Top 1%): ${levSnap.optimalDate} (${levSnap.optimalShiftText})\n• Estimated LEV Date • Active (Top 20%): ${levSnap.activeDate} (${levSnap.activeShiftText})\n• Current Pace of Aging: ${levSnap.poaOptimal} Optimal vs ${levSnap.poaActive} Active bio-yrs/yr (${levSnap.poaShiftText})\n`
   )
   textParts.push(`${issue.introSummaryParagraph}\n`)
   textParts.push(`------------------------------------------------------------\n`)
@@ -1315,7 +1324,7 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
       item.kind === 'protocol' ? 'Protocol of the Week' : 'Modality of the Week'
     htmlParts.push(`<h2>${headingPrefix}: ${item.name}</h2>`)
     htmlParts.push(
-      `<p><a href="${siteOrigin}${item.exploreDeepLink}"><img src="${siteOrigin}/api/newsletter/card-png?slug=${issue.shortSlug}&type=${item.kind}-hero" alt="${item.name}" width="600" style="width: 100%; max-width: 680px; height: auto; border-radius: 16px; display: block; margin: 14px 0;" /></a></p>`
+      `<p><a href="${siteOrigin}/app${item.exploreDeepLink}"><img src="${siteOrigin}/api/newsletter/card-png?slug=${issue.shortSlug}&type=${item.kind}-hero" alt="${item.name}" width="600" style="width: 100%; max-width: 680px; height: auto; border-radius: 16px; display: block; margin: 14px 0;" /></a></p>`
     )
     htmlParts.push(`<p><strong>One-line promise:</strong> ${item.oneLinePromise}</p>`)
     htmlParts.push(
@@ -1353,17 +1362,17 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
     htmlParts.push(`<p><strong>Beginner Scaling Note:</strong> ${item.beginnerScalingNote}</p>`)
     htmlParts.push(`<p><strong>Cautions:</strong> ${item.cautions}</p>`)
     htmlParts.push(
-      `<p><a href="${siteOrigin}${item.exploreDeepLink}"><img src="${siteOrigin}/api/newsletter/card-png?slug=${issue.shortSlug}&type=${item.kind}" alt="${item.curveSpec.title}" width="600" style="width: 100%; max-width: 680px; height: auto; border-radius: 16px; display: block; margin: 16px 0;" /></a></p>`
+      `<p><a href="${siteOrigin}/app${item.exploreDeepLink}"><img src="${siteOrigin}/api/newsletter/card-png?slug=${issue.shortSlug}&type=${item.kind}" alt="${item.curveSpec.title}" width="600" style="width: 100%; max-width: 680px; height: auto; border-radius: 16px; display: block; margin: 16px 0;" /></a></p>`
     )
     htmlParts.push(
-      `<p><a href="${siteOrigin}${item.exploreDeepLink}"><strong>Try ${item.name} interactively in the LEVL app →</strong></a></p>`
+      `<p><a href="${siteOrigin}/app${item.exploreDeepLink}"><strong>Try ${item.name} interactively in the LEVL app →</strong></a></p>`
     )
     htmlParts.push(`<p><em>${item.disclaimer}</em></p><hr />`)
 
     textParts.push(`Beginner Scaling Note: ${item.beginnerScalingNote}\n`)
     textParts.push(`Cautions: ${item.cautions}\n`)
     textParts.push(
-      `Try ${item.name} interactively in the LEVL app: ${siteOrigin}${item.exploreDeepLink}\n`
+      `Try ${item.name} interactively in the LEVL app: ${siteOrigin}/app${item.exploreDeepLink}\n`
     )
     textParts.push(`${item.disclaimer}\n------------------------------------------------------------\n`)
   }

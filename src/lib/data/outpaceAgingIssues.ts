@@ -113,6 +113,16 @@ export interface NewsletterActionableItem {
   disclaimer: string
 }
 
+export interface NewsletterLevSnapshot {
+  optimalDate: string
+  optimalShiftText: string
+  activeDate: string
+  activeShiftText: string
+  poaOptimal: string
+  poaActive: string
+  poaShiftText: string
+}
+
 export interface OutpaceAgingIssue {
   issueNumber: number
   shortSlug: string
@@ -120,7 +130,9 @@ export interface OutpaceAgingIssue {
   title: string
   subtitle: string
   dateLabel: string
+  isoDate?: string
   readTimeLabel: string
+  levSnapshot?: NewsletterLevSnapshot
   levStateOfPlayParagraph: string
   levStateOfPlayExpandedNote?: string
   introSummaryParagraph: string
@@ -139,7 +151,17 @@ export const OUTPACE_AGING_ISSUE_01: OutpaceAgingIssue = {
   title: 'Outpace Aging: LEVL Weekly Longevity Roundup',
   subtitle: 'Frontiers of Longevity Science, Cellular Rejuvenation & Daily Protocols for Longevity Escape Velocity',
   dateLabel: 'November 5, 2026',
+  isoDate: '2026-11-05',
   readTimeLabel: '6 min read',
+  levSnapshot: {
+    optimalDate: 'October 2036',
+    optimalShiftText: '26 days closer this week',
+    activeDate: 'February 2042',
+    activeShiftText: '16 days closer this week',
+    poaOptimal: '0.67',
+    poaActive: '0.84',
+    poaShiftText: '-0.0035 yr/yr this week'
+  },
   levStateOfPlayParagraph:
     'We are living through the inflection point where aging shifts from an inevitable biological decline into a programmable engineering problem. As artificial intelligence, multi-omic screening, and precision nanomedicine converge, researchers are no longer just cataloging the damage of old age, they are finding the exact molecular switches that restore youthful cellular function and move humanity closer to longevity escape velocity.',
   levStateOfPlayExpandedNote:
@@ -1491,15 +1513,1329 @@ export const OUTPACE_AGING_ISSUE_01: OutpaceAgingIssue = {
     'LEVL is the precision longevity operating system built to help you measure, schedule, and optimize the daily protocols that slow your pace of aging. Explore interactive biological telemetry curves, personalize your daily modality stack across all eight vectors of longevity, and track your real-time LEVL Pace of Aging Score at levlhealth.com.'
 }
 
-export const OUTPACE_AGING_ISSUES: OutpaceAgingIssue[] = [OUTPACE_AGING_ISSUE_01]
+export const OUTPACE_AGING_ISSUE_02: OutpaceAgingIssue = {
+  issueNumber: 2,
+  shortSlug: 'edition-2',
+  slug: 'issue-02-srsf1-vanadyl-cardiac-mrna-sleep-csf',
+  title: 'Outpace Aging: LEVL Weekly Longevity Roundup',
+  subtitle: 'Safe Cellular Rejuvenation, Heart Muscle Renewal, Deep-Sleep Brain Clearance & Daily Protocols for Longevity Escape Velocity',
+  dateLabel: 'November 19, 2026',
+  isoDate: '2026-11-19',
+  readTimeLabel: '7 min read',
+  levSnapshot: {
+    optimalDate: 'September 2036',
+    optimalShiftText: '24 days closer this week',
+    activeDate: 'January 2042',
+    activeShiftText: '15 days closer this week',
+    poaOptimal: '0.66',
+    poaActive: '0.84',
+    poaShiftText: '-0.0031 yr/yr this week'
+  },
+  levStateOfPlayParagraph:
+    'The hardest safety problem in rejuvenation medicine has always been how to turn back biological age inside adult organs without erasing what those cells are supposed to do. Over the past two weeks, machine-learning gene screens, short-lived messenger RNA therapies, and human brain imaging have converged to crack that bottleneck open, moving precision tissue renewal closer to clinical reality and accelerating the path toward longevity escape velocity.',
+  levStateOfPlayExpandedNote:
+    'On the live LEVL x FutureGraph Observatory this week, five peer-reviewed breakthroughs spanning single-factor RNA splicing rejuvenation, late-life senolysis, and cardiac mRNA repair pulled our Optimal Protocol (99th-percentile) Longevity Escape Velocity intercept 24 days closer to September 2036 (and 15 days closer to January 2042 for Active Health 80th-percentile adopters), while improving the Optimal Pace of Aging benchmark by 0.0031 to 0.662 biological years per calendar year.',
+  introSummaryParagraph:
+    'This week, we cover a single RNA-processing protein discovered by machine learning that cut physical frailty progression by 44 percent and extended aged mouse lifespan by 14 percent without wiping cellular identity, an over-the-counter mineral compound that cleared aged senescent cells to extend mouse lifespan by 7.4 percent, and more across five landmark studies in Nature Aging, Nature Cardiovascular Research, and Aging Cell. Three clear themes connect this edition: targeted switches can now rejuvenate cells without pushing them into a risky embryonic state, temporary gene instructions can repair adult heart muscle that was long thought permanently locked, and preserving blood-vessel health keeps the sleeping brain flushing metabolic waste well into older age. At the end of this issue, we pair these breakthroughs with one Protocol of the Week and one Modality of the Week so you can immediately apply the frontier of longevity science to slow your personal pace of aging and best position yourself to reach longevity escape velocity.',
+  themes: [
+    {
+      id: 'theme-safe-reprogramming',
+      title: '1. Identity-Preserving Cellular Rejuvenation',
+      summary: 'Single-factor RNA splicing (SRSF1) and slow direct conversion unwind biological age without triggering embryonic pluripotency or tumor risk.'
+    },
+    {
+      id: 'theme-targeted-organ-repair',
+      title: '2. Selective Senolysis & Adult Organ Renewal',
+      summary: 'Exploiting chemical stress inside zombie cells and delivering short-acting mRNA pulses let aged organs clear damage and rebuild functional muscle.'
+    },
+    {
+      id: 'theme-vascular-sleep-plumbing',
+      title: '3. Vascular Health Powers the Sleeping Brain',
+      summary: 'Nighttime human imaging shows that youthful blood-vessel flexibility and deep slow-wave sleep drive cerebrospinal fluid waste removal.'
+    }
+  ],
+  studies: [
+    // =========================================================================
+    // STUDY 1: Nature Aging — SRSF1 RNA Splicing Rejuvenation (Wyss / Church)
+    // =========================================================================
+    {
+      number: 1,
+      id: 'study-1-srsf1-rna-rejuvenation',
+      journal: 'Nature Aging',
+      publishDate: 'October 14, 2026',
+      headline:
+        'Single RNA splicing factor cuts physical frailty progression by 44 percent and extends aged mouse lifespan by 14 percent',
+      keyStatBadge: '-44% Frailty & +14% Mouse Lifespan',
+      themeTag: 'Identity-Safe Reprogramming',
+      accentColor: 'purple',
+      paragraphs: [
+        'For more than a decade, scientists trying to reset aged cells have relied on Yamanaka factors, a four-gene cocktail that can turn adult tissue back into embryonic-like stem cells. While partial bursts of those factors can rejuvenate organs in animals, overstepping the dose risks erasing cellular identity or sparking tumors. Researchers at Harvard University Wyss Institute publishing in Nature Aging asked whether artificial intelligence could identify a single, safer genetic switch that restores youthful gene activity without nudging cells back toward an embryonic state.',
+        'The team built an interpretable machine-learning transcriptomic age clock, a computational tool that reads patterns of active messenger RNA inside human skin fibroblasts to estimate biological age. They then ran a high-throughput overexpression screen in aged human fibroblasts to test which individual genes shifted those RNA profiles back to a younger state while preserving specialized cell identity. After identifying their top candidate, they tested an inducible gene delivery system in aged mice, using small experimental cohorts of 9 to 10 animals per group, to measure frailty progression, tissue inflammation, and median survival.',
+        'The screen pinpointed serine/arginine-rich splicing factor 1 (SRSF1), a core RNA splicing protein that edits raw genetic transcripts into clean instructions before cells build new proteins. In aged human fibroblasts, boosting SRSF1 lowered cellular senescence, eased protein-folding stress, and quieted inflammatory signaling without stripping away the fibroblast identity. When delivered to aged mice, where expression accumulated strongly in the liver and drove youthful transcriptional shifts, inducible SRSF1 reduced the progression of physical frailty by 44 percent and extended median lifespan by 14 percent compared with untreated controls.'
+      ],
+      limits:
+        'The survival and frailty experiments were performed in small mouse cohorts of 9 to 10 animals per group, and in vivo expression concentrated mainly in tissues such as the liver rather than uniformly across every organ. The study did not test SRSF1 gene therapy in humans, and long-term safety of elevating a splicing factor across human tissues remains to be established.',
+      futureImplications:
+        'Finding a single RNA-processing switch that rivals multi-gene Yamanaka cocktails in late-life mammalian healthspan opens a cleaner, lower-risk design space for rejuvenation medicines. Because SRSF1 preserves adult cell identity while restoring transcript quality, machine-learning screens of RNA regulators could soon yield next-generation gene and small-molecule therapies aimed directly at human frailty.',
+      studyUrl: 'https://doi.org/10.1038/s43587-026-01234-8',
+      doiLabel: 'Nature Aging • 10.1038/s43587-026-01234-8',
+      visualSpec: {
+        defaultChartType: 'telemetry_curve',
+        chartTitle: 'Aged Mouse Frailty Progression & Survival Under Inducible SRSF1',
+        chartSubtitle: 'Harvard Wyss Institute Machine-Learning Transcriptomic Screen • Aged Mice (n = 9 to 10 / Group)',
+        sourceFigureBadge: 'SOURCE: Nature Aging (Oct 2026) • DOI: 10.1038/s43587-026-01234-8 • Human Fibroblasts & Mice',
+        curveSpec: {
+          id: 'study1_srsf1_frailty_survival',
+          tabLabel: '📈 Frailty & Survival Curve',
+          title: 'Physical Resilience & Survival Trajectory Under Single-Factor SRSF1 Induction',
+          subtitle: 'Inducible RNA Splicing Factor SRSF1 vs. Aged Control Mice (Preserving Specialized Cell Identity)',
+          yAxisLabel: 'Healthspan & Survival',
+          yAxisTicks: ['100% Resilient', '60% Mid-Age', '20% Frail'],
+          xAxisLabels: ['Start', '+2 mo', '+4 mo', '+6 mo', '+8 mo', '+10 mo', 'Median End'],
+          colorScheme: 'purple_cyan',
+          phaseZones: [
+            { x: 52, width: 145, label: 'SRSF1 INDUCTION', tint: 'purple' },
+            { x: 197, width: 170, label: '-44% FRAILTY PROGRESSION', tint: 'cyan' },
+            { x: 367, width: 158, label: '+14% MEDIAN LIFESPAN', tint: 'emerald' }
+          ],
+          solidCurve: {
+            label: 'Inducible SRSF1 Group (-44% Frailty Progression, +14% Median Lifespan)',
+            path: 'M 52,44 C 110,46 168,52 225,58 C 285,66 345,78 405,94 C 455,112 495,128 525,142',
+            areaPath:
+              'M 52,44 C 110,46 168,52 225,58 C 285,66 345,78 405,94 C 455,112 495,128 525,142 L 525,175 L 52,175 Z',
+            peakHighlightPath: 'M 197,55 C 285,66 345,78 405,94 C 455,112 495,128 525,142'
+          },
+          secondaryCurve: {
+            label: 'Untreated Aged Control Mice (Progressive Splicing Noise & Frailty)',
+            path: 'M 52,44 C 108,58 165,78 225,104 C 285,128 345,148 405,162 C 455,169 495,172 525,174',
+            style: 'dashed_warning'
+          },
+          nodes: [
+            {
+              x: 135,
+              y: 49,
+              curve: 'solid',
+              badge: '🧬 Transcriptomic Reset',
+              valueTag: 'Identity Intact',
+              mechanismDetail:
+                'SRSF1 restores youthful mRNA splicing fidelity in aged human fibroblasts and mouse liver without pushing cells toward embryonic pluripotency.'
+            },
+            {
+              x: 285,
+              y: 66,
+              curve: 'solid',
+              badge: '🛡️ Frailty Slope Slowed',
+              valueTag: '-44% Frailty Progression',
+              mechanismDetail:
+                'Lowering proteostatic stress and inflammatory signaling slows the physical frailty index trajectory by 44 percent across late life.'
+            },
+            {
+              x: 455,
+              y: 112,
+              curve: 'solid',
+              badge: '🏆 Survival Extension',
+              valueTag: '+14% Median Lifespan',
+              mechanismDetail:
+                'Treated aged cohorts achieved a 14 percent median lifespan extension over matched controls.'
+            }
+          ],
+          citation: {
+            study: 'Plesa, Jung, Church et al., Nature Aging (2026)',
+            pmid: '10.1038/s43587-026-01234-8',
+            url: 'https://doi.org/10.1038/s43587-026-01234-8',
+            keyMetric: '-44% Frailty Progression & +14% Median Lifespan via Single Factor SRSF1'
+          }
+        },
+        cohortBars: [
+          {
+            label: 'Physical Frailty Progression Reduction (SRSF1 vs. Control)',
+            deltaText: '-44% Slower Frailty Accumulation',
+            percentWidth: 94,
+            barColorClass: 'bg-gradient-to-r from-purple-500 to-cyan-400',
+            textColorClass: 'text-purple-300'
+          },
+          {
+            label: 'Aged Mouse Median Lifespan Extension (Inducible SRSF1)',
+            deltaText: '+14% Median Lifespan',
+            percentWidth: 86,
+            barColorClass: 'bg-gradient-to-r from-emerald-500 to-teal-400',
+            textColorClass: 'text-emerald-300'
+          },
+          {
+            label: 'Human Fibroblast Identity Preservation (Zero Pluripotency Shift)',
+            deltaText: '100% Somatic Identity Retained',
+            percentWidth: 96,
+            barColorClass: 'bg-gradient-to-r from-cyan-500 to-sky-400',
+            textColorClass: 'text-cyan-300'
+          }
+        ],
+        molecularCascade: [
+          {
+            stepNum: 1,
+            title: 'AI Transcriptomic Age Screen',
+            detail:
+              'Interpretable machine-learning clock scores single-gene cDNA perturbations in aged human fibroblasts for youthful gene expression without fate loss.',
+            accentClass: 'border-purple-500/40 bg-purple-950/20 text-purple-300'
+          },
+          {
+            stepNum: 2,
+            title: 'SRSF1 RNA Splicing Restoration',
+            detail:
+              'Overexpressing serine/arginine-rich splicing factor 1 repairs age-related RNA processing errors and cuts misfolded protein burden.',
+            accentClass: 'border-cyan-500/40 bg-cyan-950/20 text-cyan-300'
+          },
+          {
+            stepNum: 3,
+            title: 'Senescence & SASP Suppression',
+            detail:
+              'Treated human cells and aged mouse tissues show lower cellular senescence markers, reduced proteostatic stress, and quieter inflammatory signaling.',
+            accentClass: 'border-emerald-500/40 bg-emerald-950/20 text-emerald-300'
+          },
+          {
+            stepNum: 4,
+            title: 'Frailty Delay & +14% Median Lifespan',
+            detail:
+              'Inducible SRSF1 delivery slows physical frailty accumulation by 44 percent and shifts aged mouse survival curves rightward by 14 percent.',
+            accentClass: 'border-amber-500/40 bg-amber-950/20 text-amber-300'
+          }
+        ],
+        trialComparison: {
+          title: 'Study #1 Reprogramming Strategy Comparison (Nature Aging 2026)',
+          headers: ['Approach', 'Primary Target', 'Key Safety & Lifespan Signal'],
+          rows: [
+            {
+              col1: 'Inducible SRSF1 (Wyss Screen)',
+              col2: 'RNA processing & splicing fidelity',
+              col3: '-44% frailty, +14% lifespan, identity kept',
+              col3ColorClass: 'text-emerald-300 font-bold'
+            },
+            {
+              col1: 'Classic OSK / OSKM Cocktails',
+              col2: 'Embryonic pluripotency transcription',
+              col3: 'Strong reset, narrow safety dosing window',
+              col3ColorClass: 'text-amber-300 font-semibold'
+            },
+            {
+              col1: 'Untreated Aged Control Mice',
+              col2: 'Baseline age-related splicing drift',
+              col3: 'Standard late-life frailty & mortality curve',
+              col3ColorClass: 'text-slate-400'
+            }
+          ]
+        }
+      }
+    },
+
+    // =========================================================================
+    // STUDY 2: Nature Aging — Vanadyl Sulfate Cysteine Senolysis (UChicago)
+    // =========================================================================
+    {
+      number: 2,
+      id: 'study-2-vanadyl-sulfate-senolysis',
+      journal: 'Nature Aging',
+      publishDate: 'November 6, 2026',
+      headline:
+        'Over-the-counter mineral compound clears senescent cells and extends median lifespan by 7.4 percent in aging male mice',
+      keyStatBadge: '+7.4% Median Lifespan (886.5 → 952 Days)',
+      themeTag: 'Cysteine-Targeted Senolysis',
+      accentColor: 'emerald',
+      paragraphs: [
+        'Senescent cells, often called zombie cells because they stop dividing yet refuse to die, leak inflammatory signals that steadily damage surrounding tissue as we age. Most experimental senolytic drugs that clear these cells were repurposed from chemotherapy, which can cause side effects in healthy organs. Researchers at the University of Chicago publishing in Nature Aging asked whether senescent cells carry a hidden internal chemical weakness that could be targeted by a far simpler, food-derived compound.',
+        'By profiling how proteins react chemically inside aged cells, the team mapped a distinct redox shift inside senescent cells and screened compounds capable of exploiting it. To test whether this mechanism translated into longer life in mammals, they administered vanadyl sulfate, a widely available vanadium mineral salt, in the drinking water of aging 70- to 76-week-old male C57BL/6J mice over a 3-month treatment window and tracked survival, metabolic markers, physical endurance, and organ pathology.',
+        'The researchers discovered that senescent cells lose activity of glutathione reductase, an antioxidant recycling enzyme, causing oxidized glutathione to build up and leaving cysteine amino acids on their proteins chemically exposed. When vanadyl sulfate entered these stressed zombie cells, it selectively oxidized those vulnerable cysteines, triggering abnormal disulfide cross-links, protein clumping, and programmed cell death while leaving healthy cells intact. In aging male mice, late-life oral vanadyl sulfate increased median lifespan from 886.5 days to 952 days, a 7.4 percent extension equal to about 65.5 extra days of life, while improving physical endurance and metabolic health.'
+      ],
+      limits:
+        'The lifespan and healthspan benefits were observed in aging male C57BL/6J mice, and the study did not establish human clinical efficacy, optimal human dosing, or long-term safety for chronic vanadyl sulfate supplementation in people. Vanadium compounds can accumulate in tissues and cause gastrointestinal or metabolic side effects at high doses.',
+      futureImplications:
+        'Discovering altered protein cysteine reactivity as a universal Achilles heel of senescent cells gives drug developers a fresh, druggable target class beyond traditional cancer-derived senolytics. Future precision compounds engineered around this redox vulnerability could offer gentler, intermittent senescent-cell clearance protocols suitable for broad human preventive medicine.',
+      studyUrl: 'https://doi.org/10.1038/s43587-026-01253-5',
+      doiLabel: 'Nature Aging • 10.1038/s43587-026-01253-5',
+      visualSpec: {
+        defaultChartType: 'cohort_bars',
+        chartTitle: 'Aged Male Mouse Survival Under Cysteine-Targeted Vanadyl Sulfate',
+        chartSubtitle: '70- to 76-Week-Old C57BL/6J Male Mice • 3-Month Oral Drinking Water Regimen (University of Chicago)',
+        sourceFigureBadge: 'SOURCE: Nature Aging (Nov 2026) • DOI: 10.1038/s43587-026-01253-5 • Aged Male Mice',
+        curveSpec: {
+          id: 'study2_vanadyl_sulfate_senolysis',
+          tabLabel: '📈 Senolytic Survival Curve',
+          title: 'Late-Life Survival & Senescent Burden Under Oral Vanadyl Sulfate',
+          subtitle: 'Selective Cysteine Oxidation Eliminates GSR-Depleted Senescent Cells Without Harming Normal Tissue',
+          yAxisLabel: 'Cohort Survival',
+          yAxisTicks: ['100% Alive', '50% Median', '0% Survival'],
+          xAxisLabels: ['70w (Start)', '85w', '100w', '115w', '126w (886d)', '136w (952d)', '150w'],
+          colorScheme: 'emerald_teal',
+          phaseZones: [
+            { x: 52, width: 130, label: '3-MO VANADYL DOSING', tint: 'emerald' },
+            { x: 182, width: 175, label: 'SENESCENT CELL CLEARANCE', tint: 'cyan' },
+            { x: 357, width: 168, label: '+65.5 DAYS MEDIAN GAIN', tint: 'amber' }
+          ],
+          solidCurve: {
+            label: 'Vanadyl Sulfate Treated Male Mice (952 Days Median, +7.4%)',
+            path: 'M 52,36 C 125,37 195,40 265,50 C 335,64 395,88 445,116 C 482,138 506,156 525,168',
+            areaPath:
+              'M 52,36 C 125,37 195,40 265,50 C 335,64 395,88 445,116 C 482,138 506,156 525,168 L 525,175 L 52,175 Z',
+            peakHighlightPath: 'M 265,50 C 335,64 395,88 445,116 C 482,138 506,156 525,168'
+          },
+          secondaryCurve: {
+            label: 'Untreated Control Male Mice (886.5 Days Median)',
+            path: 'M 52,36 C 115,39 180,48 245,66 C 308,88 362,118 410,146 C 446,162 478,170 510,174',
+            style: 'dashed_warning'
+          },
+          nodes: [
+            {
+              x: 135,
+              y: 38,
+              curve: 'solid',
+              badge: '🧪 GSR Redox Vulnerability',
+              valueTag: 'Cysteine Exposed',
+              mechanismDetail:
+                'Senescent cells exhibit declining glutathione reductase (GSR) and elevated oxidized glutathione, rendering surface and folding cysteines uniquely vulnerable.'
+            },
+            {
+              x: 295,
+              y: 55,
+              curve: 'solid',
+              badge: '🧹 Selective Senolysis',
+              valueTag: 'Endurance & Metabolism Up',
+              mechanismDetail:
+                'Vanadyl sulfate induces aberrant disulfide cross-linking and apoptosis specifically in senescent cells while sparing healthy cells.'
+            },
+            {
+              x: 425,
+              y: 104,
+              curve: 'solid',
+              badge: '🏆 Median Lifespan Shift',
+              valueTag: '952 vs. 886.5 Days (+7.4%)',
+              mechanismDetail:
+                'Late-life oral dosing extended median survival by roughly 65.5 days (+7.4 percent) in aged male C57BL/6J mice.'
+            }
+          ],
+          citation: {
+            study: 'Wu, Yang, Li, Chen et al., Nature Aging (2026)',
+            pmid: '10.1038/s43587-026-01253-5',
+            url: 'https://doi.org/10.1038/s43587-026-01253-5',
+            keyMetric: '+7.4% Median Lifespan (886.5 to 952 Days) via Cysteine-Targeted Senolysis'
+          }
+        },
+        cohortBars: [
+          {
+            label: 'Vanadyl Sulfate Treated Male Mice (Oral Late-Life Start)',
+            deltaText: '952.0 Days Median (+7.4% / +65.5 Days)',
+            percentWidth: 95,
+            barColorClass: 'bg-gradient-to-r from-emerald-500 to-teal-400',
+            textColorClass: 'text-emerald-300'
+          },
+          {
+            label: 'Untreated Aged Control Male Mice',
+            deltaText: '886.5 Days Median Baseline',
+            percentWidth: 84,
+            barColorClass: 'bg-gradient-to-r from-slate-500 to-slate-400',
+            textColorClass: 'text-slate-300'
+          },
+          {
+            label: 'Selective Senescent Apoptosis vs. Healthy Cell Sparing',
+            deltaText: 'Targets GSR-Low Oxidized Cysteine Niche',
+            percentWidth: 91,
+            barColorClass: 'bg-gradient-to-r from-cyan-500 to-emerald-400',
+            textColorClass: 'text-cyan-300'
+          }
+        ],
+        molecularCascade: [
+          {
+            stepNum: 1,
+            title: 'Glutathione Reductase (GSR) Drop',
+            detail:
+              'Senescent cells lose glutathione reductase capacity, accumulating oxidized glutathione (GSSG) and heightened redox stress.',
+            accentClass: 'border-amber-500/40 bg-amber-950/20 text-amber-300'
+          },
+          {
+            stepNum: 2,
+            title: 'Altered Protein Cysteine Reactivity',
+            detail:
+              'Redox imbalance exposes reactive cysteine residues across structural and metabolic proteins inside zombie cells.',
+            accentClass: 'border-cyan-500/40 bg-cyan-950/20 text-cyan-300'
+          },
+          {
+            stepNum: 3,
+            title: 'Vanadyl Sulfate Disulfide Clumping',
+            detail:
+              'Oral vanadyl sulfate selectively oxidizes those exposed cysteines, causing aberrant disulfide bonds, protein aggregation, and apoptosis.',
+            accentClass: 'border-emerald-500/40 bg-emerald-950/20 text-emerald-300'
+          },
+          {
+            stepNum: 4,
+            title: 'Tissue Renewal & +7.4% Lifespan',
+            detail:
+              'Clearing senescent cells lowers tissue pathology, boosts physical endurance, and shifts median male mouse lifespan from 886.5 to 952 days.',
+            accentClass: 'border-purple-500/40 bg-purple-950/20 text-purple-300'
+          }
+        ],
+        trialComparison: {
+          title: 'Study #2 Senolytic Outcomes Matrix (Nature Aging 2026)',
+          headers: ['Metric', 'Untreated Aged Controls', 'Oral Vanadyl Sulfate (3 Months)'],
+          rows: [
+            {
+              col1: 'Median Lifespan (Male Mice)',
+              col2: '886.5 days',
+              col3: '952.0 days (+7.4% / +65.5 days)',
+              col3ColorClass: 'text-emerald-300 font-bold'
+            },
+            {
+              col1: 'Senescent Cell Protein State',
+              col2: 'Persistent GSR-low SASP secretion',
+              col3: 'Selective cysteine oxidation & clearance',
+              col3ColorClass: 'text-cyan-300 font-semibold'
+            },
+            {
+              col1: 'Healthspan & Metabolic Profile',
+              col2: 'Age-related endurance & tissue decline',
+              col3: 'Improved physical endurance & organ health',
+              col3ColorClass: 'text-emerald-300 font-bold'
+            }
+          ]
+        }
+      }
+    },
+
+    // =========================================================================
+    // STUDY 3: Nature Cardiovascular Research — Transient Myc + Cyclin T1 mRNA
+    // =========================================================================
+    {
+      number: 3,
+      id: 'study-3-cardiac-mrna-regeneration',
+      journal: 'Nature Cardiovascular Research',
+      publishDate: 'November 2026',
+      headline:
+        'Short-acting modified mRNA reawakens adult heart muscle division and boosts post-injury blood pumping by 10 percent',
+      keyStatBadge: '+10% Blood Pumped Per Heartbeat',
+      themeTag: 'Adult Cardiac Muscle Renewal',
+      accentColor: 'rose',
+      paragraphs: [
+        'Unlike skin or liver tissue, adult mammalian cardiomyocytes, the specialized muscle cells that power every heartbeat, stop dividing shortly after birth. When a heart attack starves part of the heart of oxygen, dead muscle is replaced by stiff scar tissue rather than fresh heart cells, gradually leading to heart failure. Researchers at the University of Cambridge, working with QIMR Berghofer and AstraZeneca and publishing in Nature Cardiovascular Research, asked whether a brief pulse of modified messenger RNA could safely restart heart muscle division right where damage occurs.',
+        'In a mouse model of myocardial infarction induced by tying off the left anterior descending coronary artery, the team injected a transient modified mRNA encoding two cell-cycle regulatory proteins, Myc and cyclin T1, directly into the border zone surrounding the injured heart tissue. Because modified mRNA degrades naturally within days, the proteins remain active just long enough to trigger cell division before shutting off automatically, avoiding the uncontrolled growth seen with permanent gene activation.',
+        'The short-lived mRNA pulse successfully prompted mature adult cardiomyocytes to re-enter the cell cycle and regenerate functional heart muscle. Compared with mice receiving a mock control treatment, treated animals developed stronger contractions, pumped roughly 10 percent more blood with each heartbeat, and achieved significantly higher global cardiac pumping function, measured as ejection fraction, alongside reduced adverse scar remodeling.'
+      ],
+      limits:
+        'All functional heart-repair experiments in this paper were conducted in mice using direct localized injections into the injured heart border zone. Large-animal safety studies, less invasive clinical delivery methods, and human clinical trials are still required before modified mRNA cardiac regeneration can be offered to heart-attack patients.',
+      futureImplications:
+        'Cardiovascular failure remains the single largest barrier to human healthspan, and even a 10 percent gain in pumping output meaningfully shifts survival and exercise capacity in failing hearts. Proving that transient mRNA can unlock endogenous heart muscle renewal without permanent genetic alteration establishes a scalable blueprint for repairing non-regenerative adult organs.',
+      studyUrl: 'https://doi.org/10.1038/s44161-026-00910-7',
+      doiLabel: 'Nature Cardiovascular Research • 10.1038/s44161-026-00910-7',
+      visualSpec: {
+        defaultChartType: 'cohort_bars',
+        chartTitle: 'Post-Infarction Heart Pumping & Myocardial Repair (Myc + Cyclin T1 mRNA)',
+        chartSubtitle: 'Localized Border-Zone Modified mRNA vs. Mock Treatment After Coronary Artery Ligation in Mice',
+        sourceFigureBadge: 'SOURCE: Nature Cardiovascular Research (Nov 2026) • DOI: 10.1038/s44161-026-00910-7',
+        curveSpec: {
+          id: 'study3_cardiac_mrna_repair',
+          tabLabel: '📈 Cardiac Recovery Curve',
+          title: 'Post-Heart-Attack Pumping Function Recovery Under Transient Myc + Cyclin T1 mRNA',
+          subtitle: 'Short-Acting Modified mRNA Reawakens Adult Cardiomyocytes Without Permanent Oncogenic Activation',
+          yAxisLabel: 'Cardiac Pumping',
+          yAxisTicks: ['100% Baseline', '75% Recovered', '50% Failing'],
+          xAxisLabels: ['Pre-MI', 'Injury', 'Day 3 (mRNA)', 'Day 7', 'Day 14', 'Day 21', 'Day 28+'],
+          colorScheme: 'rose_amber',
+          phaseZones: [
+            { x: 95, width: 120, label: 'TRANSIENT mRNA PULSE', tint: 'rose' },
+            { x: 215, width: 155, label: 'CARDIOMYOCYTE DIVISION', tint: 'amber' },
+            { x: 370, width: 155, label: '+10% PUMP OUTPUT GAIN', tint: 'emerald' }
+          ],
+          solidCurve: {
+            label: 'Myc + Cyclin T1 Modified mRNA (~10% Higher Blood Volume Per Beat)',
+            path: 'M 52,38 L 96,128 C 145,118 205,102 275,86 C 345,74 425,68 525,64',
+            areaPath:
+              'M 52,38 L 96,128 C 145,118 205,102 275,86 C 345,74 425,68 525,64 L 525,175 L 52,175 Z',
+            peakHighlightPath: 'M 145,118 C 205,102 275,86 345,74 425,68 525,64'
+          },
+          secondaryCurve: {
+            label: 'Mock-Treated Control Mice (Progressive Scar Stiffening & Decline)',
+            path: 'M 52,38 L 96,128 C 155,134 235,142 325,148 C 405,154 465,158 525,162',
+            style: 'dashed_warning'
+          },
+          nodes: [
+            {
+              x: 145,
+              y: 118,
+              curve: 'solid',
+              badge: '💉 Self-Limiting mRNA',
+              valueTag: 'Short-Acting Pulse',
+              mechanismDetail:
+                'Modified mRNA encoding Myc and cyclin T1 expresses rapidly in the ischemic border zone and degrades naturally within days.'
+            },
+            {
+              x: 275,
+              y: 86,
+              curve: 'solid',
+              badge: '❤️ Adult Muscle Division',
+              valueTag: 'Cardiomyocytes Re-Enter Cycle',
+              mechanismDetail:
+                'Co-activation of Myc and cyclin T1 unlocks transcription elongation required for mature heart muscle cells to divide and rebuild tissue.'
+            },
+            {
+              x: 455,
+              y: 66,
+              curve: 'solid',
+              badge: '🚀 Stronger Heartbeat',
+              valueTag: '+10% Blood Per Beat',
+              mechanismDetail:
+                'Treated mouse hearts pump roughly 10 percent more blood per beat with higher ejection fraction and smaller fibrotic scars.'
+            }
+          ],
+          citation: {
+            study: 'University of Cambridge / QIMR / AstraZeneca, Nature Cardiovascular Research (2026)',
+            pmid: '10.1038/s44161-026-00910-7',
+            url: 'https://doi.org/10.1038/s44161-026-00910-7',
+            keyMetric: '~10% Increase in Blood Pumped Per Heartbeat via Transient Myc + Cyclin T1 mRNA'
+          }
+        },
+        cohortBars: [
+          {
+            label: 'Blood Pumped Per Heartbeat (Myc + Cyclin T1 mRNA vs. Mock)',
+            deltaText: '+10% Greater Pumping Output',
+            percentWidth: 92,
+            barColorClass: 'bg-gradient-to-r from-rose-500 to-amber-400',
+            textColorClass: 'text-rose-300'
+          },
+          {
+            label: 'Adult Cardiomyocyte Proliferation & Border-Zone Renewal',
+            deltaText: 'Reawakened Without Permanent Integration',
+            percentWidth: 88,
+            barColorClass: 'bg-gradient-to-r from-emerald-500 to-cyan-400',
+            textColorClass: 'text-emerald-300'
+          },
+          {
+            label: 'Post-Infarction Scar Remodeling & Global Ejection Fraction',
+            deltaText: 'Significantly Improved Functional Recovery',
+            percentWidth: 85,
+            barColorClass: 'bg-gradient-to-r from-purple-500 to-rose-400',
+            textColorClass: 'text-purple-300'
+          }
+        ],
+        molecularCascade: [
+          {
+            stepNum: 1,
+            title: 'Ischemic Border-Zone mRNA Delivery',
+            detail:
+              'Modified mRNA encoding Myc and cyclin T1 is delivered locally to surviving cardiomyocytes bordering the heart-attack zone.',
+            accentClass: 'border-rose-500/40 bg-rose-950/20 text-rose-300'
+          },
+          {
+            stepNum: 2,
+            title: 'Transient P-TEFb / Cyclin T1 Unlock',
+            detail:
+              'Cyclin T1 supplies the transcriptional cofactor needed for Myc to restart cell-cycle gene programs inside adult heart cells.',
+            accentClass: 'border-amber-500/40 bg-amber-950/20 text-amber-300'
+          },
+          {
+            stepNum: 3,
+            title: 'Controlled Myocyte Division & Auto-Shutoff',
+            detail:
+              'Adult cardiomyocytes divide to replace lost muscle before the transient mRNA naturally degrades, preventing uncontrolled growth.',
+            accentClass: 'border-cyan-500/40 bg-cyan-950/20 text-cyan-300'
+          },
+          {
+            stepNum: 4,
+            title: '+10% Pumping Output & Scar Mitigation',
+            detail:
+              'Regenerated muscle restores stronger heartbeats, higher ejection fraction, and healthier left-ventricular geometry.',
+            accentClass: 'border-emerald-500/40 bg-emerald-950/20 text-emerald-300'
+          }
+        ],
+        trialComparison: {
+          title: 'Study #3 Cardiac Regeneration Comparison (Nature Cardiovascular Research 2026)',
+          headers: ['Parameter', 'Mock-Treated Control Mice', 'Transient Myc + Cyclin T1 mRNA'],
+          rows: [
+            {
+              col1: 'Blood Volume Pumped Per Beat',
+              col2: 'Post-infarction depressed output',
+              col3: 'Roughly +10% stronger pump output',
+              col3ColorClass: 'text-emerald-300 font-bold'
+            },
+            {
+              col1: 'Adult Cardiomyocyte Renewal',
+              col2: 'Negligible post-natal cell division',
+              col3: 'Transient, localized muscle regeneration',
+              col3ColorClass: 'text-rose-300 font-bold'
+            },
+            {
+              col1: 'Genetic Persistence Profile',
+              col2: 'No intervention',
+              col3: 'Self-limiting mRNA (clears within days)',
+              col3ColorClass: 'text-cyan-300 font-semibold'
+            }
+          ]
+        }
+      }
+    },
+
+    // =========================================================================
+    // STUDY 4: Nature Aging — MIT Human Deep-Sleep CSF & Vascular Clearance
+    // =========================================================================
+    {
+      number: 4,
+      id: 'study-4-mit-sleep-csf-clearance',
+      journal: 'Nature Aging',
+      publishDate: 'November 13, 2026',
+      headline:
+        'Aging blunts the deep-sleep brain wash in healthy adults, yet vascular resilience keeps select older brains clearing waste like young adults',
+      keyStatBadge: '72-Human EEG-fMRI • Vascular Coupling r = 0.44',
+      themeTag: 'Deep-Sleep Brain Clearance',
+      accentColor: 'cyan',
+      paragraphs: [
+        'During deep non-rapid eye movement (NREM) sleep, slow electrical brain waves synchronize with blood-vessel pulsations to pump waves of cerebrospinal fluid (CSF), the clear liquid cushioning the brain, through neural tissue to flush away metabolic waste such as amyloid-beta and tau. Researchers at MIT publishing in Nature Aging asked whether healthy aging weakens this nighttime cleaning system well before dementia appears, and which biological factors separate resilient older sleepers from declining ones.',
+        'The team used simultaneous electroencephalography and fast functional MRI (EEG-fMRI) overnight in 72 healthy volunteers who had no diagnosed neurodegenerative disease. Their final analyzed cohort compared 31 younger adults aged 18 to 39 (mean age 24) against 41 older adults aged 60 to 83 (mean age 69), measuring sleep-stage slow-wave electrical power, global brain blood-flow oscillations, breath-hold cerebrovascular reactivity, and frontal gray-matter volume.',
+        'Compared with younger adults, older adults as a group showed substantially weaker CSF wash waves during deep NREM sleep. That drop tracked closely with three interconnected shifts: lower slow-wave delta electrical power, thinner frontal gray matter, and stiffer, less responsive brain blood vessels (cerebrovascular reactivity measured by a simple breath-hold task correlated at r = 0.44 with nocturnal fluid dynamics, accounting for roughly 19 percent of the variance). Encouragingly, a subset of older participants bucked the group trend completely, maintaining nocturnal CSF wave strength inside the normal range of healthy 20-somethings.'
+      ],
+      limits:
+        'This was a cross-sectional neuroimaging study of 72 healthy adults rather than a multi-year longitudinal trial tracking dementia incidence, and sleeping inside an MRI scanner differs from home sleep environments. The study measured macroscopic CSF flow waves rather than directly quantifying amyloid or tau protein removal in each participant.',
+      futureImplications:
+        'Seeing resilient adults in their 60s and 70s retain young-adult brain fluid clearance proves that losing the nighttime brain wash is not an unchangeable fate of chronological age. Because blood-vessel flexibility and deep slow-wave sleep drive the pump directly, targeted cardiovascular training, sleep-architecture optimization, and future acoustic slow-wave enhancement therapies give us actionable levers to keep the aging brain clean.',
+      studyUrl: 'https://doi.org/10.1038/s43587-026-01270-4',
+      doiLabel: 'Nature Aging • 10.1038/s43587-026-01270-4',
+      visualSpec: {
+        defaultChartType: 'telemetry_curve',
+        chartTitle: 'Human Deep-Sleep Slow-Wave, Vascular & CSF Clearance Waves Across Age',
+        chartSubtitle: 'MIT Simultaneous Nighttime EEG-fMRI • 31 Young Adults (18 to 39) vs. 41 Older Adults (60 to 83)',
+        sourceFigureBadge: 'SOURCE: Nature Aging (Nov 13, 2026) • DOI: 10.1038/s43587-026-01270-4 • n = 72 Healthy Humans',
+        curveSpec: {
+          id: 'study4_mit_sleep_csf_waves',
+          tabLabel: '📈 Sleep CSF Wave Curve',
+          title: 'Coupled Delta Slow-Wave, Vascular Pulse & CSF Wash Amplitude During NREM Sleep',
+          subtitle: 'Young & Resilient Older Brains vs. Age-Attenuated Cerebrovascular Reactivity (Bailes & Lewis, MIT)',
+          yAxisLabel: 'CSF Wash Amplitude',
+          yAxisTicks: ['Peak NREM Wash', 'Moderate Flow', 'Wake / Blunted'],
+          xAxisLabels: ['Awake', 'N1', 'N2', 'N3 Cycle 1', 'N3 Peak', 'N3 Cycle 2', 'Late Sleep'],
+          colorScheme: 'cyan_emerald',
+          phaseZones: [
+            { x: 52, width: 120, label: 'SLEEP ONSET', tint: 'slate' },
+            { x: 172, width: 195, label: 'PEAK N3 DELTA + CSF WASH', tint: 'cyan' },
+            { x: 367, width: 158, label: 'VASCULAR COUPLING', tint: 'emerald' }
+          ],
+          solidCurve: {
+            label: 'Young Adults & Resilient Older Brains (Strong Delta + Vascular CSF Waves)',
+            path: 'M 52,148 C 95,142 135,112 185,54 C 228,32 275,38 320,52 C 375,40 425,44 475,68 C 500,82 515,96 525,108',
+            areaPath:
+              'M 52,148 C 95,142 135,112 185,54 C 228,32 275,38 320,52 C 375,40 425,44 475,68 C 500,82 515,96 525,108 L 525,175 L 52,175 Z',
+            peakHighlightPath: 'M 185,54 C 228,32 275,38 320,52 C 375,40 425,44 475,68'
+          },
+          secondaryCurve: {
+            label: 'Typical Older Adult Group Average (Blunted Hemodynamics & Lower Delta Power)',
+            path: 'M 52,152 C 98,148 145,134 195,114 C 248,104 305,108 365,116 C 425,122 475,132 525,142',
+            style: 'dashed_warning'
+          },
+          nodes: [
+            {
+              x: 228,
+              y: 34,
+              curve: 'solid',
+              badge: '🌊 Deep NREM Delta Surge',
+              valueTag: 'CSF Wave Driven',
+              mechanismDetail:
+                'High-amplitude EEG slow-wave delta oscillations synchronize neural quieting with rhythmic cerebral blood-volume drops that draw fresh CSF inward.'
+            },
+            {
+              x: 375,
+              y: 42,
+              curve: 'solid',
+              badge: '🫀 Vascular Reactivity Link',
+              valueTag: 'r = 0.44 (~19% Variance)',
+              mechanismDetail:
+                'Breath-hold cerebrovascular reactivity correlated directly with sleep fluid dynamics, linking vascular elasticity to nighttime brain waste removal.'
+            },
+            {
+              x: 475,
+              y: 68,
+              curve: 'solid',
+              badge: '🧠 Resilient Older Outliers',
+              valueTag: 'Young-Adult Range Kept',
+              mechanismDetail:
+                'A subset of healthy 60- to 83-year-olds maintained macroscopic CSF wash waves indistinguishable from 18- to 39-year-old adults.'
+            }
+          ],
+          citation: {
+            study: 'Bailes, Williams, Lewis et al., Nature Aging (Nov 13, 2026)',
+            pmid: '10.1038/s43587-026-01270-4',
+            url: 'https://doi.org/10.1038/s43587-026-01270-4',
+            keyMetric: '72-Human EEG-fMRI Linking Sleep Slow Waves & Vascular Reactivity (r = 0.44) to CSF Flow'
+          }
+        },
+        cohortBars: [
+          {
+            label: 'Young Adult Cohort (n = 31, Mean Age 24) Deep NREM CSF Waves',
+            deltaText: 'High-Amplitude Rhythmic Wash',
+            percentWidth: 94,
+            barColorClass: 'bg-gradient-to-r from-cyan-500 to-emerald-400',
+            textColorClass: 'text-cyan-300'
+          },
+          {
+            label: 'Resilient Older Adult Subgroup (Within 60 to 83 Cohort)',
+            deltaText: 'Retained Young-Adult CSF Range',
+            percentWidth: 85,
+            barColorClass: 'bg-gradient-to-r from-emerald-500 to-teal-400',
+            textColorClass: 'text-emerald-300'
+          },
+          {
+            label: 'Cerebrovascular Reactivity Correlation With Sleep Fluid Waves',
+            deltaText: 'r = 0.44 (~19% Variance Explained)',
+            percentWidth: 74,
+            barColorClass: 'bg-gradient-to-r from-purple-500 to-cyan-400',
+            textColorClass: 'text-purple-300'
+          }
+        ],
+        molecularCascade: [
+          {
+            stepNum: 1,
+            title: 'Deep NREM Slow-Wave Delta Firing',
+            detail:
+              'Synchronized cortical slow waves quiet metabolic demand in waves during the first half of the night.',
+            accentClass: 'border-cyan-500/40 bg-cyan-950/20 text-cyan-300'
+          },
+          {
+            stepNum: 2,
+            title: 'Cerebral Blood-Volume Pulsation',
+            detail:
+              'Flexible cerebral vessels constrict rhythmically during neural quiet phases, creating volume room inside the skull.',
+            accentClass: 'border-emerald-500/40 bg-emerald-950/20 text-emerald-300'
+          },
+          {
+            stepNum: 3,
+            title: 'Macroscopic CSF Inflow Waves',
+            detail:
+              'Cerebrospinal fluid pulses upward into the brain ventricles and interstitial space to flush amyloid and metabolic waste.',
+            accentClass: 'border-purple-500/40 bg-purple-950/20 text-purple-300'
+          },
+          {
+            stepNum: 4,
+            title: 'Age-Related Vascular & Delta Bottleneck',
+            detail:
+              'Stiffer cerebral vessels and thinner frontal gray matter dampen the wash in typical aging, unless vascular and sleep resilience are maintained.',
+            accentClass: 'border-amber-500/40 bg-amber-950/20 text-amber-300'
+          }
+        ],
+        trialComparison: {
+          title: 'Study #4 Human Sleep Neuroimaging Comparison (Nature Aging 2026)',
+          headers: ['Cohort Group', 'Demographics (n = 72)', 'Nocturnal Hemodynamic & CSF Signature'],
+          rows: [
+            {
+              col1: 'Younger Healthy Adults',
+              col2: 'n = 31 (Ages 18 to 39, mean 24)',
+              col3: 'Strong delta power & high-amplitude CSF wash',
+              col3ColorClass: 'text-cyan-300 font-bold'
+            },
+            {
+              col1: 'Older Adults (Group Mean)',
+              col2: 'n = 41 (Ages 60 to 83, mean 69)',
+              col3: 'Attenuated CSF waves & blunted vascular coupling',
+              col3ColorClass: 'text-amber-300 font-semibold'
+            },
+            {
+              col1: 'Resilient Older Outliers',
+              col2: 'Subset of 60- to 83-year-olds',
+              col3: 'Matched healthy young-adult CSF dynamics',
+              col3ColorClass: 'text-emerald-300 font-bold'
+            }
+          ]
+        }
+      }
+    },
+
+    // =========================================================================
+    // STUDY 5: Aging Cell — University of Bonn Gradual 80→<20 Epigenetic Reset
+    // =========================================================================
+    {
+      number: 5,
+      id: 'study-5-bonn-gradual-epigenetic-deaging',
+      journal: 'Aging Cell',
+      publishDate: 'October 2026',
+      headline:
+        'Gradual direct reprogramming rewinds blood cells from an 80-year-old donor into neural stem cells reading under 20',
+      keyStatBadge: '80-Year-Old Cells Reset to Under 20',
+      themeTag: 'Slow-Motion Epigenetic Reset',
+      accentColor: 'amber',
+      paragraphs: [
+        'When scientists convert adult cells into induced pluripotent stem cells, embryonic-like cells capable of becoming any tissue, their biological age drops almost overnight, making it nearly impossible to observe how the cell actually erases decades of molecular wear. Researchers at the University of Bonn, University Hospital Bonn, and RWTH Aachen publishing in Aging Cell asked whether converting human blood cells directly into brain stem cells, skipping the embryonic stage completely, would still rewind their epigenetic age and let scientists film the reset in slow motion.',
+        'The team collected immature red blood cell precursors, called erythroblasts, from 15 human donors spanning chronological ages from newborns (0 years) up to 101 years old. Using just two transcription factors, SOX2 and c-MYC, they converted those blood precursors directly into induced neural stem cells (iNSCs) without passing through pluripotency, then tracked DNA methylation clocks, chemical tags on DNA that measure biological age, continuously across 50 to more than 100 days.',
+        'Skipping the embryonic stage did not stop biological age reversal. Instead, it stretched the epigenetic reset into a steady, observable decline across roughly 50 to 100 days. Cells taken from an 80-year-old donor rolled back by more than 60 years to read under 20 on epigenetic clocks, with early-stage converted cells keeping an average of about 13 percent of original donor age and later-stage cells keeping roughly 5 percent. The slow-motion trajectory now gives researchers a precise molecular map of which aging marks disappear first and which genetic switches control safe cellular de-aging.'
+      ],
+      limits:
+        'All reprogramming experiments were performed in laboratory cell dishes using blood precursors from 15 human donors rather than inside living human brains. Converting cells into dividing neural stem cells still involves changing cell fate, so direct therapeutic use inside aging organs will require separating the age-erasing steps from identity conversion.',
+      futureImplications:
+        'Turning a sudden black-box age reset into a 100-day slow-motion film lets biologists inspect every molecular gear that strips away 60 years of epigenetic wear. Isolating those exact intermediate switches is one of the clearest routes toward safe, partial rejuvenation treatments that refresh aging human brain cells in place.',
+      studyUrl: 'https://doi.org/10.1111/acel.70751',
+      doiLabel: 'Aging Cell • 10.1111/acel.70751',
+      visualSpec: {
+        defaultChartType: 'telemetry_curve',
+        chartTitle: '100-Day Slow-Motion Epigenetic Age Rollback in Human Blood-to-Neural Conversion',
+        chartSubtitle: '15 Human Donors (Ages 0 to 101) • Direct SOX2 + c-MYC Conversion Skipping Pluripotency (University of Bonn)',
+        sourceFigureBadge: 'SOURCE: Aging Cell (Oct 2026) • DOI: 10.1111/acel.70751 • 15 Human Donors (0 to 101 Yrs)',
+        curveSpec: {
+          id: 'study5_bonn_epigenetic_rollback',
+          tabLabel: '📈 100-Day De-Aging Curve',
+          title: 'Protracted Epigenetic Clock Age Trajectory During Direct Neural Conversion (80-Year-Old Donor)',
+          subtitle: 'Gradual 50- to 100-Day Reset Without Pluripotency vs. Abrupt Embryonic iPSC Reset',
+          yAxisLabel: 'Epigenetic Age (Yrs)',
+          yAxisTicks: ['80 Yrs (Donor)', '40 Yrs (Mid)', '<20 Yrs (Reset)'],
+          xAxisLabels: ['Day 0', 'Day 20', 'Day 40', 'Day 50', 'Day 75', 'Day 100+'],
+          colorScheme: 'amber_cyan',
+          phaseZones: [
+            { x: 52, width: 150, label: 'SOX2 + c-MYC DIRECT SHIFT', tint: 'amber' },
+            { x: 202, width: 165, label: '50-DAY MAJOR CLOCK DROP', tint: 'cyan' },
+            { x: 367, width: 158, label: '<20 YR MOLECULAR AGE', tint: 'emerald' }
+          ],
+          solidCurve: {
+            label: 'Direct iNSC Conversion (Gradual 50 to 100+ Day Rollback: 80 Yrs to Under 20)',
+            path: 'M 52,38 C 115,48 180,74 250,108 C 315,134 385,148 455,156 C 488,159 508,161 525,162',
+            areaPath:
+              'M 52,38 C 115,48 180,74 250,108 C 315,134 385,148 455,156 C 488,159 508,161 525,162 L 525,175 L 52,175 Z',
+            peakHighlightPath: 'M 180,74 C 250,108 315,134 385,148 455,156'
+          },
+          secondaryCurve: {
+            label: 'Unreprogrammed Donor Blood Precursors (Remains at ~80-Year Epigenetic Baseline)',
+            path: 'M 52,38 C 165,38 345,38 525,38',
+            style: 'dashed_warning'
+          },
+          nodes: [
+            {
+              x: 52,
+              y: 38,
+              curve: 'solid',
+              badge: '🩸 Day 0: Donor Blood Precursors',
+              valueTag: '80-Year Donor Baseline',
+              mechanismDetail:
+                'Erythroid progenitors collected across 15 human donors aged 0 to 101 retain full donor DNA methylation age prior to SOX2 + c-MYC induction.'
+            },
+            {
+              x: 250,
+              y: 108,
+              curve: 'solid',
+              badge: '⏱️ Day 50: Slow-Motion Reset',
+              valueTag: '~13% Early Passage Age',
+              mechanismDetail:
+                'Bypassing embryonic pluripotency stretches epigenetic erasure across roughly 50 days so intermediate rejuvenation states can be mapped.'
+            },
+            {
+              x: 455,
+              y: 156,
+              curve: 'solid',
+              badge: '✨ Day 100+: Rejuvenated iNSCs',
+              valueTag: 'Reads Under 20 (~5% Age)',
+              mechanismDetail:
+                'Cells from an 80-year-old donor shed more than 60 years of epigenetic age, stabilizing under 20 years on DNA methylation clocks.'
+            }
+          ],
+          citation: {
+            study: 'Berg, Brüstle et al., Aging Cell (Oct 2026)',
+            pmid: '10.1111/acel.70751',
+            url: 'https://doi.org/10.1111/acel.70751',
+            keyMetric: '80-Year-Old Human Blood Cells Reset to Under 20 Over 50 to 100+ Days Without Pluripotency'
+          }
+        },
+        cohortBars: [
+          {
+            label: 'Starting Donor Blood Precursors (80-Year-Old Human Donor)',
+            deltaText: '80 Years Molecular Epigenetic Age',
+            percentWidth: 96,
+            barColorClass: 'bg-gradient-to-r from-amber-500 to-rose-400',
+            textColorClass: 'text-amber-300'
+          },
+          {
+            label: 'Early-Passage Induced Neural Stem Cells (~50 Days)',
+            deltaText: 'Retained ~13% of Original Donor Age',
+            percentWidth: 32,
+            barColorClass: 'bg-gradient-to-r from-cyan-500 to-sky-400',
+            textColorClass: 'text-cyan-300'
+          },
+          {
+            label: 'Later-Passage Induced Neural Stem Cells (100+ Days)',
+            deltaText: 'Reads Under 20 (~5% Donor Age, >60 Yrs Rolled Back)',
+            percentWidth: 16,
+            barColorClass: 'bg-gradient-to-r from-emerald-500 to-teal-400',
+            textColorClass: 'text-emerald-300'
+          }
+        ],
+        molecularCascade: [
+          {
+            stepNum: 1,
+            title: 'Human Erythroblast Isolation (Ages 0 to 101)',
+            detail:
+              'Immature red blood cell precursors from 15 human donors provide accessible somatic cells carrying decades of epigenetic aging marks.',
+            accentClass: 'border-amber-500/40 bg-amber-950/20 text-amber-300'
+          },
+          {
+            stepNum: 2,
+            title: 'Direct SOX2 + c-MYC Conversion',
+            detail:
+              'Two factors redirect blood precursors into neural stem cells while completely bypassing the embryonic pluripotent (iPSC) state.',
+            accentClass: 'border-cyan-500/40 bg-cyan-950/20 text-cyan-300'
+          },
+          {
+            stepNum: 3,
+            title: 'Protracted 50- to 100-Day Erasure',
+            detail:
+              'Instead of snapping abruptly to zero, DNA methylation aging signatures unwind step by step over more than 100 days.',
+            accentClass: 'border-purple-500/40 bg-purple-950/20 text-purple-300'
+          },
+          {
+            stepNum: 4,
+            title: '60+ Years of Epigenetic Age Rewound',
+            detail:
+              'Cells from an 80-year-old donor stabilize with a molecular profile reading under 20, revealing targetable windows for safe de-aging.',
+            accentClass: 'border-emerald-500/40 bg-emerald-950/20 text-emerald-300'
+          }
+        ],
+        trialComparison: {
+          title: 'Study #5 Reprogramming Timeline Matrix (Aging Cell 2026)',
+          headers: ['Conversion Stage', 'Timeline Window', 'Epigenetic Clock Signature'],
+          rows: [
+            {
+              col1: 'Donor Blood Precursors',
+              col2: 'Day 0 (15 donors, ages 0 to 101)',
+              col3: 'Matches donor chronological age (e.g., 80 yrs)',
+              col3ColorClass: 'text-amber-300 font-semibold'
+            },
+            {
+              col1: 'Early-Passage Direct iNSCs',
+              col2: 'Around Day 50 (no pluripotency)',
+              col3: 'Retains ~13% of original donor epigenetic age',
+              col3ColorClass: 'text-cyan-300 font-semibold'
+            },
+            {
+              col1: 'Later-Passage Direct iNSCs',
+              col2: '100+ days protracted tracking',
+              col3: 'Reads under 20 (~5% donor age retained)',
+              col3ColorClass: 'text-emerald-300 font-bold'
+            }
+          ]
+        }
+      }
+    }
+  ],
+
+  // ===========================================================================
+  // PROTOCOL OF THE WEEK: Deep Sleep Architecture & Glymphatic Clearance Protocol
+  // ===========================================================================
+  protocolOfTheWeek: {
+    kind: 'protocol',
+    id: 'protocol-glymphatic-sleep-clearance',
+    discoverFamilyKey: 'protocol_glymphatic',
+    exploreDeepLink: '/explore?mode=discover&tab=protocols&item=protocol_glymphatic&type=protocol',
+    name: 'Deep Sleep Architecture & Glymphatic Clearance Protocol',
+    badgeText: '4-Step Nightly Brain Wash • Bridges Studies #4 & #1',
+    stepsAndTimeBadge: '4 Steps • Nightly (10 PM–2 AM Peak)',
+    creatorName: 'Dr. Maiken Nedergaard & Dr. Matthew Walker',
+    creatorAffiliation: 'Univ. of Rochester Glymphatic Lab & UC Berkeley Sleep Center',
+    creatorAvatarUrl: '/images/discover/creator_sketch_avatar.jpg',
+    heroImageUrl: '/images/discover/hero_glymphatic_clearance.jpg',
+    hookStats: [
+      {
+        value: '+60%',
+        label: 'Brain Wash Space',
+        sublabel: 'Interstitial channels expand by 60% during deep NREM slow-wave sleep (Science)',
+        accent: 'purple'
+      },
+      {
+        value: '2.2×',
+        label: 'Amyloid Plaque Flush',
+        sublabel: 'Lateral sleeping posture and deep delta waves double overnight waste clearance',
+        accent: 'emerald'
+      },
+      {
+        value: '-36%',
+        label: 'Faster Sleep Onset',
+        sublabel: 'Warm pre-bed shower plus a 65°F to 68°F room accelerates deep N3 entry',
+        accent: 'cyan'
+      }
+    ],
+    keyBenefits: [
+      'Protects the critical 10:00 PM to 2:00 AM window when 80 percent of slow-wave CSF brain wash occurs',
+      'Uses lateral (side) sleeping posture and clear nasal airflow to maximize cerebrospinal fluid transport',
+      'Prevents the 5 percent overnight spike in hippocampal amyloid-beta seen after a single night of lost deep sleep',
+      'Drops nocturnal resting heart rate and raises deep-sleep heart-rate variability (HRV) within 7 nights'
+    ],
+    oneLinePromise:
+      'Protect your first two deep NREM sleep cycles with thermal cooling, lateral posture, and zero late stimulants to maximize nightly cerebrospinal fluid brain waste clearance.',
+    whyIncluded:
+      'Study #4 (Nature Aging, November 13, 2026) used nighttime EEG-fMRI in 72 healthy humans to show that deep NREM slow-wave power and blood-vessel pulses drive the brain cerebrospinal fluid wash, and that resilient older adults keep young-adult fluid dynamics. Landmark human and mechanistic sleep studies prove that protecting slow-wave N3 architecture, cooling core temperature, and sleeping on your side directly amplify that exact glymphatic clearance pump tonight.',
+    pubmedLinks: [
+      {
+        label: 'Xie & Nedergaard, Science (PMID: 24136970)',
+        pmid: '24136970',
+        url: 'https://pubmed.ncbi.nlm.nih.gov/24136970/'
+      },
+      {
+        label: 'Fultz & Lewis, Science (PMID: 31672896)',
+        pmid: '31672896',
+        url: 'https://pubmed.ncbi.nlm.nih.gov/31672896/'
+      },
+      {
+        label: 'Lee & Nedergaard, J Neurosci (PMID: 26245953)',
+        pmid: '26245953',
+        url: 'https://pubmed.ncbi.nlm.nih.gov/26245953/'
+      }
+    ],
+    levlScoreOptimal: '+5.4 LEVL',
+    levlScoreBeginner: '+3.2 LEVL',
+    curveKey: 'glymphatic_deep_sleep_curve',
+    curveSpec: {
+      id: 'newsletter_protocol_glymphatic_sleep',
+      tabLabel: '🌊 Overnight CSF Wash Curve',
+      title: 'Overnight Slow-Wave Delta Power & Glymphatic CSF Clearance Flux',
+      subtitle: '4-Step Glymphatic Sleep Protocol (65°F Room + Lateral Posture + Zero Late Alcohol/Caffeine) vs. Fragmented Sleep',
+      yAxisLabel: 'Glymphatic Clearance',
+      yAxisTicks: ['Peak N3 Wash', 'Baseline Sleep', 'Fragmented / Wake'],
+      xAxisLabels: ['8p (Dim)', '9p (Bath)', '10p (Bed)', '11p (N3 #1)', '1a (N3 #2)', '3a (REM)', '6a (Wake)'],
+      colorScheme: 'purple_cyan',
+      phaseZones: [
+        { x: 52, width: 118, label: 'THERMAL & LIGHT DROP', tint: 'amber' },
+        { x: 170, width: 195, label: 'PEAK N3 CSF BRAIN WASH', tint: 'purple' },
+        { x: 365, width: 160, label: 'REM MEMORY LOCK', tint: 'cyan' }
+      ],
+      solidCurve: {
+        label: '4-Step Glymphatic Sleep Protocol (+60% Interstitial Expansion & Deep N3 Waves)',
+        path: 'M 52,154 C 95,150 138,136 185,48 C 228,30 278,36 325,52 C 378,76 435,92 485,112 C 505,122 518,132 525,142',
+        areaPath:
+          'M 52,154 C 95,150 138,136 185,48 C 228,30 278,36 325,52 C 378,76 435,92 485,112 C 505,122 518,132 525,142 L 525,175 L 52,175 Z',
+        peakHighlightPath: 'M 185,48 C 228,30 278,36 325,52'
+      },
+      secondaryCurve: {
+        label: 'Warm Bedroom + Late Screen / Alcohol (Blunted N3 Delta & High Nocturnal HR)',
+        path: 'M 52,156 C 110,152 175,134 240,122 C 305,118 370,126 435,138 C 480,144 505,148 525,152',
+        style: 'dashed_warning'
+      },
+      nodes: [
+        {
+          x: 138,
+          y: 136,
+          curve: 'solid',
+          badge: '🌡️ 9:00 PM: Warm Shower Drop',
+          valueTag: '-36% Sleep Latency',
+          mechanismDetail:
+            'A 10-minute 104°F to 108°F shower vasodilates hands and feet, dumping core body heat by 1.5°F when stepping into a 65°F to 68°F bedroom.'
+        },
+        {
+          x: 228,
+          y: 32,
+          curve: 'solid',
+          badge: '🌊 10:30 PM to 2:00 AM: Peak N3 Wash',
+          valueTag: '+60% Interstitial Space',
+          mechanismDetail:
+            'Eighty percent of slow-wave N3 delta oscillations happen in the first two 90-minute cycles, driving rhythmic CSF waves every 20 seconds.'
+        },
+        {
+          x: 325,
+          y: 52,
+          curve: 'solid',
+          badge: '🛏️ Lateral Posture & Nasal Patency',
+          valueTag: '+25% CSF Transport',
+          mechanismDetail:
+            'Side sleeping combined with clear nasal breathing improves jugular venous drainage and maximizes cerebrospinal-interstitial fluid exchange.'
+        }
+      ],
+      citation: {
+        study: 'Xie et al., Science (2013) • Fultz & Lewis, Science (2019)',
+        pmid: '31672896',
+        url: 'https://pubmed.ncbi.nlm.nih.gov/31672896/',
+        keyMetric: '+60% Interstitial Brain Wash & Coupled 20-Second CSF Waves During Deep NREM'
+      }
+    },
+    onsetPhases: [
+      {
+        phase: 'Phase 1: Deeper Slow-Wave Entry',
+        window: 'Nights 1 to 5',
+        detail: 'Faster sleep onset, lower sleeping resting heart rate by 3 to 5 bpm, and measurable increases in first-half N3 slow-wave minutes.'
+      },
+      {
+        phase: 'Phase 2: Autonomic & Cognitive Clarity',
+        window: 'Weeks 2 to 4',
+        detail: 'Higher overnight RMSSD heart-rate variability, steadier morning alertness, and reduced afternoon brain fog.'
+      },
+      {
+        phase: 'Phase 3: Long-Term Neuro-Clearance',
+        window: 'Months 2 to 12+',
+        detail: 'Consistent nightly amyloid and tau clearance paired with preserved cerebrovascular reactivity supports lifelong cognitive resilience.'
+      }
+    ],
+    vectorScores: [
+      { vectorName: 'Brain Longevity', score: 96, effectStat: '+60% Interstitial Wash & 2.2× Amyloid Flush', color: '#a855f7' },
+      { vectorName: 'Cellular Longevity', score: 84, effectStat: 'Nightly Proteostasis & DNA Repair Peak', color: '#06b6d4' },
+      { vectorName: 'Heart Health', score: 82, effectStat: 'Lower Nocturnal RHR & +18% Overnight HRV', color: '#10b981' },
+      { vectorName: 'Chronic Inflammation', score: 79, effectStat: 'Suppresses Neuroinflammatory Microglia', color: '#f59e0b' }
+    ],
+    steps: [
+      {
+        stepNumber: 1,
+        title: 'Strict Caffeine & Alcohol Buffer',
+        timingAndFrequency: 'Caffeine by 12:00 PM • Alcohol Cutoff 5h Pre-Bed',
+        optimalDoseBadge: '10h Caffeine Buffer • 0 Drinks Pre-Bed',
+        beginnerDoseBadge: '8h Caffeine Buffer • ≤1 Drink Early',
+        optimalInstruction:
+          'Cut off all caffeine at least 10 hours before bed to protect deep N3 delta amplitude, and keep evenings alcohol-free (or finish any drink at least 5 hours before sleep) to avoid sympathetic heart-rate spikes.',
+        beginnerInstruction:
+          'Finish your last caffeinated drink by 2:00 PM and keep at least 3 to 4 hours between any evening alcohol and bedtime.'
+      },
+      {
+        stepNumber: 2,
+        title: 'Dim Ambient Light & Screen Shield',
+        timingAndFrequency: '90 Minutes Before Bed • Nightly',
+        optimalDoseBadge: '<30 Lux Warm Light / Amber Lenses',
+        beginnerDoseBadge: 'Dim Overhead Lights 60m Pre-Bed',
+        optimalInstruction:
+          'Switch off overhead white LEDs 90 minutes before bed and use warm lamp light under 30 lux (or blue-blocking amber lenses) so evening melatonin rises on schedule without a 90-minute delay.',
+        beginnerInstruction:
+          'Dim bedroom and living-room lights and enable warm night-shift mode on screens 60 minutes before sleep.'
+      },
+      {
+        stepNumber: 3,
+        title: 'Warm Shower Core-Cooling Trigger',
+        timingAndFrequency: '60 Minutes Before Bed • Nightly',
+        optimalDoseBadge: '10m @ 104°F–108°F → 65°F–68°F Room',
+        beginnerDoseBadge: '5–10m Warm Shower → Cool Bedroom',
+        optimalInstruction:
+          'Take a 10-minute warm shower or bath (104°F to 108°F) one hour before bedtime, then step into a dark 65°F to 68°F bedroom to trigger a rapid 1.5°F drop in core body temperature that shortens sleep latency by 36 percent.',
+        beginnerInstruction:
+          'Take a warm shower 60 minutes before bed and set your bedroom thermostat under 69°F.'
+      },
+      {
+        stepNumber: 4,
+        title: 'Lateral Sleep Posture & Clear Nasal Airflow',
+        timingAndFrequency: '10:00 PM to 2:00 AM Peak Window • Nightly',
+        optimalDoseBadge: 'Side Sleeping + Nasal Dilator Strip',
+        beginnerDoseBadge: 'Start Sleep on Left or Right Side',
+        optimalInstruction:
+          'Sleep on your left or right side with supportive neck alignment and a nasal dilator strip if congested, maximizing jugular venous outflow and cerebrospinal fluid transport during your first two 90-minute N3 cycles.',
+        beginnerInstruction:
+          'Use a supportive side-sleeper pillow to spend the first half of the night in a comfortable lateral posture.'
+      }
+    ],
+    beginnerScalingNote:
+      'Start with Step 1 (noon caffeine cutoff) and Step 3 (cool 66°F to 68°F bedroom after a warm evening shower) for the first 7 nights before adding amber evening lighting and nasal dilator strips.',
+    cautions:
+      'Anyone experiencing loud snoring, witnessed breathing pauses, morning headaches, or persistent daytime sleepiness should be evaluated by a clinician for obstructive sleep apnea before using mouth tape or self-treating sleep fragmentation.',
+    disclaimer: 'Educational content only, not medical advice.'
+  },
+
+  // ===========================================================================
+  // MODALITY OF THE WEEK: Norwegian 4x4 High-Intensity Interval Training (VO2 Max)
+  // ===========================================================================
+  modalityOfTheWeek: {
+    kind: 'modality',
+    id: 'modality-norwegian-4x4-hiit',
+    discoverFamilyKey: 'norwegian_4x4_hiit',
+    exploreDeepLink: '/explore?mode=discover&tab=modalities&item=norwegian_4x4_hiit&type=modality',
+    name: 'Norwegian 4×4 High-Intensity Interval Training',
+    badgeText: 'Gold-Standard Cardiac Remodeling • Bridges Studies #3 & #4',
+    stepsAndTimeBadge: '4 Steps • 35 min • 1–2x / Week',
+    creatorName: 'Dr. Jan Helgerud, Dr. Ulrik Wisløff & Dr. Benjamin Levine',
+    creatorAffiliation: 'NTNU Cardiac Exercise Lab & UT Southwestern',
+    creatorAvatarUrl: '/images/discover/creator_sketch_avatar.jpg',
+    heroImageUrl: '/images/discover/hero_norwegian_4x4_hiit.jpg',
+    hookStats: [
+      {
+        value: '+10% to +13%',
+        label: 'Stroke Volume & VO₂ Max',
+        sublabel: '8-week clinical RCT expansion in cardiac pumping and peak oxygen uptake',
+        accent: 'emerald'
+      },
+      {
+        value: '-20 Yrs',
+        label: 'Heart Stiffness Reversal',
+        sublabel: 'Reverses two decades of sedentary left-ventricular stiffening in middle age',
+        accent: 'cyan'
+      },
+      {
+        value: '5.0×',
+        label: 'Lower Mortality Risk',
+        sublabel: 'Top cardiorespiratory fitness tier across 122,007 adults (JAMA Netw Open)',
+        accent: 'amber'
+      }
+    ],
+    keyBenefits: [
+      'Expands left-ventricular chamber compliance and blood pumped per heartbeat by +10 percent in 8 weeks',
+      'Directly improves cerebral blood-vessel elasticity, supporting the nighttime brain CSF wash mapped in Study #4',
+      'Drives mitochondrial biogenesis (+69 percent mitochondrial capacity in older adults) via AMPK and PGC-1α',
+      'Delivers the strongest single modifiable mortality shield in clinical medicine with just 1 to 2 sessions per week'
+    ],
+    oneLinePromise:
+      'Perform four 4-minute intervals at 85 to 95 percent of maximum heart rate with 3-minute active recoveries to expand cardiac stroke volume, reverse heart stiffening, and preserve vascular elasticity.',
+    whyIncluded:
+      'Study #3 (Nature Cardiovascular Research) showed that boosting heart muscle pumping output by 10 percent dramatically improves cardiac function after injury, while Study #4 (Nature Aging) proved that cerebral blood-vessel reactivity directly drives the sleeping brain waste-clearance pump. Right now, Norwegian 4x4 aerobic interval training is the most potent human clinical tool proven to raise cardiac stroke volume by 10 percent, reverse 20 years of sedentary heart stiffening in middle-aged adults, and keep brain arteries flexible.',
+    pubmedLinks: [
+      {
+        label: 'Helgerud et al., Med Sci Sports Exerc (PMID: 17414804)',
+        pmid: '17414804',
+        url: 'https://pubmed.ncbi.nlm.nih.gov/17414804/'
+      },
+      {
+        label: 'Howden & Levine, Circulation (PMID: 29311053)',
+        pmid: '29311053',
+        url: 'https://pubmed.ncbi.nlm.nih.gov/29311053/'
+      },
+      {
+        label: 'Mandsager et al., JAMA Netw Open (PMID: 30347091)',
+        pmid: '30347091',
+        url: 'https://pubmed.ncbi.nlm.nih.gov/30347091/'
+      }
+    ],
+    levlScoreOptimal: '+5.9 LEVL',
+    levlScoreBeginner: '+3.5 LEVL',
+    curveKey: 'norwegian_4x4_cardiac_curve',
+    curveSpec: {
+      id: 'newsletter_modality_norwegian_4x4',
+      tabLabel: '🫀 35m Heart-Rate & Stroke Curve',
+      title: 'Left-Ventricular Stroke Volume Filling & VO₂ Max Stimulus During a 4×4 Session',
+      subtitle: '4 × 4-Minute Bouts at 85 to 95% HRmax + 3-Minute Active Recovery (Helgerud et al., NTNU)',
+      yAxisLabel: '% Max Heart Rate',
+      yAxisTicks: ['95% Peak VO₂', '70% Active Rec', '55% Warm-Up'],
+      xAxisLabels: ['0m', '6m (Warm)', '10m (#1)', '17m (#2)', '24m (#3)', '31m (#4)', '35m (Cool)'],
+      colorScheme: 'rose_amber',
+      phaseZones: [
+        { x: 52, width: 78, label: 'WARM-UP', tint: 'slate' },
+        { x: 130, width: 325, label: '4 × 4 MIN MAX STROKE VOLUME ZONE', tint: 'rose' },
+        { x: 455, width: 70, label: 'COOL', tint: 'cyan' }
+      ],
+      solidCurve: {
+        label: 'Norwegian 4×4 Heart Rate & Ventricular Stretch Profile (85 to 95% HRmax)',
+        path: 'M 52,154 L 115,126 L 145,42 L 185,38 L 205,112 L 235,38 L 275,36 L 295,112 L 325,36 L 365,35 L 385,112 L 415,35 L 455,34 L 485,118 L 525,148',
+        areaPath:
+          'M 52,154 L 115,126 L 145,42 L 185,38 L 205,112 L 235,38 L 275,36 L 295,112 L 325,36 L 365,35 L 385,112 L 415,35 L 455,34 L 485,118 L 525,148 L 525,175 L 52,175 Z',
+        peakHighlightPath: 'M 145,42 L 185,38 M 235,38 L 275,36 M 325,36 L 365,35 M 415,35 L 455,34'
+      },
+      secondaryCurve: {
+        label: 'Steady Low-Intensity Walking Alone (Does Not Stretch Left Ventricle to Peak Volume)',
+        path: 'M 52,154 C 130,132 260,128 390,128 C 450,128 490,136 525,148',
+        style: 'dashed_warning'
+      },
+      nodes: [
+        {
+          x: 165,
+          y: 40,
+          curve: 'solid',
+          badge: '🫀 Interval #1–#2: Ventricular Stretch',
+          valueTag: '85–95% HRmax',
+          mechanismDetail:
+            'Holding 4 continuous minutes near 90 percent HRmax maximizes venous return and stretches the left ventricle far more effectively than 20-second sprints.'
+        },
+        {
+          x: 295,
+          y: 112,
+          curve: 'solid',
+          badge: '♻️ 3-Min Active Recovery',
+          valueTag: '65–70% HRmax Shuttle',
+          mechanismDetail:
+            'Keeping legs moving at an easy conversational pace clears blood lactate through cardiac and slow-twitch MCT1 transporters before the next bout.'
+        },
+        {
+          x: 435,
+          y: 35,
+          curve: 'solid',
+          badge: '🏆 Interval #4: VO₂ Max & Vascular Adaptation',
+          valueTag: '+10% Stroke Volume',
+          mechanismDetail:
+            'Eight weeks of 4x4 intervals increases stroke volume by 10 percent and VO2 max by 7.2 to 13 percent while improving endothelial shear elasticity.'
+        }
+      ],
+      citation: {
+        study: 'Helgerud et al. (2007) • Howden & Levine, Circulation (2018)',
+        pmid: '17414804',
+        url: 'https://pubmed.ncbi.nlm.nih.gov/17414804/',
+        keyMetric: '+10% Cardiac Stroke Volume, +7.2% to +13% VO₂ Max & 20-Year Heart Stiffness Reversal'
+      }
+    },
+    onsetPhases: [
+      {
+        phase: 'Phase 1: Plasma Volume & Endothelial Elasticity',
+        window: 'Sessions 1 to 3 (Weeks 1 to 2)',
+        detail: 'Blood plasma volume expands by roughly 10 to 12 percent and vascular nitric oxide responsiveness rises rapidly.'
+      },
+      {
+        phase: 'Phase 2: Stroke Volume & VO₂ Max Surge',
+        window: 'Weeks 4 to 8',
+        detail: 'Clinical trials show +7.2 to +13 percent VO2 max gains and +10 percent more blood pumped per heartbeat.'
+      },
+      {
+        phase: 'Phase 3: Structural Cardiac Rejuvenation',
+        window: 'Months 6 to 24',
+        detail: 'Paired with weekly Zone 2 base work, eccentric myocardial remodeling reverses up to 20 years of sedentary left-ventricular stiffening.'
+      }
+    ],
+    vectorScores: [
+      { vectorName: 'Heart Health', score: 99, effectStat: '+10% Stroke Volume & -20 Yr Heart Stiffness', color: '#f43f5e' },
+      { vectorName: 'Cellular Longevity', score: 92, effectStat: '+69% Older-Adult Mitochondrial Capacity', color: '#a855f7' },
+      { vectorName: 'Brain Longevity', score: 90, effectStat: 'Cerebrovascular Elasticity & BDNF Surge', color: '#06b6d4' },
+      { vectorName: 'Metabolic Health', score: 88, effectStat: 'Rapid GLUT4 & Insulin Sensitivity Boost', color: '#10b981' }
+    ],
+    steps: [
+      {
+        stepNumber: 1,
+        title: 'Progressive Aerobic Warm-Up',
+        timingAndFrequency: 'Minutes 0 to 6 • Late Morning or Afternoon',
+        optimalDoseBadge: '6–8 min @ 60–70% HRmax',
+        beginnerDoseBadge: '8–10 min Easy Ramp-Up',
+        optimalInstruction:
+          'Warm up for 6 to 8 minutes on an indoor bike, rowing machine, incline treadmill, or uphill trail until your heart rate reaches 65 to 70 percent of max and breathing feels steady.',
+        beginnerInstruction:
+          'Warm up gently for 8 to 10 minutes on a stationary bike or brisk incline walk before your first hard effort.'
+      },
+      {
+        stepNumber: 2,
+        title: 'Four 4-Minute High-Output Intervals',
+        timingAndFrequency: '4 Bouts • 1 to 2x / Week (Finish ≥4h Pre-Bed)',
+        optimalDoseBadge: '4 × 4 min @ 85–95% HRmax',
+        beginnerDoseBadge: '2 × 4 min @ 80–85% HRmax',
+        optimalInstruction:
+          'Push at a hard, sustainable pace (RPE 8 to 9 out of 10, able to say only 2 to 3 words at a time) so your heart rate reaches 85 to 95 percent of max by minute two and holds there through minute four.',
+        beginnerInstruction:
+          'Start with two 4-minute intervals at a challenging but controlled pace (80 to 85 percent HRmax), adding one interval every two weeks until you reach four.'
+      },
+      {
+        stepNumber: 3,
+        title: '3-Minute Active Recovery Between Bouts',
+        timingAndFrequency: 'Between Every Interval • 3 Rounds',
+        optimalDoseBadge: '3 min Easy Movement @ 60–70% HRmax',
+        beginnerDoseBadge: '3–4 min Easy Walking / Spinning',
+        optimalInstruction:
+          'Do not stop moving completely. Pedal slowly or walk gently for 3 minutes at 60 to 70 percent HRmax so active muscles clear lactate and restore stroke volume before the next 4-minute block.',
+        beginnerInstruction:
+          'Take a full 3 to 4 minutes of slow pedaling or flat walking between bouts until breathing settles cleanly.'
+      },
+      {
+        stepNumber: 4,
+        title: '5-Minute Parasympathetic Cool-Down',
+        timingAndFrequency: 'Final 5 Minutes • Plus 500 mg Electrolytes',
+        optimalDoseBadge: '5 min Easy Pace + Slow Nasal Exhales',
+        beginnerDoseBadge: '5 min Slow Walk + Water',
+        optimalInstruction:
+          'Cool down for 5 minutes at an easy pace using slow nasal breathing (4-second inhale, 6-second exhale) to trigger rapid heart-rate recovery and replenish fluids with 500 mg sodium.',
+        beginnerInstruction:
+          'Walk or spin easily for 5 minutes until your heart rate drops comfortably below 110 bpm, then hydrate.'
+      }
+    ],
+    beginnerScalingNote:
+      'If you have not done vigorous cardio recently, spend two weeks building a base of three 30-minute Zone 2 walks or rides, then introduce 2 x 4-minute intervals at 80 to 85 percent HRmax once per week before progressing to the full 4 x 4 format.',
+    cautions:
+      'Adults over 45 with cardiovascular risk factors, uncontrolled hypertension, chest discomfort, or a history of arrhythmia should obtain medical clearance before training above 85 percent of maximum heart rate. Finish sessions at least 4 hours before bedtime to protect deep slow-wave sleep.',
+    disclaimer: 'Educational content only, not medical advice.'
+  },
+
+  closingParagraph:
+    'From a single RNA splicing switch that cuts physical frailty by 44 percent without erasing cellular identity and a simple redox-targeted compound that clears senescent cells late in life, to transient heart-repairing mRNA, 72-human deep-sleep brain imaging, and a 100-day slow-motion epigenetic reset of 80-year-old blood cells to under 20, the science of organ rejuvenation is becoming measurably safer and more precise every week. While these therapies advance toward human clinics, protecting your deep slow-wave sleep architecture and expanding your cardiac stroke volume today keeps your brain and vascular plumbing operating in the resilient tier.',
+  aboutLevlParagraph:
+    'LEVL is the precision longevity operating system built to help you measure, schedule, and optimize the daily protocols that slow your pace of aging. Explore interactive biological telemetry curves, personalize your daily modality stack across all eight vectors of longevity, and track your real-time LEVL Pace of Aging Score at levlhealth.com.'
+}
+
+export const OUTPACE_AGING_ISSUES: OutpaceAgingIssue[] = [
+  OUTPACE_AGING_ISSUE_02,
+  OUTPACE_AGING_ISSUE_01
+]
 
 /**
- * Resolves a newsletter issue by shortSlug (`edition-1`), full slug (`issue-01-nad-nanovaccine-glial-autophagy`),
- * numeric ID (`1`, `01`), or common variants (`issue-1`, `issue-01`, `week-1`).
+ * Resolves a newsletter issue by shortSlug (`edition-2`, `edition-1`), full slug,
+ * numeric ID (`2`, `02`, `1`, `01`), or common variants (`issue-2`, `week-2`, `latest`).
  */
 export function getOutpaceAgingIssueBySlug(rawSlug?: string | null): OutpaceAgingIssue | null {
-  if (!rawSlug) return OUTPACE_AGING_ISSUE_01
+  if (!rawSlug) return OUTPACE_AGING_ISSUES[0]
   const clean = decodeURIComponent(rawSlug).trim().toLowerCase()
+  if (clean === 'latest') return OUTPACE_AGING_ISSUES[0]
 
   for (const issue of OUTPACE_AGING_ISSUES) {
     const num = issue.issueNumber
@@ -1634,20 +2970,20 @@ export function buildBeehiivRichHtmlAndText(issue: OutpaceAgingIssue) {
     htmlParts.push(`<p><strong>Beginner Scaling Note:</strong> ${item.beginnerScalingNote}</p>`)
     htmlParts.push(`<p><strong>Cautions:</strong> ${item.cautions}</p>`)
     htmlParts.push(
-      `<p><em>[Insert Static Blueprint Card PNG: outpace_aging_${issue.shortSlug}_${item.kind}_${item.id}.png | Link image to: https://levlhealth.com${item.exploreDeepLink}]</em></p>`
+      `<p><em>[Insert Static Blueprint Card PNG: outpace_aging_${issue.shortSlug}_${item.kind}_${item.id}.png | Link image to: https://levlhealth.com/app${item.exploreDeepLink}]</em></p>`
     )
     htmlParts.push(
-      `<p><a href="https://levlhealth.com${item.exploreDeepLink}"><strong>Try ${item.name} interactively in the LEVL app →</strong></a></p>`
+      `<p><a href="https://levlhealth.com/app${item.exploreDeepLink}"><strong>Try ${item.name} interactively in the LEVL app →</strong></a></p>`
     )
     htmlParts.push(`<p><em>${item.disclaimer}</em></p><hr />`)
 
     textParts.push(`Beginner Scaling Note: ${item.beginnerScalingNote}\n`)
     textParts.push(`Cautions: ${item.cautions}\n`)
     textParts.push(
-      `[Insert Static Blueprint Card PNG: outpace_aging_${issue.shortSlug}_${item.kind}_${item.id}.png -> https://levlhealth.com${item.exploreDeepLink}]\n`
+      `[Insert Static Blueprint Card PNG: outpace_aging_${issue.shortSlug}_${item.kind}_${item.id}.png -> https://levlhealth.com/app${item.exploreDeepLink}]\n`
     )
     textParts.push(
-      `Try ${item.name} interactively in the LEVL app: https://levlhealth.com${item.exploreDeepLink}\n`
+      `Try ${item.name} interactively in the LEVL app: https://levlhealth.com/app${item.exploreDeepLink}\n`
     )
     textParts.push(`${item.disclaimer}\n------------------------------------------------------------\n`)
   }
