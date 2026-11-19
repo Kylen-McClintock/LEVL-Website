@@ -364,7 +364,7 @@ export default function OutpaceAgingCatalogPage() {
                   isLightMode ? 'text-slate-600' : 'text-slate-400'
                 }`}
               >
-                Clean permanent links (/newsletter/edition-1) + Simple Email View
+                Clean permanent links (/newsletter/{OUTPACE_AGING_ISSUES[0].shortSlug}) + Simple Email View
               </div>
             </div>
           </div>
@@ -445,7 +445,7 @@ export default function OutpaceAgingCatalogPage() {
                 type="text"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                placeholder="Search studies, molecules (NAD+, Gpnmb, FGF13), journals, or protocols..."
+                placeholder="Search studies, molecules (SRSF1, NAD+, vanadyl, CSF), journals, or protocols..."
                 className={`w-full pl-9 pr-4 py-2 rounded-xl border text-xs sm:text-sm focus:outline-none focus:border-cyan-400/50 ${
                   isLightMode
                     ? 'bg-slate-50 border-slate-300 text-slate-900 placeholder:text-slate-400'
@@ -507,7 +507,8 @@ export default function OutpaceAgingCatalogPage() {
                 >
                   <div className="flex flex-wrap items-center gap-2.5">
                     <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-emerald-500 text-slate-950">
-                      Edition #{issue.issueNumber} • Latest Release
+                      Edition #{issue.issueNumber}
+                      {issue.issueNumber === OUTPACE_AGING_ISSUES[0].issueNumber ? ' • Latest Release' : ''}
                     </span>
                     <span
                       className={`text-xs sm:text-sm font-semibold flex items-center gap-1.5 ${
@@ -576,7 +577,7 @@ export default function OutpaceAgingCatalogPage() {
                           : 'text-white group-hover:text-cyan-300'
                       }`}
                     >
-                      Edition #{issue.issueNumber}: NAD+ Proteostasis, Spider-Silk Senolytic Nanovaccines, Glial Autophagy & 51-Trial Human Epigenetic Clocks
+                      Edition #{issue.issueNumber}: {issue.catalogHeadline || issue.subtitle}
                     </h2>
                   </Link>
                   <p

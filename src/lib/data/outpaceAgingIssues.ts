@@ -128,6 +128,7 @@ export interface OutpaceAgingIssue {
   shortSlug: string
   slug: string
   title: string
+  catalogHeadline?: string
   subtitle: string
   dateLabel: string
   isoDate?: string
@@ -149,6 +150,8 @@ export const OUTPACE_AGING_ISSUE_01: OutpaceAgingIssue = {
   shortSlug: 'edition-1',
   slug: 'issue-01-nad-nanovaccine-glial-autophagy',
   title: 'Outpace Aging: LEVL Weekly Longevity Roundup',
+  catalogHeadline:
+    'NAD+ Proteostasis, Spider-Silk Senolytic Nanovaccines, Glial Autophagy & 51-Trial Human Epigenetic Clocks',
   subtitle: 'Frontiers of Longevity Science, Cellular Rejuvenation & Daily Protocols for Longevity Escape Velocity',
   dateLabel: 'November 5, 2026',
   isoDate: '2026-11-05',
@@ -1518,6 +1521,8 @@ export const OUTPACE_AGING_ISSUE_02: OutpaceAgingIssue = {
   shortSlug: 'edition-2',
   slug: 'issue-02-srsf1-vanadyl-cardiac-mrna-sleep-csf',
   title: 'Outpace Aging: LEVL Weekly Longevity Roundup',
+  catalogHeadline:
+    'SRSF1 RNA Rejuvenation (-44% Frailty), Cysteine-Targeted Senolysis, Cardiac Repair mRNA, Deep-Sleep Brain Wash & 80-to-Under-20 Neural Reset',
   subtitle: 'Safe Cellular Rejuvenation, Heart Muscle Renewal, Deep-Sleep Brain Clearance & Daily Protocols for Longevity Escape Velocity',
   dateLabel: 'November 19, 2026',
   isoDate: '2026-11-19',
