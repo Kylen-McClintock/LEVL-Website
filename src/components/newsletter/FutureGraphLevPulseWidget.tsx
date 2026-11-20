@@ -6,6 +6,7 @@ import {
     ChevronDown,
     ChevronUp,
     Compass,
+    ExternalLink,
     Gauge,
     Sparkles,
     Zap,
@@ -13,6 +14,8 @@ import {
 import type { OutpaceAgingIssue } from '@/lib/data/outpaceAgingIssues';
 
 const FUTUREGRAPH_WEEKLY_PULSE_API = 'https://futuregraph-beta.vercel.app/api/v1/lev/weekly-pulse';
+const FUTUREGRAPH_LEV_URL = 'https://www.agifutures.org/futuregraph/lev';
+const LEVL_TRAJECTORY_URL = 'https://www.levlhealth.com/LEVTrajectory/';
 
 interface CohortMetricsSnapshot {
     intrinsicPaceOfAging: number;
@@ -892,6 +895,39 @@ export default function FutureGraphLevPulseWidget({
                             )}
                         </button>
                     </div>
+
+                    <a
+                        href={FUTUREGRAPH_LEV_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-all ${
+                            isLightMode
+                                ? 'bg-cyan-50/80 hover:bg-cyan-100 text-cyan-800 border-cyan-200'
+                                : 'bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border-cyan-500/30'
+                        }`}
+                    >
+                        <span>Live via FutureGraph · Full LEV Observatory</span>
+                        <ExternalLink className="w-3 h-3 shrink-0" />
+                    </a>
+                </div>
+            )}
+
+            {/* Attribution Link in Simple Email View */}
+            {hideExpandControls && (
+                <div className="flex justify-end pt-0.5">
+                    <a
+                        href={FUTUREGRAPH_LEV_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`inline-flex items-center gap-1 text-[11px] font-semibold transition-colors ${
+                            isLightMode
+                                ? 'text-cyan-700 hover:text-cyan-900'
+                                : 'text-cyan-300 hover:text-cyan-200'
+                        }`}
+                    >
+                        <span>Live LEV forecasts via FutureGraph (agifutures.org/futuregraph/lev)</span>
+                        <ExternalLink className="w-3 h-3 shrink-0" />
+                    </a>
                 </div>
             )}
 
@@ -1209,6 +1245,40 @@ export default function FutureGraphLevPulseWidget({
                                 {data.latestPulse.breakthroughsSummary}
                             </p>
                         </div>
+                    </div>
+
+                    {/* Footer Links: FutureGraph Full Observatory + Personal LEV Trajectory Calculator */}
+                    <div
+                        className={`flex flex-wrap items-center justify-between gap-2 pt-2.5 border-t text-xs ${
+                            isLightMode ? 'border-slate-200' : 'border-white/10'
+                        }`}
+                    >
+                        <a
+                            href={FUTUREGRAPH_LEV_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`inline-flex items-center gap-1.5 font-semibold transition-colors ${
+                                isLightMode
+                                    ? 'text-cyan-700 hover:text-cyan-900'
+                                    : 'text-cyan-300 hover:text-cyan-200'
+                            }`}
+                        >
+                            <span>Explore Full Interactive LEV Observatory on FutureGraph</span>
+                            <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+                        </a>
+                        <a
+                            href={LEVL_TRAJECTORY_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`inline-flex items-center gap-1.5 font-semibold transition-colors ${
+                                isLightMode
+                                    ? 'text-emerald-700 hover:text-emerald-900'
+                                    : 'text-emerald-300 hover:text-emerald-200'
+                            }`}
+                        >
+                            <span>Model Your Personal LEV Trajectory</span>
+                            <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+                        </a>
                     </div>
                 </div>
             )}
